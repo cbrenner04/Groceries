@@ -39,4 +39,4 @@ gem "rubocop", "~> 0.46.0", require: false
 
 # heroku
 gem "rails_12factor", group: :production
-ruby "2.3.1"
+ruby "2.3.0"

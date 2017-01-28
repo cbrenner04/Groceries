@@ -2,9 +2,13 @@
 require "rails_helper"
 
 feature "Home Page" do
+  let(:user) { create :user }
+
+  before { sign_in user }
+
   it "loads" do
     visit root_path
 
-    expect(status_code).to eq 200
+    expect(page).to have_text "Home"
   end
 end
