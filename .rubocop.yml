@@ -1,0 +1,25 @@
+AllCops:
+  Exclude:
+    - bin/**/*
+    - config/**/*
+    - db/**/*
+    - vendor/**/*
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+ModuleLength:
+  Exclude:
+    - spec/**/*
+
+MethodLength:
+  Exclude:
+    - spec/**/*
+
+StringLiterals:
+  EnforcedStyle: double_quotes
