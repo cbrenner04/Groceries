@@ -1,3 +1,6 @@
 <h1>Edit <%= @list.name %></h1>
 
+<%= link_to "Back to list", list_path(@list) %>
+<br /><br />
+
 <%= render "form" %>

@@ -1,5 +1,7 @@
 <h1>Lists</h1>
 
+<%= link_to "Create List", new_list_path %>
+
 <% @lists.each do |list| %>
   <ul>
     <li><%= link_to list.name, list_path(list) %> | <%= list.created_at.to_formatted_s(:long) %></li>
