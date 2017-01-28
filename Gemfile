@@ -35,6 +35,7 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # add-ons
 gem "devise", "~> 4.2"
+gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rubocop", "~> 0.46.0", require: false
 
 # heroku
