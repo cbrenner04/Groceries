@@ -2,7 +2,36 @@
 
 <%= link_to "Back to lists", lists_path %>
 <%= link_to "Edit", edit_list_path(@list) %>
-<%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %></td>
+<%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %>
 
 <p>Created: <%= @list.created_at.to_formatted_s(:long) %></p>
 <p>Last updated: <%= @list.updated_at.to_formatted_s(:long) %></p>
+
+<%= link_to "Add item to list", new_item_path(list_id: params[:id]) %>
+
+<h2>Items</h2>
+
+<ul>
+  <% @list.items.not_purchased.each do |item| %>
+    <li>
+      <%= item.name %>:
+      <%= item.quantity %>
+      <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put %>
+      <%= link_to "Edit", edit_item_path(item, list_id: params[:id]) %>
+      <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Purchased</h2>
+
+<ul>
+  <% @list.items.purchased.each do |item| %>
+    <li>
+      <%= item.name %>:
+      <%= item.quantity %>
+      <%= link_to "Edit", edit_item_path(item, list_id: params[:id]) %>
+      <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
