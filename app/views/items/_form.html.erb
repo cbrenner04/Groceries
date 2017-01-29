@@ -1,16 +1,18 @@
 <%= form_for @item, url: url do |f| %>
+  <%= render "shared/alert", invalid_object: @item, name: "item" %>
+
   <%= f.hidden_field :user_id, value: @list.user.id %>
   <%= f.hidden_field :purchased, value: false %>
 
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <br /><br />
+  <div class="form-group">
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity, class: "form-control" %>
+  </div>
 
-  <%= f.label :quantity %>
-  <%= f.number_field :quantity %>
-
-  <br /><br />
-
-  <%= f.submit %>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>

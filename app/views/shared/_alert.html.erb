@@ -1,0 +1,17 @@
+<% if invalid_object.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-heading">
+      <%= pluralize(invalid_object.errors.count, "error") %> prohibited this
+      <%= name %> from being saved:
+    </h4>
+
+    <ul class="mb-0">
+    <% invalid_object.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

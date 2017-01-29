@@ -1,6 +1,10 @@
 <%= form_for @list do |f| %>
-  <%= f.label :name %>:
-  <%= f.text_field :name %>
+  <%= render "shared/alert", invalid_object: @list, name: "list" %>
+
+  <div class="form-group">
+    <%= f.label :name %>:
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
   <br />
-  <%= f.submit %>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>

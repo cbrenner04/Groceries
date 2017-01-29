@@ -42,7 +42,12 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
     ast (2.3.0)
+    autoprefixer-rails (6.6.1)
+      execjs
     bcrypt (3.1.11)
+    bootstrap (4.0.0.alpha6)
+      autoprefixer-rails (>= 6.0.3)
+      sass (>= 3.4.19)
     builder (3.2.3)
     byebug (9.0.6)
     capybara (2.12.0)
@@ -77,6 +82,8 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.17)
+    font-awesome-rails (4.7.0.1)
+      railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -224,12 +231,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap (~> 4.0.0.alpha6)
   byebug
   capybara (~> 2.12.0)
   coffee-rails (~> 4.2)
   database_cleaner (~> 1.5)
   devise (~> 4.2)
   factory_girl_rails (~> 4.8)
+  font-awesome-rails (~> 4.7, >= 4.7.0.1)
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

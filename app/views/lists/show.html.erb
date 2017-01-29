@@ -1,37 +1,43 @@
 <h1><%= @list.name %></h1>
 
-<%= link_to "Back to lists", lists_path %>
-<%= link_to "Edit", edit_list_path(@list) %>
-<%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %>
-
+<%= link_to "Back to lists", lists_path %><br /><br />
+<%= link_to "Edit", edit_list_path(@list), class: "btn btn-secondary btn-block" %>
+<%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-block" %>
+<br />
 <p>Created: <%= @list.created_at.to_formatted_s(:long) %></p>
 <p>Last updated: <%= @list.updated_at.to_formatted_s(:long) %></p>
 
-<%= link_to "Add item to list", new_item_path(list_id: params[:id]) %>
+<%= link_to "Add item to list", new_item_path(list_id: params[:id]), class: "btn btn-success btn-block" %>
+<br />
 
 <h2>Items</h2>
 
-<ul>
+<div id="accordion" role="tablist" aria-multiselectable="true">
   <% @list.items.not_purchased.each do |item| %>
-    <li>
-      <%= item.name %>:
-      <%= item.quantity %>
-      <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put %>
-      <%= link_to "Edit", edit_item_path(item, list_id: params[:id]) %>
-      <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" } %>
-    </li>
+    <div class="card">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <div class="card-header" role="tab" id="headingOne">
+          <p class="mb-0"><%= item.quantity %> <%= item.name %></p>
+        </div>
+      </a>
+
+      <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="card-block">
+          <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "btn btn-primary btn-sm" %>
+          <%= link_to "Edit", edit_item_path(item, list_id: params[:id]), class: "btn btn-secondary btn-sm" %>
+          <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+        </div>
+      </div>
+    </div>
   <% end %>
-</ul>
+</div>
+
+<br />
 
 <h2>Purchased</h2>
 
-<ul>
+<ul class="list-group">
   <% @list.items.purchased.each do |item| %>
-    <li>
-      <%= item.name %>:
-      <%= item.quantity %>
-      <%= link_to "Edit", edit_item_path(item, list_id: params[:id]) %>
-      <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" } %>
-    </li>
+    <li class="list-group-item"><%= item.quantity %> <%= item.name %></li>
   <% end %>
 </ul>

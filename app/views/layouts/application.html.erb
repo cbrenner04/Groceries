@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Groceries</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container-fluid">
+      <nav class="navbar fixed-top navbar-toggleable-sm navbar-light bg-faded navbar-full">
+        <button class="navbar-toggler navbar-toggler-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+          <%= link_to main_app.root_path, class: "navbar-brand" do %>Groceries<% end %>
+          <% if user_signed_in? %>
+            <div class="col-lg-10 col-md-9">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <%= link_to "Lists", main_app.lists_path, class: "btn nav-link" %>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <%= link_to "Log out", main_app.destroy_user_session_path, method: :delete, class: "btn nav-link" %>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <% if notice %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

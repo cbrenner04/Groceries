@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 # no doc
 class User < ApplicationRecord
+  # TODO: remove registerable/validatable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
