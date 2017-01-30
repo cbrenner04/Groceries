@@ -10,9 +10,9 @@ feature "Lists" do
     it "creates list" do
       visit new_list_path
       fill_in "Name", with: "foo"
-      click_on "Create List"
+      click_on "Submit"
 
-      expect(page).to have_css("li", text: "foo")
+      expect(page).to have_css("h5", text: "foo")
     end
   end
 
@@ -22,18 +22,29 @@ feature "Lists" do
       visit list_path(list)
       click_on "Edit"
       fill_in "Name", with: "foo"
-      click_on "Update List"
+      click_on "Submit"
 
       expect(page).to have_css("h1", text: "foo")
     end
   end
 
   describe "destroy" do
-    it "deletes list" do
+    it "deletes list with no items" do
       list = create :list, name: "foo"
       create :list, name: "bar"
       visit list_path(list)
       click_on "Destroy"
+
+      expect(page).to have_text "bar"
+      expect(page).to_not have_text "foo"
+    end
+
+    it "deletes list with items" do
+      list = create :list, name: "foo"
+      create :list, name: "bar"
+      create :item, list: list
+      visit list_path(list)
+      first(".btn", text: "Destroy").click
 
       expect(page).to have_text "bar"
       expect(page).to_not have_text "foo"

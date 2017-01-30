@@ -34,7 +34,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list.delete
+    @list.destroy
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end
 
