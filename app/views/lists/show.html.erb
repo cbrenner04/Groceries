@@ -32,8 +32,8 @@
 
       <div id="collapse<%= index %>" class="collapse" role="tabpanel" aria-labelledby="heading<%= index %>">
         <div class="card-block">
-          <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "btn btn-primary btn-sm" %>
-          <%= link_to "Edit", edit_item_path(item, list_id: params[:id]), class: "btn btn-secondary btn-sm" %>
+          <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "btn btn-primary btn-sm", style: "margin-right: 1rem;" %>
+          <%= link_to "Edit", edit_item_path(item, list_id: params[:id]), class: "btn btn-secondary btn-sm", style: "margin-right: 1rem;" %>
           <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
         </div>
       </div>
