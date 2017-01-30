@@ -30,32 +30,63 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   describe "POST #create" do
-    it "creates a new item" do
-      expect do
+    describe "with valid params" do
+      it "creates a new item" do
+        expect do
+          post :create, params: {
+            item: {
+              user_id: user.id,
+              name: "foo"
+            },
+            list_id: list.id
+          }
+        end.to change(Item, :count).by 1
+      end
+    end
+
+    describe "with invalid params" do
+      it "re-renders the 'new' template" do
         post :create, params: {
           item: {
-            user_id: user.id,
-            name: "foo"
+            name: nil
           },
           list_id: list.id
         }
-      end.to change(Item, :count).by 1
+
+        expect(response).to render_template("new")
+      end
     end
   end
 
   describe "PUT #update" do
-    it "updates a item" do
-      update_item = create :item, name: "foo"
-      put :update, params: {
-        id: update_item.id,
-        item: {
-          name: "bar"
-        },
-        list_id: list.id
-      }
-      update_item.reload
+    describe "with valid params" do
+      it "updates a item" do
+        update_item = create :item, name: "foo"
+        put :update, params: {
+          id: update_item.id,
+          item: {
+            name: "bar"
+          },
+          list_id: list.id
+        }
+        update_item.reload
 
-      expect(update_item.name).to eq "bar"
+        expect(update_item.name).to eq "bar"
+      end
+    end
+
+    describe "with invalid params" do
+      it "re-renders the 'edit' template" do
+        item = create :item
+        put :update, params: {
+          id: item.id, item: {
+            name: nil
+          },
+          list_id: list.id
+        }
+
+        expect(response).to render_template("edit")
+      end
     end
   end
 

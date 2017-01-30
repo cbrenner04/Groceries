@@ -44,30 +44,60 @@ RSpec.describe ListsController, type: :controller do
   end
 
   describe "POST #create" do
-    it "creates a new list" do
-      expect do
+    describe "with valid params" do
+      it "creates a new list" do
+        expect do
+          post :create, params: {
+            list: {
+              user_id: user.id,
+              name: "foo"
+            }
+          }
+        end.to change(List, :count).by 1
+      end
+    end
+
+    describe "with invalid params" do
+      it "re-renders the 'new' template" do
         post :create, params: {
           list: {
-            user_id: user.id,
-            name: "foo"
+            name: nil
           }
         }
-      end.to change(List, :count).by 1
+
+        expect(response).to render_template("new")
+      end
     end
   end
 
   describe "PUT #update" do
-    it "updates a list" do
-      update_list = create :list, name: "foo"
-      put :update, params: {
-        id: update_list.id,
-        list: {
-          name: "bar"
+    describe "with valid params" do
+      it "updates a list" do
+        update_list = create :list, name: "foo"
+        put :update, params: {
+          id: update_list.id,
+          list: {
+            name: "bar"
+          }
         }
-      }
-      update_list.reload
+        update_list.reload
 
-      expect(update_list.name).to eq "bar"
+        expect(update_list.name).to eq "bar"
+      end
+    end
+
+    describe "with invalid params" do
+      it "re-renders the 'edit' template" do
+        list = create :list
+        put :update, params: {
+          id: list.id,
+          list: {
+            name: nil
+          }
+        }
+
+        expect(response).to render_template("edit")
+      end
     end
   end
 

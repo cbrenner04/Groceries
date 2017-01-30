@@ -40,6 +40,7 @@ gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.1"
 gem "launchy", "~> 2.4", ">= 2.4.3"
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rubocop", "~> 0.46.0", require: false
+gem "simplecov", "~> 0.13.0"
 
 # heroku
 gem "rails_12factor", group: :production
