@@ -9,9 +9,9 @@
     </h4>
 
     <ul class="mb-0">
-    <% invalid_object.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+      <% invalid_object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     </ul>
   </div>
 <% end %>

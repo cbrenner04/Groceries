@@ -1,18 +1,27 @@
 <h1><%= @list.name %></h1>
 
-<%= link_to "Back to lists", lists_path %><br /><br />
-<%= link_to "Edit", edit_list_path(@list), class: "btn btn-secondary btn-block" %>
-<%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-block" %>
-<br />
-<p>Created: <%= @list.created_at.to_formatted_s(:long) %></p>
-<p>Last updated: <%= @list.updated_at.to_formatted_s(:long) %></p>
+<%= link_to "Back to lists", lists_path, class: "pull-right" %>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Options
+  </button>
+  <div class="dropdown-menu">
+    <button class="dropdown-item" type="button"><%= link_to "Edit", edit_list_path(@list) %></button>
+    <button class="dropdown-item" type="button"><%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %></button>
+    <button class="dropdown-item" type="button">Created: <%= @list.created_at.to_formatted_s(:long) %></button>
+    <button class="dropdown-item" type="button">Last updated: <%= @list.updated_at.to_formatted_s(:long) %></button>
+  </div>
+</div>
+
+<br /><br />
 
 <%= link_to "Add item to list", new_item_path(list_id: params[:id]), class: "btn btn-success btn-block" %>
 <br />
 
 <h2>Items</h2>
 
-<div id="accordion" role="tablist" aria-multiselectable="true">
+<div id="item-accordion" role="tablist" aria-multiselectable="true">
   <% @list.items.not_purchased.each_with_index do |item, index| %>
     <div class="card">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
