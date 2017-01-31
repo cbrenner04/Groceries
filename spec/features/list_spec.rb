@@ -3,61 +3,77 @@ require "rails_helper"
 
 feature "Lists" do
   let(:user) { create :user }
+  let(:list_page) { Pages::List.new }
 
   before { sign_in user }
 
   describe "create" do
     it "creates list" do
-      visit new_list_path
-      fill_in "Name", with: "foo"
-      click_on "Submit"
+      list_page.load_new
+      list_page.fill_in_name_with "foo"
+      list_page.submit
 
-      expect(page).to have_css("h5", text: "foo")
+      expect(list_page).to have_list "foo"
     end
   end
 
   describe "index" do
-    it "has most recent list at top" do
+    before do
       create :list, name: "foo"
       create :list, name: "bar"
-      visit lists_path
+    end
 
-      expect(first(".list-group-item")).to have_text "bar"
+    it "has most recent list at top" do
+      list_page.load_index
+
+      expect(list_page.first_list).to have_text "bar"
     end
   end
 
   describe "update" do
-    it "updates list" do
-      list = create :list
-      visit list_path(list)
-      first("a", text: "Edit").click
-      fill_in "Name", with: "foo"
-      click_on "Submit"
+    let(:list) { create :list }
 
-      expect(page).to have_css("h1", text: "foo")
+    before { list_page.load_list list }
+
+    it "updates list" do
+      list_page.edit_list
+      list_page.fill_in_name_with "foo"
+      list_page.submit
+
+      expect(list_page).to have_list_title "foo"
     end
   end
 
   describe "destroy" do
-    it "deletes list with no items" do
-      list = create :list, name: "foo"
-      create :list, name: "bar"
-      visit list_path(list)
-      first("a", text: "Destroy").click
+    let(:list) { create :list, name: "foo" }
 
-      expect(page).to have_text "bar"
-      expect(page).to_not have_text "foo"
+    context "when there are no items" do
+      before do
+        create :list, name: "bar"
+        list_page.load_list list
+      end
+
+      it "deletes list" do
+        list_page.destroy_list
+
+        expect(list_page).to have_text "bar"
+        expect(list_page).to_not have_text "foo"
+      end
     end
 
-    it "deletes list with items" do
-      list = create :list, name: "foo"
-      create :list, name: "bar"
-      create :item, list: list
-      visit list_path(list)
-      first("a", text: "Destroy").click
+    context "where there are items" do
+      before do
+        create :list, name: "bar"
+        create :item, list: list
+        list_page.load_list list
+      end
 
-      expect(page).to have_text "bar"
-      expect(page).to_not have_text "foo"
+      it "deletes list with items" do
+        list_page.destroy_list
+
+        expect(list_page).to have_text "bar"
+        expect(list_page).to_not have_text "foo"
+      end
     end
   end
 end
