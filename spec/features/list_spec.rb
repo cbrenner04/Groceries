@@ -16,11 +16,21 @@ feature "Lists" do
     end
   end
 
+  describe "index" do
+    it "has most recent list at top" do
+      create :list, name: "foo"
+      create :list, name: "bar"
+      visit lists_path
+
+      expect(first(".list-group-item")).to have_text "bar"
+    end
+  end
+
   describe "update" do
     it "updates list" do
       list = create :list
       visit list_path(list)
-      click_on "Edit"
+      first("a", text: "Edit").click
       fill_in "Name", with: "foo"
       click_on "Submit"
 
@@ -33,7 +43,7 @@ feature "Lists" do
       list = create :list, name: "foo"
       create :list, name: "bar"
       visit list_path(list)
-      click_on "Destroy"
+      first("a", text: "Destroy").click
 
       expect(page).to have_text "bar"
       expect(page).to_not have_text "foo"
@@ -44,7 +54,7 @@ feature "Lists" do
       create :list, name: "bar"
       create :item, list: list
       visit list_path(list)
-      first(".btn", text: "Destroy").click
+      first("a", text: "Destroy").click
 
       expect(page).to have_text "bar"
       expect(page).to_not have_text "foo"
