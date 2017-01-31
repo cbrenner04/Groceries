@@ -2,34 +2,34 @@
 require "rails_helper"
 
 feature "Lists" do
-  let(:user) { create :user }
+  let(:user) { create :user_with_lists }
+  let(:another_user) { create :user_with_lists }
+  let(:first_list) { create :list, name: "foo" }
+  let(:second_list) { create :list, name: "bar" }
+  let(:third_list) { create :list, name: "baz" }
   let(:list_page) { Pages::List.new }
 
-  before { sign_in user }
+  before do
+    [first_list, second_list].each { |list| user.lists << list }
+    another_user.lists << third_list
+    sign_in user
+  end
 
   describe "create" do
     it "creates list" do
       list_page.load_new
-      list_page.fill_in_name_with "foo"
+      list_page.fill_in_name_with "foobar"
       list_page.submit
 
-      expect(list_page).to have_list "foo"
+      expect(list_page).to have_list "foobar"
     end
   end
 
   describe "index" do
-    let(:another_user) { create :user }
-
-    before do
-      create :list, name: "foo", user: user
-      create :list, name: "bar", user: user
-      create :list, name: "baz", user: another_user
-    end
-
     it "has most recent list at top" do
       list_page.load_index
 
-      expect(list_page.first_list).to have_text "bar"
+      expect(list_page.first_list).to have_text user.lists.last.name
     end
 
     it "only show lists for logged in user" do
@@ -41,27 +41,24 @@ feature "Lists" do
   end
 
   describe "update" do
-    let(:list) { create :list, user: user }
+    let(:list) { user.lists.last }
 
     before { list_page.load_list list }
 
     it "updates list" do
       list_page.edit_list
-      list_page.fill_in_name_with "foo"
+      list_page.fill_in_name_with "updated"
       list_page.submit
 
-      expect(list_page).to have_list_title "foo"
+      expect(list_page).to have_list_title "updated"
     end
   end
 
   describe "destroy" do
-    let(:list) { create :list, name: "foo", user: user }
+    let(:list) { user.lists.find_by(name: "foo") }
 
     context "when there are no items" do
-      before do
-        create :list, name: "bar", user: user
-        list_page.load_list list
-      end
+      before { list_page.load_list list }
 
       it "deletes list" do
         list_page.destroy_list
@@ -73,7 +70,6 @@ feature "Lists" do
 
     context "where there are items" do
       before do
-        create :list, name: "bar", user: user
         create :item, list: list
         list_page.load_list list
       end

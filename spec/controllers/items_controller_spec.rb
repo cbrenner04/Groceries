@@ -2,8 +2,8 @@
 require "rails_helper"
 
 RSpec.describe ItemsController, type: :controller do
-  let(:user) { create :user }
-  let(:list) { create :list, user: user }
+  let(:user) { create :user_with_lists }
+  let(:list) { user.lists.last }
   let(:item) { create :item, list: list }
 
   before { sign_in user }

@@ -9,12 +9,6 @@ RSpec.describe List, type: :model do
       expect(list).to be_valid
     end
 
-    it "is invalid without user" do
-      list.user = nil
-
-      expect(list).to_not be_valid
-    end
-
     it "is invalid without name" do
       list.name = nil
 

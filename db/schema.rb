@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128231617) do
+ActiveRecord::Schema.define(version: 20170131212652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,11 +28,9 @@ ActiveRecord::Schema.define(version: 20170128231617) do
   end
 
   create_table "lists", force: :cascade do |t|
-    t.integer  "user_id",    null: false
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,7 +51,14 @@ ActiveRecord::Schema.define(version: 20170128231617) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "users_lists", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "list_id", null: false
+    t.index ["list_id"], name: "index_users_lists_on_list_id", using: :btree
+    t.index ["user_id", "list_id"], name: "index_users_lists_on_user_id_and_list_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_users_lists_on_user_id", using: :btree
+  end
+
   add_foreign_key "items", "lists"
   add_foreign_key "items", "users"
-  add_foreign_key "lists", "users"
 end

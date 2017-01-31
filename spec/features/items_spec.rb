@@ -2,8 +2,8 @@
 require "rails_helper"
 
 feature "Items" do
-  let(:user) { create :user }
-  let(:list) { create :list, user: user }
+  let(:user) { create :user_with_lists }
+  let(:list) { user.lists.last }
   let(:list_page) { Pages::List.new }
   let(:item_page) { Pages::Item.new }
 
