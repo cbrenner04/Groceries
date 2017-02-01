@@ -4,7 +4,7 @@
   <%= f.hidden_field :list_id, value: @list.id %>
   <div class="form-group">
     <%= f.label :user_id, "Select who you would like to share this list with:" %>
-    <%= f.collection_select :user_id, User.unattached_to_list(@list), :id, :first_name, prompt: true, class: "form-control" %>
+    <%= f.collection_select :user_id, User.unattached_to_list(@list), :id, :first_name, { prompt: true }, { class: "form-control" } %>
   </div>
   <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>
