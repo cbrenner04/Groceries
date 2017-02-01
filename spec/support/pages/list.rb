@@ -41,6 +41,10 @@ module Pages
       click_on "Add item to list"
     end
 
+    def share_list
+      click_on "Share list"
+    end
+
     def edit_list
       first("a", text: "Edit").click
     end
