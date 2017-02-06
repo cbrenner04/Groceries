@@ -1,3 +1,13 @@
 <h1>New item</h1>
 
 <%= render "form", url: items_path(list_id: params[:list_id]) %>
+
+<br />
+
+<h2>Items already on list</h2>
+
+<ul>
+  <% @list.items.each do |item| %>
+    <li><%= item.name %></li>
+  <% end %>
+</ul>
