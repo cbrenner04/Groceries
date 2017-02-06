@@ -18,6 +18,8 @@ feature "Items" do
       item_page.fill_in_quantity_with "20"
       item_page.submit
 
+      list_page.load_list list
+
       expect(list_page).to have_item "20 bar"
     end
   end

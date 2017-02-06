@@ -12,7 +12,8 @@ class ItemsController < ApplicationController
     @item = @list.items.build(item_params)
 
     if @item.save
-      redirect_to list_path(@list), notice: "Your item was successfully created"
+      redirect_to new_item_path(list_id: params[:list_id]),
+                  notice: "Your item was successfully created"
     else
       render :new
     end
