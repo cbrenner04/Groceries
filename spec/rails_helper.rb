@@ -10,6 +10,11 @@ require "spec_helper"
 require "rspec/rails"
 require "capybara/rails"
 require "factory_girl_rails"
+require "capybara/poltergeist"
+Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, js_errors: false)
+end
 
 include Warden::Test::Helpers
 Warden.test_mode!

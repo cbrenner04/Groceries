@@ -38,6 +38,7 @@ gem "bootstrap", "~> 4.0.0.alpha6"
 gem "devise", "~> 4.2"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.1"
 gem "launchy", "~> 2.4", ">= 2.4.3"
+gem "poltergeist", "~> 1.13"
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails_real_favicon", "~> 0.0.7"
 gem "rubocop", "~> 0.46.0", require: false

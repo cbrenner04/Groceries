@@ -12,15 +12,29 @@ feature "Items" do
   describe "create" do
     before { list_page.load_list list }
 
-    it "creates successfully" do
+    it "creates a new item successfully", js: true do
       list_page.add_item
-      item_page.fill_in_name_with "bar"
+      item_page.fill_in_new_name_with "bar"
+      item_page.fill_in_quantity_with "20"
+      item_page.submit
+
+      # save_and_open_page
+
+      list_page.load_list list
+
+      expect(list_page).to have_item "20 bar"
+    end
+
+    it "adds a previous item successfully" do
+      create :item, name: "foobar"
+      list_page.add_item
+      item_page.select_item "foobar"
       item_page.fill_in_quantity_with "20"
       item_page.submit
 
       list_page.load_list list
 
-      expect(list_page).to have_item "20 bar"
+      expect(list_page).to have_item "20 foobar"
     end
   end
 

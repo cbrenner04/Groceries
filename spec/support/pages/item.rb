@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 module Pages
   class Item < Page
-    def fill_in_name_with(name)
-      fill_in "Name", with: name
+    def fill_in_new_name_with(name)
+      fill_in "Add a new item", with: name
+    end
+
+    def select_item(name)
+      select name, from: "Or select an item from another list"
     end
 
     def fill_in_quantity_with(quantity)
