@@ -10,7 +10,7 @@
     <button class="dropdown-item" type="button"><%= link_to "Edit", edit_list_path(@list) %></button>
     <button class="dropdown-item" type="button"><%= link_to "Destroy", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %></button>
     <button class="dropdown-item" type="button">Created: <%= @list.created_at.to_formatted_s(:long) %></button>
-    <button class="dropdown-item" type="button">Last updated: <%= @list.updated_at.to_formatted_s(:long) %></button>
+    <button class="dropdown-item" type="button">Last updated: <%= @list.last_item_update %></button>
   </div>
 </div>
 

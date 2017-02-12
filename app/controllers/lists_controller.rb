@@ -45,6 +45,6 @@ class ListsController < ApplicationController
   end
 
   def set_list
-    @list = List.find(params[:id])
+    @list = ListPresenter.new(List.find(params[:id]))
   end
 end
