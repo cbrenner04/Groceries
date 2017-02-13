@@ -25,6 +25,12 @@
     <%= f.number_field :quantity, class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :quantity_name %>
+    <%= f.text_field :quantity_name, class: "form-control" %>
+    <small class="help-block text-muted">This is meant to be used in conjunction with quantity. For example "1 bag" or "12 ounces".</small>
+  </div>
+
   <%= f.submit "Submit", class: "btn btn-primary" %>
   <%= link_to "Back to list", list_path(@list), class: "btn btn-secondary" %>
 <% end %>
