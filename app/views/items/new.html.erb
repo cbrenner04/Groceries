@@ -7,7 +7,7 @@
 <h2>Items already on list</h2>
 
 <ul>
-  <% @list.items.each do |item| %>
+  <% @list.items.ordered.each do |item| %>
     <li><%= item.name %></li>
   <% end %>
 </ul>

@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe UsersList, type: :model do
+RSpec.describe UsersList do
   describe "validations" do
     let(:users_list) { create :users_list }
     let(:second_list) { create :users_list }
 
-    it "is valid" do
-      expect(users_list).to be_valid
-    end
+    it { expect(users_list).to be_valid }
 
     it "is invalid without user" do
       users_list.user = nil

@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe Item, type: :model do
-  describe "validations" do
-    let(:item) { create :item }
+RSpec.describe Item do
+  let(:item) { create :item, name: "foo" }
+  let(:another_item) { create :item, name: "bar" }
 
-    it "is valid" do
-      expect(item).to be_valid
-    end
+  describe "validations" do
+    it { expect(item).to be_valid }
 
     it "is invalid without user" do
       item.user = nil
@@ -31,6 +30,24 @@ RSpec.describe Item, type: :model do
       item.purchased = nil
 
       expect(item).to_not be_valid
+    end
+  end
+
+  describe ".ordered" do
+    it "returns items ordered by name" do
+      expect(Item.ordered).to eq [another_item, item]
+    end
+  end
+
+  describe ".unique_names" do
+    let(:third_item) { create :item, name: "foo" }
+
+    it "returns unique items based on name" do
+      item
+      another_item
+      third_item
+      item_names = Item.unique_names.map(&:name)
+      expect(item_names).to eq [another_item.name, item.name]
     end
   end
 end

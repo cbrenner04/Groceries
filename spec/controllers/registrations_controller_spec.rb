@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe RegistrationsController, type: :controller do
+RSpec.describe RegistrationsController do
   before { @request.env["devise.mapping"] = Devise.mappings[:user] }
 
   describe "POST #create" do

@@ -16,7 +16,7 @@
       <%= f.label :name do %>
         Or select an item from another list
       <% end %>
-      <%= f.collection_select :name, Item.all, :name, :name, { prompt: true }, { class: "form-control" } %>
+      <%= f.collection_select :name, Item.unique_names, :name, :name, { prompt: true }, { class: "form-control" } %>
     </div>
   <% end %>
 

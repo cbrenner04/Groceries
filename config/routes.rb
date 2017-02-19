@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   resources :lists
   resources :items, only: [:new, :create, :edit, :update, :destroy]
   resources :users_lists, only: [:new, :create]
-  root to: "home#show"
+  root to: "lists#index"
 end

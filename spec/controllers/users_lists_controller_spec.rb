@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe UsersListsController, type: :controller do
+RSpec.describe UsersListsController do
   let(:user) { create :user_with_lists }
   let(:list) { user.lists.last }
   let(:other_user) { create :user }

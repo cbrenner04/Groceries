@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe List, type: :model do
+RSpec.describe List do
   describe "validations" do
     let(:list) { create :list }
 
-    it "is valid" do
-      expect(list).to be_valid
-    end
+    it { expect(list).to be_valid }
 
     it "is invalid without name" do
       list.name = nil
