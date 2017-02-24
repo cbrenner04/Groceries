@@ -4,7 +4,7 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   def index
-    @lists = current_user.lists.descending
+    @lists = current_user.lists.not_archived.descending
   end
 
   def new
@@ -34,7 +34,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list.destroy
+    @list.archive
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end
 

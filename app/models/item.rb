@@ -6,6 +6,7 @@ class Item < ApplicationRecord
 
   scope :not_purchased, -> { where(purchased: false) }
   scope :purchased, -> { where(purchased: true) }
+  scope :not_archived, -> { where(archived_at: nil) }
 
   validates :user, :list, :name, :quantity, presence: true
   validates :purchased, inclusion: { in: [true, false] }
@@ -16,5 +17,9 @@ class Item < ApplicationRecord
 
   def self.unique_names
     ordered.select(:name).distinct
+  end
+
+  def archive
+    update archived_at: Time.zone.now
   end
 end

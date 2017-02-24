@@ -24,7 +24,7 @@
 <h2>Items</h2>
 
 <div id="item-accordion" role="tablist" aria-multiselectable="true">
-  <% @list.items.ordered.not_purchased.each_with_index do |item, index| %>
+  <% @list.items.not_archived.ordered.not_purchased.each_with_index do |item, index| %>
     <div class="card">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
         <div class="card-header" role="tab" id="heading<%= index %>">
@@ -48,7 +48,7 @@
 <h2>Purchased</h2>
 
 <ul class="list-group">
-  <% @list.items.ordered.purchased.each do |item| %>
+  <% @list.items.not_archived.ordered.purchased.each do |item| %>
     <li class="list-group-item"><%= item.quantity %> <%= item.name %></li>
   <% end %>
 </ul>

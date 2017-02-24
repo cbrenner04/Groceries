@@ -6,6 +6,11 @@ class List < ApplicationRecord
   has_many :items, dependent: :destroy
 
   scope :descending, -> { order(created_at: :desc) }
+  scope :not_archived, -> { where(archived_at: nil) }
 
   validates :name, presence: true
+
+  def archive
+    update archived_at: Time.zone.now
+  end
 end

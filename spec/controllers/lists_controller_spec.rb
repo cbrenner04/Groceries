@@ -108,7 +108,7 @@ RSpec.describe ListsController do
         id: delete_list.id
       }
 
-      expect(List.all).to_not include delete_list
+      expect(List.not_archived).to_not include delete_list
     end
   end
 end
