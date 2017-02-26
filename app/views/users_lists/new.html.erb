@@ -1,5 +1,7 @@
 <h1>Share <%= @list.name %></h1>
 
+<%= link_to "Back to list", list_path(params[:list_id]), class: "pull-right" %>
+
 <%= form_for @users_list, url: users_lists_path(list_id: params[:list_id]) do |f| %>
   <%= f.hidden_field :list_id, value: @list.id %>
   <div class="form-group">

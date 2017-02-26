@@ -1,3 +1,5 @@
 <h1>Edit <%= @item.name %></h1>
 
+<%= link_to "Back to list", list_path(@list), class: "pull-right" %>
+
 <%= render "form", url: item_path(list_id: params[:list_id]) %>
