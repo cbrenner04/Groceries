@@ -31,8 +31,6 @@ group :development do
   gem "web-console", ">= 3.3.0"
 end
 
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 # add-ons
 gem "bootstrap", "~> 4.0.0.alpha6"
 gem "devise", "~> 4.2"
@@ -41,9 +39,12 @@ gem "launchy", "~> 2.4", ">= 2.4.3"
 gem "poltergeist", "~> 1.13"
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails_real_favicon", "~> 0.0.7"
+gem 'react_on_rails', '~> 6.6'
 gem "rubocop", "~> 0.46.0", require: false
 gem "simplecov", "~> 0.13.0"
 
 # heroku
 gem "rails_12factor", group: :production
 ruby "2.3.0"
+
+gem 'mini_racer', platforms: :ruby
