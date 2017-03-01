@@ -23,6 +23,9 @@ Please submit an issue if you find one.
   * Currently the page needs to reload to tell when items have been purchased or
     not. This can make decision making a little difficult if multiple parties
     are shopping at the same time.
+    - [X] Lists
+    - [ ] Items
+    - [ ] Update/add tests
 * Update front-end UI.
   * Gestures for updating items in list. Swipe left for purchased or right for
     deleted, click to edit. There should be settings for preferred gestures.
