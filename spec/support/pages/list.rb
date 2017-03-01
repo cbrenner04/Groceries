@@ -2,15 +2,11 @@
 module Pages
   class List < Page
     def fill_in_name_with(name)
-      fill_in "Name", with: name
+      fill_in "name", with: name
     end
 
     def submit
       click_on "Submit"
-    end
-
-    def load_new
-      visit new_list_path
     end
 
     def load_index

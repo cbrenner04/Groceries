@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-feature "Lists" do
+feature "Lists", :js do
   let(:user) { create :user_with_lists }
   let(:another_user) { create :user_with_lists }
   let(:first_list) { create :list, name: "foo" }
@@ -12,12 +12,15 @@ feature "Lists" do
   before do
     [first_list, second_list].each { |list| user.lists << list }
     another_user.lists << third_list
-    sign_in user
+    visit '/'
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    click_on "Log in"
   end
 
   describe "create" do
     it "creates list" do
-      list_page.load_new
+      save_and_open_page
       list_page.fill_in_name_with "foobar"
       list_page.submit
 

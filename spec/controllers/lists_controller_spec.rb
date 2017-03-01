@@ -15,14 +15,6 @@ RSpec.describe ListsController do
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new list as @list" do
-      get :new
-
-      expect(assigns(:list)).to be_a List
-    end
-  end
-
   describe "GET #show" do
     it "assigns the requested list as @list" do
       get :show, params: {
@@ -63,9 +55,11 @@ RSpec.describe ListsController do
           list: {
             name: nil
           }
-        }
+        },
+        format: 'json'
 
-        expect(response).to render_template("new")
+        expect(JSON.parse(response.body))
+          .to eq({ "name" => ["can't be blank"] })
       end
     end
   end

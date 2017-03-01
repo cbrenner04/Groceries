@@ -15,9 +15,9 @@ class ListsController < ApplicationController
     @list = current_user.lists.create(list_params)
 
     if @list.save
-      redirect_to lists_path, notice: "Your list was successfully created"
+      render json: @list
     else
-      render :new
+      render json: @list.errors, status: :unprocessable_entity
     end
   end
 
