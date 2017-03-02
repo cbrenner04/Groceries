@@ -5,6 +5,14 @@ module Pages
       fill_in "name", with: name
     end
 
+    def fill_in_edit_name_with(name)
+      fill_in "Name", with: name
+    end
+
+    def create_list
+      click_on "Create List"
+    end
+
     def submit
       click_on "Submit"
     end
@@ -42,10 +50,12 @@ module Pages
     end
 
     def edit_list
+      click_on "Options"
       first("a", text: "Edit").click
     end
 
     def destroy_list
+      click_on "Options"
       first("a", text: "Destroy").click
     end
   end

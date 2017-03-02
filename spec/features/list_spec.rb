@@ -12,17 +12,13 @@ feature "Lists", :js do
   before do
     [first_list, second_list].each { |list| user.lists << list }
     another_user.lists << third_list
-    visit '/'
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_on "Log in"
+    log_in_user user
   end
 
   describe "create" do
     it "creates list" do
-      save_and_open_page
       list_page.fill_in_name_with "foobar"
-      list_page.submit
+      list_page.create_list
 
       expect(list_page).to have_list "foobar"
     end
@@ -50,7 +46,7 @@ feature "Lists", :js do
 
     it "updates list" do
       list_page.edit_list
-      list_page.fill_in_name_with "updated"
+      list_page.fill_in_edit_name_with "updated"
       list_page.submit
 
       expect(list_page).to have_list_title "updated"
