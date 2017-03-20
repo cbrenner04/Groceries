@@ -1,13 +1,13 @@
 class ListForm extends React.Component {
-  handleChange(e) {
-    const name = e.target.name;
+  handleChange(event) {
+    const name = event.target.name;
     const obj = {};
-    obj[name] = e.target.value;
+    obj[name] = event.target.value;
     this.props.onUserInput(obj);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     this.props.onFormSubmit();
   }
 
