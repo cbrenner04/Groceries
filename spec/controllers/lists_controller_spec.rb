@@ -55,11 +55,10 @@ RSpec.describe ListsController do
           list: {
             name: nil
           }
-        },
-        format: 'json'
+        }, format: "json"
 
         expect(JSON.parse(response.body))
-          .to eq({ "name" => ["can't be blank"] })
+          .to eq("name" => ["can't be blank"])
       end
     end
   end

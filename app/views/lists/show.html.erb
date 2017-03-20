@@ -23,21 +23,14 @@
 
 <h2>Items</h2>
 
-<div id="item-accordion" role="tablist" aria-multiselectable="true">
+<div class="list-group">
   <% @list.items.not_archived.ordered.not_purchased.each_with_index do |item, index| %>
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
-        <div class="card-header" role="tab" id="heading<%= index %>">
-          <p class="mb-0"><%= item.quantity %> <%= item.quantity_name %> <%= item.name %></p>
-        </div>
-      </a>
-
-      <div id="collapse<%= index %>" class="collapse" role="tabpanel" aria-labelledby="heading<%= index %>">
-        <div class="card-block">
-          <%= link_to "Purchased", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "btn btn-primary btn-sm", style: "margin-right: 1rem;" %>
-          <%= link_to "Edit", edit_item_path(item, list_id: params[:id]), class: "btn btn-secondary btn-sm", style: "margin-right: 1rem;" %>
-          <%= link_to "Destroy", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
-        </div>
+    <div class="list-group-item" style="display: block;" >
+      <p class="mb-0 float-left"><%= item.quantity %> <%= item.quantity_name %> <%= item.name %></p>
+      <div class="btn-group float-right" role="group">
+        <%= link_to "", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "fa fa-check-square-o fa-2x text-success", style: "margin-right: 1rem;" %>
+        <%= link_to "", edit_item_path(item, list_id: params[:id]), class: "fa fa-pencil-square-o fa-2x text-warning", style: "margin-right: 1rem;" %>
+        <%= link_to "", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" }, class: "fa fa-trash fa-2x text-danger" %>
       </div>
     </div>
   <% end %>

@@ -34,7 +34,7 @@ module Pages
     end
 
     def has_item?(item)
-      has_css? ".card", text: item
+      has_css? ".list-group-item", text: item
     end
 
     def first_list

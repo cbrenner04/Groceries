@@ -18,8 +18,8 @@ module Pages
     end
 
     def destroy_item(item)
-      find(".card", text: item)
-        .find(".btn", text: "Destroy")
+      find(".list-group-item", text: item)
+        .find(".fa-trash")
         .click
     end
 
