@@ -7,10 +7,12 @@ feature "Lists", :js do
   let!(:first_list) { create :list, name: "foo" }
   let!(:second_list) { create :list, name: "bar" }
   let!(:third_list) { create :list, name: "baz" }
+  let!(:fourth) { create :list, name: "asdf" }
+  let!(:fifth) { create :list, name: "xyz" }
   let(:list_page) { Pages::List.new }
 
   before do
-    [first_list, second_list].each { |list| user.lists << list }
+    [first_list, second_list, fourth, fifth].each { |list| user.lists << list }
     another_user.lists << third_list
     log_in_user user
   end
@@ -43,7 +45,7 @@ feature "Lists", :js do
     before { list_page.load_index }
 
     it "updates list" do
-      list_page.edit_list("baz")
+      list_page.edit_list("asdf")
       list_page.fill_in_edit_name_with "updated"
       list_page.submit
 
@@ -64,18 +66,18 @@ feature "Lists", :js do
     end
 
     context "where there are items" do
-      let(:list) { List.find_by(name: "foo") }
+      let(:list) { List.find_by(name: "bar") }
 
       before do
         create :item, list: list
-        list_page.load_list list
+        list_page.load_index
       end
 
       it "deletes list with items" do
-        list_page.destroy_list("foo")
+        list_page.destroy_list("bar")
 
-        expect(list_page).to have_text "bar"
-        expect(list_page).to_not have_text "foo"
+        expect(list_page).to_not have_text "bar"
+        expect(list_page).to have_text "xyz"
       end
     end
   end
