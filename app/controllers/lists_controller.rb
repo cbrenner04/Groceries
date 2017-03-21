@@ -27,7 +27,7 @@ class ListsController < ApplicationController
 
   def update
     if @list.update(list_params)
-      redirect_to @list, notice: "Your list was successfully updated"
+      redirect_to lists_path, notice: "Your list was successfully updated"
     else
       render :edit
     end

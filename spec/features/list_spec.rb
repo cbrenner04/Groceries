@@ -4,9 +4,9 @@ require "rails_helper"
 feature "Lists", :js do
   let(:user) { create :user_with_lists }
   let(:another_user) { create :user_with_lists }
-  let(:first_list) { create :list, name: "foo" }
-  let(:second_list) { create :list, name: "bar" }
-  let(:third_list) { create :list, name: "baz" }
+  let!(:first_list) { create :list, name: "foo" }
+  let!(:second_list) { create :list, name: "bar" }
+  let!(:third_list) { create :list, name: "baz" }
   let(:list_page) { Pages::List.new }
 
   before do
@@ -40,27 +40,23 @@ feature "Lists", :js do
   end
 
   describe "update" do
-    let(:list) { user.lists.last }
-
-    before { list_page.load_list list }
+    before { list_page.load_index }
 
     it "updates list" do
-      list_page.edit_list
+      list_page.edit_list("baz")
       list_page.fill_in_edit_name_with "updated"
       list_page.submit
 
-      expect(list_page).to have_list_title "updated"
+      expect(list_page).to have_text "updated"
     end
   end
 
   describe "destroy" do
-    let(:list) { user.lists.find_by(name: "foo") }
-
     context "when there are no items" do
-      before { list_page.load_list list }
+      before { list_page.load_index }
 
       it "deletes list" do
-        list_page.destroy_list
+        list_page.destroy_list("foo")
 
         expect(list_page).to have_text "bar"
         expect(list_page).to_not have_text "foo"
@@ -68,13 +64,15 @@ feature "Lists", :js do
     end
 
     context "where there are items" do
+      let(:list) { List.find_by(name: "foo") }
+
       before do
         create :item, list: list
         list_page.load_list list
       end
 
       it "deletes list with items" do
-        list_page.destroy_list
+        list_page.destroy_list("foo")
 
         expect(list_page).to have_text "bar"
         expect(list_page).to_not have_text "foo"

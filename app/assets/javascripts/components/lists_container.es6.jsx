@@ -28,6 +28,23 @@ class ListsContainer extends React.Component {
     })
   }
 
+  handleDelete(listId) {
+    $.ajax({
+      url: `/lists/${listId}`,
+      type: 'DELETE',
+      success:() => {
+        this.removeList(listId)
+      }
+    })
+  }
+
+  removeList(listId) {
+    const lists = this.state.lists.filter((list) => {
+      return list.id !== listId;
+    })
+    this.setState({lists});
+  }
+
   render() {
     return (
       <div>
@@ -35,7 +52,8 @@ class ListsContainer extends React.Component {
           onUserInput={ (object) => this.handleUserInput(object) }
           onFormSubmit={ () =>  this.handleFormSubmit() } />
         <hr />
-        <Lists lists={ this.state.lists } />
+        <Lists lists={ this.state.lists }
+               onListDelete={ (listId) => this.handleDelete(listId) } />
       </div>
     )
   }

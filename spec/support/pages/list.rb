@@ -49,14 +49,14 @@ module Pages
       click_on "Share list"
     end
 
-    def edit_list
-      click_on "Options"
-      first("a", text: "Edit").click
+    def edit_list(name)
+      find(".list-group-item", text: name)
+        .find(".fa-pencil-square-o").click
     end
 
-    def destroy_list
-      click_on "Options"
-      first("a", text: "Destroy").click
+    def destroy_list(name)
+      find(".list-group-item", text: name)
+        .find(".fa-trash").click
     end
   end
 end
