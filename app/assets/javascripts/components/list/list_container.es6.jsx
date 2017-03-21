@@ -11,8 +11,6 @@ class ListContainer extends React.Component {
   render() {
     return (
       <div>
-        <ListOptions list={ this.state.list }/>
-
         <br /><br />
         <a href={ '/users_lists/new?list_id=' + this.state.list.id }
            className="btn btn-primary btn-block">Share list</a>
