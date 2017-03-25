@@ -45,8 +45,9 @@ module Pages
       click_on "Add item to list"
     end
 
-    def share_list
-      click_on "Share list"
+    def share_list(name)
+      find(".list-group-item", text: name)
+        .find(".fa-users").click
     end
 
     def edit_list(name)

@@ -18,6 +18,10 @@ class List extends React.Component {
             </div>
             <div className="col-md-2">
               <div className="btn-group float-right" role="group">
+              {/* <%= link_to "Share list", new_users_list_path(list_id: params[:id]), class: "btn btn-primary btn-block" %> */}
+                <a href={'/users_lists/new?list_id=' + this.props.list.id}
+                   className="fa fa-users fa-2x text-primary"
+                   style={{ marginRight: 1 + 'rem' }}></a>
                 <a href={ '/lists/' + this.props.list.id + '/edit' }
                    className="fa fa-pencil-square-o fa-2x text-warning"
                    style={{ marginRight: 1 + 'rem' }}></a>

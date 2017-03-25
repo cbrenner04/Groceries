@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-feature "Users list" do
-  let(:user) { create :user_with_lists }
-  let(:list) { user.lists.last }
+feature "Users list", :js do
+  let(:user) { create :user }
+  let!(:list) { create :list, name: "foo" }
+  let!(:users_list) { create :users_list, user: user, list: list }
   let!(:other_user) { create :user }
   let(:list_page) { Pages::List.new }
   let(:users_list_page) { Pages::UsersList.new }
@@ -12,8 +13,8 @@ feature "Users list" do
 
   describe "create" do
     it "shares a list" do
-      list_page.load_list(list)
-      list_page.share_list
+      list_page.load_index
+      list_page.share_list("foo")
       users_list_page.select_user(other_user.first_name)
       users_list_page.submit
 
@@ -23,7 +24,7 @@ feature "Users list" do
       sign_in other_user
       list_page.load_list(list)
 
-      expect(list_page).to have_text list.name
+      expect(list_page).to have_text "foo"
     end
   end
 end

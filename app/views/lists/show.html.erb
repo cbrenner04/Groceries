@@ -3,8 +3,6 @@
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
 <br /><br />
-<%= link_to "Share list", new_users_list_path(list_id: params[:id]), class: "btn btn-primary btn-block" %>
-<br />
 
 <%= link_to "Add item to list", new_item_path(list_id: params[:id]), class: "btn btn-success btn-block" %>
 <br />

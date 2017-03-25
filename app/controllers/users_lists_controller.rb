@@ -11,7 +11,7 @@ class UsersListsController < ApplicationController
     @users_list = UsersList.create(item_params)
 
     if @users_list.save
-      redirect_to list_path(@list), notice: "Your list was successfully shared"
+      redirect_to lists_path, notice: "Your list was successfully shared"
     else
       render :new
     end
