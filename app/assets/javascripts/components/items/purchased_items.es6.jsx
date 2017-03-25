@@ -7,7 +7,7 @@ const PurchasedItems = ({ items }) =>
         items.map((item) => {
           return(
             <li className="list-group-item" key={ item.id }>
-              { item.quantity } { item.name }
+              { `${ item.quantity } ${ item.name }` }
             </li>
           )
         })
