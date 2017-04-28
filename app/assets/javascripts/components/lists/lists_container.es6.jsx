@@ -29,13 +29,15 @@ class ListsContainer extends React.Component {
   }
 
   handleDelete(listId) {
-    $.ajax({
-      url: `/lists/${listId}`,
-      type: 'DELETE',
-      success:() => {
-        this.removeList(listId)
-      }
-    })
+    if (confirm('Are you sure?')) {
+      $.ajax({
+        url: `/lists/${listId}`,
+        type: 'DELETE',
+        success: () => this.removeList(listId)
+      })
+    } else {
+      return false;
+    }
   }
 
   removeList(listId) {

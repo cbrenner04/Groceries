@@ -8,12 +8,16 @@ class ListContainer extends React.Component {
     }
   }
 
+  handleAddItem(listId) {
+    window.location = `/items/new?list_id=${this.state.list.id}`;
+  }
+
   render() {
     return (
       <div>
         <br /><br />
-        <a href={ `/items/new?list_id=${this.state.list.id}` }
-           className="btn btn-success btn-block">Add item to list</a>
+        <div onClick={ () => this.handleAddItem(this.state.list.id) }
+             className="btn btn-success btn-block">Add item to list</div>
         <br />
 
         <ItemsContainer list={ this.state.list }
