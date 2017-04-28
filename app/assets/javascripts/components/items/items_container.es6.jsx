@@ -1,10 +1,31 @@
-const ItemsContainer = ({ list, purchasedItems, notPurchasedItems }) =>
-  <div>
-    <h2>Items</h2>
+class ItemsContainer extends React.Component {
+  handlePurchase(item, listId) {
+    this.props.handlePurchaseOfItem(item, listId);
+  }
 
-    <NotPurchasedItems items={ notPurchasedItems } list={ list } />
+  handleDeletion(itemId, listId) {
+    this.props.handleItemDelete(itemId, listId);
+  }
 
-    <br />
+  render() {
+    return (
+      <div>
+        <h2>Items</h2>
 
-    <PurchasedItems items={ purchasedItems } list={ list } />
-  </div>
+        <NotPurchasedItems items={ this.props.notPurchasedItems }
+                           list={ this.props.list }
+                           onItemPurchase={
+                             (item, listId) => this.handlePurchase(item, listId)
+                           }
+                           onItemDelete={
+                             (itemId, listId) => this.handleDeletion(itemId, listId)
+                           }/>
+
+        <br />
+
+        <PurchasedItems items={ this.props.purchasedItems }
+                        list={ this.props.list } />
+      </div>
+    )
+  }
+}
