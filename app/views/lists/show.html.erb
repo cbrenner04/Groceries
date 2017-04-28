@@ -2,32 +2,7 @@
 
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
-<br /><br />
-
-<%= link_to "Add item to list", new_item_path(list_id: params[:id]), class: "btn btn-success btn-block" %>
-<br />
-
-<h2>Items</h2>
-
-<div class="list-group">
-  <% @list.items.not_archived.ordered.not_purchased.each_with_index do |item, index| %>
-    <div class="list-group-item" style="display: block;" >
-      <p class="mb-0 float-left"><%= item.quantity %> <%= item.quantity_name %> <%= item.name %></p>
-      <div class="btn-group float-right" role="group">
-        <%= link_to "", item_path(item, item: { purchased: true }, list_id: params[:id]), method: :put, class: "fa fa-check-square-o fa-2x text-success", style: "margin-right: 1rem;" %>
-        <%= link_to "", edit_item_path(item, list_id: params[:id]), class: "fa fa-pencil-square-o fa-2x text-warning", style: "margin-right: 1rem;" %>
-        <%= link_to "", item_path(item, list_id: params[:id]), method: :delete, data: { confirm: "Are you sure?" }, class: "fa fa-trash fa-2x text-danger" %>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-<br />
-
-<h2>Purchased</h2>
-
-<ul class="list-group">
-  <% @list.items.not_archived.ordered.purchased.each do |item| %>
-    <li class="list-group-item"><%= item.quantity %> <%= item.name %></li>
-  <% end %>
-</ul>
+<%= react_component 'ListContainer',
+                    list: @list,
+                    not_purchased_items: @list.items.not_archived.ordered.not_purchased,
+                    purchased_items: @list.items.not_archived.ordered.purchased %>

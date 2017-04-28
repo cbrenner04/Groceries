@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-feature "Items" do
+feature "Items", :js do
   let(:user) { create :user_with_lists }
   let(:list) { user.lists.last }
   let(:list_page) { Pages::List.new }
@@ -12,7 +12,7 @@ feature "Items" do
   describe "create" do
     before { list_page.load_list list }
 
-    it "creates a new item successfully", js: true do
+    it "creates a new item successfully" do
       list_page.add_item
       item_page.fill_in_new_name_with "bar"
       item_page.fill_in_quantity_with "20"

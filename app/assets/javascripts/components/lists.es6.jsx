@@ -9,8 +9,9 @@ class Lists extends React.Component {
         {
           this.props.lists.map((list) => {
             return (
-              <List list={ list } key={ list.id }
-                    onListDeletion={ (listId) => { this.onDeleteOfList(listId) } } />
+              <List list={ list }
+                    key={ list.id }
+                    onListDeletion={ (listId) => this.onDeleteOfList(listId) }/>
             )
           })
         }
