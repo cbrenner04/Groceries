@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 # no doc
 class ItemsController < ApplicationController
-  before_action :set_list
-  before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_list, except: %i[autocomplete]
+  before_action :set_item, only: %i[edit update destroy]
 
   def new
     @item = Item.new
@@ -32,6 +33,17 @@ class ItemsController < ApplicationController
   def destroy
     @item.archive
     redirect_to @list, notice: "Your item was successfully deleted"
+  end
+
+  def autocomplete
+    render json: Item.search(
+      params[:name],
+      fields: %w[name],
+      match: :word_start,
+      limit: 10,
+      load: false,
+      misspellings: { below: 5 }
+    ).map(&:name)
   end
 
   private

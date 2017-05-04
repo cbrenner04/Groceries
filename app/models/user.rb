@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # no doc
 class User < ApplicationRecord
   # TODO: remove registerable/validatable

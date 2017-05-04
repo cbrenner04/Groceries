@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 feature "Items", :js do
@@ -21,18 +22,6 @@ feature "Items", :js do
       list_page.load_list list
 
       expect(list_page).to have_item "20 bar"
-    end
-
-    it "adds a previous item successfully" do
-      create :item, name: "foobar"
-      list_page.add_item
-      item_page.select_item "foobar"
-      item_page.fill_in_quantity_with "20"
-      item_page.submit
-
-      list_page.load_list list
-
-      expect(list_page).to have_item "20 foobar"
     end
   end
 

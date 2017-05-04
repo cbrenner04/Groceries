@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Pages
   class Item < Page
     def fill_in_new_name_with(name)

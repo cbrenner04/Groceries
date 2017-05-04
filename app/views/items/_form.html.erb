@@ -11,15 +11,6 @@
     <%= f.text_field :name, class: "form-control" %>
   </div>
 
-  <% if current_page? action: "new" %>
-    <div class="form-group" id="old-item">
-      <%= f.label :name do %>
-        Or select an item from another list
-      <% end %>
-      <%= f.collection_select :name, Item.unique_names, :name, :name, { prompt: true }, { class: "form-control" } %>
-    </div>
-  <% end %>
-
   <div class="form-group">
     <%= f.label :quantity %>
     <%= f.number_field :quantity, class: "form-control" %>
@@ -35,10 +26,20 @@
 <% end %>
 
 <script>
-  $('#item_name').on('focus', function() {
-    $('#old-item').remove();
+  var items = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/items/autocomplete?name=%QUERY',
+      wildcard: '%QUERY'
+    }
   });
-  $('#old-item').on('change', function() {
-    $('#new-item').remove();
+  $('#item_name').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  }, {
+    name: 'items',
+    source: items
   });
 </script>

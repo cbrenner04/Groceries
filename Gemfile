@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source "https://rubygems.org"
 
 git_source(:github) do |repo_name|
@@ -45,7 +46,8 @@ gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails-erd", "~> 1.5"
 gem "rails_real_favicon", "~> 0.0.7"
 gem "react-rails", "~> 1.10"
-gem "rubocop", "~> 0.46.0", require: false
+gem "rubocop", "~> 0.48.1", require: false
+gem "searchkick", "~> 2.2", ">= 2.2.1"
 gem "simplecov", "~> 0.13.0"
 
 # heroku

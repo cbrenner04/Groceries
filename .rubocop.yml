@@ -5,6 +5,7 @@ AllCops:
     - db/**/*
     - vendor/**/*
   TargetRubyVersion: 2.3
+  DisplayCopNames: true
 
 Rails:
   Enabled: true
@@ -14,6 +15,10 @@ Style/Documentation:
     - 'spec/**/*'
 
 ModuleLength:
+  Exclude:
+    - spec/**/*'
+
+BlockLength:
   Exclude:
     - spec/**/*
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Pages
   class UsersList < Page
     def select_user(user)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module AuthenticationHelpers
   def log_in_user(user)
     visit root_path

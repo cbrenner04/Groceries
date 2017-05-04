@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # override Devise for creation
 class RegistrationsController < Devise::RegistrationsController
   # rubocop:disable AbcSize, MethodLength

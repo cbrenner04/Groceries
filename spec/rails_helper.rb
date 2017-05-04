@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "simplecov"
 SimpleCov.start "rails"
 
@@ -21,7 +22,7 @@ Warden.test_mode!
 
 ActiveRecord::Migration.maintain_test_schema!
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
