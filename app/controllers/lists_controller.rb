@@ -7,10 +7,6 @@ class ListsController < ApplicationController
     @lists = current_user.lists.not_archived.descending
   end
 
-  def new
-    @list = List.new
-  end
-
   def create
     @list = current_user.lists.create(list_params)
 

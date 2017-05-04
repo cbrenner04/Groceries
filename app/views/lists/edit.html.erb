@@ -2,4 +2,12 @@
 
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
-<%= render "form" %>
+<%= form_for @list do |f| %>
+  <%= render "shared/alert", invalid_object: @list, name: "list" %>
+
+  <div class="form-group">
+    <%= f.label :name %>:
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

@@ -42,7 +42,7 @@ module Pages
     end
 
     def add_item
-      click_on "Add item to list"
+      find(".btn", text: "Add item to list").click
     end
 
     def share_list(name)
