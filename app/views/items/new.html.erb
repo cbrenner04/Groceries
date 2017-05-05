@@ -9,7 +9,7 @@
 <h2>Items already on list</h2>
 
 <ul>
-  <% @list.items.ordered.each do |item| %>
+  <% @list.items.not_archived.ordered.each do |item| %>
     <li><%= item.name %></li>
   <% end %>
 </ul>
