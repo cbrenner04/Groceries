@@ -1,5 +1,20 @@
 <%= form_for @item, url: url do |f| %>
-  <%= render "shared/alert", invalid_object: @item, name: "item" %>
+  <% if @item.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="alert-heading">
+        <%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:
+      </h4>
+
+      <ul class="mb-0">
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :purchased, value: false %>
