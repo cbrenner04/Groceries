@@ -14,12 +14,12 @@ class ItemsContainer extends React.Component {
 
         <NotPurchasedItems items={ this.props.notPurchasedItems }
                            list={ this.props.list }
-                           onItemPurchase={
-                             (item, listId) => this.handlePurchase(item, listId)
-                           }
-                           onItemDelete={
-                             (itemId, listId) => this.handleDeletion(itemId, listId)
-                           }/>
+                           onItemPurchase={ (item, listId) => {
+                             this.handlePurchase(item, listId)
+                           } }
+                           onItemDelete={ (itemId, listId) => {
+                             this.handleDeletion(itemId, listId)
+                           } } />
 
         <br />
 

@@ -2,7 +2,7 @@ class ListsContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lists: this.props.lists,
+      lists: props.lists,
       name: ''
     }
   }

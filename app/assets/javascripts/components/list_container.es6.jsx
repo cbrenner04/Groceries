@@ -2,13 +2,13 @@ class ListContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      list: this.props.list,
-      notPurchasedItems: this.props.not_purchased_items,
-      purchasedItems: this.props.purchased_items
+      list: props.list,
+      notPurchasedItems: props.not_purchased_items,
+      purchasedItems: props.purchased_items
     }
   }
 
-  handleAddItem(listId) {
+  handleAddItem() {
     window.location = `/items/new?list_id=${this.state.list.id}`;
   }
 
@@ -25,7 +25,9 @@ class ListContainer extends React.Component {
     const notPurchasedItems = this.state.notPurchasedItems.filter((notItem) => {
       return notItem.id !== item.id;
     });
-    const purchasedItems = React.addons.update(this.state.purchasedItems, { $push: [item] });
+    const purchasedItems = React.addons.update(
+      this.state.purchasedItems, { $push: [item] }
+    );
     this.setState({notPurchasedItems, purchasedItems});
   }
 
@@ -53,7 +55,7 @@ class ListContainer extends React.Component {
     return (
       <div>
         <br /><br />
-        <div onClick={ () => this.handleAddItem(this.state.list.id) }
+        <div onClick={ () => this.handleAddItem() }
              className="btn btn-success btn-block">Add item to list</div>
         <br />
 

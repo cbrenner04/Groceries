@@ -1,14 +1,14 @@
 class NotPurchasedItem extends React.Component {
-  handlePurchase(item, listId) {
-    this.props.handleItemPurchase(item, listId);
+  handlePurchase() {
+    this.props.handleItemPurchase(this.props.item, this.props.list.id);
   }
 
-  handleEdit(itemId, listId) {
+  handleEdit() {
     window.location = `/items/${this.props.item.id}/edit?list_id=${this.props.list.id}`
   }
 
-  handleDelete(itemId, listId) {
-    this.props.handleItemDelete(itemId, listId)
+  handleDelete() {
+    this.props.handleItemDelete(this.props.item.id, this.props.list.id)
   }
 
   render() {
@@ -18,20 +18,13 @@ class NotPurchasedItem extends React.Component {
           { `${this.props.item.quantity} ${this.props.item.quantity_name} ${this.props.item.name}` }
         </p>
         <div className="btn-group float-right" role="group">
-          <div onClick={ () => {
-                   this.handlePurchase(this.props.item, this.props.list.id)
-                 }
-               }
+          <div onClick={ () => { this.handlePurchase() } }
                className="fa fa-check-square-o fa-2x text-success"
                style={{ marginRight: '1rem' }}></div>
-          <div onClick={
-                 () => this.handleEdit(this.props.item.id, this.props.list.id)
-               }
+          <div onClick={ () => this.handleEdit() }
                className="fa fa-pencil-square-o fa-2x text-warning"
                style={{ marginRight: '1rem' }}></div>
-          <div onClick={
-                 () => this.handleDelete(this.props.item.id, this.props.list.id)
-               }
+          <div onClick={ () => this.handleDelete() }
                className="fa fa-trash fa-2x text-danger"
                data-confirm="Are you sure?"></div>
         </div>

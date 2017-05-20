@@ -17,12 +17,12 @@ class NotPurchasedItems extends React.Component {
                                 index={ index }
                                 list={ this.props.list }
                                 key={ item.id }
-                                handleItemPurchase={
-                                  (item, listId) => this.purchaseItem(item, listId)
-                                }
-                                handleItemDelete={
-                                  (itemId, listId) => this.deleteItem(itemId, listId)
-                                } />
+                                handleItemPurchase={ (item, listId) => {
+                                  this.purchaseItem(item, listId)
+                                } }
+                                handleItemDelete={ (itemId, listId) => {
+                                  this.deleteItem(itemId, listId)
+                                } } />
             )
           })
         }
