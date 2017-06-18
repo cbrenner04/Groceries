@@ -17,6 +17,24 @@ and if a list is deleted it would delete the items.
 
 Please submit an issue if you find one.
 
+## Development
+
+Seed data can be found in `db/seeds.rb`.
+
+To run the app with fresh data:
+
+```
+rails db:drop db:create db:migrate db:seed; rails s
+```
+
+Just to run the app:
+
+```
+rails s
+```
+
+You can sign in using any of the users in the seeds file listed above.
+
 ## Todos
 
 * Update front-end to use React.
