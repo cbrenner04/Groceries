@@ -2,7 +2,9 @@
 
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
-<%= react_component 'ListContainer',
-                    list: @list,
-                    not_purchased_items: @list.items.not_archived.ordered.not_purchased,
-                    purchased_items: @list.items.not_archived.ordered.purchased %>
+<%= react_component(
+  'ListContainer',
+  list: @list,
+  not_purchased_items: @list.items.not_archived.ordered.not_purchased,
+  purchased_items: @list.items.not_archived.ordered.purchased
+) %>
