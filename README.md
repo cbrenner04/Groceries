@@ -41,7 +41,7 @@ You can sign in using any of the users in the seeds file listed above.
   * Currently the page needs to reload to tell when items have been purchased or
     not. This can make decision making a little difficult if multiple parties
     are shopping at the same time.
-    - [X] Lists
+    - [x] Lists
     - [x] Items
     - [ ] Update/add tests
 * Update front-end UI.

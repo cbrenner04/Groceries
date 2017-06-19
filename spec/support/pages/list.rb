@@ -43,7 +43,7 @@ module Pages
     end
 
     def add_item
-      find(".btn", text: "Add item to list").click
+      find("input[type='submit']").click
     end
 
     def share_list(name)
@@ -59,6 +59,18 @@ module Pages
     def destroy_list(name)
       find(".list-group-item", text: name)
         .find(".fa-trash").click
+    end
+
+    def fill_in_new_item_quantity(quantity)
+      find("input[name='quantity']").set(quantity)
+    end
+
+    def fill_in_new_item_quantity_type(quantity_name)
+      find("input[name='quantity_name']").set(quantity_name)
+    end
+
+    def fill_in_new_item_name(name)
+      find("input[name='name']").set(name)
     end
   end
 end

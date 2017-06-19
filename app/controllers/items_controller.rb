@@ -2,21 +2,17 @@
 
 # no doc
 class ItemsController < ApplicationController
-  before_action :set_list, except: %i[autocomplete]
+  before_action :set_list, except: %i[create autocomplete]
   before_action :set_item, only: %i[edit update destroy]
 
-  def new
-    @item = Item.new
-  end
-
   def create
-    @item = @list.items.build(item_params)
+    list = List.find(item_params[:list_id])
+    @item = list.items.build(item_params)
 
     if @item.save
-      redirect_to new_item_path(list_id: params[:list_id]),
-                  notice: "Your item was successfully created"
+      render json: @item
     else
-      render :new
+      render json: @item.errors, status: :unprocessable_entity
     end
   end
 
