@@ -2,14 +2,22 @@ class ListContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      userId: props.current_user_id,
       list: props.list,
       notPurchasedItems: props.not_purchased_items,
       purchasedItems: props.purchased_items
     }
   }
 
-  handleAddItem() {
-    window.location = `/items/new?list_id=${this.state.list.id}`;
+  handleAddItem(item) {
+    const items = React.addons.update(
+      this.state.notPurchasedItems, { $push: [item] }
+    )
+    this.setState({
+      notPurchasedItems: items.sort((a, b) => {
+        return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+      })
+    })
   }
 
   handleItemPurchase(item, listId) {
@@ -17,7 +25,7 @@ class ListContainer extends React.Component {
       url: `/items/${item.id}`,
       type: 'PUT',
       data: `item%5Bpurchased%5D=true&list_id=${listId}`,
-      success: (data) => this.moveItemToPurchased(item)
+      success: () => this.moveItemToPurchased(item)
     });
   }
 
@@ -55,10 +63,10 @@ class ListContainer extends React.Component {
     return (
       <div>
         <br /><br />
-        <div onClick={ () => this.handleAddItem() }
-             className="btn btn-success btn-block">Add item to list</div>
+        <ItemForm listId={ this.props.list.id }
+                  userId={ this.state.userId }
+                  handleItemAddition={ (item) => this.handleAddItem(item) } />
         <br />
-
         <ItemsContainer list={ this.state.list }
                         notPurchasedItems={ this.state.notPurchasedItems }
                         purchasedItems={ this.state.purchasedItems }

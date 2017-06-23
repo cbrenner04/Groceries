@@ -14,14 +14,12 @@ feature "Items", :js do
     before { list_page.load_list list }
 
     it "creates a new item successfully" do
+      list_page.fill_in_new_item_quantity "20"
+      list_page.fill_in_new_item_quantity_type "bags"
+      list_page.fill_in_new_item_name "oranges"
       list_page.add_item
-      item_page.fill_in_new_name_with "bar"
-      item_page.fill_in_quantity_with "20"
-      item_page.submit
 
-      list_page.load_list list
-
-      expect(list_page).to have_item "20 bar"
+      expect(list_page).to have_item "20 bags oranges"
     end
   end
 

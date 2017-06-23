@@ -9,16 +9,6 @@ RSpec.describe ItemsController do
 
   before { sign_in user }
 
-  describe "GET #new" do
-    it "assigns a new item as @item" do
-      get :new, params: {
-        list_id: list.id
-      }
-
-      expect(assigns(:item)).to be_a Item
-    end
-  end
-
   describe "GET #edit" do
     it "assigns the requested item as @item" do
       get :edit, params: {
@@ -37,9 +27,9 @@ RSpec.describe ItemsController do
           post :create, params: {
             item: {
               user_id: user.id,
-              name: "foo"
-            },
-            list_id: list.id
+              name: "foo",
+              list_id: list.id
+            }
           }
         end.to change(Item, :count).by 1
       end
@@ -49,12 +39,12 @@ RSpec.describe ItemsController do
       it "re-renders the 'new' template" do
         post :create, params: {
           item: {
-            name: nil
-          },
-          list_id: list.id
+            name: nil,
+            list_id: list.id
+          }
         }
 
-        expect(response).to render_template("new")
+        expect(response.status).to eq 422
       end
     end
   end
