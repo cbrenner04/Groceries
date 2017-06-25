@@ -112,7 +112,7 @@ class ItemForm extends React.Component {
         <br />
         <input type="submit"
                value="Add New Item"
-               className="btn btn-success btn-block" />
+               className="btn btn-success btn-block action-button" />
       </form>
     )
   }
