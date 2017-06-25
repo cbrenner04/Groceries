@@ -13,7 +13,7 @@ class ListsContainer extends React.Component {
 
   handleFormSubmit() {
     const list = { name: this.state.name }
-    $.post('/lists', { list: list }).done((data) => {
+    $.post('/lists', { list }).done((data) => {
       this.addNewList(data);
     });
   }
@@ -51,8 +51,8 @@ class ListsContainer extends React.Component {
     return (
       <div>
         <ListForm name={ this.state.name }
-          onUserInput={ (object) => this.handleUserInput(object) }
-          onFormSubmit={ () =>  this.handleFormSubmit() } />
+                  onUserInput={ (object) => this.handleUserInput(object) }
+                  onFormSubmit={ () =>  this.handleFormSubmit() } />
         <hr />
         <Lists lists={ this.state.lists }
                onListDelete={ (listId) => this.handleDelete(listId) } />

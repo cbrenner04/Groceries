@@ -2,9 +2,6 @@
 
 # no doc
 class ItemsController < ApplicationController
-  before_action :set_list, except: %i[create autocomplete]
-  before_action :set_item, only: %i[edit update destroy]
-
   def create
     list = List.find(item_params[:list_id])
     @item = list.items.build(item_params)
@@ -16,17 +13,23 @@ class ItemsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @list = List.find(params[:list_id])
+    @item = Item.find(params[:id])
+  end
 
   def update
+    @item = Item.find(params[:id])
     if @item.update(item_params)
-      redirect_to @list, notice: "Your item was successfully updated"
+      render json: @item
     else
-      render :edit
+      render json: @item.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
+    @list = List.find(params[:list_id])
+    @item = Item.find(params[:id])
     @item.archive
     redirect_to @list, notice: "Your item was successfully deleted"
   end
@@ -48,13 +51,5 @@ class ItemsController < ApplicationController
     params.require(:item).permit(
       :user_id, :name, :list_id, :quantity, :purchased, :quantity_name
     )
-  end
-
-  def set_item
-    @item = Item.find(params[:id])
-  end
-
-  def set_list
-    @list = List.find(params[:list_id])
   end
 end

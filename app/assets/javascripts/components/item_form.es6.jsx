@@ -2,12 +2,12 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_id: props.userId,
-      list_id: props.listId,
+      userId: props.userId,
+      listId: props.listId,
       name: '',
       purchased: false,
       quantity: '',
-      quantity_name: ''
+      quantityName: ''
     }
   }
 
@@ -21,21 +21,21 @@ class ItemForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const item = {
-      user_id: this.state.user_id,
+      user_id: this.state.userId,
       name: this.state.name,
-      list_id: this.state.list_id,
+      list_id: this.state.listId,
       quantity: this.state.quantity,
       purchased: this.state.purchased,
-      quantity_name: this.state.quantity_name
+      quantity_name: this.state.quantityName
     }
-    $.post('/items', { item: item }).done((data) => {
+    $.post('/items', { item }).done((data) => {
       this.props.handleItemAddition(data);
     });
     this.setState({
       name: '',
       purchased: false,
       quantity: '',
-      quantity_name: ''
+      quantityName: ''
     });
   }
 
@@ -61,11 +61,12 @@ class ItemForm extends React.Component {
   render() {
     return (
       <form onSubmit={ (event) => this.handleSubmit(event) }>
-        <input name="user_id"
+        { /* add alert for errors */ }
+        <input name="userId"
                type="hidden"
                className="hidden"
                value={ this.state.userId } />
-        <input name="list_id"
+        <input name="listId"
                type="hidden"
                className="hidden"
                value={ this.state.listId } />
@@ -79,7 +80,7 @@ class ItemForm extends React.Component {
               <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
               <input name="quantity"
                      type="number"
-                     className="form-control"
+                     className="form-control no-border-right"
                      id="itemQuantity"
                      value={ this.state.quantity }
                      onChange={ (event) => this.handleUserInput(event) }
@@ -89,11 +90,11 @@ class ItemForm extends React.Component {
               <label className="sr-only" htmlFor="itemQuantityName">
                 Quantity Name
               </label>
-              <input name="quantity_name"
+              <input name="quantityName"
                      type="text"
-                     className="form-control"
+                     className="form-control no-border-sides"
                      id="itemQuantityName"
-                     value={ this.state.quantity_name }
+                     value={ this.state.quantityName }
                      onChange={ (event) => this.handleUserInput(event) }
                      placeholder="type"/>
             </div>
@@ -101,7 +102,7 @@ class ItemForm extends React.Component {
               <label className="sr-only" htmlFor="itemName">Item Name</label>
               <input name="name"
                      type="text"
-                     className="form-control"
+                     className="form-control no-border-left"
                      id="itemName"
                      value={ this.state.name }
                      onChange={ (event) => this.handleUserInput(event) }
