@@ -19,13 +19,13 @@ class NotPurchasedItem extends React.Component {
         </p>
         <div className="btn-group float-right" role="group">
           <div onClick={ () => { this.handlePurchase() } }
-               className="fa fa-check-square-o fa-2x text-success"
+               className="fa fa-check-square-o fa-2x text-success action-button"
                style={{ marginRight: '1rem' }}></div>
           <div onClick={ () => this.handleEdit() }
-               className="fa fa-pencil-square-o fa-2x text-warning"
+               className="fa fa-pencil-square-o fa-2x text-warning action-button"
                style={{ marginRight: '1rem' }}></div>
           <div onClick={ () => this.handleDelete() }
-               className="fa fa-trash fa-2x text-danger"
+               className="fa fa-trash fa-2x text-danger action-button"
                data-confirm="Are you sure?"></div>
         </div>
       </div>

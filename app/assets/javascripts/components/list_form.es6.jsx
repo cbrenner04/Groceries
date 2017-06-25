@@ -20,7 +20,7 @@ class ListForm extends React.Component {
                  placeholder="New list name"/>
         </div>
         <input type="submit" value="Create List"
-               className="btn btn-success btn-block"/>
+               className="btn btn-success btn-block action-button"/>
       </form>
     )
   }

@@ -21,7 +21,8 @@ class List extends React.Component {
         <div className="list-group-item" style={{ display: "block" }}>
           <div className="row">
             <div className="col-md-6">
-              <h5 className="mb-1" onClick={ () => this.handleSelect() }>
+              <h5 className="mb-1 action-button"
+                  onClick={ () => this.handleSelect() }>
                 { this.props.list.name }
               </h5>
             </div>
@@ -33,12 +34,12 @@ class List extends React.Component {
             <div className="col-md-2">
               <div className="btn-group float-right" role="group">
                 <div onClick={ () => this.handleShare() }
-                     className="fa fa-users fa-2x text-primary"
+                     className="fa fa-users fa-2x text-primary action-button"
                      style={{ marginRight: '1rem' }}></div>
                 <div onClick={ () => this.handleEdit() }
-                     className="fa fa-pencil-square-o fa-2x text-warning"
+                     className="fa fa-pencil-square-o fa-2x text-warning action-button"
                      style={{ marginRight: '1rem' }}></div>
-                <div className="fa fa-trash fa-2x text-danger"
+                <div className="fa fa-trash fa-2x text-danger action-button"
                      onClick={ () => this.handleDelete() }></div>
               </div>
             </div>
