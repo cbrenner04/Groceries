@@ -7,7 +7,7 @@ module Pages
     end
 
     def submit
-      click_on "Submit"
+      click_on "Share List"
     end
   end
 end
