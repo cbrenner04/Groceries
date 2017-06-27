@@ -2,15 +2,12 @@
 
 # no doc
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[show edit update destroy]
-
   def index
     @lists = current_user.lists.not_archived.descending
   end
 
   def create
     @list = current_user.lists.create(list_params)
-
     if @list.save
       render json: @list
     else
@@ -18,11 +15,16 @@ class ListsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @list = ListPresenter.new(List.find(params[:id]))
+  end
 
-  def edit; end
+  def edit
+    @list = ListPresenter.new(List.find(params[:id]))
+  end
 
   def update
+    @list = ListPresenter.new(List.find(params[:id]))
     if @list.update(list_params)
       redirect_to lists_path, notice: "Your list was successfully updated"
     else
@@ -31,6 +33,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
+    @list = ListPresenter.new(List.find(params[:id]))
     @list.archive
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end
@@ -39,9 +42,5 @@ class ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(:user, :name)
-  end
-
-  def set_list
-    @list = ListPresenter.new(List.find(params[:id]))
   end
 end

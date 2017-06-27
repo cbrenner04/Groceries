@@ -15,7 +15,7 @@ module Pages
     end
 
     def submit
-      click_on "Submit"
+      click_on "Update Item"
     end
 
     def destroy_item(item)

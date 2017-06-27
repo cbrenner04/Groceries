@@ -14,12 +14,16 @@ class ListForm extends React.Component {
   render() {
     return (
       <form className="form" onSubmit={ (event) => this.handleSubmit(event) }>
+        { /* add alert for errors */ }
         <div className="form-group">
-          <input name='name' className="form-control" value={ this.props.name }
+          <input name="name"
+                 className="form-control"
+                 value={ this.props.name }
                  onChange={ (event) => this.handleChange(event) }
                  placeholder="New list name"/>
         </div>
-        <input type="submit" value="Create List"
+        <input type="submit"
+               value="Create List"
                className="btn btn-success btn-block action-button"/>
       </form>
     )

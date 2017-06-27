@@ -11,7 +11,6 @@ class ItemsContainer extends React.Component {
     return (
       <div>
         <h2>Items</h2>
-
         <NotPurchasedItems items={ this.props.notPurchasedItems }
                            list={ this.props.list }
                            onItemPurchase={ (item, listId) => {
@@ -20,9 +19,7 @@ class ItemsContainer extends React.Component {
                            onItemDelete={ (itemId, listId) => {
                              this.handleDeletion(itemId, listId)
                            } } />
-
         <br />
-
         <PurchasedItems items={ this.props.purchasedItems }
                         list={ this.props.list } />
       </div>

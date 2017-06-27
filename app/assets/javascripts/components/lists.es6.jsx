@@ -6,15 +6,13 @@ class Lists extends React.Component {
   render() {
     return (
       <div>
-        {
-          this.props.lists.map((list) => {
-            return (
-              <List list={ list }
-                    key={ list.id }
-                    onListDeletion={ (listId) => this.onDeleteOfList(listId) }/>
-            )
-          })
-        }
+        { this.props.lists.map((list) => {
+          return (
+            <List list={ list }
+                  key={ list.id }
+                  onListDeletion={ (listId) => this.onDeleteOfList(listId) }/>
+          )
+        }) }
       </div>
     )
   }

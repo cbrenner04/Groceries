@@ -56,9 +56,9 @@ RSpec.describe ItemsController do
         put :update, params: {
           id: update_item.id,
           item: {
-            name: "bar"
-          },
-          list_id: list.id
+            name: "bar",
+            list_id: list.id
+          }
         }
         update_item.reload
 
@@ -71,12 +71,12 @@ RSpec.describe ItemsController do
         item = create :item
         put :update, params: {
           id: item.id, item: {
-            name: nil
-          },
-          list_id: list.id
+            name: nil,
+            list_id: list.id
+          }
         }
 
-        expect(response).to render_template("edit")
+        expect(response.status).to eq 422
       end
     end
   end

@@ -15,7 +15,7 @@ module Pages
     end
 
     def submit
-      click_on "Submit"
+      click_on "Update List"
     end
 
     def load_index
@@ -66,7 +66,7 @@ module Pages
     end
 
     def fill_in_new_item_quantity_type(quantity_name)
-      find("input[name='quantity_name']").set(quantity_name)
+      find("input[name='quantityName']").set(quantity_name)
     end
 
     def fill_in_new_item_name(name)
