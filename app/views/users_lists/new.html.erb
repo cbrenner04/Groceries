@@ -2,11 +2,4 @@
 
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
-<%= form_for @users_list, url: users_lists_path(list_id: params[:list_id]) do |f| %>
-  <%= f.hidden_field :list_id, value: @list.id %>
-  <div class="form-group">
-    <%= f.label :user_id, "Select who you would like to share this list with:" %>
-    <%= f.collection_select :user_id, User.unattached_to_list(@list), :id, :first_name, { prompt: true }, { class: "form-control" } %>
-  </div>
-  <%= f.submit "Submit", class: "btn btn-primary" %>
-<% end %>
+<%= react_component "ShareListForm", list: @list, users: User.unattached_to_list(@list) %>
