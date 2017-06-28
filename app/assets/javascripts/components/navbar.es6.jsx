@@ -1,5 +1,5 @@
 class Navbar extends React.Component {
-  logOutButton () {
+  logOutButton() {
     if (this.props.is_user_signed_in) {
       return (
         <ul className="navbar-nav">

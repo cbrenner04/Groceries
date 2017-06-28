@@ -14,7 +14,6 @@ class ListForm extends React.Component {
   render() {
     return (
       <form className="form" onSubmit={ (event) => this.handleSubmit(event) }>
-        { /* add alert for errors */ }
         <div className="form-group">
           <input name="name"
                  className="form-control"

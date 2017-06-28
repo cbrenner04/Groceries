@@ -3,7 +3,8 @@ class ListsContainer extends React.Component {
     super(props)
     this.state = {
       lists: props.lists,
-      name: ''
+      name: '',
+      errors: ''
     }
   }
 
@@ -13,9 +14,18 @@ class ListsContainer extends React.Component {
 
   handleFormSubmit() {
     const list = { name: this.state.name }
-    $.post('/lists', { list }).done((data) => {
-      this.addNewList(data);
-    });
+    $.post('/lists', { list })
+      .done((data) => this.addNewList(data))
+      .fail((response) => {
+        responseJSON = JSON.parse(response.responseText)
+        responseTextKeys = Object.keys(responseJSON);
+        errors = []
+        responseTextKeys.forEach((key) => {
+          errorText = `${key} ${responseJSON[key]}`
+          errors.push(errorText);
+        });
+        this.setState({ errors: errors.join(' and ') });
+      });
   }
 
   addNewList(list) {
@@ -47,9 +57,18 @@ class ListsContainer extends React.Component {
     this.setState({lists});
   }
 
+  alert() {
+    if (this.state.errors.length > 0) {
+      return (
+        <Alert text={ this.state.errors } alert_class="danger" />
+      )
+    }
+  }
+
   render() {
     return (
       <div>
+        { this.alert() }
         <ListForm name={ this.state.name }
                   onUserInput={ (object) => this.handleUserInput(object) }
                   onFormSubmit={ () =>  this.handleFormSubmit() } />
