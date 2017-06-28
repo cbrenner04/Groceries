@@ -1,7 +1,7 @@
 class Alert extends React.Component{
   render() {
     return (
-      <div className={`alert alert-${ this.props.alert_class }` +
+      <div className={`alert alert-${ this.props.alert_class } ` +
                       `alert-dismissible fade show`} role="alert">
         <button type="button"
                 className="close"

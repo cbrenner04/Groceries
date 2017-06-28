@@ -7,7 +7,8 @@ class ItemForm extends React.Component {
       name: '',
       purchased: false,
       quantity: '',
-      quantityName: ''
+      quantityName: '',
+      errors: ''
     }
   }
 
@@ -28,15 +29,26 @@ class ItemForm extends React.Component {
       purchased: this.state.purchased,
       quantity_name: this.state.quantityName
     }
-    $.post('/items', { item }).done((data) => {
-      this.props.handleItemAddition(data);
-    });
-    this.setState({
-      name: '',
-      purchased: false,
-      quantity: '',
-      quantityName: ''
-    });
+    $.post('/items', { item })
+      .done((data) => {
+        this.props.handleItemAddition(data);
+        this.setState({
+          name: '',
+          purchased: false,
+          quantity: '',
+          quantityName: ''
+        });
+      })
+      .fail((response) => {
+        responseJSON = JSON.parse(response.responseText)
+        responseTextKeys = Object.keys(responseJSON);
+        errors = []
+        responseTextKeys.forEach((key) => {
+          errorText = `${key} ${responseJSON[key]}`
+          errors.push(errorText);
+        });
+        this.setState({ errors: errors.join(' and ') });
+      });
   }
 
   // Typeahead stuff will need to be re-engineered once
@@ -58,63 +70,73 @@ class ItemForm extends React.Component {
   //   source: items
   // });
 
+  alert() {
+    if (this.state.errors.length > 0) {
+      return (
+        <Alert text={ this.state.errors } alert_class="danger" />
+      )
+    }
+  }
+
   render() {
     return (
-      <form onSubmit={ (event) => this.handleSubmit(event) }>
-        { /* add alert for errors */ }
-        <input name="userId"
-               type="hidden"
-               className="hidden"
-               value={ this.state.userId } />
-        <input name="listId"
-               type="hidden"
-               className="hidden"
-               value={ this.state.listId } />
-        <input name="purchased"
-               type="hidden"
-               className="hidden"
-               value={ this.state.purchased } />
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-2" style={{padding: 0}}>
-              <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
-              <input name="quantity"
-                     type="number"
-                     className="form-control no-border-right"
-                     id="itemQuantity"
-                     value={ this.state.quantity }
-                     onChange={ (event) => this.handleUserInput(event) }
-                     placeholder="#"/>
-            </div>
-            <div className="col-3" style={{padding: 0}}>
-              <label className="sr-only" htmlFor="itemQuantityName">
-                Quantity Name
-              </label>
-              <input name="quantityName"
-                     type="text"
-                     className="form-control no-border-sides"
-                     id="itemQuantityName"
-                     value={ this.state.quantityName }
-                     onChange={ (event) => this.handleUserInput(event) }
-                     placeholder="type"/>
-            </div>
-            <div className="col-7" style={{padding: 0}}>
-              <label className="sr-only" htmlFor="itemName">Item Name</label>
-              <input name="name"
-                     type="text"
-                     className="form-control no-border-left"
-                     id="itemName"
-                     value={ this.state.name }
-                     onChange={ (event) => this.handleUserInput(event) }
-                     placeholder="name"/>
+      <div>
+        { this.alert() }
+        <form onSubmit={ (event) => this.handleSubmit(event) }>
+          <input name="userId"
+                 type="hidden"
+                 className="hidden"
+                 value={ this.state.userId } />
+          <input name="listId"
+                 type="hidden"
+                 className="hidden"
+                 value={ this.state.listId } />
+          <input name="purchased"
+                 type="hidden"
+                 className="hidden"
+                 value={ this.state.purchased } />
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-2" style={{padding: 0}}>
+                <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
+                <input name="quantity"
+                       type="number"
+                       className="form-control no-border-right"
+                       id="itemQuantity"
+                       value={ this.state.quantity }
+                       onChange={ (event) => this.handleUserInput(event) }
+                       placeholder="#"/>
+              </div>
+              <div className="col-3" style={{padding: 0}}>
+                <label className="sr-only" htmlFor="itemQuantityName">
+                  Quantity Name
+                </label>
+                <input name="quantityName"
+                       type="text"
+                       className="form-control no-border-sides"
+                       id="itemQuantityName"
+                       value={ this.state.quantityName }
+                       onChange={ (event) => this.handleUserInput(event) }
+                       placeholder="type"/>
+              </div>
+              <div className="col-7" style={{padding: 0}}>
+                <label className="sr-only" htmlFor="itemName">Item Name</label>
+                <input name="name"
+                       type="text"
+                       className="form-control no-border-left"
+                       id="itemName"
+                       value={ this.state.name }
+                       onChange={ (event) => this.handleUserInput(event) }
+                       placeholder="name"/>
+              </div>
             </div>
           </div>
-        </div>
-        <br />
-        <input type="submit"
-               value="Add New Item"
-               className="btn btn-success btn-block action-button" />
-      </form>
+          <br />
+          <input type="submit"
+                 value="Add New Item"
+                 className="btn btn-success btn-block action-button" />
+        </form>
+      </div>
     )
   }
 }
