@@ -2,7 +2,8 @@ class ListEditForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: props.list.name
+      name: props.list.name,
+      errors: ''
     }
   }
 
@@ -24,25 +25,44 @@ class ListEditForm extends React.Component {
       method: "PUT"
     }).done(() => {
       window.location = '/lists';
+    }).fail((response) => {
+      responseJSON = JSON.parse(response.responseText)
+      responseTextKeys = Object.keys(responseJSON);
+      errors = []
+      responseTextKeys.forEach((key) => {
+        errorText = `${key} ${responseJSON[key]}`
+        errors.push(errorText);
+      });
+      this.setState({ errors: errors.join(' and ') });
     });
+  }
+
+  alert() {
+    if (this.state.errors.length > 0) {
+      return (
+        <Alert text={ this.state.errors } alert_class="danger" />
+      )
+    }
   }
 
   render() {
     return (
-      <form className="form" onSubmit={ (event) => this.handleSubmit(event) }>
-        { /* add alert for errors */ }
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input name="name"
-                 className="form-control"
-                 id="name"
-                 value={ this.state.name }
-                 onChange={ (event) => this.handleChange(event) } />
-        </div>
-        <input type="submit"
-               value="Update List"
-               className="btn btn-success btn-block action-button"/>
-      </form>
+      <div>
+        { this.alert() }
+        <form className="form" onSubmit={ (event) => this.handleSubmit(event) }>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input name="name"
+                   className="form-control"
+                   id="name"
+                   value={ this.state.name }
+                   onChange={ (event) => this.handleChange(event) } />
+          </div>
+          <input type="submit"
+                 value="Update List"
+                 className="btn btn-success btn-block action-button"/>
+        </form>
+      </div>
     )
   }
 }

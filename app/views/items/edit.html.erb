@@ -2,4 +2,6 @@
 
 <%= link_to "Back to list", list_path(@list), class: "pull-right" %>
 
+<br />
+
 <%= react_component 'EditItemForm', item: @item, list: @list, user: current_user %>

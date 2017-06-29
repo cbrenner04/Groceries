@@ -4,7 +4,8 @@ class ListsContainer extends React.Component {
     this.state = {
       lists: props.lists,
       name: '',
-      errors: ''
+      errors: '',
+      success: ''
     }
   }
 
@@ -34,7 +35,8 @@ class ListsContainer extends React.Component {
       lists: lists.sort((a, b) => {
         return new Date(b.created_at) - new Date(a.created_at)
       }),
-      name: ''
+      name: '',
+      success: 'List successfully added.'
     })
   }
 
@@ -61,6 +63,10 @@ class ListsContainer extends React.Component {
     if (this.state.errors.length > 0) {
       return (
         <Alert text={ this.state.errors } alert_class="danger" />
+      )
+    } else if (this.state.success.length > 0) {
+      return (
+        <Alert text={ this.state.success } alert_class="success" />
       )
     }
   }

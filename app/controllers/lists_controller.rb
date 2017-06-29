@@ -26,9 +26,9 @@ class ListsController < ApplicationController
   def update
     @list = ListPresenter.new(List.find(params[:id]))
     if @list.update(list_params)
-      redirect_to lists_path, notice: "Your list was successfully updated"
+      render json: @list
     else
-      render :edit
+      render json: @list.errors, status: :unprocessable_entity
     end
   end
 

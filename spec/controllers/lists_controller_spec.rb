@@ -88,9 +88,10 @@ RSpec.describe ListsController do
           list: {
             name: nil
           }
-        }
+        }, format: "json"
 
-        expect(response).to render_template("edit")
+        expect(JSON.parse(response.body))
+          .to eq("name" => ["can't be blank"])
       end
     end
   end
