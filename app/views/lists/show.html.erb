@@ -2,6 +2,8 @@
 
 <%= link_to "Back to lists", lists_path, class: "pull-right" %>
 
+<br />
+
 <%= react_component(
   'ListContainer',
   current_user_id: current_user.id,

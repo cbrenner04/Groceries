@@ -8,7 +8,8 @@ class ItemForm extends React.Component {
       purchased: false,
       quantity: '',
       quantityName: '',
-      errors: ''
+      errors: '',
+      success: ''
     }
   }
 
@@ -36,7 +37,8 @@ class ItemForm extends React.Component {
           name: '',
           purchased: false,
           quantity: '',
-          quantityName: ''
+          quantityName: '',
+          success: 'Item successfully added.'
         });
       })
       .fail((response) => {
@@ -74,6 +76,10 @@ class ItemForm extends React.Component {
     if (this.state.errors.length > 0) {
       return (
         <Alert text={ this.state.errors } alert_class="danger" />
+      )
+    } else if (this.state.success.length > 0) {
+      return (
+        <Alert text={ this.state.success } alert_class="success" />
       )
     }
   }
