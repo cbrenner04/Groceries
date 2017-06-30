@@ -2,8 +2,6 @@
 
 # no doc
 class Item < ApplicationRecord
-  searchkick word_start: %w[name]
-
   belongs_to :user
   belongs_to :list
 
