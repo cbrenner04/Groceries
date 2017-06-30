@@ -16,15 +16,15 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = ListPresenter.new(List.find(params[:id]))
+    @list = List.find(params[:id])
   end
 
   def edit
-    @list = ListPresenter.new(List.find(params[:id]))
+    @list = List.find(params[:id])
   end
 
   def update
-    @list = ListPresenter.new(List.find(params[:id]))
+    @list = List.find(params[:id])
     if @list.update(list_params)
       render json: @list
     else
@@ -33,7 +33,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list = ListPresenter.new(List.find(params[:id]))
+    @list = List.find(params[:id])
     @list.archive
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end

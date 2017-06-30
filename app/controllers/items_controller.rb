@@ -34,17 +34,6 @@ class ItemsController < ApplicationController
     redirect_to @list, notice: "Your item was successfully deleted"
   end
 
-  def autocomplete
-    render json: Item.search(
-      params[:name],
-      fields: %w[name],
-      match: :word_start,
-      limit: 10,
-      load: false,
-      misspellings: { below: 5 }
-    ).map(&:name)
-  end
-
   private
 
   def item_params

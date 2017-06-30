@@ -7,7 +7,7 @@ RSpec.describe RegistrationsController do
 
   describe "POST #create" do
     describe "with valid params" do
-      it "creates a new list" do
+      it "creates a new user" do
         expect do
           post :create, params: {
             user: {

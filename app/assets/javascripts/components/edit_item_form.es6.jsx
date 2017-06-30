@@ -47,25 +47,6 @@ class EditItemForm extends React.Component {
     });
   }
 
-  // Typeahead stuff will need to be re-engineered once
-  // upgrading to React is complete
-  // var items = new Bloodhound({
-  //   datumTokenizer: Bloodhound.tokenizers.whitespace,
-  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  //   remote: {
-  //     url: '/items/autocomplete?name=%QUERY',
-  //     wildcard: '%QUERY'
-  //   }
-  // });
-  // $('#item_name').typeahead({
-  //   hint: true,
-  //   highlight: true,
-  //   minLength: 1
-  // }, {
-  //   name: 'items',
-  //   source: items
-  // });
-
   alert() {
     if (this.state.errors.length > 0) {
       return (
