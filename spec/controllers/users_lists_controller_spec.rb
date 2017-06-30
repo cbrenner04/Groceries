@@ -43,7 +43,7 @@ RSpec.describe UsersListsController do
           list_id: list.id
         }
 
-        expect(response).to render_template("new")
+        expect(response.status).to eq 422
       end
     end
   end

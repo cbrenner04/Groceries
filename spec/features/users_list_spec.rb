@@ -19,7 +19,7 @@ feature "Users list", :js do
       users_list_page.select_user(other_user.first_name)
       users_list_page.submit
 
-      expect(list_page).to have_text "Your list was successfully shared"
+      expect(list_page).to have_text "foo"
 
       logout(user)
       sign_in other_user

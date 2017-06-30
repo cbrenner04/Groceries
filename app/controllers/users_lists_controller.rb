@@ -12,9 +12,9 @@ class UsersListsController < ApplicationController
     @users_list = UsersList.create(item_params)
 
     if @users_list.save
-      redirect_to lists_path, notice: "Your list was successfully shared"
+      render json: @users_list
     else
-      render :new
+      render json: @users_list.errors, status: :unprocessable_entity
     end
   end
 
