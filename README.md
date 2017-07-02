@@ -27,6 +27,12 @@ To run the app with fresh data:
 rails db:drop db:create db:migrate db:seed; rails s
 ```
 
+When updating React components you will need to run:
+
+```
+sh -c 'rm app/assets/webpack/* || true && cd client && bundle exec rake react_on_rails:locale && yarn run build:development'
+```
+
 Just to run the app:
 
 ```

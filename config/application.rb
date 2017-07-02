@@ -13,6 +13,5 @@ module Groceries
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = "Central Time (US & Canada)"
     config.active_record.time_zone_aware_types = [:datetime]
-    config.react.addons = true
   end
 end

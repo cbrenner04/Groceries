@@ -1,4 +1,8 @@
-class Lists extends React.Component {
+import React, {Component} from 'react';
+
+import List from './List';
+
+export default class Lists extends Component {
   onDeleteOfList(listId) {
     this.props.onListDelete(listId);
   }

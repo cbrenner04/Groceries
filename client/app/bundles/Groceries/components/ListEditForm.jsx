@@ -1,4 +1,8 @@
-class ListEditForm extends React.Component {
+import React, {Component} from 'react';
+
+import Alert from './Alert';
+
+export default class ListEditForm extends Component {
   constructor(props) {
     super(props)
     this.state = {

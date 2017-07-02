@@ -1,4 +1,6 @@
-class Navbar extends React.Component {
+import React, {Component} from 'react';
+
+export default class Navbar extends Component {
   logOutButton() {
     if (this.props.is_user_signed_in) {
       return (

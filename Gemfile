@@ -41,13 +41,17 @@ end
 gem "devise", "~> 4.2"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.1"
 gem "launchy", "~> 2.4", ">= 2.4.3"
+gem "mini_racer", platforms: :ruby
 gem "poltergeist", "~> 1.13"
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails-erd", "~> 1.5"
 gem "rails_real_favicon", "~> 0.0.7"
-gem "react-rails", "~> 1.10"
+gem "react_on_rails", "~> 8.0", ">= 8.0.3"
 gem "rubocop", "~> 0.48.1", require: false
 gem "simplecov", "~> 0.13.0"
+gem "webpacker_lite"
+# error bundling on heroku fixed adding line below
+gem "libv8", "~> 5.3", ">= 5.3.332.38.5"
 
 # heroku
 gem "rails_12factor", group: :production

@@ -1,10 +1,8 @@
+//= require webpack-bundle
+
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require tether
 //= require bootstrap-sprockets
-//= require react
-//= require react_ujs
-//= require moment.min
-//= require components
 //= require_tree .
