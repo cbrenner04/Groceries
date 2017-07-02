@@ -1,4 +1,6 @@
-class ListForm extends React.Component {
+import React, {Component} from 'react';
+
+export default class ListForm extends Component {
   handleChange(event) {
     const name = event.target.name;
     const obj = {};

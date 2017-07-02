@@ -1,4 +1,11 @@
-class ListsContainer extends React.Component {
+import React, {Component} from 'react';
+import update from 'immutability-helper';
+
+import Alert from './Alert';
+import ListForm from './ListForm';
+import Lists from './Lists';
+
+export default class ListsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -30,7 +37,7 @@ class ListsContainer extends React.Component {
   }
 
   addNewList(list) {
-    const lists = React.addons.update(this.state.lists, { $push: [list] })
+    const lists = update(this.state.lists, { $push: [list] })
     this.setState({
       lists: lists.sort((a, b) => {
         return new Date(b.created_at) - new Date(a.created_at)

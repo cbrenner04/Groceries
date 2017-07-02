@@ -1,4 +1,8 @@
-class List extends React.Component {
+import React, {Component} from 'react';
+
+import {formatDate} from '../utils/format';
+
+export default class List extends Component {
   handleDelete() {
     this.props.onListDeletion(this.props.list.id);
   }

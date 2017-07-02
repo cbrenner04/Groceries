@@ -1,4 +1,6 @@
-const PurchasedItems = ({ items }) =>
+import React from 'react';
+
+export const PurchasedItems = ({ items }) =>
   <div>
     <h2>Purchased</h2>
     <ul className="list-group">

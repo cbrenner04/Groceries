@@ -1,8 +1,14 @@
 machine:
+  node:
+    version: v6.1.0
   ruby:
     version: 2.3.0
 
 dependencies:
+  pre:
+    - rm -rf ~/.yarn
+    - npm install -g yarn
+    - yarn -v
   post:
     - bundle exec rake assets:precompile
 

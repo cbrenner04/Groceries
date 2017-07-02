@@ -4,4 +4,5 @@
 
 <br />
 
-<%= react_component 'EditItemForm', item: @item, list: @list, user: current_user %>
+<%= react_component 'EditItemForm',
+                    props: { item: @item, list: @list, user: current_user } %>

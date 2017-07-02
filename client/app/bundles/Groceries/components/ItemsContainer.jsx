@@ -1,4 +1,9 @@
-class ItemsContainer extends React.Component {
+import React, {Component} from 'react';
+
+import NotPurchasedItems from './NotPurchasedItems';
+import {PurchasedItems} from './PurchasedItems';
+
+export default class ItemsContainer extends Component {
   handlePurchase(item, listId) {
     this.props.handlePurchaseOfItem(item, listId);
   }

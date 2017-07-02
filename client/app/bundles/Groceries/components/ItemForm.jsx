@@ -1,4 +1,8 @@
-class ItemForm extends React.Component {
+import React, {Component} from 'react';
+
+import Alert from './Alert';
+
+export default class ItemForm extends Component {
   constructor(props) {
     super(props)
     this.state = {

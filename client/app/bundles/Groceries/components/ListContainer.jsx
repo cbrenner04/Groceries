@@ -1,4 +1,10 @@
-class ListContainer extends React.Component {
+import React, {Component} from 'react';
+import update from 'immutability-helper';
+
+import ItemForm from './ItemForm';
+import ItemsContainer from './ItemsContainer';
+
+export default class ListContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -10,7 +16,7 @@ class ListContainer extends React.Component {
   }
 
   handleAddItem(item) {
-    const items = React.addons.update(
+    const items = update(
       this.state.notPurchasedItems, { $push: [item] }
     )
     this.setState({
@@ -33,7 +39,7 @@ class ListContainer extends React.Component {
     const notPurchasedItems = this.state.notPurchasedItems.filter((notItem) => {
       return notItem.id !== item.id;
     });
-    const purchasedItems = React.addons.update(
+    const purchasedItems = update(
       this.state.purchasedItems, { $push: [item] }
     );
     this.setState({notPurchasedItems, purchasedItems});

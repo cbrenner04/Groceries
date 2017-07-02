@@ -1,4 +1,6 @@
-class NotPurchasedItem extends React.Component {
+import React, {Component} from 'react';
+
+export default class NotPurchasedItem extends Component {
   handlePurchase() {
     this.props.handleItemPurchase(this.props.item, this.props.list.id);
   }
