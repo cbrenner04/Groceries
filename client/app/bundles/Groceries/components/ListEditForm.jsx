@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class ListEditForm extends Component {
+  static propTypes = {
+    list: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }).isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -11,14 +18,14 @@ export default class ListEditForm extends Component {
     }
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const name = event.target.name;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const list = {
       name: this.state.name
@@ -30,12 +37,10 @@ export default class ListEditForm extends Component {
     }).done(() => {
       window.location = '/lists';
     }).fail((response) => {
-      responseJSON = JSON.parse(response.responseText)
-      responseTextKeys = Object.keys(responseJSON);
-      errors = []
-      responseTextKeys.forEach((key) => {
-        errorText = `${key} ${responseJSON[key]}`
-        errors.push(errorText);
+      let responseJSON = JSON.parse(response.responseText)
+      let responseTextKeys = Object.keys(responseJSON);
+      let errors = responseTextKeys.map((key) => {
+        return (`${key} ${responseJSON[key]}`);
       });
       this.setState({ errors: errors.join(' and ') });
     });
@@ -53,14 +58,14 @@ export default class ListEditForm extends Component {
     return (
       <div>
         { this.alert() }
-        <form className="form" onSubmit={ (event) => this.handleSubmit(event) }>
+        <form className="form" onSubmit={ this.handleSubmit }>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input name="name"
                    className="form-control"
                    id="name"
                    value={ this.state.name }
-                   onChange={ (event) => this.handleChange(event) } />
+                   onChange={ this.handleChange } />
           </div>
           <input type="submit"
                  value="Update List"

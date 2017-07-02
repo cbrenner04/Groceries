@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class Navbar extends Component {
+  static propTypes = {
+    is_user_signed_in: PropTypes.bool.isRequired
+  }
+
   logOutButton() {
     if (this.props.is_user_signed_in) {
       return (

@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {formatDate} from '../utils/format';
 
 export default class List extends Component {
-  handleDelete() {
+  static propTypes = {
+    list: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired
+    }).isRequired
+  }
+
+  handleDelete = () => {
     this.props.onListDeletion(this.props.list.id);
   }
 
-  handleSelect() {
+  handleSelect = () => {
     window.location = `/lists/${this.props.list.id}`;
   }
 
-  handleShare() {
+  handleShare = () => {
     window.location = `/users_lists/new?list_id=${this.props.list.id}`;
   }
 
-  handleEdit() {
+  handleEdit = () => {
     window.location = `/lists/${this.props.list.id}/edit`;
   }
 
@@ -26,7 +35,7 @@ export default class List extends Component {
           <div className="row">
             <div className="col-md-6">
               <h5 className="mb-1 action-button"
-                  onClick={ () => this.handleSelect() }>
+                  onClick={ this.handleSelect }>
                 { this.props.list.name }
               </h5>
             </div>
@@ -37,14 +46,14 @@ export default class List extends Component {
             </div>
             <div className="col-md-2">
               <div className="btn-group float-right" role="group">
-                <div onClick={ () => this.handleShare() }
+                <div onClick={ this.handleShare }
                      className="fa fa-users fa-2x text-primary action-button"
                      style={{ marginRight: '1rem' }}></div>
-                <div onClick={ () => this.handleEdit() }
+                <div onClick={ this.handleEdit }
                      className="fa fa-pencil-square-o fa-2x text-warning action-button"
                      style={{ marginRight: '1rem' }}></div>
                 <div className="fa fa-trash fa-2x text-danger action-button"
-                     onClick={ () => this.handleDelete() }></div>
+                     onClick={ this.handleDelete }></div>
               </div>
             </div>
           </div>

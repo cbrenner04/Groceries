@@ -1,10 +1,33 @@
 import React, {Component} from 'react';
 import update from 'immutability-helper';
+import PropTypes from 'prop-types';
 
 import ItemForm from './ItemForm';
 import ItemsContainer from './ItemsContainer';
 
 export default class ListContainer extends Component {
+  static propTypes = {
+    current_user_id: PropTypes.number.isRequired,
+    list: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }).isRequired,
+    notPurchasedItems: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        quantity: PropTypes.number.isRequired,
+        quantity_name: PropTypes.string
+      }).isRequired
+    ),
+    purchasedItems: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        quantity: PropTypes.number
+      }).isRequired
+    ),
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -15,7 +38,7 @@ export default class ListContainer extends Component {
     }
   }
 
-  handleAddItem(item) {
+  handleAddItem = (item) => {
     const items = update(
       this.state.notPurchasedItems, { $push: [item] }
     )
@@ -26,7 +49,7 @@ export default class ListContainer extends Component {
     })
   }
 
-  handleItemPurchase(item, listId) {
+  handleItemPurchase = (item, listId) => {
     $.ajax({
       url: `/items/${item.id}`,
       type: 'PUT',
@@ -35,7 +58,7 @@ export default class ListContainer extends Component {
     });
   }
 
-  moveItemToPurchased(item) {
+  moveItemToPurchased = (item) => {
     const notPurchasedItems = this.state.notPurchasedItems.filter((notItem) => {
       return notItem.id !== item.id;
     });
@@ -45,7 +68,7 @@ export default class ListContainer extends Component {
     this.setState({notPurchasedItems, purchasedItems});
   }
 
-  handleDelete(itemId, listId) {
+  handleDelete = (itemId, listId) => {
     if (confirm('Are you sure?')) {
       $.ajax({
         url: `/items/${itemId}`,
@@ -58,7 +81,7 @@ export default class ListContainer extends Component {
     }
   }
 
-  removeItem(itemId) {
+  removeItem = (itemId) => {
     const notPurchasedItems = this.state.notPurchasedItems.filter((item) => {
       return item.id !== itemId;
     })
@@ -71,17 +94,13 @@ export default class ListContainer extends Component {
         <br /><br />
         <ItemForm listId={ this.props.list.id }
                   userId={ this.state.userId }
-                  handleItemAddition={ (item) => this.handleAddItem(item) } />
+                  handleItemAddition={ this.handleAddItem } />
         <br />
         <ItemsContainer list={ this.state.list }
                         notPurchasedItems={ this.state.notPurchasedItems }
                         purchasedItems={ this.state.purchasedItems }
-                        handlePurchaseOfItem={
-                          (item, listId) => this.handleItemPurchase(item, listId)
-                        }
-                        handleItemDelete={
-                          (itemId, listId) => this.handleDelete(itemId, listId)
-                        }/>
+                        handlePurchaseOfItem={ this.handleItemPurchase }
+                        handleItemDelete={ this.handleDelete }/>
       </div>
     )
   }

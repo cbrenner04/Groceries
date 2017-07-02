@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import List from './List';
 
 export default class Lists extends Component {
-  onDeleteOfList(listId) {
+  static propTypes = {
+    lists: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired
+      })
+    ).isRequired,
+    onListDelete: PropTypes.func.isRequired
+  }
+
+  onDeleteOfList = (listId) => {
     this.props.onListDelete(listId);
   }
 
@@ -14,7 +24,7 @@ export default class Lists extends Component {
           return (
             <List list={ list }
                   key={ list.id }
-                  onListDeletion={ (listId) => this.onDeleteOfList(listId) }/>
+                  onListDeletion={ this.onDeleteOfList }/>
           )
         }) }
       </div>

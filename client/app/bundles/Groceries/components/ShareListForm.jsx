@@ -1,6 +1,19 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class ShareListForm extends Component {
+  static propTypes = {
+    list: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }).isRequired,
+    users: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        first_name: PropTypes.string.isRequired
+      }).isRequired
+    ).isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -10,14 +23,14 @@ export default class ShareListForm extends Component {
     }
   }
 
-  handleUserInput(event) {
+  handleUserInput = (event) => {
     const name = event.target.name;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const users_list = {
       user_id: this.state.userId,
@@ -33,7 +46,7 @@ export default class ShareListForm extends Component {
 
   render() {
     return(
-      <form onSubmit={ (event) => this.handleSubmit(event) }>
+      <form onSubmit={ this.handleSubmit }>
         <div className="form-group">
           <label htmlFor="usersListUserId">
             Select who you would like to share this list with:
@@ -42,7 +55,7 @@ export default class ShareListForm extends Component {
                   name="userId"
                   id="usersListUserId"
                   value={ this.state.value }
-                  onChange={ (event) => this.handleUserInput(event) }>
+                  onChange={ this.handleUserInput }>
             <option value="">Please select</option>
             { this.props.users.map((user) => {
               return (
