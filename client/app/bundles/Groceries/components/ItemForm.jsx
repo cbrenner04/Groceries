@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class ItemForm extends Component {
+  static propTypes = {
+    userId: PropTypes.number.isRequired,
+    listId: PropTypes.number.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -17,14 +23,14 @@ export default class ItemForm extends Component {
     }
   }
 
-  handleUserInput(event) {
+  handleUserInput = (event) => {
     const name = event.target.name;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const item = {
       user_id: this.state.userId,
@@ -46,12 +52,10 @@ export default class ItemForm extends Component {
         });
       })
       .fail((response) => {
-        responseJSON = JSON.parse(response.responseText)
-        responseTextKeys = Object.keys(responseJSON);
-        errors = []
-        responseTextKeys.forEach((key) => {
-          errorText = `${key} ${responseJSON[key]}`
-          errors.push(errorText);
+        let responseJSON = JSON.parse(response.responseText)
+        let responseTextKeys = Object.keys(responseJSON);
+        let errors = responseTextKeys.map((key) => {
+          return (`${key} ${responseJSON[key]}`);
         });
         this.setState({ errors: errors.join(' and ') });
       });
@@ -73,7 +77,7 @@ export default class ItemForm extends Component {
     return (
       <div>
         { this.alert() }
-        <form onSubmit={ (event) => this.handleSubmit(event) }>
+        <form onSubmit={ this.handleSubmit }>
           <input name="userId"
                  type="hidden"
                  className="hidden"
@@ -89,13 +93,14 @@ export default class ItemForm extends Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-2" style={{padding: 0}}>
-                <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
+                <label className="sr-only"
+                       htmlFor="itemQuantity">Quantity</label>
                 <input name="quantity"
                        type="number"
                        className="form-control no-border-right"
                        id="itemQuantity"
                        value={ this.state.quantity }
-                       onChange={ (event) => this.handleUserInput(event) }
+                       onChange={ this.handleUserInput }
                        placeholder="#"/>
               </div>
               <div className="col-3" style={{padding: 0}}>
@@ -107,7 +112,7 @@ export default class ItemForm extends Component {
                        className="form-control no-border-sides"
                        id="itemQuantityName"
                        value={ this.state.quantityName }
-                       onChange={ (event) => this.handleUserInput(event) }
+                       onChange={ this.handleUserInput }
                        placeholder="type"/>
               </div>
               <div className="col-7" style={{padding: 0}}>
@@ -117,7 +122,7 @@ export default class ItemForm extends Component {
                        className="form-control no-border-left"
                        id="itemName"
                        value={ this.state.name }
-                       onChange={ (event) => this.handleUserInput(event) }
+                       onChange={ this.handleUserInput }
                        placeholder="name"/>
               </div>
             </div>

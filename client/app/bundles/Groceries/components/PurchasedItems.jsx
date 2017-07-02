@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const PurchasedItems = ({ items }) =>
   <div>
@@ -13,3 +14,13 @@ export const PurchasedItems = ({ items }) =>
       }) }
     </ul>
   </div>
+
+PurchasedItems.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      quantity: PropTypes.number
+    }).isRequired
+  ).isRequired
+}

@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import update from 'immutability-helper';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
 
 export default class ListsContainer extends Component {
+  static propTypes = {
+    lists: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired
+      }).isRequired
+    )
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -16,27 +25,25 @@ export default class ListsContainer extends Component {
     }
   }
 
-  handleUserInput(obj) {
+  handleUserInput = (obj) => {
     this.setState(obj);
   }
 
-  handleFormSubmit() {
+  handleFormSubmit = () => {
     const list = { name: this.state.name }
     $.post('/lists', { list })
       .done((data) => this.addNewList(data))
       .fail((response) => {
         responseJSON = JSON.parse(response.responseText)
         responseTextKeys = Object.keys(responseJSON);
-        errors = []
-        responseTextKeys.forEach((key) => {
-          errorText = `${key} ${responseJSON[key]}`
-          errors.push(errorText);
+        errors = responseTextKeys.map((key) => {
+          return (`${key} ${responseJSON[key]}`);
         });
         this.setState({ errors: errors.join(' and ') });
       });
   }
 
-  addNewList(list) {
+  addNewList = (list) => {
     const lists = update(this.state.lists, { $push: [list] })
     this.setState({
       lists: lists.sort((a, b) => {
@@ -47,7 +54,7 @@ export default class ListsContainer extends Component {
     })
   }
 
-  handleDelete(listId) {
+  handleDelete = (listId) => {
     if (confirm('Are you sure?')) {
       $.ajax({
         url: `/lists/${listId}`,
@@ -59,7 +66,7 @@ export default class ListsContainer extends Component {
     }
   }
 
-  removeList(listId) {
+  removeList = (listId) => {
     const lists = this.state.lists.filter((list) => {
       return list.id !== listId;
     })
@@ -83,11 +90,11 @@ export default class ListsContainer extends Component {
       <div>
         { this.alert() }
         <ListForm name={ this.state.name }
-                  onUserInput={ (object) => this.handleUserInput(object) }
-                  onFormSubmit={ () =>  this.handleFormSubmit() } />
+                  onUserInput={ this.handleUserInput }
+                  onFormSubmit={ this.handleFormSubmit } />
         <hr />
         <Lists lists={ this.state.lists }
-               onListDelete={ (listId) => this.handleDelete(listId) } />
+               onListDelete={ this.handleDelete } />
       </div>
     )
   }

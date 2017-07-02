@@ -1,8 +1,23 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class EditItemForm extends Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }).isRequired,
+    list: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }).isRequired,
+    item: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      quantity_name: PropTypes.string.isRequired
+    }).isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -16,14 +31,14 @@ export default class EditItemForm extends Component {
     }
   }
 
-  handleUserInput(event) {
+  handleUserInput = (event) => {
     const name = event.target.name;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const item = {
       user_id: this.state.userId,
@@ -40,12 +55,10 @@ export default class EditItemForm extends Component {
     }).done(() => {
       window.location = `/lists/${this.props.list.id}`;
     }).fail((response) => {
-      responseJSON = JSON.parse(response.responseText)
-      responseTextKeys = Object.keys(responseJSON);
-      errors = []
-      responseTextKeys.forEach((key) => {
-        errorText = `${key} ${responseJSON[key]}`
-        errors.push(errorText);
+      let responseJSON = JSON.parse(response.responseText)
+      let responseTextKeys = Object.keys(responseJSON);
+      let errors = responseTextKeys.map((key) => {
+        return (`${key} ${responseJSON[key]}`);
       });
       this.setState({ errors: errors.join(' and ') });
     });
@@ -63,8 +76,7 @@ export default class EditItemForm extends Component {
     return (
       <div>
         { this.alert() }
-        <form onSubmit={ (event) => this.handleSubmit(event) }>
-          { /* add alert for errors */ }
+        <form onSubmit={ this.handleSubmit }>
           <input name="userId"
                  type="hidden"
                  className="hidden"
@@ -84,7 +96,7 @@ export default class EditItemForm extends Component {
                    className="form-control"
                    id="itemName"
                    value={ this.state.name }
-                   onChange={ (event) => this.handleUserInput(event) } />
+                   onChange={ this.handleUserInput } />
           </div>
           <div className="form-group" id="new-item">
             <label htmlFor="quantity">Quantity</label>
@@ -93,7 +105,7 @@ export default class EditItemForm extends Component {
                    className="form-control"
                    id="quantity"
                    value={ this.state.quantity }
-                   onChange={ (event) => this.handleUserInput(event) } />
+                   onChange={ this.handleUserInput } />
           </div>
           <div className="form-group" id="new-item">
             <label htmlFor="quantityName">Quantity Name</label>
@@ -102,7 +114,7 @@ export default class EditItemForm extends Component {
                    className="form-control"
                    id="quantityName"
                    value={ this.state.quantityName }
-                   onChange={ (event) => this.handleUserInput(event) } />
+                   onChange={ this.handleUserInput } />
             <small className="help-block text-muted">
               This is meant to be used in conjunction with quantity. For example
               "1 bag" or "12 ounces".

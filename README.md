@@ -39,6 +39,9 @@ Just to run the app:
 rails s
 ```
 
+When developing, it may be easiest to have two terminals open running the two
+previous commands.
+
 You can sign in using any of the users in the seeds file listed above.
 
 ## Todos
