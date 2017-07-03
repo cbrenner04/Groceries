@@ -34,9 +34,9 @@ export default class ListsContainer extends Component {
     $.post('/lists', { list })
       .done((data) => this.addNewList(data))
       .fail((response) => {
-        responseJSON = JSON.parse(response.responseText)
-        responseTextKeys = Object.keys(responseJSON);
-        errors = responseTextKeys.map((key) => {
+        let responseJSON = JSON.parse(response.responseText)
+        let responseTextKeys = Object.keys(responseJSON);
+        let errors = responseTextKeys.map((key) => {
           return (`${key} ${responseJSON[key]}`);
         });
         this.setState({ errors: errors.join(' and ') });
