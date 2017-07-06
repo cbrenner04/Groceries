@@ -20,11 +20,15 @@ export default class Lists extends Component {
   render() {
     return (
       <div>
-        { this.props.lists.map(list => (<List
-          list={list}
-          key={list.id}
-          onListDeletion={this.onDeleteOfList}
-        />)) }
+        {
+          this.props.lists.map(list => (
+            <List
+              list={list}
+              key={list.id}
+              onListDeletion={this.onDeleteOfList}
+            />
+          ))
+        }
       </div>
     );
   }

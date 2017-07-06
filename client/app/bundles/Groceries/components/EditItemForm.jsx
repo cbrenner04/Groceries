@@ -77,6 +77,11 @@ export default class EditItemForm extends Component {
   render() {
     return (
       <div>
+        <h1>Edit { this.state.name }</h1>
+        <a href={`/lists/${this.props.list.id}`} className="pull-right">
+          Back to list
+        </a>
+        <br />
         { this.alert() }
         <form onSubmit={this.handleSubmit}>
           <input

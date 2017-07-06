@@ -29,7 +29,10 @@ export default class Navbar extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <nav className="navbar fixed-top navbar-toggleable-md navbar-light bg-faded navbar-full">
+        <nav
+          className={'navbar fixed-top navbar-toggleable-md navbar-light' +
+                     ' bg-faded navbar-full'}
+        >
           <button
             className="navbar-toggler navbar-toggler-right"
             type="button"
@@ -41,9 +44,7 @@ export default class Navbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-
           <a href="/" className="navbar-brand">Groceries</a>
-
           <div className="collapse navbar-collapse" id="navbar">
             { this.logOutButton() }
           </div>

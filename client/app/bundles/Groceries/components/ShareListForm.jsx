@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Alert from './Alert';
+
 export default class ShareListForm extends Component {
   static propTypes = {
     list: PropTypes.shape({
+      name: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
     }).isRequired,
     users: PropTypes.arrayOf(
@@ -20,6 +23,7 @@ export default class ShareListForm extends Component {
       userId: '',
       listId: this.props.list.id,
       users: this.props.users,
+      errors: '',
     };
   }
 
@@ -41,38 +45,60 @@ export default class ShareListForm extends Component {
       { users_list: usersList },
     ).done(() => {
       window.location = '/lists';
+    }).fail((response) => {
+      const responseJSON = JSON.parse(response.responseText);
+      const responseTextKeys = Object.keys(responseJSON);
+      const errors = responseTextKeys
+                     .map(key => `${key} ${responseJSON[key].join(' and ')}`);
+      this.setState({ errors: errors.join(' and ') });
     });
+  }
+
+  alert() {
+    if (this.state.errors.length > 0) {
+      return (
+        <Alert text={this.state.errors} alert_class="danger" />
+      );
+    }
+    return '';
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="usersListUserId">
-            Select who you would like to share this list with:
-          </label>
-          <select
-            className="form-control"
-            name="userId"
-            id="usersListUserId"
-            value={this.state.value}
-            onChange={this.handleUserInput}
-          >
-            <option value="">Please select</option>
-            { this.props.users.map(user => (<option
-              key={user.id}
-              value={user.id}
+      <div>
+        <h1>Share {this.state.name}</h1>
+        <a href="/lists" className="pull-right">Back to lists</a>
+        <br />
+        { this.alert() }
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="usersListUserId">
+              Select who you would like to share this list with:
+            </label>
+            <select
+              className="form-control"
+              name="userId"
+              id="usersListUserId"
+              value={this.state.value}
+              onChange={this.handleUserInput}
             >
-              {user.first_name}
-            </option>)) }
-          </select>
-        </div>
-        <input
-          type="submit"
-          value="Share List"
-          className="btn btn-success btn-block action-button"
-        />
-      </form>
+              <option value="">Please select</option>
+              {
+                this.props.users.map(user => (
+                  <option key={user.id} value={user.id}>
+                    {user.first_name}
+                  </option>
+                ))
+              }
+            </select>
+          </div>
+          <input
+            type="submit"
+            value="Share List"
+            className="btn btn-success btn-block action-button"
+          />
+        </form>
+      </div>
     );
   }
 }

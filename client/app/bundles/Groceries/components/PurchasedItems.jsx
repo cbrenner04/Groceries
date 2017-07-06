@@ -24,12 +24,13 @@ export default class PurchasedItems extends Component {
       <div>
         <h2>Purchased</h2>
         <ul className="list-group">
-          { this.state.items.map(item => (<li
-            className="list-group-item"
-            key={item.id}
-          >
-            {`${item.quantity} ${item.name}`}
-          </li>)) }
+          {
+            this.state.items.map(item => (
+              <li className="list-group-item" key={item.id}>
+                {`${item.quantity} ${item.name}`}
+              </li>
+            ))
+          }
         </ul>
       </div>
     );

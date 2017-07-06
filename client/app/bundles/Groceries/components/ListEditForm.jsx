@@ -57,6 +57,9 @@ export default class ListEditForm extends Component {
   render() {
     return (
       <div>
+        <h1>Edit { this.state.name }</h1>
+        <a href="/lists" className="pull-right">Back to lists</a>
+        <br />
         { this.alert() }
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">

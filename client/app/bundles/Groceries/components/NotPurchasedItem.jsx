@@ -21,7 +21,8 @@ export default class NotPurchasedItem extends Component {
   }
 
   handleEdit = () => {
-    window.location = `/items/${this.props.item.id}/edit?list_id=${this.props.list.id}`;
+    window.location =
+      `/items/${this.props.item.id}/edit?list_id=${this.props.list.id}`;
   }
 
   handleDelete = () => {
@@ -32,7 +33,8 @@ export default class NotPurchasedItem extends Component {
     return (
       <div className="list-group-item" style={{ display: 'block' }}>
         <p className="mb-0 float-left">
-          { `${this.props.item.quantity} ${this.props.item.quantity_name} ${this.props.item.name}` }
+          { `${this.props.item.quantity} ` +
+            `${this.props.item.quantity_name} ${this.props.item.name}` }
         </p>
         <div className="btn-group float-right" role="group">
           <div

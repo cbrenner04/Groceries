@@ -97,10 +97,7 @@ export default class ItemForm extends Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-2" style={{ padding: 0 }}>
-                <label
-                  className="sr-only"
-                  htmlFor="itemQuantity"
-                >
+                <label className="sr-only" htmlFor="itemQuantity">
                   Quantity
                 </label>
                 <input

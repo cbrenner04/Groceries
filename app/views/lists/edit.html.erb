@@ -1,7 +1,1 @@
-<h1>Edit <%= @list.name %></h1>
-
-<%= link_to "Back to lists", lists_path, class: "pull-right" %>
-
-<br />
-
 <%= react_component 'ListEditForm', props: { list: @list } %>

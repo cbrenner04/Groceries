@@ -97,7 +97,9 @@ export default class ListContainer extends Component {
   render() {
     return (
       <div>
-        <br /><br />
+        <h1>{ this.state.list.name }</h1>
+        <a href="/lists" className="pull-right">Back to lists</a>
+        <br />
         <ItemForm
           listId={this.props.list.id}
           userId={this.state.userId}
