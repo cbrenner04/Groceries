@@ -24,7 +24,7 @@ Seed data can be found in `db/seeds.rb`.
 To run the app with fresh data:
 
 ```
-rails db:drop db:create db:migrate db:seed; rails s
+rails db:drop db:create db:migrate; rails db:seed; rails s
 ```
 
 When updating React components you will need to run:

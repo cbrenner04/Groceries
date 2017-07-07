@@ -5,20 +5,23 @@ import PropTypes from 'prop-types';
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
+import UnacceptedLists from './UnacceptedLists';
 
 export default class ListsContainer extends Component {
   static propTypes = {
-    lists: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-      }).isRequired,
+    accepted_lists: PropTypes.arrayOf(
+      PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired,
+    ).isRequired,
+    not_accepted_lists: PropTypes.arrayOf(
+      PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired,
     ).isRequired,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      lists: props.lists,
+      acceptedLists: props.accepted_lists,
+      notAcceptedLists: props.not_accepted_lists,
       name: '',
       errors: '',
       success: '',
@@ -43,16 +46,17 @@ export default class ListsContainer extends Component {
   }
 
   addNewList = (list) => {
-    const lists = update(this.state.lists, { $push: [list] });
+    const lists = update(this.state.acceptedLists, { $push: [list] });
     this.setState({
-      lists: lists
-             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
+      acceptedLists:
+        lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
       name: '',
       success: 'List successfully added.',
     });
   }
 
   handleDelete = (listId) => {
+    // eslint doesn't like confirms
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
@@ -67,8 +71,42 @@ export default class ListsContainer extends Component {
   }
 
   removeList = (listId) => {
-    const lists = this.state.lists.filter(list => list.id !== listId);
-    this.setState({ lists });
+    const acceptedLists =
+      this.state.acceptedLists.filter(list => list.id !== listId);
+    this.setState({ acceptedLists });
+  }
+
+  handleAccept = (list) => {
+    this.removeListFromUnaccepted(list.id);
+    this.acceptList(list);
+  }
+
+  handleReject = (listId) => {
+    // eslint doesn't like confirms
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure?')) {
+      $.ajax({
+        url: '/users_lists/reject_list',
+        type: 'GET',
+        data: { list_id: listId },
+        success: () => this.removeListFromUnaccepted(listId),
+      });
+    }
+  }
+
+  acceptList = (list) => {
+    $.ajax({
+      url: '/users_lists/accept_list',
+      type: 'GET',
+      data: { list_id: list.id },
+      success: () => this.addNewList(list),
+    });
+  }
+
+  removeListFromUnaccepted = (listId) => {
+    const notAcceptedLists =
+      this.state.notAcceptedLists.filter(list => list.id !== listId);
+    this.setState({ notAcceptedLists });
   }
 
   alert() {
@@ -95,8 +133,14 @@ export default class ListsContainer extends Component {
           onFormSubmit={this.handleFormSubmit}
         />
         <hr />
+        <UnacceptedLists
+          lists={this.state.notAcceptedLists}
+          onAccept={this.handleAccept}
+          onReject={this.handleReject}
+        />
+        <hr />
         <Lists
-          lists={this.state.lists}
+          lists={this.state.acceptedLists}
           onListDelete={this.handleDelete}
         />
       </div>

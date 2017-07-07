@@ -9,10 +9,10 @@ RSpec.describe ListsController do
   before { sign_in user }
 
   describe "GET #index" do
-    it "assigns lists as @lists" do
+    it "assigns lists as @accepted_lists" do
       get :index
 
-      expect(assigns(:lists)).to include list
+      expect(assigns(:accepted_lists)).to include list
     end
   end
 

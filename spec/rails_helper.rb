@@ -2,8 +2,8 @@
 
 require "simplecov"
 SimpleCov.start "rails"
-SimpleCov.minimum_coverage 99 # can drop to 90 but no lower
-SimpleCov.minimum_coverage_by_file 99 # can drop to 80 but no lower
+SimpleCov.minimum_coverage 90
+SimpleCov.minimum_coverage_by_file 80
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)

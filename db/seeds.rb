@@ -1,11 +1,9 @@
 user_emails = %w(foo@ex.co bar@ex.co baz@ex.co)
-user_names = %w(Foo Bar Baz)
-user_emails.zip(user_names) do |email, first_name|
+user_emails.each do |email|
   User.create!(
     email: email,
     password: 'asdfasdf',
-    password_confirmation: 'asdfasdf',
-    first_name: first_name
+    password_confirmation: 'asdfasdf'
   )
 end
 
@@ -14,22 +12,26 @@ list_names.each { |list| List.create!(name: list) }
 
 UsersList.create!(
   user: User.find_by(email: 'foo@ex.co'),
-  list: List.find_by(name: 'foobar')
+  list: List.find_by(name: 'foobar'),
+  has_accepted: true
 )
 
 UsersList.create!(
   user: User.find_by(email: 'bar@ex.co'),
-  list: List.find_by(name: 'foobar')
+  list: List.find_by(name: 'foobar'),
+  has_accepted: true
 )
 
 UsersList.create!(
   user: User.find_by(email: 'baz@ex.co'),
-  list: List.find_by(name: 'foobar')
+  list: List.find_by(name: 'foobar'),
+  has_accepted: true
 )
 
 UsersList.create!(
   user: User.find_by(email: 'foo@ex.co'),
-  list: List.find_by(name: 'foobaz')
+  list: List.find_by(name: 'foobaz'),
+  has_accepted: true
 )
 
 item_names = %w(apples bananas oranges chocolate beer)

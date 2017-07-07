@@ -39,7 +39,7 @@ module Pages
     end
 
     def first_list
-      first(".list-group-item")
+      first(".accepted-list")
     end
 
     def add_item
@@ -52,7 +52,7 @@ module Pages
     end
 
     def edit_list(name)
-      find(".list-group-item", text: name)
+      find(".accepted-list", text: name)
         .find(".fa-pencil-square-o").click
     end
 

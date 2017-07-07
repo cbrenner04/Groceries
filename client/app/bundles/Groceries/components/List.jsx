@@ -35,7 +35,10 @@ export default class List extends Component {
   render() {
     return (
       <div className="list-group">
-        <div className="list-group-item" style={{ display: 'block' }}>
+        <div
+          className="list-group-item accepted-list"
+          style={{ display: 'block' }}
+        >
           <div className="row">
             <div className="col-md-6">
               <h5
