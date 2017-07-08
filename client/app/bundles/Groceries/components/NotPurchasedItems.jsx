@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import NotPurchasedItem from './NotPurchasedItem';
@@ -11,11 +11,17 @@ export default class NotPurchasedItems extends Component {
         name: PropTypes.string.isRequired,
         quantity: PropTypes.number.isRequired,
         quantity_name: PropTypes.string,
-      }).isRequired
+      }).isRequired,
     ),
     list: PropTypes.shape({
-      id: PropTypes.number.isRequired
-    }).isRequired
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    onItemPurchase: PropTypes.func.isRequired,
+    onItemDelete: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    items: [],
   }
 
   purchaseItem = (item, listId) => {
@@ -27,19 +33,17 @@ export default class NotPurchasedItems extends Component {
   }
 
   render() {
-    return(
+    return (
       <div className="list-group">
-        { this.props.items.map((item, index) => {
-          return(
-            <NotPurchasedItem item={ item }
-                              index={ index }
-                              list={ this.props.list }
-                              key={ item.id }
-                              handleItemPurchase={ this.purchaseItem }
-                              handleItemDelete={ this.deleteItem } />
-          )
-        }) }
+        { this.props.items.map((item, index) => (<NotPurchasedItem
+          item={item}
+          index={index}
+          list={this.props.list}
+          key={item.id}
+          handleItemPurchase={this.purchaseItem}
+          handleItemDelete={this.deleteItem}
+        />)) }
       </div>
-    )
+    );
   }
 }

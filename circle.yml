@@ -15,3 +15,4 @@ dependencies:
 test:
   post:
     - bundle exec rubocop
+    - cd client && yarn lint
