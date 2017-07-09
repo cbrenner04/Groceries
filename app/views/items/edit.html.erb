@@ -1,8 +1,2 @@
-<h1>Edit <%= @item.name %></h1>
-
-<%= link_to "Back to list", list_path(@list), class: "pull-right" %>
-
-<br />
-
 <%= react_component 'EditItemForm',
                     props: { item: @item, list: @list, user: current_user } %>

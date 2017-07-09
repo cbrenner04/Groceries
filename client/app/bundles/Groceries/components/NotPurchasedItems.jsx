@@ -35,14 +35,18 @@ export default class NotPurchasedItems extends Component {
   render() {
     return (
       <div className="list-group">
-        { this.props.items.map((item, index) => (<NotPurchasedItem
-          item={item}
-          index={index}
-          list={this.props.list}
-          key={item.id}
-          handleItemPurchase={this.purchaseItem}
-          handleItemDelete={this.deleteItem}
-        />)) }
+        {
+          this.props.items.map((item, index) => (
+            <NotPurchasedItem
+              item={item}
+              index={index}
+              list={this.props.list}
+              key={item.id}
+              handleItemPurchase={this.purchaseItem}
+              handleItemDelete={this.deleteItem}
+            />
+          ))
+        }
       </div>
     );
   }

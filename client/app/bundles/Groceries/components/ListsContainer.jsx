@@ -36,7 +36,8 @@ export default class ListsContainer extends Component {
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);
         const responseTextKeys = Object.keys(responseJSON);
-        const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+        const errors = responseTextKeys
+                       .map(key => `${key} ${responseJSON[key].join(' and ')}`);
         this.setState({ errors: errors.join(' and ') });
       });
   }
@@ -44,7 +45,8 @@ export default class ListsContainer extends Component {
   addNewList = (list) => {
     const lists = update(this.state.lists, { $push: [list] });
     this.setState({
-      lists: lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
+      lists: lists
+             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
       name: '',
       success: 'List successfully added.',
     });
@@ -85,6 +87,7 @@ export default class ListsContainer extends Component {
   render() {
     return (
       <div>
+        <h1>Lists</h1>
         { this.alert() }
         <ListForm
           name={this.state.name}
