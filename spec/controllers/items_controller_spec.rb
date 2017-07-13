@@ -36,7 +36,7 @@ RSpec.describe ItemsController do
     end
 
     describe "with invalid params" do
-      it "re-renders the 'new' template" do
+      it "returns 422" do
         post :create, params: {
           item: {
             name: nil,
@@ -67,7 +67,7 @@ RSpec.describe ItemsController do
     end
 
     describe "with invalid params" do
-      it "re-renders the 'edit' template" do
+      it "returns 422" do
         item = create :item
         put :update, params: {
           id: item.id, item: {
