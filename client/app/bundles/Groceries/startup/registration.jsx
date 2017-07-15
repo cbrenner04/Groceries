@@ -6,6 +6,7 @@ import ListContainer from '../components/ListContainer';
 import ListsContainer from '../components/ListsContainer';
 import ListEditForm from '../components/ListEditForm';
 import Navbar from '../components/Navbar';
+import NewRegistration from '../components/NewRegistration';
 import ShareListForm from '../components/ShareListForm';
 
 ReactOnRails.register({
@@ -15,5 +16,6 @@ ReactOnRails.register({
   ListsContainer,
   ListEditForm,
   Navbar,
+  NewRegistration,
   ShareListForm,
 });

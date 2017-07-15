@@ -13,7 +13,14 @@ module Users
 
     # POST /resource
     def create
-      super
+      # super
+      @user = User.create(sign_up_params)
+
+      if @user.save
+        render json: @user
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
     end
 
     # GET /resource/edit
