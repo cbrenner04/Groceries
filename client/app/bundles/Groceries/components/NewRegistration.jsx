@@ -12,7 +12,6 @@ export default class NewRegistration extends Component {
     super(props);
     this.state = {
       minimumPasswordLength: props.minimum_password_length,
-      firstName: '',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -30,13 +29,13 @@ export default class NewRegistration extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const user = {
-      first_name: this.state.firstName,
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.passwordConfirmation,
     };
     $.post('/users', { user }).done(() => {
-      {/* redirect to '/' */}
+      // TODO: update to use react router
+      window.location = '/';
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -54,22 +53,21 @@ export default class NewRegistration extends Component {
     return '';
   }
 
+  passwordHelper() {
+    if (this.state.minimumPasswordLength) {
+      return (
+        <em>{ this.state.minimumPasswordLength } characters minimum</em>
+      );
+    }
+    return '';
+  }
+
   render() {
     return (
       <div>
         { this.alert() }
         <h2>Sign up</h2>
         <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input
-              name="firstName"
-              className="form-control"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-              placeholder="First name"
-              autoFocus={true}
-            />
-          </div>
           <div className="form-group">
             <input
               name="email"
@@ -86,7 +84,11 @@ export default class NewRegistration extends Component {
               value={this.state.password}
               onChange={this.handleChange}
               placeholder="Password"
+              type="password"
+              autoComplete="off"
             />
+            { this.passwordHelper() }
+            <br />
           </div>
           <div className="form-group">
             <input
@@ -95,6 +97,8 @@ export default class NewRegistration extends Component {
               value={this.state.passwordConfirmation}
               onChange={this.handleChange}
               placeholder="Password Confirmation"
+              type="password"
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -105,40 +109,6 @@ export default class NewRegistration extends Component {
             />
           </div>
         </form>
-        { /*
-
-
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-          <%= devise_error_messages! %>
-
-          <div class="field">
-            <%= f.label :first_name %><br />
-            <%= f.text_field :first_name, autofocus: true %>
-          </div>
-
-          <div class="field">
-            <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true %>
-          </div>
-
-          <div class="field">
-            <%= f.label :password %>
-            <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
-            <% end %><br />
-            <%= f.password_field :password, autocomplete: "off" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :password_confirmation %><br />
-            <%= f.password_field :password_confirmation, autocomplete: "off" %>
-          </div>
-
-          <div class="actions">
-            <%= f.submit "Sign up" %>
-          </div>
-        <% end %>
-        */}
       </div>
     );
   }

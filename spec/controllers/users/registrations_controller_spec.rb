@@ -20,7 +20,6 @@ module Users
           expect do
             post :create, params: {
               user: {
-                first_name: "foo",
                 email: "foo@bar.com",
                 password: "supersecret",
                 password_confirmation: "supersecret"
