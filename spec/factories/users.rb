@@ -5,7 +5,6 @@ FactoryGirl.define do
     sequence(:email) { |n| "foo#{n}@bar.com" }
     password "foobar!"
     password_confirmation "foobar!"
-    first_name "MyString"
 
     factory :user_with_lists do
       transient do

@@ -46,7 +46,7 @@ feature "Lists", :js do
     before { list_page.load_index }
 
     it "updates list" do
-      list_page.edit_list("asdf")
+      list_page.edit_list(user.lists.last.name)
       list_page.fill_in_edit_name_with "updated"
       list_page.submit
 

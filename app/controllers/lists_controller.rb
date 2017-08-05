@@ -3,12 +3,16 @@
 # no doc
 class ListsController < ApplicationController
   def index
-    @lists = current_user.lists.not_archived.descending
+    @accepted_lists = current_user.lists.accepted(current_user)
+    @not_accepted_lists = current_user.lists.not_accepted(current_user)
   end
 
   def create
     @list = current_user.lists.create(list_params)
     if @list.save
+      UsersList
+        .find_by(list: @list)
+        .update!(has_accepted: true, responded: true)
       render json: @list
     else
       render json: @list.errors, status: :unprocessable_entity

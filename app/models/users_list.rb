@@ -7,4 +7,6 @@ class UsersList < ApplicationRecord
 
   validates :user, :list, presence: true
   validates :user, uniqueness: { scope: :list }
+  validates :has_accepted, inclusion: { in: [true, false] }
+  validates :responded, inclusion: { in: [true, false] }
 end

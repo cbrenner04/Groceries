@@ -3,7 +3,11 @@
 module Pages
   class UsersList < Page
     def select_user(user)
-      select user, from: "Select who you would like to share this list with:"
+      find(".action-button", text: user).click
+    end
+
+    def invite_user(user)
+      find("#usersListNewEmail").set user
     end
 
     def submit

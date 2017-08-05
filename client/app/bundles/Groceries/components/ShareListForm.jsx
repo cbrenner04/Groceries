@@ -12,7 +12,6 @@ export default class ShareListForm extends Component {
     users: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        first_name: PropTypes.string.isRequired,
       }).isRequired,
     ).isRequired,
   }
@@ -23,6 +22,8 @@ export default class ShareListForm extends Component {
       userId: '',
       listId: this.props.list.id,
       users: this.props.users,
+      name: this.props.list.name,
+      newEmail: '',
       errors: '',
     };
   }
@@ -36,22 +37,31 @@ export default class ShareListForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    $.post(
+      '/users/invitation',
+      { user: { email: this.state.newEmail }, list_id: this.state.listId },
+    ).fail(response => this.failure(response));
+  }
+
+  handleSelectUser(userId) {
+    event.preventDefault();
     const usersList = {
-      user_id: this.state.userId,
+      user_id: userId,
       list_id: this.state.listId,
     };
     $.post(
-      `/users_lists?list_id=${this.props.list.id}`,
+      `/users_lists?list_id=${this.state.listId}`,
       { users_list: usersList },
-    ).done(() => {
-      window.location = '/lists';
-    }).fail((response) => {
-      const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys
-                     .map(key => `${key} ${responseJSON[key].join(' and ')}`);
-      this.setState({ errors: errors.join(' and ') });
-    });
+    ).done(window.location = '/lists')
+    .fail(response => this.failure(response));
+  }
+
+  failure(response) {
+    const responseJSON = JSON.parse(response.responseText);
+    const responseTextKeys = Object.keys(responseJSON);
+    const errors = responseTextKeys
+                   .map(key => `${key} ${responseJSON[key].join(' and ')}`);
+    this.setState({ errors: errors.join(' and ') });
   }
 
   alert() {
@@ -72,25 +82,17 @@ export default class ShareListForm extends Component {
         { this.alert() }
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="usersListUserId">
-              Select who you would like to share this list with:
+            <label htmlFor="usersListNewEmail">
+              Enter an email to invite someone to share this list:
             </label>
-            <select
+            <input
+              id="usersListNewEmail"
+              type="email"
+              name="newEmail"
               className="form-control"
-              name="userId"
-              id="usersListUserId"
-              value={this.state.value}
+              value={this.state.newEmail}
               onChange={this.handleUserInput}
-            >
-              <option value="">Please select</option>
-              {
-                this.props.users.map(user => (
-                  <option key={user.id} value={user.id}>
-                    {user.first_name}
-                  </option>
-                ))
-              }
-            </select>
+            />
           </div>
           <input
             type="submit"
@@ -98,6 +100,24 @@ export default class ShareListForm extends Component {
             className="btn btn-success btn-block action-button"
           />
         </form>
+        <br />
+        <strong>OR</strong>
+        <br />
+        <p className="text-lead">
+          Select someone you&apos;ve previously shared with:
+        </p>
+        {
+          this.props.users.map(user => (
+            <div
+              key={user.id}
+              className="list-group-item action-button"
+              onClick={() => this.handleSelectUser(user.id)}
+              role="presentation"
+            >
+              {user.email}
+            </div>
+          ))
+        }
       </div>
     );
   }

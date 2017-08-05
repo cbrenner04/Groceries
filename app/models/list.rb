@@ -14,4 +14,19 @@ class List < ApplicationRecord
   def archive
     update archived_at: Time.zone.now
   end
+
+  def self.accepted(user)
+    not_archived.descending.map do |list|
+      next unless UsersList.find_by(user: user, list: list)&.has_accepted
+      list
+    end.reject(&:blank?)
+  end
+
+  def self.not_accepted(user)
+    not_archived.descending.map do |list|
+      users_list = UsersList.find_by(user: user, list: list)
+      next if users_list&.has_accepted || users_list&.responded
+      list
+    end.reject(&:blank?)
+  end
 end

@@ -20,6 +20,11 @@ export default class Lists extends Component {
   render() {
     return (
       <div>
+        <h1>Your Lists</h1>
+        <p>
+          These are lists you&apos;ve created or you&apos;ve accepted an
+          invitation from someone else.
+        </p>
         {
           this.props.lists.map(list => (
             <List

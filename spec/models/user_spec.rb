@@ -8,12 +8,6 @@ RSpec.describe User do
 
     it { expect(user).to be_valid }
 
-    it "is invalid without first_name" do
-      user.first_name = nil
-
-      expect(user).to_not be_valid
-    end
-
     it "is invalid without email" do
       user.email = nil
 
