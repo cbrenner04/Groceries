@@ -97,5 +97,8 @@ Rails.application.configure do
   }
 
   # set default url for heroku
-  config.action_mailer.default_url_options = { host: 'groceries-app.com' }
+  config.action_mailer.default_url_options = {
+    host: 'groceries-app.com',
+    protocol: 'https'
+  }
 end
