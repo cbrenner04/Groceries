@@ -1,6 +1,6 @@
 # Groceries
 
-Check out the production version at <https://groceries-app.com>.
+Check out the production version at <https://www.groceries-app.com>.
 
 You will need to sign up to use the app.
 
