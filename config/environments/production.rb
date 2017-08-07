@@ -92,10 +92,10 @@ Rails.application.configure do
     address: ENV['MAILGUN_SMTP_SERVER'],
     user_name: ENV['MAILGUN_SMTP_LOGIN'],
     password: ENV['MAILGUN_SMTP_PASSWORD'],
-    domain: 'cjb-groceries.heroku.com',
+    domain: 'groceries-app.com',
     authentication: :plain,
   }
 
   # set default url for heroku
-  config.action_mailer.default_url_options = { host: 'cjb-groceries.heroku.com' }
+  config.action_mailer.default_url_options = { host: 'groceries-app.com' }
 end

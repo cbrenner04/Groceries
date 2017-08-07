@@ -1,6 +1,6 @@
 # Groceries
 
-Check out the production version at <https://cjb-groceries.herokuapp.com>.
+Check out the production version at <https://groceries-app.com>.
 
 You will need to sign up to use the app.
 
