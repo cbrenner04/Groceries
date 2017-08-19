@@ -46,6 +46,10 @@ module Pages
       find("input[type='submit']").click
     end
 
+    def complete_list
+      find(".fa-check-square-o").click
+    end
+
     def share_list(name)
       find(".list-group-item", text: name)
         .find(".fa-users").click
