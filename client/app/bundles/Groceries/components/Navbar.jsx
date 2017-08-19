@@ -9,21 +9,24 @@ export default class Navbar extends Component {
   logOutButton() {
     if (this.props.is_user_signed_in) {
       return (
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              rel="nofollow"
-              data-method="delete"
-              href="/users/sign_out"
-            >
-              Log out
-            </a>
-          </li>
-        </ul>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            rel="nofollow"
+            data-method="delete"
+            href="/users/sign_out"
+          >
+            Log out
+          </a>
+        </li>
       );
     }
     return '';
+  }
+
+  handleInvite = () => {
+    // TODO: update to use react router
+    window.location = '/users/invitation/new';
   }
 
   render() {
@@ -46,7 +49,18 @@ export default class Navbar extends Component {
           </button>
           <a href="/" className="navbar-brand">Groceries</a>
           <div className="collapse navbar-collapse" id="navbar">
-            { this.logOutButton() }
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <div
+                  className="nav-link"
+                  onClick={this.handleInvite}
+                  role="presentation"
+                >
+                  Invite
+                </div>
+              </li>
+              { this.logOutButton() }
+            </ul>
           </div>
         </nav>
       </div>
