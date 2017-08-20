@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 
 import Alert from './Alert';
 
-export default class NewRegistration extends Component {
+export default class NewPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: '',
-      passwordConfirmation: '',
       errors: '',
     };
   }
@@ -24,12 +22,9 @@ export default class NewRegistration extends Component {
     event.preventDefault();
     const user = {
       email: this.state.email,
-      password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation,
     };
-    $.post('/users', { user }).done(() => {
-      // TODO: update to use react router
-      window.location = '/';
+    $.post('/users/password', { user }).done(() => {
+      // noop
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -51,7 +46,7 @@ export default class NewRegistration extends Component {
     return (
       <div>
         { this.alert() }
-        <h2>Sign up</h2>
+        <h2>Forgot your password?</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input
@@ -64,35 +59,14 @@ export default class NewRegistration extends Component {
           </div>
           <div className="form-group">
             <input
-              name="password"
-              className="form-control"
-              value={this.state.password}
-              onChange={this.handleChange}
-              placeholder="Password"
-              type="password"
-              autoComplete="off"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="passwordConfirmation"
-              className="form-control"
-              value={this.state.passwordConfirmation}
-              onChange={this.handleChange}
-              placeholder="Password Confirmation"
-              type="password"
-              autoComplete="off"
-            />
-          </div>
-          <div className="form-group">
-            <input
               type="submit"
-              value="Submit Registration"
+              value="Send me reset password instructions"
               className="btn btn-success btn-block action-button"
             />
           </div>
         </form>
-        <a href="/">Log in</a>
+        <a href="/">Log in</a><br />
+        <a href="/users">Sign up</a>
       </div>
     );
   }

@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 
 import Alert from './Alert';
 
-export default class NewRegistration extends Component {
+export default class NewSession extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      passwordConfirmation: '',
+      rememberMe: false,
       errors: '',
     };
   }
 
   handleChange = (event) => {
-    const name = event.target.name;
+    const target = event.target;
+    const name = target.name;
     const obj = {};
-    obj[name] = event.target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    obj[name] = value;
     this.setState(obj);
   }
 
@@ -25,11 +27,10 @@ export default class NewRegistration extends Component {
     const user = {
       email: this.state.email,
       password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation,
+      remember_me: this.state.rememberMe,
     };
-    $.post('/users', { user }).done(() => {
-      // TODO: update to use react router
-      window.location = '/';
+    $.post('/users/sign_in', { user }).done(() => {
+      // noop
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -51,7 +52,7 @@ export default class NewRegistration extends Component {
     return (
       <div>
         { this.alert() }
-        <h2>Sign up</h2>
+        <h2>Log in</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input
@@ -74,25 +75,27 @@ export default class NewRegistration extends Component {
             />
           </div>
           <div className="form-group">
-            <input
-              name="passwordConfirmation"
-              className="form-control"
-              value={this.state.passwordConfirmation}
-              onChange={this.handleChange}
-              placeholder="Password Confirmation"
-              type="password"
-              autoComplete="off"
-            />
+            <label htmlFor="remember-me">
+              <input
+                id="remember-me"
+                name="rememberMe"
+                checked={this.state.rememberMe}
+                onChange={this.handleChange}
+                type="checkbox"
+              />
+              {' '} Remember me
+            </label>
           </div>
           <div className="form-group">
             <input
               type="submit"
-              value="Submit Registration"
+              value="Log in"
               className="btn btn-success btn-block action-button"
             />
           </div>
         </form>
-        <a href="/">Log in</a>
+        <a href="/users">Sign up</a><br />
+        <a href="/users/password/new">Forgot your password?</a>
       </div>
     );
   }

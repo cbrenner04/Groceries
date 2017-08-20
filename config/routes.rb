@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    confirmations: "users/confirmations",
-    invitations: 'users/invitations',
-    passwords: "users/passwords",
-    registrations: "users/registrations",
-    sessions: "users/sessions",
-    unlocks: "users/unlocks"
-  }
+  devise_for :users,
+             controllers: { invitations: 'users/invitations' },
+             skip: :registration
+  as :user do
+    get "/users" => "devise/registrations#new", as: :new_user_registration
+    post "/users" => "devise/registrations#create", as: :user_registration
+  end
   resources :lists, only: [:index, :show, :create, :edit, :update, :destroy]
   resources :items, only: [:create, :edit, :update, :destroy]
   resources :users_lists, only: [:new, :create] do

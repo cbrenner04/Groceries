@@ -8,14 +8,20 @@ import ListEditForm from '../components/ListEditForm';
 import Navbar from '../components/Navbar';
 import NewRegistration from '../components/NewRegistration';
 import ShareListForm from '../components/ShareListForm';
+import NewSession from '../components/NewSession';
+import NewPassword from '../components/NewPassword';
+import EditPassword from '../components/EditPassword';
 
 ReactOnRails.register({
   Alert,
   EditItemForm,
+  EditPassword,
   ListContainer,
   ListsContainer,
   ListEditForm,
   Navbar,
+  NewPassword,
   NewRegistration,
+  NewSession,
   ShareListForm,
 });
