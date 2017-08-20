@@ -47,4 +47,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include AuthenticationHelpers, type: :feature
+
+  config.after :each do
+    page.driver.restart if defined?(page.driver.restart)
+  end
 end

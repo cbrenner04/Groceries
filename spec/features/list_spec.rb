@@ -16,6 +16,7 @@ feature "Lists", :js do
     [first_list, second_list, fourth, fifth].each { |list| user.lists << list }
     another_user.lists << third_list
     log_in_user user
+    sleep 0.2
   end
 
   describe "create" do

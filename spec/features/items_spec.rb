@@ -8,10 +8,16 @@ feature "Items", :js do
   let(:list_page) { Pages::List.new }
   let(:item_page) { Pages::Item.new }
 
-  before { sign_in user }
+  before do
+    log_in_user user
+    sleep 0.2
+  end
 
   describe "create" do
-    before { list_page.load_list list }
+    before do
+      list_page.load_list list
+      sleep 0.5
+    end
 
     it "creates a new item successfully" do
       list_page.fill_in_new_item_quantity "20"
@@ -26,7 +32,10 @@ feature "Items", :js do
   describe "update" do
     let(:item) { create :item, list: list, name: "bar", quantity: 10 }
 
-    before { item_page.load_edit item, list }
+    before do
+      item_page.load_edit(item, list)
+      sleep 0.2
+    end
 
     it "updates successfully" do
       item_page.fill_in_quantity_with "25"
@@ -40,6 +49,7 @@ feature "Items", :js do
     before do
       create :item, list: list, name: "bar"
       list_page.load_list list
+      sleep 0.2
     end
 
     it "destroys successfully" do
