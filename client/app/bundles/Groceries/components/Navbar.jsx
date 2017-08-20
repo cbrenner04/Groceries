@@ -6,19 +6,30 @@ export default class Navbar extends Component {
     is_user_signed_in: PropTypes.bool.isRequired,
   }
 
-  logOutButton() {
+  conditionalLinks() {
     if (this.props.is_user_signed_in) {
       return (
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            rel="nofollow"
-            data-method="delete"
-            href="/users/sign_out"
-          >
-            Log out
-          </a>
-        </li>
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <div
+              className="nav-link"
+              onClick={this.handleInvite}
+              role="presentation"
+            >
+              Invite
+            </div>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              rel="nofollow"
+              data-method="delete"
+              href="/users/sign_out"
+            >
+              Log out
+            </a>
+          </li>
+        </ul>
       );
     }
     return '';
@@ -49,18 +60,7 @@ export default class Navbar extends Component {
           </button>
           <a href="/" className="navbar-brand">Groceries</a>
           <div className="collapse navbar-collapse" id="navbar">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <div
-                  className="nav-link"
-                  onClick={this.handleInvite}
-                  role="presentation"
-                >
-                  Invite
-                </div>
-              </li>
-              { this.logOutButton() }
-            </ul>
+            { this.conditionalLinks() }
           </div>
         </nav>
       </div>

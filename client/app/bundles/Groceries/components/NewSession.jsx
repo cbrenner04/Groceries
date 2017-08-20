@@ -32,10 +32,7 @@ export default class NewSession extends Component {
     $.post('/users/sign_in', { user }).done(() => {
       // noop
     }).fail((response) => {
-      const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      this.setState({ errors: response.responseText });
     });
   }
 

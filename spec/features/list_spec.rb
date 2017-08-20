@@ -47,6 +47,7 @@ feature "Lists", :js do
     before { list_page.load_index }
 
     it "completes list" do
+      sleep 0.2
       within(list_page.first_list) { list_page.complete_list }
 
       sleep 0.2 # HACK: keep it from throwing stale element reference
