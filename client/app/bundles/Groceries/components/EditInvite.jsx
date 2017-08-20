@@ -5,7 +5,7 @@ import Alert from './Alert';
 
 export default class EditPassword extends Component {
   static propTypes = {
-    reset_password_token: PropTypes.string.isRequired,
+    invitation_token: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -13,7 +13,7 @@ export default class EditPassword extends Component {
     this.state = {
       password: '',
       passwordConfirmation: '',
-      resetPasswordToken: this.props.reset_password_token,
+      invitationToken: this.props.invitation_token,
       errors: '',
     };
   }
@@ -30,10 +30,10 @@ export default class EditPassword extends Component {
     const user = {
       password: this.state.password,
       password_confirmation: this.state.passwordConfirmation,
-      reset_password_token: this.state.resetPasswordToken,
+      invitation_token: this.state.invitationToken,
     };
     $.ajax({
-      url: '/users/password',
+      url: '/users/invitation',
       data: { user },
       method: 'PUT',
     }).done(() => {
@@ -59,7 +59,7 @@ export default class EditPassword extends Component {
     return (
       <div>
         { this.alert() }
-        <h2>Change your password</h2>
+        <h2>Set your password</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input
@@ -91,8 +91,6 @@ export default class EditPassword extends Component {
             />
           </div>
         </form>
-        <a href="/">Log in</a><br />
-        <a href="/users">Sign up</a>
       </div>
     );
   }
