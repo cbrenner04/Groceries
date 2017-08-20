@@ -31,6 +31,7 @@ export default class Lists extends Component {
               list={list}
               key={list.id}
               onListDeletion={this.onDeleteOfList}
+              completed={list.completed}
             />
           ))
         }

@@ -31,6 +31,8 @@ RSpec.configure do |config|
   # This will use the defaults of :js and :server_rendering meta tags
   ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
 
+  config.example_status_persistence_file_path = "spec/examples.txt"
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }

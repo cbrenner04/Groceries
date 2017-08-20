@@ -45,6 +45,13 @@ feature "Lists", :js do
   describe "update" do
     before { list_page.load_index }
 
+    it "completes list" do
+      within(list_page.first_list) { list_page.complete_list }
+
+      sleep 0.2 # HACK: keep it from throwing stale element reference
+      expect(list_page.first_list).to have_text "Completed"
+    end
+
     it "updates list" do
       list_page.edit_list(user.lists.last.name)
       list_page.fill_in_edit_name_with "updated"

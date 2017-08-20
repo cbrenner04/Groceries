@@ -28,3 +28,6 @@ node_modules
 # Generated js bundles
 /public/webpack/*
 /app/assets/webpack/*
+
+# test metrics
+spec/examples.txt
