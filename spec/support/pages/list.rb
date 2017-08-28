@@ -47,7 +47,7 @@ module Pages
     end
 
     def complete_list
-      find(".fa-check-square-o").click
+      find(".fa-check-square-o").trigger("click")
     end
 
     def share_list(name)
