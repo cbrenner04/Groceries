@@ -11,6 +11,7 @@ export default class ItemsContainer extends Component {
     }).isRequired,
     handleItemDelete: PropTypes.func.isRequired,
     handlePurchaseOfItem: PropTypes.func.isRequired,
+    handleItemUnPurchase: PropTypes.func.isRequired,
     notPurchasedItems: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -26,6 +27,10 @@ export default class ItemsContainer extends Component {
         quantity: PropTypes.number,
       }).isRequired,
     ).isRequired,
+  }
+
+  onItemUnPurchase = (item, listId) => {
+    this.props.handleItemUnPurchase(item, listId);
   }
 
   handlePurchase = (item, listId) => {
@@ -47,7 +52,11 @@ export default class ItemsContainer extends Component {
           onItemDelete={this.handleDeletion}
         />
         <br />
-        <PurchasedItems items={this.props.purchasedItems} />
+        <PurchasedItems
+          items={this.props.purchasedItems}
+          list={this.props.list}
+          handleItemUnPurchase={this.onItemUnPurchase}
+        />
       </div>
     );
   }

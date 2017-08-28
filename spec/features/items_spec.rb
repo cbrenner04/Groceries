@@ -45,6 +45,14 @@ feature "Items", :js do
     end
   end
 
+  describe "purchase" do
+    it "purchases successfully"
+  end
+
+  describe "unpurchase" do
+    it "unpurchases successfully"
+  end
+
   describe "destroy" do
     before do
       create :item, list: list, name: "bar"

@@ -64,11 +64,29 @@ export default class ListContainer extends Component {
     });
   }
 
+  handleUnPurchase = (item, listId) => {
+    $.ajax({
+      url: `/items/${item.id}`,
+      type: 'PUT',
+      data: `item%5Bpurchased%5D=false&list_id=${listId}`,
+      success: () => this.moveItemToNotPurchased(item),
+    });
+  }
+
   moveItemToPurchased = (item) => {
     const notPurchasedItems =
       this.state.notPurchasedItems.filter(notItem => notItem.id !== item.id);
     const purchasedItems = update(
       this.state.purchasedItems, { $push: [item] },
+    );
+    this.setState({ notPurchasedItems, purchasedItems });
+  }
+
+  moveItemToNotPurchased = (item) => {
+    const purchasedItems =
+      this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
+    const notPurchasedItems = update(
+      this.state.notPurchasedItems, { $push: [item] },
     );
     this.setState({ notPurchasedItems, purchasedItems });
   }
@@ -112,6 +130,7 @@ export default class ListContainer extends Component {
           purchasedItems={this.state.purchasedItems}
           handlePurchaseOfItem={this.handleItemPurchase}
           handleItemDelete={this.handleDelete}
+          handleItemUnPurchase={this.handleUnPurchase}
         />
       </div>
     );

@@ -8,6 +8,7 @@ export default class ListEditForm extends Component {
     list: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
     }).isRequired,
   }
 
@@ -15,14 +16,15 @@ export default class ListEditForm extends Component {
     super(props);
     this.state = {
       name: props.list.name,
+      completed: props.list.completed,
       errors: '',
     };
   }
 
   handleChange = (event) => {
-    const name = event.target.name;
+    const target = event.target;
     const obj = {};
-    obj[name] = event.target.value;
+    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -30,6 +32,7 @@ export default class ListEditForm extends Component {
     event.preventDefault();
     const list = {
       name: this.state.name,
+      completed: this.state.completed,
     };
     $.ajax({
       url: `/lists/${this.props.list.id}`,
@@ -71,6 +74,17 @@ export default class ListEditForm extends Component {
               value={this.state.name}
               onChange={this.handleChange}
             />
+          </div>
+          <div className="form-group">
+            <label className="form-check-label" htmlFor="completed">
+              <input
+                className="form-check-input"
+                name="completed"
+                type="checkbox"
+                checked={this.state.completed}
+                onChange={this.handleChange}
+              /> Completed
+            </label>
           </div>
           <input
             type="submit"

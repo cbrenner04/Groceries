@@ -16,6 +16,7 @@ export default class EditItemForm extends Component {
       name: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
       quantity_name: PropTypes.string.isRequired,
+      purchased: PropTypes.bool.isRequired,
     }).isRequired,
   }
 
@@ -25,7 +26,7 @@ export default class EditItemForm extends Component {
       userId: props.user.id,
       listId: props.list.id,
       name: props.item.name,
-      purchased: false,
+      purchased: props.item.purchased,
       quantity: props.item.quantity,
       quantityName: props.item.quantity_name,
       errors: '',
@@ -33,9 +34,9 @@ export default class EditItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const name = event.target.name;
+    const target = event.target;
     const obj = {};
-    obj[name] = event.target.value;
+    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -138,6 +139,17 @@ export default class EditItemForm extends Component {
               This is meant to be used in conjunction with quantity. For example
               &quot;1 bag&quot; or &quot;12 ounces&quot;.
             </small>
+          </div>
+          <div className="form-group">
+            <label className="form-check-label" htmlFor="purchased">
+              <input
+                className="form-check-input"
+                name="purchased"
+                type="checkbox"
+                checked={this.state.purchased}
+                onChange={this.handleUserInput}
+              /> Purchased
+            </label>
           </div>
           <input
             type="submit"
