@@ -62,7 +62,7 @@ module Pages
 
     def destroy_list(name)
       find(".list-group-item", text: name)
-        .find(".fa-trash").click
+        .find(".fa-trash").trigger("click")
     end
 
     def fill_in_new_item_quantity(quantity)

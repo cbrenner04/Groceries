@@ -76,24 +76,6 @@ export default class ItemForm extends Component {
       <div>
         { this.alert() }
         <form onSubmit={this.handleSubmit}>
-          <input
-            name="userId"
-            type="hidden"
-            className="hidden"
-            value={this.state.userId}
-          />
-          <input
-            name="listId"
-            type="hidden"
-            className="hidden"
-            value={this.state.listId}
-          />
-          <input
-            name="purchased"
-            type="hidden"
-            className="hidden"
-            value={this.state.purchased}
-          />
           <div className="container-fluid">
             <div className="row">
               <div className="col-2" style={{ padding: 0 }}>

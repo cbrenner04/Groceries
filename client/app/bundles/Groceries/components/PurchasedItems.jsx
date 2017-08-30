@@ -14,17 +14,19 @@ export default class PurchasedItems extends Component {
       }).isRequired,
     ),
     handleItemUnPurchase: PropTypes.func.isRequired,
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
+    onItemDelete: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     items: [],
   }
 
-  handleUnPurchase = (item, listId) => {
-    this.props.handleItemUnPurchase(item, listId);
+  handleUnPurchase = (item) => {
+    this.props.handleItemUnPurchase(item);
+  }
+
+  deleteItem = (item) => {
+    this.props.onItemDelete(item);
   }
 
   render() {
@@ -36,9 +38,9 @@ export default class PurchasedItems extends Component {
             this.props.items.map(item => (
               <PurchasedItem
                 item={item}
-                list={this.props.list}
                 key={item.id}
                 unPurchaseItem={this.handleUnPurchase}
+                handleItemDelete={this.deleteItem}
               />
             ))
           }

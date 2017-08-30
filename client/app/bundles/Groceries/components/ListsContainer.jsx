@@ -25,7 +25,25 @@ export default class ListsContainer extends Component {
       name: '',
       errors: '',
       success: '',
+      completedLists: [],
+      nonCompletedLists: [],
     };
+  }
+
+  componentWillMount() {
+    const completedLists = this.state.acceptedLists.filter((list) => {
+      if (list.completed && !list.refreshed) {
+        return list;
+      }
+      return '';
+    });
+    const nonCompletedLists = this.state.acceptedLists.filter((list) => {
+      if (!list.completed) {
+        return list;
+      }
+      return '';
+    });
+    this.setState({ completedLists, nonCompletedLists });
   }
 
   handleUserInput = (obj) => {
@@ -45,13 +63,18 @@ export default class ListsContainer extends Component {
       });
   }
 
+  sortLists = lists =>
+    lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+
   addNewList = (list) => {
     const lists = update(this.state.acceptedLists, { $push: [list] });
+    const nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
     this.setState({
-      acceptedLists:
-        lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
+      acceptedLists: this.sortLists(lists),
       name: '',
       success: 'List successfully added.',
+      nonCompletedLists: this.sortLists(nonCompletedLists),
     });
   }
 
@@ -68,6 +91,23 @@ export default class ListsContainer extends Component {
       return false;
     }
     return '';
+  }
+
+  handleCompletion = (list) => {
+    $.ajax({
+      url: `/lists/${list.id}`,
+      type: 'PUT',
+      data: 'list%5Bcompleted%5D=true',
+      success: () => this.moveListToCompleted(list),
+    });
+  }
+
+  moveListToCompleted = (list) => {
+    const nonCompletedLists =
+      this.state.nonCompletedLists.filter(nonList => nonList.id !== list.id);
+    let completedLists = update(this.state.completedLists, { $push: [list] });
+    completedLists = this.sortLists(completedLists);
+    this.setState({ nonCompletedLists, completedLists });
   }
 
   removeList = (listId) => {
@@ -109,15 +149,25 @@ export default class ListsContainer extends Component {
     this.setState({ notAcceptedLists });
   }
 
+  removeListFromCompleted = (listId) => {
+    const completedLists =
+      this.state.completedLists.filter(list => list.id !== listId);
+    this.setState({ completedLists });
+  }
+
+  handleRefresh = (list) => {
+    $.ajax({
+      url: `/lists/${list.id}/refresh_list`,
+      type: 'POST',
+      success: () => this.removeListFromCompleted(list.id),
+    });
+  }
+
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     } else if (this.state.success.length > 0) {
-      return (
-        <Alert text={this.state.success} alert_class="success" />
-      );
+      return (<Alert text={this.state.success} alert_class="success" />);
     }
     return '';
   }
@@ -140,8 +190,11 @@ export default class ListsContainer extends Component {
         />
         <hr />
         <Lists
-          lists={this.state.acceptedLists}
           onListDelete={this.handleDelete}
+          onListCompletion={this.handleCompletion}
+          completedLists={this.state.completedLists}
+          nonCompletedLists={this.state.nonCompletedLists}
+          onListRefresh={this.handleRefresh}
         />
       </div>
     );

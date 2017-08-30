@@ -10,13 +10,15 @@ export default class PurchasedItem extends Component {
       quantity_name: PropTypes.string,
     }).isRequired,
     unPurchaseItem: PropTypes.func.isRequired,
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
+    handleItemDelete: PropTypes.func.isRequired,
   }
 
   unPurchase = () => {
-    this.props.unPurchaseItem(this.props.item, this.props.list.id);
+    this.props.unPurchaseItem(this.props.item);
+  }
+
+  handleDelete = () => {
+    this.props.handleItemDelete(this.props.item);
   }
 
   render() {
@@ -27,13 +29,20 @@ export default class PurchasedItem extends Component {
         style={{ display: 'block' }}
       >
         <p className="mb-0 float-left">
-          {`${this.props.item.quantity} ${this.props.item.name}`}
+          {`${this.props.item.quantity} ${this.props.item.quantity_name} ` +
+           `${this.props.item.name}`}
         </p>
         <div className="btn-group float-right" role="group">
           <div
             onClick={this.unPurchase}
             className="fa fa-refresh fa-2x text-primary action-button"
             style={{ marginRight: '1rem' }}
+            role="presentation"
+          />
+          <div
+            onClick={this.handleDelete}
+            className="fa fa-trash fa-2x text-danger action-button"
+            data-confirm="Are you sure?"
             role="presentation"
           />
         </div>

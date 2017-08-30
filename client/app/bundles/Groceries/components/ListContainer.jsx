@@ -43,62 +43,84 @@ export default class ListContainer extends Component {
     };
   }
 
-  handleAddItem = (item) => {
-    const items = update(
-      this.state.notPurchasedItems, { $push: [item] },
-    );
-    this.setState({
-      notPurchasedItems: items.sort((a, b) => {
+  sortItems = (items) => {
+    const sortedItems = items.sort(
+      (a, b) => {
         const positiveBranch = (a.name > b.name) ? 1 : 0;
         return (a.name < b.name) ? -1 : positiveBranch;
-      }),
-    });
+      },
+    );
+    const filteredItems = sortedItems.filter(
+      (item, position, itemArray) =>
+        !position || item.name !== itemArray[position - 1].name,
+    );
+    return filteredItems;
   }
 
-  handleItemPurchase = (item, listId) => {
+  handleAddItem = (item) => {
+    const items = update(this.state.notPurchasedItems, { $push: [item] });
+    const notPurchasedItems = this.sortItems(items);
+    this.setState({ notPurchasedItems });
+  }
+
+  handleItemPurchase = (item) => {
     $.ajax({
       url: `/items/${item.id}`,
       type: 'PUT',
-      data: `item%5Bpurchased%5D=true&list_id=${listId}`,
+      data: `item%5Bpurchased%5D=true&list_id=${item.list_id}`,
       success: () => this.moveItemToPurchased(item),
     });
   }
 
-  handleUnPurchase = (item, listId) => {
-    $.ajax({
-      url: `/items/${item.id}`,
-      type: 'PUT',
-      data: `item%5Bpurchased%5D=false&list_id=${listId}`,
-      success: () => this.moveItemToNotPurchased(item),
+  handleUnPurchase = (item) => {
+    const newItem = {
+      user_id: item.user_id,
+      name: item.name,
+      list_id: item.list_id,
+      quantity: item.quantity,
+      purchased: false,
+      quantity_name: item.quantity_name,
+    };
+    $.post('/items', { item: newItem }).done((data) => {
+      this.handleAddItem(data);
+      $.ajax({
+        url: `/items/${item.id}`,
+        type: 'PUT',
+        data: `item%5Brefreshed%5D=true&list_id=${item.list_id}`,
+        success: () => this.removeItemFromPurchased(item),
+      });
+    }).fail((response) => {
+      const responseJSON = JSON.parse(response.responseText);
+      const responseTextKeys = Object.keys(responseJSON);
+      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+      this.setState({ errors: errors.join(' and ') });
     });
   }
 
   moveItemToPurchased = (item) => {
     const notPurchasedItems =
       this.state.notPurchasedItems.filter(notItem => notItem.id !== item.id);
-    const purchasedItems = update(
-      this.state.purchasedItems, { $push: [item] },
-    );
+    let purchasedItems = update(this.state.purchasedItems, { $push: [item] });
+    purchasedItems = this.sortItems(purchasedItems);
     this.setState({ notPurchasedItems, purchasedItems });
   }
 
   moveItemToNotPurchased = (item) => {
     const purchasedItems =
       this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
-    const notPurchasedItems = update(
-      this.state.notPurchasedItems, { $push: [item] },
-    );
+    let notPurchasedItems = update(this.state.notPurchasedItems, { $push: [item] });
+    notPurchasedItems = this.sortItems(notPurchasedItems);
     this.setState({ notPurchasedItems, purchasedItems });
   }
 
-  handleDelete = (itemId, listId) => {
+  handleDelete = (item) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/items/${itemId}`,
-        data: `list_id=${listId}`,
+        url: `/items/${item.id}`,
+        data: `list_id=${item.list_id}`,
         type: 'DELETE',
-        success: () => this.removeItem(itemId),
+        success: () => this.removeItem(item.id),
       });
     } else {
       return false;
@@ -110,6 +132,12 @@ export default class ListContainer extends Component {
     const notPurchasedItems =
       this.state.notPurchasedItems.filter(item => item.id !== itemId);
     this.setState({ notPurchasedItems });
+  }
+
+  removeItemFromPurchased = (item) => {
+    const purchasedItems =
+      this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
+    this.setState({ purchasedItems });
   }
 
   render() {
@@ -125,7 +153,6 @@ export default class ListContainer extends Component {
         />
         <br />
         <ItemsContainer
-          list={this.state.list}
           notPurchasedItems={this.state.notPurchasedItems}
           purchasedItems={this.state.purchasedItems}
           handlePurchaseOfItem={this.handleItemPurchase}

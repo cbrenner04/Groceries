@@ -5,28 +5,26 @@ export default class NotPurchasedItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
+      list_id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
       quantity_name: PropTypes.string,
     }).isRequired,
     handleItemDelete: PropTypes.func.isRequired,
     handleItemPurchase: PropTypes.func.isRequired,
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
   }
 
   handlePurchase = () => {
-    this.props.handleItemPurchase(this.props.item, this.props.list.id);
+    this.props.handleItemPurchase(this.props.item);
   }
 
   handleEdit = () => {
     window.location =
-      `/items/${this.props.item.id}/edit?list_id=${this.props.list.id}`;
+      `/items/${this.props.item.id}/edit?list_id=${this.props.item.list_id}`;
   }
 
   handleDelete = () => {
-    this.props.handleItemDelete(this.props.item.id, this.props.list.id);
+    this.props.handleItemDelete(this.props.item);
   }
 
   render() {
