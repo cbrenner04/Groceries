@@ -4,6 +4,6 @@
     current_user_id: current_user.id,
     list: @list,
     not_purchased_items: @list.items.not_archived.ordered.not_purchased,
-    purchased_items: @list.items.not_archived.ordered.purchased
+    purchased_items: @list.items.not_archived.ordered.purchased.not_refreshed
   }
 ) %>

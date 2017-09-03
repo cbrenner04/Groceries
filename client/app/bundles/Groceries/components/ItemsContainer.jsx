@@ -6,9 +6,6 @@ import PurchasedItems from './PurchasedItems';
 
 export default class ItemsContainer extends Component {
   static propTypes = {
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
     handleItemDelete: PropTypes.func.isRequired,
     handlePurchaseOfItem: PropTypes.func.isRequired,
     handleItemUnPurchase: PropTypes.func.isRequired,
@@ -29,16 +26,16 @@ export default class ItemsContainer extends Component {
     ).isRequired,
   }
 
-  onItemUnPurchase = (item, listId) => {
-    this.props.handleItemUnPurchase(item, listId);
+  onItemUnPurchase = (item) => {
+    this.props.handleItemUnPurchase(item);
   }
 
-  handlePurchase = (item, listId) => {
-    this.props.handlePurchaseOfItem(item, listId);
+  handlePurchase = (item) => {
+    this.props.handlePurchaseOfItem(item);
   }
 
-  handleDeletion = (itemId, listId) => {
-    this.props.handleItemDelete(itemId, listId);
+  handleDeletion = (item) => {
+    this.props.handleItemDelete(item);
   }
 
   render() {
@@ -47,15 +44,14 @@ export default class ItemsContainer extends Component {
         <h2>Items</h2>
         <NotPurchasedItems
           items={this.props.notPurchasedItems}
-          list={this.props.list}
           onItemPurchase={this.handlePurchase}
           onItemDelete={this.handleDeletion}
         />
         <br />
         <PurchasedItems
           items={this.props.purchasedItems}
-          list={this.props.list}
           handleItemUnPurchase={this.onItemUnPurchase}
+          onItemDelete={this.handleDeletion}
         />
       </div>
     );

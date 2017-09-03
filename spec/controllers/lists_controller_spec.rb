@@ -106,4 +106,29 @@ RSpec.describe ListsController do
       expect(List.not_archived).to_not include delete_list
     end
   end
+
+  describe "POST #refresh_list" do
+    it "creates new list" do
+      expect do
+        post :refresh_list, params: {
+          id: list.id
+        }
+      end.to change(List, :count).by 1
+    end
+
+    it "creates new items" do
+      Item.create!(
+        user: user,
+        list: list,
+        name: "foo",
+        quantity: 1,
+        quantity_name: "bar"
+      )
+      expect do
+        post :refresh_list, params: {
+          id: list.id
+        }
+      end.to change(Item, :count).by 1
+    end
+  end
 end

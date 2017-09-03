@@ -13,9 +13,6 @@ export default class NotPurchasedItems extends Component {
         quantity_name: PropTypes.string,
       }).isRequired,
     ),
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired,
     onItemPurchase: PropTypes.func.isRequired,
     onItemDelete: PropTypes.func.isRequired,
   }
@@ -24,12 +21,12 @@ export default class NotPurchasedItems extends Component {
     items: [],
   }
 
-  purchaseItem = (item, listId) => {
-    this.props.onItemPurchase(item, listId);
+  purchaseItem = (item) => {
+    this.props.onItemPurchase(item);
   }
 
-  deleteItem = (itemId, listId) => {
-    this.props.onItemDelete(itemId, listId);
+  deleteItem = (item) => {
+    this.props.onItemDelete(item);
   }
 
   render() {
@@ -40,7 +37,6 @@ export default class NotPurchasedItems extends Component {
             <NotPurchasedItem
               item={item}
               index={index}
-              list={this.props.list}
               key={item.id}
               handleItemPurchase={this.purchaseItem}
               handleItemDelete={this.deleteItem}

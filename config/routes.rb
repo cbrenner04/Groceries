@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     get "/users" => "devise/registrations#new", as: :new_user_registration
     post "/users" => "devise/registrations#create", as: :user_registration
   end
-  resources :lists, only: [:index, :show, :create, :edit, :update, :destroy]
+  resources :lists, only: [:index, :show, :create, :edit, :update, :destroy] do
+    post :refresh_list, on: :member
+  end
   resources :items, only: [:create, :edit, :update, :destroy]
   resources :users_lists, only: [:new, :create] do
     get :accept_list, on: :collection

@@ -8,6 +8,7 @@ class List < ApplicationRecord
 
   scope :descending, (-> { order(created_at: :desc) })
   scope :not_archived, (-> { where(archived_at: nil) })
+  scope :not_refreshed, (-> { where(refreshed: false) })
 
   validates :name, presence: true
 

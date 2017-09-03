@@ -12,7 +12,7 @@ export default class List extends Component {
       completed: PropTypes.bool.isRequired,
     }).isRequired,
     onListDeletion: PropTypes.func.isRequired,
-    onListCompletion: PropTypes.func.isRequired,
+    onListRefresh: PropTypes.func.isRequired,
   }
 
   handleDelete = () => {
@@ -24,18 +24,8 @@ export default class List extends Component {
     window.location = `/lists/${this.props.list.id}`;
   }
 
-  handleShare = () => {
-    // TODO: update to use react router
-    window.location = `/users_lists/new?list_id=${this.props.list.id}`;
-  }
-
-  handleEdit = () => {
-    // TODO: update to use react router
-    window.location = `/lists/${this.props.list.id}/edit`;
-  }
-
-  handleComplete = () => {
-    this.props.onListCompletion(this.props.list);
+  handleRefresh = () => {
+    this.props.onListRefresh(this.props.list);
   }
 
   render() {
@@ -63,20 +53,8 @@ export default class List extends Component {
             <div className="col-md-2">
               <div className="btn-group float-right" role="group">
                 <div
-                  onClick={this.handleComplete}
-                  className="fa fa-check-square-o fa-2x text-success action-button"
-                  style={{ marginRight: '1rem' }}
-                  role="presentation"
-                />
-                <div
-                  onClick={this.handleShare}
-                  className="fa fa-users fa-2x text-primary action-button"
-                  style={{ marginRight: '1rem' }}
-                  role="presentation"
-                />
-                <div
-                  onClick={this.handleEdit}
-                  className="fa fa-pencil-square-o fa-2x text-warning action-button"
+                  onClick={this.handleRefresh}
+                  className="fa fa-refresh fa-2x text-primary action-button"
                   style={{ marginRight: '1rem' }}
                   role="presentation"
                 />

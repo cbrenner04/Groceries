@@ -38,7 +38,8 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :user_id, :name, :list_id, :quantity, :purchased, :quantity_name
+      :user_id, :name, :list_id, :quantity, :purchased, :quantity_name,
+      :refreshed
     )
   end
 end
