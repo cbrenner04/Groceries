@@ -25,7 +25,7 @@ module Pages
     end
 
     def load_edit(item, list)
-      visit edit_item_path(item, list_id: list.id)
+      visit edit_list_item_path(item, list_id: list.id)
     end
   end
 end

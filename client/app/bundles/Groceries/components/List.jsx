@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import formatDate from '../utils/format';
@@ -19,21 +20,6 @@ export default class List extends Component {
     this.props.onListDeletion(this.props.list.id);
   }
 
-  handleSelect = () => {
-    // TODO: update to use react router
-    window.location = `/lists/${this.props.list.id}`;
-  }
-
-  handleShare = () => {
-    // TODO: update to use react router
-    window.location = `/users_lists/new?list_id=${this.props.list.id}`;
-  }
-
-  handleEdit = () => {
-    // TODO: update to use react router
-    window.location = `/lists/${this.props.list.id}/edit`;
-  }
-
   handleComplete = () => {
     this.props.onListCompletion(this.props.list);
   }
@@ -47,13 +33,11 @@ export default class List extends Component {
         >
           <div className="row">
             <div className="col-md-6">
-              <h5
-                className="mb-1 action-button"
-                onClick={this.handleSelect}
-                role="presentation"
-              >
-                {this.props.list.name}
-              </h5>
+              <Link to={`/lists/${this.props.list.id}`} className="router-link">
+                <h5 className="mb-1 action-button">
+                  {this.props.list.name}
+                </h5>
+              </Link>
             </div>
             <div className="col-md-4">
               <small className="text-muted">
@@ -68,17 +52,15 @@ export default class List extends Component {
                   style={{ marginRight: '1rem' }}
                   role="presentation"
                 />
-                <div
-                  onClick={this.handleShare}
-                  className="fa fa-users fa-2x text-primary action-button"
+                <Link
+                  to={`lists/${this.props.list.id}/users_lists/new`}
+                  className="fa fa-users fa-2x text-primary router-link"
                   style={{ marginRight: '1rem' }}
-                  role="presentation"
                 />
-                <div
-                  onClick={this.handleEdit}
-                  className="fa fa-pencil-square-o fa-2x text-warning action-button"
+                <Link
+                  to={`/lists/${this.props.list.id}/edit`}
+                  className="fa fa-pencil-square-o fa-2x text-warning router-link"
                   style={{ marginRight: '1rem' }}
-                  role="presentation"
                 />
                 <div
                   className="fa fa-trash fa-2x text-danger action-button"

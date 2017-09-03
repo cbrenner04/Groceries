@@ -1,24 +1,55 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class ListEditForm extends Component {
   static propTypes = {
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        list_id: PropTypes.string,
+      }).isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+  }
+
+  static defaultProps = {
+    id: 0,
+    name: '',
+    completed: false,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      name: props.list.name,
-      completed: props.list.completed,
+      id: props.id,
+      name: props.name,
+      completed: props.completed,
       errors: '',
     };
+  }
+
+  componentWillMount() {
+    if (this.props.match) {
+      $.ajax({
+        type: 'GET',
+        url: `/lists/${this.props.match.params.id}/edit`,
+        dataType: 'JSON',
+      }).done((list) => {
+        this.setState({
+          id: list.id,
+          name: list.name,
+          completed: list.completed,
+        });
+      });
+    }
   }
 
   handleChange = (event) => {
@@ -35,11 +66,11 @@ export default class ListEditForm extends Component {
       completed: this.state.completed,
     };
     $.ajax({
-      url: `/lists/${this.props.list.id}`,
+      url: `/lists/${this.state.id}`,
       data: { list },
       method: 'PUT',
     }).done(() => {
-      window.location = '/lists';
+      this.props.history.push('/lists');
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -61,7 +92,9 @@ export default class ListEditForm extends Component {
     return (
       <div>
         <h1>Edit { this.state.name }</h1>
-        <a href="/lists" className="pull-right">Back to lists</a>
+        <Link to={'/lists'} className="pull-right">
+          Back to lists
+        </Link>
         <br />
         { this.alert() }
         <form className="form" onSubmit={this.handleSubmit}>

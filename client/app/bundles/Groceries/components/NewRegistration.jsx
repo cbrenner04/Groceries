@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class NewRegistration extends Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +36,7 @@ export default class NewRegistration extends Component {
       password_confirmation: this.state.passwordConfirmation,
     };
     $.post('/users', { user }).done(() => {
-      // TODO: update to use react router
-      window.location = '/';
+      this.props.history.push('/');
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -92,7 +99,7 @@ export default class NewRegistration extends Component {
             />
           </div>
         </form>
-        <a href="/">Log in</a>
+        <Link to="/users/sign_in">Log in</Link>
       </div>
     );
   }

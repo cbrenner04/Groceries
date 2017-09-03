@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import formatDate from '../utils/format';
@@ -19,11 +20,6 @@ export default class List extends Component {
     this.props.onListDeletion(this.props.list.id);
   }
 
-  handleSelect = () => {
-    // TODO: update to use react router
-    window.location = `/lists/${this.props.list.id}`;
-  }
-
   handleRefresh = () => {
     this.props.onListRefresh(this.props.list);
   }
@@ -37,13 +33,11 @@ export default class List extends Component {
         >
           <div className="row">
             <div className="col-md-6">
-              <h5
-                className="mb-1 action-button"
-                onClick={this.handleSelect}
-                role="presentation"
-              >
-                {this.props.list.name}
-              </h5>
+              <Link to={`/lists/${this.props.list.id}`} className="router-link">
+                <h5 className="mb-1 action-button">
+                  {this.props.list.name}
+                </h5>
+              </Link>
             </div>
             <div className="col-md-4">
               <small className="text-muted">

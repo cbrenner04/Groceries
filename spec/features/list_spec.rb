@@ -31,6 +31,7 @@ feature "Lists", :js do
   describe "index" do
     it "has most recent list at top" do
       list_page.load_index
+      sleep 0.5
 
       expect(list_page.first_list).to have_text user.lists.last.name
     end

@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 
 import Alert from './Alert';
 
 export default class EditPassword extends Component {
   static propTypes = {
     invitation_token: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
+  }
+
+  static defaultProps = {
+    invitation_token: '',
   }
 
   constructor(props) {
@@ -16,6 +24,14 @@ export default class EditPassword extends Component {
       invitationToken: this.props.invitation_token,
       errors: '',
     };
+  }
+
+  componentWillMount() {
+    if (this.props.location) {
+      this.setState({
+        invitationToken: queryString.parse(this.props.location.search).invitation_token,
+      });
+    }
   }
 
   handleChange = (event) => {

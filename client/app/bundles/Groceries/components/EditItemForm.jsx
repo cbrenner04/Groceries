@@ -1,36 +1,72 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class EditItemForm extends Component {
   static propTypes = {
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+    userId: PropTypes.number.isRequired,
+    listId: PropTypes.number.isRequired,
+    itemId: PropTypes.number.isRequired,
+    itemName: PropTypes.string.isRequired,
+    itemQuantity: PropTypes.number.isRequired,
+    itemQuantityName: PropTypes.string.isRequired,
+    itemPurchased: PropTypes.bool.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        list_id: PropTypes.string,
+      }).isRequired,
     }).isRequired,
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
     }).isRequired,
-    item: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
-      quantity_name: PropTypes.string.isRequired,
-      purchased: PropTypes.bool.isRequired,
-    }).isRequired,
+  }
+
+  static defaultProps = {
+    userId: 0,
+    listId: 0,
+    itemId: 0,
+    itemName: '',
+    itemQuantity: 0,
+    itemQuantityName: '',
+    itemPurchased: false,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      userId: props.user.id,
-      listId: props.list.id,
-      name: props.item.name,
-      purchased: props.item.purchased,
-      quantity: props.item.quantity,
-      quantityName: props.item.quantity_name,
+      userId: props.userId,
+      listId: props.listId,
+      itemId: props.itemId,
+      itemName: props.itemName,
+      itemPurchased: props.itemPurchased,
+      itemQuantity: props.itemQuantity,
+      itemQuantityName: props.itemQuantityName,
       errors: '',
     };
+  }
+
+  componentWillMount() {
+    if (this.props.match) {
+      $.ajax({
+        type: 'GET',
+        url: `/lists/${this.props.match.params.list_id}` +
+             `/items/${this.props.match.params.id}/edit`,
+        dataType: 'JSON',
+      }).done((item) => {
+        this.setState({
+          userId: item.user_id,
+          listId: item.list_id,
+          itemId: item.id,
+          itemName: item.name,
+          itemPurchased: item.purchased,
+          itemQuantity: item.quantity,
+          itemQuantityName: item.quantity_name,
+        });
+      });
+    }
   }
 
   handleUserInput = (event) => {
@@ -44,20 +80,19 @@ export default class EditItemForm extends Component {
     event.preventDefault();
     const item = {
       user_id: this.state.userId,
-      name: this.state.name,
+      name: this.state.itemName,
       list_id: this.state.listId,
-      quantity: this.state.quantity,
-      purchased: this.state.purchased,
-      quantity_name: this.state.quantityName,
+      quantity: this.state.itemQuantity,
+      purchased: this.state.itemPurchased,
+      quantity_name: this.state.itemQuantityName,
     };
     // TODO: update to use axios. this will require auth token stuff
     $.ajax({
-      url: `/items/${this.props.item.id}`,
+      url: `/lists/${this.state.listId}/items/${this.state.itemId}`,
       data: { item },
       method: 'PUT',
     }).done(() => {
-      // TODO: update to use react router
-      window.location = `/lists/${this.props.list.id}`;
+      this.props.history.push(`/lists/${this.state.listId}`);
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -78,61 +113,43 @@ export default class EditItemForm extends Component {
   render() {
     return (
       <div>
-        <h1>Edit { this.state.name }</h1>
-        <a href={`/lists/${this.props.list.id}`} className="pull-right">
+        <h1>Edit { this.state.itemName }</h1>
+        <Link to={`/lists/${this.state.listId}`} className="pull-right">
           Back to list
-        </a>
+        </Link>
         <br />
         { this.alert() }
         <form onSubmit={this.handleSubmit}>
-          <input
-            name="userId"
-            type="hidden"
-            className="hidden"
-            value={this.state.userId}
-          />
-          <input
-            name="listId"
-            type="hidden"
-            className="hidden"
-            value={this.state.listId}
-          />
-          <input
-            name="purchased"
-            type="hidden"
-            className="hidden"
-            value={this.state.purchased}
-          />
           <div className="form-group" id="new-item">
             <label htmlFor="itemName">Item Name</label>
             <input
-              name="name"
+              name="itemName"
               type="text"
               className="form-control"
               id="itemName"
-              value={this.state.name}
+              value={this.state.itemName}
               onChange={this.handleUserInput}
             />
           </div>
           <div className="form-group" id="new-item">
-            <label htmlFor="quantity">Quantity</label>
+            <label htmlFor="itemQuantity">Quantity</label>
             <input
-              name="quantity"
+              name="itemQuantity"
               type="text"
               className="form-control"
-              id="quantity"
-              value={this.state.quantity}
+              id="itemQuantity"
+              value={this.state.itemQuantity}
               onChange={this.handleUserInput}
             />
           </div>
           <div className="form-group" id="new-item">
-            <label htmlFor="quantityName">Quantity Name</label>
+            <label htmlFor="itemQuantityName">Quantity Name</label>
             <input
-              name="quantityName"
+              name="itemQuantityName"
               type="text"
               className="form-control"
-              id="quantityName"
-              value={this.state.quantityName}
+              id="itemQuantityName"
+              value={this.state.itemQuantityName}
               onChange={this.handleUserInput}
             />
             <small className="help-block text-muted">
@@ -141,12 +158,13 @@ export default class EditItemForm extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label className="form-check-label" htmlFor="purchased">
+            <label className="form-check-label" htmlFor="itemPurchased">
               <input
                 className="form-check-input"
-                name="purchased"
+                name="itemPurchased"
+                id="itemPurchased"
                 type="checkbox"
-                checked={this.state.purchased}
+                checked={this.state.itemPurchased}
                 onChange={this.handleUserInput}
               /> Purchased
             </label>

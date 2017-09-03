@@ -9,10 +9,24 @@ RSpec.describe ListsController do
   before { sign_in user }
 
   describe "GET #index" do
-    it "assigns lists as @accepted_lists" do
-      get :index
+    describe "format HTML" do
+      it "assigns renders index" do
+        get :index
 
-      expect(assigns(:accepted_lists)).to include list
+        expect(response).to render_template :index
+      end
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :index, format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body)["accepted_lists"].count)
+          .to eq user.lists.accepted(user).count
+        expect(JSON.parse(response.body)["not_accepted_lists"].count)
+          .to eq user.lists.not_accepted(user).count
+      end
     end
   end
 
@@ -27,12 +41,30 @@ RSpec.describe ListsController do
   end
 
   describe "GET #edit" do
-    it "assigns the requested list as @list" do
-      get :edit, params: {
-        id: list.id
-      }
+    describe "format HTML" do
+      it "renders index" do
+        get :edit, params: {
+          id: list.id
+        }
 
-      expect(assigns(:list)).to eq list
+        expect(response).to render_template :index
+      end
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :edit, params: {
+          id: list.id
+        }, format: :json
+
+        expect(JSON.parse(response.body).to_h).to include(
+          "archived_at" => list[:archived_at],
+          "completed" => list[:completed],
+          "id" => list[:id],
+          "name" => list[:name],
+          "refreshed" => list[:refreshed]
+        )
+      end
     end
   end
 

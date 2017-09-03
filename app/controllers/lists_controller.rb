@@ -3,8 +3,15 @@
 # no doc
 class ListsController < ApplicationController
   def index
-    @accepted_lists = current_user.lists.accepted(current_user)
-    @not_accepted_lists = current_user.lists.not_accepted(current_user)
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          accepted_lists: current_user.lists.accepted(current_user),
+          not_accepted_lists: current_user.lists.not_accepted(current_user)
+        }
+      end
+    end
   end
 
   def create
@@ -18,11 +25,24 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = List.find(params[:id])
+    set_list
+    set_ordered_items
+    respond_to do |format|
+      format.html { render :index }
+      format.json do
+        render json: { current_user_id: current_user.id, list: @list,
+                       not_purchased_items: @ordered_items.not_purchased,
+                       purchased_items: @ordered_items.purchased.not_refreshed }
+      end
+    end
   end
 
   def edit
-    @list = List.find(params[:id])
+    list = List.find(params[:id])
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: list }
+    end
   end
 
   def update
@@ -71,5 +91,13 @@ class ListsController < ApplicationController
         quantity_name: item[:quantity_name]
       )
     end
+  end
+
+  def set_list
+    @list = List.find(params[:id])
+  end
+
+  def set_ordered_items
+    @ordered_items = @list.items.not_archived.ordered
   end
 end

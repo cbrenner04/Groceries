@@ -12,6 +12,14 @@ module Users
       sign_in user
     end
 
+    describe "GET new" do
+      it "renders 'lists/index'" do
+        get :new
+
+        expect(response).to render_template "lists/index"
+      end
+    end
+
     describe "POST #create" do
       context "when list_id param exists" do
         context "with valid params" do
@@ -27,8 +35,7 @@ module Users
           it "creates a new users_list" do
             expect do
               post :create, params: {
-                user: { email: "foo@bar.com" },
-                list_id: list.id
+                user: { email: "foo@bar.com" }, list_id: list.id
               }
             end.to change(UsersList, :count).by 1
           end
@@ -36,10 +43,7 @@ module Users
 
         context "with invalid params" do
           it "re-renders the 'new' template" do
-            post :create, params: {
-              user: { email: nil },
-              list_id: list.id
-            }
+            post :create, params: { user: { email: nil }, list_id: list.id }
 
             expect(response).to render_template("new")
           end
@@ -54,19 +58,17 @@ module Users
             it "does not create a new users_list" do
               expect do
                 post :create, params: {
-                  user: { email: other_user.email },
-                  list_id: list.id
+                  user: { email: other_user.email }, list_id: list.id
                 }
               end.to_not change(UsersList, :count)
             end
 
             it "redirects and gives correct alert" do
               post :create, params: {
-                user: { email: other_user.email },
-                list_id: list.id
+                user: { email: other_user.email }, list_id: list.id
               }
               expect(response)
-                .to redirect_to new_users_list_path(list_id: list.id)
+                .to redirect_to new_list_users_list_path(list_id: list.id)
               expect(flash[:notice]).to be_present
               expect(flash[:notice])
                 .to eq "List already shared with #{other_user.email}"
@@ -77,19 +79,17 @@ module Users
             it "creates a new users_list" do
               expect do
                 post :create, params: {
-                  user: { email: other_user.email },
-                  list_id: list.id
+                  user: { email: other_user.email }, list_id: list.id
                 }
               end.to change(UsersList, :count).by(1)
             end
 
             it "redirects and gives correct alert" do
               post :create, params: {
-                user: { email: other_user.email },
-                list_id: list.id
+                user: { email: other_user.email }, list_id: list.id
               }
               expect(response)
-                .to redirect_to new_users_list_path(list_id: list.id)
+                .to redirect_to new_list_users_list_path(list_id: list.id)
               expect(flash[:notice]).to be_present
               expect(flash[:notice])
                 .to eq "List has been shared with #{other_user.email}"
@@ -101,9 +101,8 @@ module Users
       context "when list_id param does not exist" do
         context "with valid params" do
           it "creates a new user" do
-            expect do
-              post :create, params: { user: { email: "foo@bar.com" } }
-            end.to change(User, :count).by 1
+            expect { post :create, params: { user: { email: "foo@bar.com" } } }
+              .to change(User, :count).by 1
           end
         end
 

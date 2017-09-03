@@ -3,6 +3,10 @@
 module Users
   # override invitations controller
   class InvitationsController < Devise::InvitationsController
+    def new
+      render "lists/index"
+    end
+
     def create
       return super unless list_id
       new_user = User.find_by(email: params[:user][:email])
@@ -14,6 +18,10 @@ module Users
       else
         super { |user| create_users_list(user) if user.valid? }
       end
+    end
+
+    def edit
+      render "lists/index"
     end
 
     private
@@ -28,7 +36,7 @@ module Users
 
     def flash_and_redirect(flash_message)
       flash[:notice] = flash_message
-      redirect_to new_users_list_path(list_id: list_id)
+      redirect_to new_list_users_list_path(list_id: list_id)
     end
 
     def create_users_list(user)

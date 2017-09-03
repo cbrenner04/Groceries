@@ -6,6 +6,13 @@ export default class Navbar extends Component {
     is_user_signed_in: PropTypes.bool.isRequired,
   }
 
+  conditionalBrand() {
+    if (this.props.is_user_signed_in) {
+      return (<a href="/" className="navbar-brand">Groceries</a>);
+    }
+    return (<a href="/users/sign_in" className="navbar-brand">Groceries</a>);
+  }
+
   conditionalLinks() {
     if (this.props.is_user_signed_in) {
       return (
@@ -58,7 +65,7 @@ export default class Navbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <a href="/" className="navbar-brand">Groceries</a>
+          { this.conditionalBrand() }
           <div className="collapse navbar-collapse" id="navbar">
             { this.conditionalLinks() }
           </div>

@@ -31,3 +31,11 @@ body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.router-link:link,
+.router-link:visited,
+.router-link:hover,
+.router-link:active {
+  color: black;
+  text-decoration: none;
+}

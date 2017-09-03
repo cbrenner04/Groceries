@@ -3,12 +3,15 @@
 # no doc
 class UsersListsController < ApplicationController
   def new
-    @list = List.find(params[:list_id])
-    @users_list = UsersList.new
-    @users = current_user.related_users_through_lists.map do |user|
-      next unless User.unattached_to_list(@list).include? user
+    list = List.find(params[:list_id])
+    users = current_user.related_users_through_lists.map do |user|
+      next unless User.unattached_to_list(list).include? user
       user
     end.reject(&:blank?)
+    respond_to do |format|
+      format.html { render template: "lists/index" }
+      format.json { render json: { list: list, users: users } }
+    end
   end
 
   def create

@@ -17,6 +17,11 @@ export default class ListsContainer extends Component {
     ).isRequired,
   }
 
+  static defaultProps = {
+    accepted_lists: [],
+    not_accepted_lists: [],
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,19 +36,32 @@ export default class ListsContainer extends Component {
   }
 
   componentWillMount() {
-    const completedLists = this.state.acceptedLists.filter((list) => {
-      if (list.completed && !list.refreshed) {
-        return list;
-      }
-      return '';
+    $.ajax({
+      type: 'GET',
+      url: '/lists/',
+      dataType: 'JSON',
+    }).done((data) => {
+      const acceptedLists = data.accepted_lists;
+      const notAcceptedLists = data.not_accepted_lists;
+      const completedLists = acceptedLists.filter((list) => {
+        if (list.completed && !list.refreshed) {
+          return list;
+        }
+        return '';
+      });
+      const nonCompletedLists = acceptedLists.filter((list) => {
+        if (!list.completed) {
+          return list;
+        }
+        return '';
+      });
+      this.setState({
+        acceptedLists,
+        notAcceptedLists,
+        completedLists,
+        nonCompletedLists,
+      });
     });
-    const nonCompletedLists = this.state.acceptedLists.filter((list) => {
-      if (!list.completed) {
-        return list;
-      }
-      return '';
-    });
-    this.setState({ completedLists, nonCompletedLists });
   }
 
   handleUserInput = (obj) => {
@@ -126,9 +144,8 @@ export default class ListsContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: '/users_lists/reject_list',
+        url: `/lists/${listId}/users_lists/reject_list`,
         type: 'GET',
-        data: { list_id: listId },
         success: () => this.removeListFromUnaccepted(listId),
       });
     }
@@ -136,9 +153,8 @@ export default class ListsContainer extends Component {
 
   acceptList = (list) => {
     $.ajax({
-      url: '/users_lists/accept_list',
+      url: `/lists/${list.id}/users_lists/accept_list`,
       type: 'GET',
-      data: { list_id: list.id },
       success: () => this.addNewList(list),
     });
   }
