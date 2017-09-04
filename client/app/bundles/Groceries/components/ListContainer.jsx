@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
@@ -26,9 +27,17 @@ export default class ListContainer extends Component {
         quantity: PropTypes.number,
       }).isRequired,
     ),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+        list_id: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
   }
 
   static defaultProps = {
+    current_user_id: 0,
+    list: { id: 0 },
     not_purchased_items: [],
     purchased_items: [],
   }
@@ -41,6 +50,23 @@ export default class ListContainer extends Component {
       notPurchasedItems: props.not_purchased_items,
       purchasedItems: props.purchased_items,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.match) {
+      $.ajax({
+        type: 'GET',
+        url: `/lists/${this.props.match.params.id}`,
+        dataType: 'JSON',
+      }).done((data) => {
+        this.setState({
+          userId: data.current_user_id,
+          list: data.list,
+          notPurchasedItems: data.not_purchased_items,
+          purchasedItems: data.purchased_items,
+        });
+      });
+    }
   }
 
   sortItems = (items) => {
@@ -65,9 +91,9 @@ export default class ListContainer extends Component {
 
   handleItemPurchase = (item) => {
     $.ajax({
-      url: `/items/${item.id}`,
+      url: `/lists/${item.list_id}/items/${item.id}`,
       type: 'PUT',
-      data: `item%5Bpurchased%5D=true&list_id=${item.list_id}`,
+      data: 'item%5Bpurchased%5D=true',
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -81,12 +107,12 @@ export default class ListContainer extends Component {
       purchased: false,
       quantity_name: item.quantity_name,
     };
-    $.post('/items', { item: newItem }).done((data) => {
+    $.post(`/lists/${newItem.list_id}/items`, { item: newItem }).done((data) => {
       this.handleAddItem(data);
       $.ajax({
-        url: `/items/${item.id}`,
+        url: `/lists/${item.list_id}/items/${item.id}`,
         type: 'PUT',
-        data: `item%5Brefreshed%5D=true&list_id=${item.list_id}`,
+        data: 'item%5Brefreshed%5D=true',
         success: () => this.removeItemFromPurchased(item),
       });
     }).fail((response) => {
@@ -117,8 +143,7 @@ export default class ListContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/items/${item.id}`,
-        data: `list_id=${item.list_id}`,
+        url: `/lists/${item.list_id}/items/${item.id}`,
         type: 'DELETE',
         success: () => this.removeItem(item.id),
       });
@@ -144,10 +169,10 @@ export default class ListContainer extends Component {
     return (
       <div>
         <h1>{ this.state.list.name }</h1>
-        <a href="/lists" className="pull-right">Back to lists</a>
+        <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
         <ItemForm
-          listId={this.props.list.id}
+          listId={this.state.list.id}
           userId={this.state.userId}
           handleItemAddition={this.handleAddItem}
         />

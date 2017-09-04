@@ -11,12 +11,31 @@ RSpec.describe UsersListsController do
   before { sign_in user }
 
   describe "GET #new" do
-    it "assigns a new users list as @users_list" do
-      get :new, params: {
-        list_id: list.id
-      }
+    describe "format HTML" do
+      it "renders 'lists/index'" do
+        get :new, params: {
+          list_id: list.id
+        }
 
-      expect(assigns(:users_list)).to be_a UsersList
+        expect(response).to render_template "lists/index"
+      end
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :new, params: {
+          list_id: list.id
+        }, format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body)["list"].to_h).to include(
+          "id" => list[:id],
+          "name" => list[:name],
+          "archived_at" => list[:archived_at],
+          "completed" => list[:completed],
+          "refreshed" => list[:refreshed]
+        )
+      end
     end
   end
 

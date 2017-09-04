@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 
 import Alert from './Alert';
 
 export default class EditPassword extends Component {
   static propTypes = {
     reset_password_token: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
+  }
+
+  static defaultProps = {
+    reset_password_token: '',
   }
 
   constructor(props) {
@@ -16,6 +25,14 @@ export default class EditPassword extends Component {
       resetPasswordToken: this.props.reset_password_token,
       errors: '',
     };
+  }
+
+  componentWillMount() {
+    if (this.props.location) {
+      this.setState({
+        resetPasswordToken: queryString.parse(this.props.location.search).reset_password_token,
+      });
+    }
   }
 
   handleChange = (event) => {
@@ -91,8 +108,8 @@ export default class EditPassword extends Component {
             />
           </div>
         </form>
-        <a href="/">Log in</a><br />
-        <a href="/users">Sign up</a>
+        <Link to="/users/sign_in">Log in</Link><br />
+        <Link to="/users">Sign up</Link>
       </div>
     );
   }

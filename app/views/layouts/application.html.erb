@@ -20,19 +20,10 @@
   </head>
 
   <body>
-
-    <%= react_component 'Navbar',
-                        props: { is_user_signed_in: user_signed_in? } %>
-
+    <%= react_component 'Navbar', props: { is_user_signed_in: user_signed_in? } %>
     <div class="container">
-        <%= react_component(
-          'Alert',
-          props: { text: notice, alert_class: 'info' }
-        ) if notice %>
-        <%= react_component(
-          'Alert',
-          props: { text: alert, alert_class: 'warning' }
-        ) if alert %>
+      <%= react_component('Alert', props: { text: notice, alert_class: 'info' }) if notice %>
+      <%= react_component('Alert', props: { text: alert, alert_class: 'warning' }) if alert %>
       <%= yield %>
     </div>
   </body>

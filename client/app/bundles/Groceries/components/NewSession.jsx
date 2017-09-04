@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Alert from './Alert';
 
@@ -91,8 +92,8 @@ export default class NewSession extends Component {
             />
           </div>
         </form>
-        <a href="/users">Sign up</a><br />
-        <a href="/users/password/new">Forgot your password?</a>
+        <Link to="/users">Sign up</Link><br />
+        <Link to="/users/password/new">Forgot your password?</Link>
       </div>
     );
   }

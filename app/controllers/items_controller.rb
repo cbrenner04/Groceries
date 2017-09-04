@@ -3,7 +3,7 @@
 # no doc
 class ItemsController < ApplicationController
   def create
-    list = List.find(item_params[:list_id])
+    list = List.find(params[:list_id])
     @item = list.items.build(item_params)
 
     if @item.save
@@ -14,8 +14,11 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @list = List.find(params[:list_id])
-    @item = Item.find(params[:id])
+    item = Item.find(params[:id])
+    respond_to do |format|
+      format.html { render template: "lists/index" }
+      format.json { render json: item }
+    end
   end
 
   def update

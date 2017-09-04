@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default class NotPurchasedItem extends Component {
@@ -16,11 +17,6 @@ export default class NotPurchasedItem extends Component {
 
   handlePurchase = () => {
     this.props.handleItemPurchase(this.props.item);
-  }
-
-  handleEdit = () => {
-    window.location =
-      `/items/${this.props.item.id}/edit?list_id=${this.props.item.list_id}`;
   }
 
   handleDelete = () => {
@@ -41,11 +37,10 @@ export default class NotPurchasedItem extends Component {
             style={{ marginRight: '1rem' }}
             role="presentation"
           />
-          <div
-            onClick={this.handleEdit}
-            className="fa fa-pencil-square-o fa-2x text-warning action-button"
+          <Link
+            to={`/lists/${this.props.item.list_id}/items/${this.props.item.id}/edit`}
+            className="fa fa-pencil-square-o fa-2x text-warning router-link"
             style={{ marginRight: '1rem' }}
-            role="presentation"
           />
           <div
             onClick={this.handleDelete}

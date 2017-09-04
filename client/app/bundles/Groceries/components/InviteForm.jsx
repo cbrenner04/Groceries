@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Alert from './Alert';
 
@@ -45,7 +46,7 @@ export default class InviteForm extends Component {
     return (
       <div>
         <h1>Send Invitation</h1>
-        <a href="/lists" className="pull-right">Back to lists</a>
+        <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
         { this.alert() }
         <form onSubmit={this.handleSubmit}>

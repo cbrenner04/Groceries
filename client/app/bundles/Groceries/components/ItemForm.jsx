@@ -13,8 +13,6 @@ export default class ItemForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: props.userId,
-      listId: props.listId,
       name: '',
       purchased: false,
       quantity: '',
@@ -34,14 +32,14 @@ export default class ItemForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const item = {
-      user_id: this.state.userId,
+      user_id: this.props.userId,
       name: this.state.name,
-      list_id: this.state.listId,
+      list_id: this.props.listId,
       quantity: this.state.quantity,
       purchased: this.state.purchased,
       quantity_name: this.state.quantityName,
     };
-    $.post('/items', { item }).done((data) => {
+    $.post(`/lists/${this.props.listId}/items`, { item }).done((data) => {
       this.props.handleItemAddition(data);
       this.setState({
         name: '',

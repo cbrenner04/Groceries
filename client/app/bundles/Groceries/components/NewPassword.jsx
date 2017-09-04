@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Alert from './Alert';
 
@@ -65,8 +66,8 @@ export default class NewPassword extends Component {
             />
           </div>
         </form>
-        <a href="/">Log in</a><br />
-        <a href="/users">Sign up</a>
+        <Link to="/users/sign_in">Log in</Link><br />
+        <Link to="/users">Sign up</Link>
       </div>
     );
   }

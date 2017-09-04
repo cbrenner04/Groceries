@@ -10,13 +10,37 @@ RSpec.describe ItemsController do
   before { sign_in user }
 
   describe "GET #edit" do
-    it "assigns the requested item as @item" do
-      get :edit, params: {
-        id: item.id,
-        list_id: list.id
-      }
+    describe "format HTML" do
+      it "renders 'lists/index'" do
+        get :edit, params: {
+          id: item.id,
+          list_id: list.id
+        }
 
-      expect(assigns(:item)).to eq item
+        expect(response).to render_template "lists/index"
+      end
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :edit, params: {
+          id: item.id,
+          list_id: list.id
+        }, format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body).to_h).to include(
+          "archived_at" => item[:archived_at],
+          "id" => item[:id],
+          "list_id" => item[:list_id],
+          "name" => item[:name],
+          "purchased" => item[:purchased],
+          "quantity" => item[:quantity],
+          "quantity_name" => item[:quantity_name],
+          "refreshed" => item[:refreshed],
+          "user_id" => item[:user_id]
+        )
+      end
     end
   end
 
@@ -27,9 +51,9 @@ RSpec.describe ItemsController do
           post :create, params: {
             item: {
               user_id: user.id,
-              name: "foo",
-              list_id: list.id
-            }
+              name: "foo"
+            },
+            list_id: list.id
           }
         end.to change(Item, :count).by 1
       end
@@ -38,10 +62,8 @@ RSpec.describe ItemsController do
     describe "with invalid params" do
       it "returns 422" do
         post :create, params: {
-          item: {
-            name: nil,
-            list_id: list.id
-          }
+          item: { name: nil },
+          list_id: list.id
         }
 
         expect(response.status).to eq 422
@@ -55,10 +77,8 @@ RSpec.describe ItemsController do
         update_item = create :item, name: "foo"
         put :update, params: {
           id: update_item.id,
-          item: {
-            name: "bar",
-            list_id: list.id
-          }
+          item: { name: "bar" },
+          list_id: list.id
         }
         update_item.reload
 
@@ -70,10 +90,9 @@ RSpec.describe ItemsController do
       it "returns 422" do
         item = create :item
         put :update, params: {
-          id: item.id, item: {
-            name: nil,
-            list_id: list.id
-          }
+          id: item.id,
+          item: { name: nil },
+          list_id: list.id
         }
 
         expect(response.status).to eq 422
