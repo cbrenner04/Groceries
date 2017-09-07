@@ -10,24 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902190352) do
+ActiveRecord::Schema.define(version: 20170924193548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "items", force: :cascade do |t|
-    t.integer  "user_id",                       null: false
-    t.integer  "list_id",                       null: false
-    t.string   "name",                          null: false
-    t.integer  "quantity",      default: 1,     null: false
-    t.boolean  "purchased",     default: false, null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+  create_table "book_list_items", force: :cascade do |t|
+    t.integer  "user_id",                     null: false
+    t.integer  "lists_id",                    null: false
+    t.string   "author"
+    t.string   "title"
+    t.boolean  "purchase",    default: false, null: false
+    t.boolean  "read",        default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["lists_id"], name: "index_book_list_items_on_lists_id", using: :btree
+    t.index ["user_id"], name: "index_book_list_items_on_user_id", using: :btree
+  end
+
+  create_table "grocery_list_items", force: :cascade do |t|
+    t.integer  "user_id",                         null: false
+    t.integer  "grocery_list_id",                 null: false
+    t.string   "name",                            null: false
+    t.integer  "quantity",        default: 1,     null: false
+    t.boolean  "purchased",       default: false, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "quantity_name"
     t.datetime "archived_at"
-    t.boolean  "refreshed",     default: false, null: false
-    t.index ["list_id"], name: "index_items_on_list_id", using: :btree
-    t.index ["user_id"], name: "index_items_on_user_id", using: :btree
+    t.boolean  "refreshed",       default: false, null: false
+    t.index ["grocery_list_id"], name: "index_grocery_list_items_on_grocery_list_id", using: :btree
+    t.index ["user_id"], name: "index_grocery_list_items_on_user_id", using: :btree
   end
 
   create_table "lists", force: :cascade do |t|
@@ -37,6 +51,37 @@ ActiveRecord::Schema.define(version: 20170902190352) do
     t.datetime "archived_at"
     t.boolean  "completed",   default: false, null: false
     t.boolean  "refreshed",   default: false, null: false
+    t.string   "type"
+  end
+
+  create_table "music_list_items", force: :cascade do |t|
+    t.integer  "user_id",                     null: false
+    t.integer  "lists_id",                    null: false
+    t.string   "title"
+    t.string   "artist"
+    t.string   "album"
+    t.boolean  "purchased",   default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["lists_id"], name: "index_music_list_items_on_lists_id", using: :btree
+    t.index ["user_id"], name: "index_music_list_items_on_user_id", using: :btree
+  end
+
+  create_table "to_do_list_items", force: :cascade do |t|
+    t.integer  "user_id",                     null: false
+    t.integer  "lists_id",                    null: false
+    t.string   "name"
+    t.integer  "assignee_id"
+    t.datetime "due_by"
+    t.boolean  "completed",   default: false, null: false
+    t.boolean  "refreshed",   default: false, null: false
+    t.datetime "archived_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["assignee_id"], name: "index_to_do_list_items_on_assignee_id", using: :btree
+    t.index ["lists_id"], name: "index_to_do_list_items_on_lists_id", using: :btree
+    t.index ["user_id"], name: "index_to_do_list_items_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -77,6 +122,13 @@ ActiveRecord::Schema.define(version: 20170902190352) do
     t.index ["user_id"], name: "index_users_lists_on_user_id", using: :btree
   end
 
-  add_foreign_key "items", "lists"
-  add_foreign_key "items", "users"
+  add_foreign_key "book_list_items", "lists", column: "lists_id"
+  add_foreign_key "book_list_items", "users"
+  add_foreign_key "grocery_list_items", "lists", column: "grocery_list_id"
+  add_foreign_key "grocery_list_items", "users"
+  add_foreign_key "music_list_items", "lists", column: "lists_id"
+  add_foreign_key "music_list_items", "users"
+  add_foreign_key "to_do_list_items", "lists", column: "lists_id"
+  add_foreign_key "to_do_list_items", "users"
+  add_foreign_key "to_do_list_items", "users", column: "assignee_id"
 end

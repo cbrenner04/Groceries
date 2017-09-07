@@ -6,7 +6,7 @@ feature "Lists", :js do
   let(:user) { create :user_with_lists }
   let(:another_user) { create :user_with_lists }
   let!(:first_list) { create :list, name: "foo" }
-  let!(:second_list) { create :list, name: "bar" }
+  let!(:second_list) { create :grocery_list, name: "bar" }
   let!(:third_list) { create :list, name: "baz" }
   let!(:fourth) { create :list, name: "asdf" }
   let!(:fifth) { create :list, name: "xyz" }
@@ -77,7 +77,7 @@ feature "Lists", :js do
       let(:list) { List.find_by(name: "bar") }
 
       before do
-        create :item, list: list
+        create :grocery_list_item, grocery_list: list
         list_page.load_index
       end
 

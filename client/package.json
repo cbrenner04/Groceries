@@ -2,9 +2,9 @@
   "name": "groceries",
   "private": true,
   "engines": {
-    "node": "8.4.0",
+    "node": "8.5.0",
     "npm": "4.4.4",
-    "yarn": "1.0.2"
+    "yarn": "1.1.0"
   },
   "scripts": {
     "build:test": "NODE_ENV=test webpack --config webpack.config.js",

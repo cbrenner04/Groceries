@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
-export default class ItemForm extends Component {
+export default class GroceryListItemForm extends Component {
   static propTypes = {
     userId: PropTypes.number.isRequired,
     listId: PropTypes.number.isRequired,
@@ -31,15 +31,18 @@ export default class ItemForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const item = {
+    const groceryListItem = {
       user_id: this.props.userId,
       name: this.state.name,
-      list_id: this.props.listId,
+      grocery_list_id: this.props.listId,
       quantity: this.state.quantity,
       purchased: this.state.purchased,
       quantity_name: this.state.quantityName,
     };
-    $.post(`/lists/${this.props.listId}/items`, { item }).done((data) => {
+    $.post(
+      `/lists/${this.props.listId}/grocery_list_items`,
+      { grocery_list_item: groceryListItem },
+    ).done((data) => {
       this.props.handleItemAddition(data);
       this.setState({
         name: '',

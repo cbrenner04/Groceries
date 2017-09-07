@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NotPurchasedItems from './NotPurchasedItems';
-import PurchasedItems from './PurchasedItems';
+import NotPurchasedGroceryListItems from './NotPurchasedGroceryListItems';
+import PurchasedGroceryListItems from './PurchasedGroceryListItems';
 
-export default class ItemsContainer extends Component {
+export default class GroceryListItemsContainer extends Component {
   static propTypes = {
     handleItemDelete: PropTypes.func.isRequired,
     handlePurchaseOfItem: PropTypes.func.isRequired,
@@ -42,13 +42,13 @@ export default class ItemsContainer extends Component {
     return (
       <div>
         <h2>Items</h2>
-        <NotPurchasedItems
+        <NotPurchasedGroceryListItems
           items={this.props.notPurchasedItems}
           onItemPurchase={this.handlePurchase}
           onItemDelete={this.handleDeletion}
         />
         <br />
-        <PurchasedItems
+        <PurchasedGroceryListItems
           items={this.props.purchasedItems}
           handleItemUnPurchase={this.onItemUnPurchase}
           onItemDelete={this.handleDeletion}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NotPurchasedItem from './NotPurchasedItem';
+import NotPurchasedGroceryListItem from './NotPurchasedGroceryListItem';
 
-export default class NotPurchasedItems extends Component {
+export default class NotPurchasedGroceryListItems extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -34,7 +34,7 @@ export default class NotPurchasedItems extends Component {
       <div className="list-group">
         {
           this.props.items.map((item, index) => (
-            <NotPurchasedItem
+            <NotPurchasedGroceryListItem
               item={item}
               index={index}
               key={item.id}

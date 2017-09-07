@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class PurchasedItem extends Component {
+export default class PurchasedGroceryListItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,

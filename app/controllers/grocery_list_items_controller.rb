@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # no doc
-class ItemsController < ApplicationController
+class GroceryListItemsController < ApplicationController
   def create
-    list = List.find(params[:list_id])
-    @item = list.items.build(item_params)
+    @item = GroceryListItem
+            .create(item_params.merge!(grocery_list_id: params[:list_id]))
 
     if @item.save
       render json: @item
@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    item = Item.find(params[:id])
+    item = GroceryListItem.find(params[:id])
     respond_to do |format|
       format.html { render template: "lists/index" }
       format.json { render json: item }
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
+    @item = GroceryListItem.find(params[:id])
     if @item.update(item_params)
       render json: @item
     else
@@ -32,15 +32,15 @@ class ItemsController < ApplicationController
 
   def destroy
     @list = List.find(params[:list_id])
-    @item = Item.find(params[:id])
+    @item = GroceryListItem.find(params[:id])
     @item.archive
-    redirect_to @list, notice: "Your item was successfully deleted"
+    redirect_to list_url(@list.id), notice: "Your item was successfully deleted"
   end
 
   private
 
   def item_params
-    params.require(:item).permit(
+    params.require(:grocery_list_item).permit(
       :user_id, :name, :list_id, :quantity, :purchased, :quantity_name,
       :refreshed
     )

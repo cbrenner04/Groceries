@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
-export default class EditItemForm extends Component {
+export default class EditGroceryListItemForm extends Component {
   static propTypes = {
     userId: PropTypes.number.isRequired,
-    listId: PropTypes.number.isRequired,
     itemId: PropTypes.number.isRequired,
     itemName: PropTypes.string.isRequired,
     itemQuantity: PropTypes.number.isRequired,
@@ -16,7 +15,7 @@ export default class EditItemForm extends Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
-        list_id: PropTypes.string,
+        grocery_list_id: PropTypes.string,
       }).isRequired,
     }).isRequired,
     history: PropTypes.shape({
@@ -26,7 +25,7 @@ export default class EditItemForm extends Component {
 
   static defaultProps = {
     userId: 0,
-    listId: 0,
+    listId: '0',
     itemId: 0,
     itemName: '',
     itemQuantity: 0,
@@ -38,7 +37,7 @@ export default class EditItemForm extends Component {
     super(props);
     this.state = {
       userId: props.userId,
-      listId: props.listId,
+      listId: props.match.params.grocery_list_id,
       itemId: props.itemId,
       itemName: props.itemName,
       itemPurchased: props.itemPurchased,
@@ -52,13 +51,13 @@ export default class EditItemForm extends Component {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
-        url: `/lists/${this.props.match.params.list_id}` +
-             `/items/${this.props.match.params.id}/edit`,
+        url: `/lists/${this.props.match.params.grocery_list_id}` +
+             `/grocery_list_items/${this.props.match.params.id}/edit`,
         dataType: 'JSON',
       }).done((item) => {
         this.setState({
           userId: item.user_id,
-          listId: item.list_id,
+          listId: item.grocery_list_id,
           itemId: item.id,
           itemName: item.name,
           itemPurchased: item.purchased,
@@ -78,18 +77,18 @@ export default class EditItemForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const item = {
+    const groceryListItem = {
       user_id: this.state.userId,
       name: this.state.itemName,
-      list_id: this.state.listId,
+      grocery_list_id: this.state.listId,
       quantity: this.state.itemQuantity,
       purchased: this.state.itemPurchased,
       quantity_name: this.state.itemQuantityName,
     };
     // TODO: update to use axios. this will require auth token stuff
     $.ajax({
-      url: `/lists/${this.state.listId}/items/${this.state.itemId}`,
-      data: { item },
+      url: `/lists/${this.state.listId}/grocery_list_items/${this.state.itemId}`,
+      data: { grocery_list_item: groceryListItem },
       method: 'PUT',
     }).done(() => {
       this.props.history.push(`/lists/${this.state.listId}`);

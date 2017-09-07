@@ -2,11 +2,12 @@
 
 require "rails_helper"
 
-feature "Items", :js do
-  let(:user) { create :user_with_lists }
-  let(:list) { user.lists.last }
+feature "Grocery List Items", :js do
+  let(:user) { create :user }
+  let(:list) { create :grocery_list }
+  let(:users_list) { create :users_list, user: user, list: list }
   let(:list_page) { Pages::List.new }
-  let(:item_page) { Pages::Item.new }
+  let(:item_page) { Pages::GroceryListItem.new }
 
   before do
     log_in_user user
@@ -28,7 +29,9 @@ feature "Items", :js do
   end
 
   describe "update" do
-    let(:item) { create :item, list: list, name: "bar", quantity: 10 }
+    let(:item) do
+      create :grocery_list_item, grocery_list: list, name: "bar", quantity: 10
+    end
 
     before do
       item_page.load_edit(item, list)
@@ -53,7 +56,7 @@ feature "Items", :js do
 
   describe "destroy" do
     before do
-      create :item, list: list, name: "bar"
+      create :grocery_list_item, list: list, name: "bar"
       list_page.load_list list
     end
 
