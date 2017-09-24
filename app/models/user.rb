@@ -18,9 +18,9 @@ class User < ApplicationRecord
   end
 
   def related_users_through_lists
-    lists.map(&:users_lists).flatten.uniq.map do |user_list|
-      next if user_list.user_id == id || !user_list.has_accepted
-      User.find(user_list.user_id)
-    end.uniq.reject(&:blank?)
+    user_lists = lists.map(&:users_lists).flatten.uniq.reject do |user_list|
+      user_list.user_id == id || !user_list.has_accepted
+    end
+    user_lists.map { |user_list| User.find(user_list.user_id) }.uniq
   end
 end
