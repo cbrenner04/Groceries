@@ -2,10 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe ItemsController do
-  let(:user) { create :user_with_lists }
-  let(:list) { user.lists.last }
-  let(:item) { create :item, list: list }
+RSpec.describe GroceryListItemsController do
+  let(:user) { create :user }
+  let(:list) { create :grocery_list }
+  let(:users_list) { create :users_list, user: user, list: list }
+  let(:item) { create :grocery_list_item, grocery_list: list }
 
   before { sign_in user }
 
@@ -32,7 +33,7 @@ RSpec.describe ItemsController do
         expect(JSON.parse(response.body).to_h).to include(
           "archived_at" => item[:archived_at],
           "id" => item[:id],
-          "list_id" => item[:list_id],
+          "grocery_list_id" => item[:grocery_list_id],
           "name" => item[:name],
           "purchased" => item[:purchased],
           "quantity" => item[:quantity],
@@ -49,20 +50,24 @@ RSpec.describe ItemsController do
       it "creates a new item" do
         expect do
           post :create, params: {
-            item: {
+            grocery_list_item: {
+              grocery_list_id: list.id,
               user_id: user.id,
               name: "foo"
             },
             list_id: list.id
           }
-        end.to change(Item, :count).by 1
+        end.to change(GroceryListItem, :count).by 1
       end
     end
 
     describe "with invalid params" do
       it "returns 422" do
         post :create, params: {
-          item: { name: nil },
+          grocery_list_item: {
+            grocery_list_id: list.id,
+            name: nil
+          },
           list_id: list.id
         }
 
@@ -74,10 +79,10 @@ RSpec.describe ItemsController do
   describe "PUT #update" do
     describe "with valid params" do
       it "updates a item" do
-        update_item = create :item, name: "foo"
+        update_item = create :grocery_list_item, name: "foo"
         put :update, params: {
           id: update_item.id,
-          item: { name: "bar" },
+          grocery_list_item: { name: "bar" },
           list_id: list.id
         }
         update_item.reload
@@ -88,10 +93,10 @@ RSpec.describe ItemsController do
 
     describe "with invalid params" do
       it "returns 422" do
-        item = create :item
+        item = create :grocery_list_item
         put :update, params: {
           id: item.id,
-          item: { name: nil },
+          grocery_list_item: { name: nil },
           list_id: list.id
         }
 
@@ -102,13 +107,13 @@ RSpec.describe ItemsController do
 
   describe "DELETE #destroy" do
     it "destroys a item" do
-      delete_item = create :item, name: "foo"
+      delete_item = create :grocery_list_item, name: "foo"
       delete :destroy, params: {
         id: delete_item.id,
         list_id: list.id
       }
 
-      expect(Item.not_archived).to_not include delete_item
+      expect(GroceryListItem.not_archived).to_not include delete_item
     end
   end
 end

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import EditItemForm from './EditItemForm';
+import EditGroceryListItemForm from './EditGroceryListItemForm';
 import ListContainer from './ListContainer';
 import ListEditForm from './ListEditForm';
 import ListsContainer from './ListsContainer';
@@ -27,7 +27,11 @@ export default function AppRouter() {
         <Route exact path="/lists" component={ListsContainer} />
         <Route exact path="/lists/:id" component={ListContainer} />
         <Route exact path="/lists/:id/edit" component={ListEditForm} />
-        <Route exact path="/lists/:list_id/items/:id/edit" component={EditItemForm} />
+        <Route
+          exact
+          path="/lists/:grocery_list_id/grocery_list_items/:id/edit"
+          component={EditGroceryListItemForm}
+        />
         <Route exact path="/lists/:list_id/users_lists/new" component={ShareListForm} />
       </div>
     </Router>

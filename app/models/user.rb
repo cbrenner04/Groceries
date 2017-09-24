@@ -7,7 +7,6 @@ class User < ApplicationRecord
 
   has_many :users_lists, dependent: :destroy
   has_many :lists, through: :users_lists, source: :list, dependent: :destroy
-  has_many :items, through: :lists, dependent: :destroy
   has_many :invitations, class_name: to_s, as: :invited_by
 
   validates :email, presence: true

@@ -2,6 +2,6 @@
 
 require "rails_helper"
 
-RSpec.describe Item do
+RSpec.describe MusicListItem, type: :model do
   # nothing here
 end

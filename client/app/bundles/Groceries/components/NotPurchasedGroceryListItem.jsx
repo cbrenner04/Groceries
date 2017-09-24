@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default class NotPurchasedItem extends Component {
+export default class NotPurchasedGroceryListItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      list_id: PropTypes.number.isRequired,
+      grocery_list_id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
       quantity_name: PropTypes.string,
@@ -38,7 +38,8 @@ export default class NotPurchasedItem extends Component {
             role="presentation"
           />
           <Link
-            to={`/lists/${this.props.item.list_id}/items/${this.props.item.id}/edit`}
+            to={`/lists/${this.props.item.grocery_list_id}/grocery_list_items` +
+                `/${this.props.item.id}/edit`}
             className="fa fa-pencil-square-o fa-2x text-warning router-link"
             style={{ marginRight: '1rem' }}
           />

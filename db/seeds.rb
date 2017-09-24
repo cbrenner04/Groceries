@@ -8,7 +8,7 @@ user_emails.each do |email|
 end
 
 list_names = %w(foobar foobaz)
-list_names.each { |list| List.create!(name: list) }
+list_names.each { |list| GroceryList.create!(name: list) }
 
 UsersList.create!(
   user: User.find_by(email: 'foo@ex.co'),
@@ -37,9 +37,9 @@ UsersList.create!(
 item_names = %w(apples bananas oranges chocolate beer)
 
 item_names.each do |item|
-  Item.create!(
+  GroceryListItem.create!(
     user: User.find_by(email: 'foo@ex.co'),
-    list: List.find_by(name: 'foobar'),
+    grocery_list: List.find_by(name: 'foobar'),
     name: item,
     quantity: (1..10).to_a.sample,
     quantity_name: %w(bag bunch case).sample

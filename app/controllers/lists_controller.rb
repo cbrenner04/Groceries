@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
+# rubocop:disable Metrics/ClassLength
 class ListsController < ApplicationController
   def index
     respond_to do |format|
@@ -61,11 +62,12 @@ class ListsController < ApplicationController
   end
 
   def refresh_list
-    list = List.find(params[:id])
-    list.update!(refreshed: true)
-    new_list = current_user.lists.create!(name: list[:name])
+    old_list = List.find(params[:id])
+    old_list.update!(refreshed: true)
+    new_list = create_new_list(old_list)
+    UsersList.create!(user: current_user, list: new_list)
     accept_user_list(new_list)
-    create_new_items(list.items, new_list)
+    create_new_items(old_list, new_list)
     redirect_to lists_path, notice: "Your list was successfully refreshed"
   end
 
@@ -81,15 +83,86 @@ class ListsController < ApplicationController
       .update!(has_accepted: true, responded: true)
   end
 
-  def create_new_items(items, list)
-    items.each do |item|
-      Item.create!(
+  def create_new_list(old_list)
+    case old_list.type
+    when "ToDoList"
+      ToDoList.create!(name: old_list[:name])
+    when "BookList"
+      BookList.create!(name: old_list[:name])
+    when "MusicList"
+      MusicList.create!(name: old_list[:name])
+    else
+      GroceryList.create!(name: old_list[:name])
+    end
+  end
+
+  def create_new_items(old_list, new_list)
+    case old_list.type
+    when "ToDoList"
+      create_to_do_list_items(old_list, new_list)
+    when "BookList"
+      create_book_list_items(old_list, new_list)
+    when "MusicList"
+      create_music_list_items(old_list, new_list)
+    else
+      create_grocery_list_items(old_list, new_list)
+    end
+  end
+
+  def create_to_do_list_items(old_list, new_list)
+    list_items(old_list).each do |item|
+      ToDoListItem.create!(
         user: current_user,
-        list: list,
+        to_do_list: new_list,
+        name: item[:name]
+      )
+    end
+  end
+
+  def create_book_list_items(old_list, new_list)
+    list_items(old_list).each do |item|
+      BookListItem.create!(
+        user: current_user,
+        book_list: new_list,
+        title: item[:title]
+      )
+    end
+  end
+
+  def create_music_list_items(old_list, new_list)
+    list_items(old_list).each do |item|
+      MusicListItem.create!(
+        user: current_user,
+        music_list: new_list,
+        title: item[:title],
+        artist: item[:artist],
+        album: item[:album]
+      )
+    end
+  end
+
+  def create_grocery_list_items(old_list, new_list)
+    list_items(old_list).each do |item|
+      GroceryListItem.create!(
+        user: current_user,
+        grocery_list: new_list,
         name: item[:name],
         quantity: item[:quantity],
         quantity_name: item[:quantity_name]
       )
+    end
+  end
+
+  def list_items(list)
+    case list.type
+    when "ToDoList"
+      ToDoListItem.where(to_do_list: list)
+    when "BookList"
+      BookListItem.where(book_list: list)
+    when "MusicList"
+      MusicListItem.where(music_list: list)
+    else
+      GroceryListItem.where(grocery_list: list)
     end
   end
 
@@ -98,6 +171,7 @@ class ListsController < ApplicationController
   end
 
   def set_ordered_items
-    @ordered_items = @list.items.not_archived.ordered
+    @ordered_items = list_items(@list).not_archived.ordered
   end
 end
+# rubocop:enable Metrics/ClassLength

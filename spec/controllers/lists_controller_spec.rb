@@ -149,9 +149,10 @@ RSpec.describe ListsController do
     end
 
     it "creates new items" do
-      Item.create!(
+      list = GroceryList.create!(name: "NewGroceryList")
+      GroceryListItem.create!(
         user: user,
-        list: list,
+        grocery_list: list,
         name: "foo",
         quantity: 1,
         quantity_name: "bar"
@@ -160,7 +161,7 @@ RSpec.describe ListsController do
         post :refresh_list, params: {
           id: list.id
         }
-      end.to change(Item, :count).by 1
+      end.to change(GroceryListItem, :count).by 1
     end
   end
 end

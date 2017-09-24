@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
-import ItemForm from './ItemForm';
-import ItemsContainer from './ItemsContainer';
+import GroceryListItemForm from './GroceryListItemForm';
+import GroceryListItemsContainer from './GroceryListItemsContainer';
 
 export default class ListContainer extends Component {
   static propTypes = {
@@ -91,9 +91,9 @@ export default class ListContainer extends Component {
 
   handleItemPurchase = (item) => {
     $.ajax({
-      url: `/lists/${item.list_id}/items/${item.id}`,
+      url: `/lists/${item.list_id}/grocery_list_items/${item.id}`,
       type: 'PUT',
-      data: 'item%5Bpurchased%5D=true',
+      data: 'grocery_list_item%5Bpurchased%5D=true',
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -102,17 +102,20 @@ export default class ListContainer extends Component {
     const newItem = {
       user_id: item.user_id,
       name: item.name,
-      list_id: item.list_id,
+      grocery_list_id: item.grocery_list_id,
       quantity: item.quantity,
       purchased: false,
       quantity_name: item.quantity_name,
     };
-    $.post(`/lists/${newItem.list_id}/items`, { item: newItem }).done((data) => {
+    $.post(
+      `/lists/${newItem.grocery_list_id}/grocery_list_items`,
+      { grocery_list_item: newItem },
+    ).done((data) => {
       this.handleAddItem(data);
       $.ajax({
-        url: `/lists/${item.list_id}/items/${item.id}`,
+        url: `/lists/${item.grocery_list_id}/grocery_list_items/${item.id}`,
         type: 'PUT',
-        data: 'item%5Brefreshed%5D=true',
+        data: 'grocery_list_item%5Brefreshed%5D=true',
         success: () => this.removeItemFromPurchased(item),
       });
     }).fail((response) => {
@@ -143,7 +146,7 @@ export default class ListContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/lists/${item.list_id}/items/${item.id}`,
+        url: `/lists/${item.grocery_list_id}/grocery_list_items/${item.id}`,
         type: 'DELETE',
         success: () => this.removeItem(item.id),
       });
@@ -171,13 +174,13 @@ export default class ListContainer extends Component {
         <h1>{ this.state.list.name }</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
-        <ItemForm
+        <GroceryListItemForm
           listId={this.state.list.id}
           userId={this.state.userId}
           handleItemAddition={this.handleAddItem}
         />
         <br />
-        <ItemsContainer
+        <GroceryListItemsContainer
           notPurchasedItems={this.state.notPurchasedItems}
           purchasedItems={this.state.purchasedItems}
           handlePurchaseOfItem={this.handleItemPurchase}

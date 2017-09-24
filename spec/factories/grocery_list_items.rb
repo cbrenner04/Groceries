@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  factory :item do
+  factory :grocery_list_item do
     user
-    list
+    grocery_list
     name "MyString"
     quantity 1
     purchased false

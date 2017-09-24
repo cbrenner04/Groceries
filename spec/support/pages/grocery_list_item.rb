@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Pages
-  class Item < Page
+  class GroceryListItem < Page
     def fill_in_new_name_with(name)
       fill_in "Add a new item", with: name
     end
@@ -25,7 +25,7 @@ module Pages
     end
 
     def load_edit(item, list)
-      visit edit_list_item_path(item, list_id: list.id)
+      visit edit_list_grocery_list_item_path(item, list_id: list.id)
     end
   end
 end
