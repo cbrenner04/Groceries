@@ -17,17 +17,15 @@ class List < ApplicationRecord
   end
 
   def self.accepted(user)
-    not_archived.descending.map do |list|
-      next unless UsersList.find_by(user: user, list: list)&.has_accepted
-      list
-    end.reject(&:blank?)
+    not_archived.descending.select do |list|
+      UsersList.find_by(user: user, list: list)&.has_accepted
+    end
   end
 
   def self.not_accepted(user)
-    not_archived.descending.map do |list|
+    not_archived.descending.reject do |list|
       users_list = UsersList.find_by(user: user, list: list)
-      next if users_list&.has_accepted || users_list&.responded
-      list
-    end.reject(&:blank?)
+      users_list&.has_accepted || users_list&.responded
+    end
   end
 end
