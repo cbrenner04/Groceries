@@ -70,15 +70,73 @@ RSpec.describe ListsController do
 
   describe "POST #create" do
     describe "with valid params" do
-      it "creates a new list" do
-        expect do
-          post :create, params: {
-            list: {
-              user_id: user.id,
-              name: "foo"
+      describe "when type is ToDoList" do
+        it "creates a new list" do
+          expect do
+            post :create, params: {
+              list: {
+                user_id: user.id,
+                name: "foo",
+                type: "ToDoList"
+              }
             }
-          }
-        end.to change(List, :count).by 1
+          end.to change(ToDoList, :count).by 1
+        end
+      end
+
+      describe "when type is BookList" do
+        it "creates a new list" do
+          expect do
+            post :create, params: {
+              list: {
+                user_id: user.id,
+                name: "foo",
+                type: "BookList"
+              }
+            }
+          end.to change(BookList, :count).by 1
+        end
+      end
+
+      describe "when type is MusicList" do
+        it "creates a new list" do
+          expect do
+            post :create, params: {
+              list: {
+                user_id: user.id,
+                name: "foo",
+                type: "MusicList"
+              }
+            }
+          end.to change(MusicList, :count).by 1
+        end
+      end
+
+      describe "when type is GroceryList" do
+        it "creates a new list" do
+          expect do
+            post :create, params: {
+              list: {
+                user_id: user.id,
+                name: "foo",
+                type: "GroceryList"
+              }
+            }
+          end.to change(GroceryList, :count).by 1
+        end
+      end
+
+      describe "when type is not present" do
+        it "creates a new list" do
+          expect do
+            post :create, params: {
+              list: {
+                user_id: user.id,
+                name: "foo"
+              }
+            }
+          end.to change(GroceryList, :count).by 1
+        end
       end
     end
 

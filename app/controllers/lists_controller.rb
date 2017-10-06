@@ -16,9 +16,10 @@ class ListsController < ApplicationController
   end
 
   def create
-    @list = current_user.lists.create(list_params)
+    @list = build_new_list
     if @list.save
-      accept_user_list(@list)
+      UsersList.create!(user: current_user, list: @list,
+                        has_accepted: true, responded: true)
       render json: @list
     else
       render json: @list.errors, status: :unprocessable_entity
@@ -64,7 +65,7 @@ class ListsController < ApplicationController
   def refresh_list
     old_list = List.find(params[:id])
     old_list.update!(refreshed: true)
-    new_list = create_new_list(old_list)
+    new_list = create_new_list_from(old_list)
     UsersList.create!(user: current_user, list: new_list)
     accept_user_list(new_list)
     create_new_items(old_list, new_list)
@@ -74,7 +75,7 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:user, :name, :completed, :refreshed)
+    params.require(:list).permit(:user, :name, :completed, :refreshed, :type)
   end
 
   def accept_user_list(list)
@@ -83,7 +84,20 @@ class ListsController < ApplicationController
       .update!(has_accepted: true, responded: true)
   end
 
-  def create_new_list(old_list)
+  def build_new_list
+    case list_params[:type]
+    when "ToDoList"
+      ToDoList.new(list_params)
+    when "BookList"
+      BookList.new(list_params)
+    when "MusicList"
+      MusicList.new(list_params)
+    else
+      GroceryList.new(list_params)
+    end
+  end
+
+  def create_new_list_from(old_list)
     case old_list.type
     when "ToDoList"
       ToDoList.create!(name: old_list[:name])
