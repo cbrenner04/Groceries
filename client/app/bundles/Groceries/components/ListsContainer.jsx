@@ -32,6 +32,7 @@ export default class ListsContainer extends Component {
       success: '',
       completedLists: [],
       nonCompletedLists: [],
+      listType: '',
     };
   }
 
@@ -69,7 +70,7 @@ export default class ListsContainer extends Component {
   }
 
   handleFormSubmit = () => {
-    const list = { name: this.state.name };
+    const list = { name: this.state.name, type: this.state.listType };
     $.post('/lists', { list })
       .done(data => this.addNewList(data))
       .fail((response) => {
@@ -91,6 +92,7 @@ export default class ListsContainer extends Component {
     this.setState({
       acceptedLists: this.sortLists(lists),
       name: '',
+      listType: '',
       success: 'List successfully added.',
       nonCompletedLists: this.sortLists(nonCompletedLists),
     });
@@ -195,6 +197,7 @@ export default class ListsContainer extends Component {
         { this.alert() }
         <ListForm
           name={this.state.name}
+          listType={this.state.listType}
           onUserInput={this.handleUserInput}
           onFormSubmit={this.handleFormSubmit}
         />
