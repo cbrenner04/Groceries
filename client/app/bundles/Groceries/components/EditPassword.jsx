@@ -30,7 +30,9 @@ export default class EditPassword extends Component {
   componentWillMount() {
     if (this.props.location) {
       this.setState({
-        resetPasswordToken: queryString.parse(this.props.location.search).reset_password_token,
+        resetPasswordToken: queryString
+                            .parse(this.props.location.search)
+                            .reset_password_token,
       });
     }
   }
@@ -65,9 +67,7 @@ export default class EditPassword extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     }
     return '';
   }

@@ -61,13 +61,9 @@ export default class GroceryListItemForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     } else if (this.state.success.length > 0) {
-      return (
-        <Alert text={this.state.success} alert_class="success" />
-      );
+      return (<Alert text={this.state.success} alert_class="success" />);
     }
     return '';
   }

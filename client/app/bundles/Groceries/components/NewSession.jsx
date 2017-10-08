@@ -39,9 +39,7 @@ export default class NewSession extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     }
     return '';
   }

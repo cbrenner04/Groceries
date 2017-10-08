@@ -29,7 +29,9 @@ export default class EditPassword extends Component {
   componentWillMount() {
     if (this.props.location) {
       this.setState({
-        invitationToken: queryString.parse(this.props.location.search).invitation_token,
+        invitationToken: queryString
+                         .parse(this.props.location.search)
+                         .invitation_token,
       });
     }
   }
@@ -64,9 +66,7 @@ export default class EditPassword extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     }
     return '';
   }

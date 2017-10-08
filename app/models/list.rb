@@ -15,6 +15,10 @@ class List < ApplicationRecord
     update archived_at: Time.zone.now
   end
 
+  def as_json(options = {})
+    super(options.merge(methods: :type))
+  end
+
   def self.accepted(user)
     not_archived.descending.select do |list|
       UsersList.find_by(user: user, list: list)&.has_accepted

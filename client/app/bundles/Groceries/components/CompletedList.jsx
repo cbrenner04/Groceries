@@ -9,6 +9,7 @@ export default class List extends Component {
     list: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
       created_at: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
     }).isRequired,
@@ -24,6 +25,15 @@ export default class List extends Component {
     this.props.onListRefresh(this.props.list);
   }
 
+  listIconClass = listType => (
+    {
+      BookList: 'fa-book',
+      GroceryList: 'fa-shopping-bag',
+      MusicList: 'fa-music',
+      ToDoList: 'fa-list',
+    }[listType]
+  );
+
   render() {
     return (
       <div className="list-group">
@@ -35,6 +45,12 @@ export default class List extends Component {
             <div className="col-md-6">
               <Link to={`/lists/${this.props.list.id}`} className="router-link">
                 <h5 className="mb-1 action-button">
+                  <i
+                    className={
+                      `fa ${this.listIconClass(this.props.list.type)} text-info`
+                    }
+                    style={{ marginRight: '1rem' }}
+                  />
                   {this.props.list.name}
                 </h5>
               </Link>
