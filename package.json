@@ -3,10 +3,10 @@
   "private": true,
   "engines": {
     "node": "8.5.0",
-    "yarn": "1.1.0"
+    "yarn": "1.3.2"
   },
   "dependencies": {
-    "yarn": "^1.1.0"
+    "yarn": "^1.3.2"
   },
   "scripts": {
     "postinstall": "cd client && yarn install"
