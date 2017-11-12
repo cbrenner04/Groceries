@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :book_list_item do
-    user nil
-    book_lists nil
+    user
+    book_list
     author "MyString"
     title "MyString"
     purchase false

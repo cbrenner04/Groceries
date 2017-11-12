@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :music_list_item do
-    user nil
-    music_list nil
+    user
+    music_list
     title "MyString"
     artist "MyString"
     album "MyString"

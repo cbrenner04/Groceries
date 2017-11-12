@@ -11,6 +11,7 @@ export default class ListContainer extends Component {
     current_user_id: PropTypes.number.isRequired,
     list: PropTypes.shape({
       id: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
     }).isRequired,
     not_purchased_items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -37,7 +38,7 @@ export default class ListContainer extends Component {
 
   static defaultProps = {
     current_user_id: 0,
-    list: { id: 0 },
+    list: { id: 0, type: 'GroceryList' },
     not_purchased_items: [],
     purchased_items: [],
   }
@@ -89,11 +90,22 @@ export default class ListContainer extends Component {
     this.setState({ notPurchasedItems });
   }
 
+  itemType = () => (
+    {
+      BookList: 'book_list_item',
+      GroceryList: 'grocery_list_item',
+      MusicList: 'music_list_item',
+      ToDoList: 'to_do_list_item',
+    }[this.state.list.type]
+  );
+
+  listItemPath = listId => `/lists/${listId}/${this.itemType()}s`
+
   handleItemPurchase = (item) => {
     $.ajax({
-      url: `/lists/${item.list_id}/grocery_list_items/${item.id}`,
+      url: `${this.listItemPath(item.grocery_list_id)}/${item.id}`,
       type: 'PUT',
-      data: 'grocery_list_item%5Bpurchased%5D=true',
+      data: `${this.itemType()}%5Bpurchased%5D=true`,
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -108,14 +120,14 @@ export default class ListContainer extends Component {
       quantity_name: item.quantity_name,
     };
     $.post(
-      `/lists/${newItem.grocery_list_id}/grocery_list_items`,
+      `${this.listItemPath(newItem.grocery_list_id)}`,
       { grocery_list_item: newItem },
     ).done((data) => {
       this.handleAddItem(data);
       $.ajax({
-        url: `/lists/${item.grocery_list_id}/grocery_list_items/${item.id}`,
+        url: `${this.listItemPath(item.grocery_list_id)}/${item.id}`,
         type: 'PUT',
-        data: 'grocery_list_item%5Brefreshed%5D=true',
+        data: `${this.itemType()}%5Brefreshed%5D=true`,
         success: () => this.removeItemFromPurchased(item),
       });
     }).fail((response) => {
@@ -146,7 +158,7 @@ export default class ListContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/lists/${item.grocery_list_id}/grocery_list_items/${item.id}`,
+        url: `${this.listItemPath(item.grocery_list_id)}${item.id}`,
         type: 'DELETE',
         success: () => this.removeItem(item.id),
       });

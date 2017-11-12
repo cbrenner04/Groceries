@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :to_do_list_item do
-    user nil
-    to_do_list nil
+    user
+    to_do_list
     name "MyString"
     assignee nil
     due_by "2017-09-24 14:35:48"
