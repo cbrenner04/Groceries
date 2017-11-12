@@ -90,22 +90,21 @@ export default class ListContainer extends Component {
     this.setState({ notPurchasedItems });
   }
 
-  itemType = () => (
-    {
-      BookList: 'book_list_item',
-      GroceryList: 'grocery_list_item',
-      MusicList: 'music_list_item',
-      ToDoList: 'to_do_list_item',
-    }[this.state.list.type]
-  );
+  listTypetoSnakeCase = () => {
+    const listType = this.state.list.type;
+    return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
+  }
 
-  listItemPath = listId => `/lists/${listId}/${this.itemType()}s`
+  listItemPath = item =>
+    `/lists/${this.listId(item)}/${this.listTypetoSnakeCase()}_items`
+
+  listId = item => item[`${this.listTypetoSnakeCase()}_id`]
 
   handleItemPurchase = (item) => {
     $.ajax({
-      url: `${this.listItemPath(item.grocery_list_id)}/${item.id}`,
+      url: `${this.listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${this.itemType()}%5Bpurchased%5D=true`,
+      data: `${this.listTypetoSnakeCase()}_item%5Bpurchased%5D=true`,
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -114,20 +113,20 @@ export default class ListContainer extends Component {
     const newItem = {
       user_id: item.user_id,
       name: item.name,
-      grocery_list_id: item.grocery_list_id,
       quantity: item.quantity,
       purchased: false,
       quantity_name: item.quantity_name,
     };
-    $.post(
-      `${this.listItemPath(newItem.grocery_list_id)}`,
-      { grocery_list_item: newItem },
-    ).done((data) => {
+    newItem[`${this.listTypetoSnakeCase()}_id`] = this.listId(item);
+    const postData = {};
+    postData[`${this.listTypetoSnakeCase()}_item`] = newItem;
+    $.post(`${this.listItemPath(newItem)}`, postData)
+    .done((data) => {
       this.handleAddItem(data);
       $.ajax({
-        url: `${this.listItemPath(item.grocery_list_id)}/${item.id}`,
+        url: `${this.listItemPath(item)}/${item.id}`,
         type: 'PUT',
-        data: `${this.itemType()}%5Brefreshed%5D=true`,
+        data: `${this.listTypetoSnakeCase()}_item%5Brefreshed%5D=true`,
         success: () => this.removeItemFromPurchased(item),
       });
     }).fail((response) => {
@@ -149,7 +148,8 @@ export default class ListContainer extends Component {
   moveItemToNotPurchased = (item) => {
     const purchasedItems =
       this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
-    let notPurchasedItems = update(this.state.notPurchasedItems, { $push: [item] });
+    let notPurchasedItems =
+      update(this.state.notPurchasedItems, { $push: [item] });
     notPurchasedItems = this.sortItems(notPurchasedItems);
     this.setState({ notPurchasedItems, purchasedItems });
   }
@@ -158,7 +158,7 @@ export default class ListContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `${this.listItemPath(item.grocery_list_id)}${item.id}`,
+        url: `${this.listItemPath(item)}${item.id}`,
         type: 'DELETE',
         success: () => this.removeItem(item.id),
       });
