@@ -109,7 +109,11 @@ export default class ListEditForm extends Component {
       { name: 'ToDoList', id: 4 },
     ];
     const options = listTypes.map(listType => (
-      <div className="form-check form-check-inline" key={listType.id}>
+      <div
+        className="form-check form-check-inline col-3"
+        style={{ marginLeft: 0 }}
+        key={listType.id}
+      >
         <label
           className="form-check-label"
           htmlFor={`listType-${listType.name}`}
@@ -152,7 +156,7 @@ export default class ListEditForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-group" style={{ paddingLeft: '0.4rem' }}>
+          <div className="form-group">
             {this.listTypeOptions()}
           </div>
           <div className="form-group">
