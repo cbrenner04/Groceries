@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
 import ListItemForm from './ListItemForm';
-import GroceryListItemsContainer from './GroceryListItemsContainer';
+import ListItemsContainer from './ListItemsContainer';
 
 export default class ListContainer extends Component {
   static propTypes = {
@@ -16,16 +16,29 @@ export default class ListContainer extends Component {
     not_purchased_items: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        quantity: PropTypes.number.isRequired,
+        name: PropTypes.string,
+        quantity: PropTypes.number,
         quantity_name: PropTypes.string,
+        author: PropTypes.string,
+        title: PropTypes.string,
+        artist: PropTypes.string,
+        album: PropTypes.string,
+        assignee_id: PropTypes.number,
+        due_by: PropTypes.date,
       }).isRequired,
     ),
     purchased_items: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
+        name: PropTypes.string,
         quantity: PropTypes.number,
+        quantity_name: PropTypes.string,
+        author: PropTypes.string,
+        title: PropTypes.string,
+        artist: PropTypes.string,
+        album: PropTypes.string,
+        assignee_id: PropTypes.number,
+        due_by: PropTypes.date,
       }).isRequired,
     ),
     match: PropTypes.shape({
@@ -202,12 +215,13 @@ export default class ListContainer extends Component {
           handleItemAddition={this.handleAddItem}
         />
         <br />
-        <GroceryListItemsContainer
+        <ListItemsContainer
           notPurchasedItems={this.state.notPurchasedItems}
           purchasedItems={this.state.purchasedItems}
           handlePurchaseOfItem={this.handleItemPurchase}
           handleItemDelete={this.handleDelete}
           handleItemUnPurchase={this.handleUnPurchase}
+          listType={this.state.list.type}
         />
       </div>
     );

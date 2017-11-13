@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class PurchasedGroceryListItem extends Component {
+export default class PurchasedListItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.number,
       quantity_name: PropTypes.string,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
     }).isRequired,
     unPurchaseItem: PropTypes.func.isRequired,
     handleItemDelete: PropTypes.func.isRequired,

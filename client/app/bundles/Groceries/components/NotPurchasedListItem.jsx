@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default class NotPurchasedGroceryListItem extends Component {
+export default class NotPurchasedListItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      grocery_list_id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.number,
       quantity_name: PropTypes.string,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
     }).isRequired,
     handleItemDelete: PropTypes.func.isRequired,
     handleItemPurchase: PropTypes.func.isRequired,
+    listType: PropTypes.string.isRequired,
   }
 
   handlePurchase = () => {
@@ -21,6 +27,16 @@ export default class NotPurchasedGroceryListItem extends Component {
 
   handleDelete = () => {
     this.props.handleItemDelete(this.props.item);
+  }
+
+  listTypetoSnakeCase = () => {
+    const listType = this.props.listType;
+    return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
+  }
+
+  listItemPath = () => {
+    const listId = this.props.item[`${this.listTypetoSnakeCase()}_id`];
+    return `/lists/${listId}/${this.listTypetoSnakeCase()}_items`;
   }
 
   render() {
@@ -38,8 +54,7 @@ export default class NotPurchasedGroceryListItem extends Component {
             role="presentation"
           />
           <Link
-            to={`/lists/${this.props.item.grocery_list_id}/grocery_list_items` +
-                `/${this.props.item.id}/edit`}
+            to={`${this.listItemPath()}/${this.props.item.id}/edit`}
             className="fa fa-pencil-square-o fa-2x text-warning router-link"
             style={{ marginRight: '1rem' }}
           />
