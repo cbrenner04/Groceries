@@ -6,7 +6,7 @@ FactoryGirl.define do
     book_list
     author "MyString"
     title "MyString"
-    purchase false
+    purchased false
     read false
     archived_at "2017-09-24 14:35:29"
   end

@@ -27,10 +27,7 @@ class ListsController < ApplicationController
   end
 
   def show
-    set_list
-    set_ordered_items
-    set_not_purchased_items
-    set_purchased_items
+    set_up_list
     respond_to do |format|
       format.html { render :index }
       format.json do
@@ -180,6 +177,13 @@ class ListsController < ApplicationController
     else
       GroceryListItem.where(grocery_list: list)
     end
+  end
+
+  def set_up_list
+    set_list
+    set_ordered_items
+    set_not_purchased_items
+    set_purchased_items
   end
 
   def set_list

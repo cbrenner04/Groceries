@@ -22,8 +22,17 @@ export default class ListItemForm extends Component {
     userId: PropTypes.number.isRequired,
     listId: PropTypes.number.isRequired,
     listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.array,
+    listUsers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        email: PropTypes.string.isRequired,
+      }),
+    ),
     handleItemAddition: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    listUsers: [],
   }
 
   constructor(props) {
@@ -114,7 +123,7 @@ export default class ListItemForm extends Component {
             </div>
           </div>
         </div>
-      )
+      );
     } else if (this.props.listType === 'GroceryList') {
       return (
         <div className="row">
@@ -157,7 +166,7 @@ export default class ListItemForm extends Component {
             />
           </div>
         </div>
-      )
+      );
     } else if (this.props.listType === 'MusicList') {
       return (
         <div className="row">
@@ -198,12 +207,12 @@ export default class ListItemForm extends Component {
             />
           </div>
         </div>
-      )
+      );
     } else if (this.props.listType === 'ToDoList') {
       return (
         <div>
           <div className="row">
-            <div className="col-12" style={{ padding: ".5rem 0rem" }}>
+            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
               <label className="sr-only" htmlFor="itemName">Name</label>
               <input
                 name="name"
@@ -217,7 +226,7 @@ export default class ListItemForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12" style={{ padding: ".5rem 0rem" }}>
+            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
               <label className="sr-only" htmlFor="itemAssignee">Assignee</label>
               <select
                 name="assigneeId"
@@ -236,7 +245,7 @@ export default class ListItemForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12" style={{ padding: ".5rem 0rem" }}>
+            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
               <label className="sr-only" htmlFor="itemDueDate">Due By</label>
               <input
                 name="dueBy"
@@ -250,8 +259,9 @@ export default class ListItemForm extends Component {
             </div>
           </div>
         </div>
-      )
+      );
     }
+    return '';
   }
 
   render() {

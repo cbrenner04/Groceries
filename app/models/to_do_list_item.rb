@@ -4,7 +4,6 @@
 class ToDoListItem < ApplicationRecord
   belongs_to :user
   belongs_to :to_do_list
-  belongs_to :assignee, class_name: "User"
 
   scope :not_completed, (-> { where(completed: false) })
   scope :completed, (-> { where(completed: true) })
@@ -12,7 +11,7 @@ class ToDoListItem < ApplicationRecord
   scope :not_refreshed, (-> { where(refreshed: false) })
   scope :refreshed, (-> { where(refreshed: true) })
 
-  validates :user, :grocery_list, presence: true
+  validates :user, :to_do_list, presence: true
   validates :completed, inclusion: { in: [true, false] }
 
   def self.ordered

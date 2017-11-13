@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :music_list do
     sequence(:name) { |n| "MyString#{n}" }
-    type "MusicyList"
+    type "MusicList"
   end
 end
