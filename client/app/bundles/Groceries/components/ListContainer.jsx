@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
-import GroceryListItemForm from './GroceryListItemForm';
+import ListItemForm from './ListItemForm';
 import GroceryListItemsContainer from './GroceryListItemsContainer';
 
 export default class ListContainer extends Component {
@@ -50,6 +50,7 @@ export default class ListContainer extends Component {
       list: props.list,
       notPurchasedItems: props.not_purchased_items,
       purchasedItems: props.purchased_items,
+      listUsers: [],
     };
   }
 
@@ -66,6 +67,13 @@ export default class ListContainer extends Component {
           notPurchasedItems: data.not_purchased_items,
           purchasedItems: data.purchased_items,
         });
+      });
+      $.ajax({
+        type: 'GET',
+        url: `/lists/${this.props.match.params.id}/users_lists`,
+        dataType: 'JSON',
+      }).done((data) => {
+        this.setState({ listUsers: data.users });
       });
     }
   }
@@ -158,7 +166,7 @@ export default class ListContainer extends Component {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `${this.listItemPath(item)}${item.id}`,
+        url: `${this.listItemPath(item)}/${item.id}`,
         type: 'DELETE',
         success: () => this.removeItem(item.id),
       });
@@ -186,8 +194,10 @@ export default class ListContainer extends Component {
         <h1>{ this.state.list.name }</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
-        <GroceryListItemForm
+        <ListItemForm
           listId={this.state.list.id}
+          listType={this.state.list.type}
+          listUsers={this.state.listUsers}
           userId={this.state.userId}
           handleItemAddition={this.handleAddItem}
         />

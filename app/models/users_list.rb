@@ -9,4 +9,6 @@ class UsersList < ApplicationRecord
   validates :user, uniqueness: { scope: :list }
   validates :has_accepted, inclusion: { in: [true, false] }
   validates :responded, inclusion: { in: [true, false] }
+
+  scope :accepted, (-> { where(has_accepted: true) })
 end
