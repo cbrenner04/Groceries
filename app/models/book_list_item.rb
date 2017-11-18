@@ -12,6 +12,8 @@ class BookListItem < ApplicationRecord
   scope :not_archived, (-> { where(archived_at: nil) })
 
   validates :user, :book_list, presence: true
+  validates :author, presence: true, if: proc { |item| item.title.blank? }
+  validates :title, presence: true, if: proc { |item| item.author.blank? }
   validates :read, inclusion: { in: [true, false] }
   validates :purchased, inclusion: { in: [true, false] }
 

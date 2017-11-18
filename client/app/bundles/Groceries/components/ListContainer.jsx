@@ -92,17 +92,20 @@ export default class ListContainer extends Component {
   }
 
   sortItems = (items) => {
+    let sortAttr;
+    if (this.state.list.type === 'BookList' ||
+        this.state.list.type === 'MusicList') {
+      sortAttr = 'id';
+    } else {
+      sortAttr = 'name';
+    }
     const sortedItems = items.sort(
       (a, b) => {
-        const positiveBranch = (a.name > b.name) ? 1 : 0;
-        return (a.name < b.name) ? -1 : positiveBranch;
+        const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
+        return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
       },
     );
-    const filteredItems = sortedItems.filter(
-      (item, position, itemArray) =>
-        !position || item.name !== itemArray[position - 1].name,
-    );
-    return filteredItems;
+    return sortedItems;
   }
 
   handleAddItem = (item) => {
@@ -122,10 +125,16 @@ export default class ListContainer extends Component {
   listId = item => item[`${this.listTypetoSnakeCase()}_id`]
 
   handleItemPurchase = (item) => {
+    let completionType;
+    if (this.state.list.type === 'ToDoList') {
+      completionType = 'completed';
+    } else {
+      completionType = 'purchased';
+    }
     $.ajax({
       url: `${this.listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${this.listTypetoSnakeCase()}_item%5Bpurchased%5D=true`,
+      data: `${this.listTypetoSnakeCase()}_item%5B${completionType}%5D=true`,
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -136,7 +145,10 @@ export default class ListContainer extends Component {
       name: item.name,
       quantity: item.quantity,
       purchased: false,
+      completed: false,
       quantity_name: item.quantity_name,
+      assignee_id: item.assignee_id,
+      due_by: item.due_by,
     };
     newItem[`${this.listTypetoSnakeCase()}_id`] = this.listId(item);
     const postData = {};
@@ -222,6 +234,7 @@ export default class ListContainer extends Component {
           handleItemDelete={this.handleDelete}
           handleItemUnPurchase={this.handleUnPurchase}
           listType={this.state.list.type}
+          listUsers={this.state.listUsers}
         />
       </div>
     );

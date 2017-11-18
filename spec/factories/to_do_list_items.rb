@@ -9,6 +9,6 @@ FactoryGirl.define do
     due_by "2017-09-24 14:35:48"
     completed false
     refreshed false
-    archived_at "2017-09-24 14:35:48"
+    archived_at nil
   end
 end

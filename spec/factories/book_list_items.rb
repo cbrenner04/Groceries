@@ -8,6 +8,6 @@ FactoryGirl.define do
     title "MyString"
     purchased false
     read false
-    archived_at "2017-09-24 14:35:29"
+    archived_at nil
   end
 end

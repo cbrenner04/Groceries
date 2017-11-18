@@ -8,6 +8,6 @@ FactoryGirl.define do
     artist "MyString"
     album "MyString"
     purchased false
-    archived_at "2017-09-24 14:35:40"
+    archived_at nil
   end
 end

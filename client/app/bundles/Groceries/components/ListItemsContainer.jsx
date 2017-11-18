@@ -38,6 +38,16 @@ export default class ListItemsContainer extends Component {
       }).isRequired,
     ).isRequired,
     listType: PropTypes.string.isRequired,
+    listUsers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        email: PropTypes.string.isRequired,
+      }),
+    ),
+  }
+
+  static defaultProps = {
+    listUsers: [],
   }
 
   onItemUnPurchase = (item) => {
@@ -61,12 +71,15 @@ export default class ListItemsContainer extends Component {
           onItemPurchase={this.handlePurchase}
           onItemDelete={this.handleDeletion}
           listType={this.props.listType}
+          listUsers={this.props.listUsers}
         />
         <br />
         <PurchasedListItems
           items={this.props.purchasedItems}
           handleItemUnPurchase={this.onItemUnPurchase}
           onItemDelete={this.handleDeletion}
+          listType={this.props.listType}
+          listUsers={this.props.listUsers}
         />
       </div>
     );

@@ -79,7 +79,14 @@ export default class ListItemForm extends Component {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
       const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      let joinString;
+      if (this.props.listType === 'BookList' ||
+          this.props.listType === 'MusicList') {
+        joinString = ' or ';
+      } else {
+        joinString = ' and ';
+      }
+      this.setState({ errors: errors.join(joinString) });
     });
   }
 

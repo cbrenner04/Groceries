@@ -19,12 +19,20 @@ export default class PurchasedListItems extends Component {
         due_by: PropTypes.date,
       }).isRequired,
     ),
+    listType: PropTypes.string.isRequired,
     handleItemUnPurchase: PropTypes.func.isRequired,
     onItemDelete: PropTypes.func.isRequired,
+    listUsers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        email: PropTypes.string.isRequired,
+      }),
+    ),
   }
 
   static defaultProps = {
     items: [],
+    listUsers: [],
   }
 
   handleUnPurchase = (item) => {
@@ -47,6 +55,8 @@ export default class PurchasedListItems extends Component {
                 key={item.id}
                 unPurchaseItem={this.handleUnPurchase}
                 handleItemDelete={this.deleteItem}
+                listType={this.props.listType}
+                listUsers={this.props.listUsers}
               />
             ))
           }
