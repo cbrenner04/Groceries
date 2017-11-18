@@ -51,4 +51,12 @@ RSpec.describe GroceryListItem do
       expect(item_names).to eq [another_item.name, item.name]
     end
   end
+
+  describe "#archive" do
+    it "archives item" do
+      expect(item.archived_at).to be_nil
+      item.archive
+      expect(item.archived_at).to_not be_nil
+    end
+  end
 end

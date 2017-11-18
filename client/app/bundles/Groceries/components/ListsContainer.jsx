@@ -27,7 +27,6 @@ export default class ListsContainer extends Component {
     this.state = {
       acceptedLists: props.accepted_lists,
       notAcceptedLists: props.not_accepted_lists,
-      name: '',
       errors: '',
       success: '',
       completedLists: [],
@@ -43,18 +42,9 @@ export default class ListsContainer extends Component {
     }).done((data) => {
       const acceptedLists = data.accepted_lists;
       const notAcceptedLists = data.not_accepted_lists;
-      const completedLists = acceptedLists.filter((list) => {
-        if (list.completed && !list.refreshed) {
-          return list;
-        }
-        return '';
-      });
-      const nonCompletedLists = acceptedLists.filter((list) => {
-        if (!list.completed) {
-          return list;
-        }
-        return '';
-      });
+      const completedLists =
+        acceptedLists.filter(list => list.completed && !list.refreshed);
+      const nonCompletedLists = acceptedLists.filter(list => !list.completed);
       this.setState({
         acceptedLists,
         notAcceptedLists,
@@ -64,12 +54,7 @@ export default class ListsContainer extends Component {
     });
   }
 
-  handleUserInput = (obj) => {
-    this.setState(obj);
-  }
-
-  handleFormSubmit = () => {
-    const list = { name: this.state.name };
+  handleFormSubmit = (list) => {
     $.post('/lists', { list })
       .done(data => this.addNewList(data))
       .fail((response) => {
@@ -84,13 +69,11 @@ export default class ListsContainer extends Component {
   sortLists = lists =>
     lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-
   addNewList = (list) => {
     const lists = update(this.state.acceptedLists, { $push: [list] });
     const nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
     this.setState({
       acceptedLists: this.sortLists(lists),
-      name: '',
       success: 'List successfully added.',
       nonCompletedLists: this.sortLists(nonCompletedLists),
     });
@@ -193,11 +176,7 @@ export default class ListsContainer extends Component {
       <div>
         <h1>Lists</h1>
         { this.alert() }
-        <ListForm
-          name={this.state.name}
-          onUserInput={this.handleUserInput}
-          onFormSubmit={this.handleFormSubmit}
-        />
+        <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
         <UnacceptedLists
           lists={this.state.notAcceptedLists}

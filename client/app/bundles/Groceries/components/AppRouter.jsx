@@ -32,7 +32,11 @@ export default function AppRouter() {
           path="/lists/:grocery_list_id/grocery_list_items/:id/edit"
           component={EditGroceryListItemForm}
         />
-        <Route exact path="/lists/:list_id/users_lists/new" component={ShareListForm} />
+        <Route
+          exact
+          path="/lists/:list_id/users_lists/new"
+          component={ShareListForm}
+        />
       </div>
     </Router>
   );

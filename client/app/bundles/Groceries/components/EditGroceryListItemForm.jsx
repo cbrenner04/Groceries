@@ -71,7 +71,8 @@ export default class EditGroceryListItemForm extends Component {
   handleUserInput = (event) => {
     const target = event.target;
     const obj = {};
-    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
+    obj[target.name] =
+      target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -87,7 +88,8 @@ export default class EditGroceryListItemForm extends Component {
     };
     // TODO: update to use axios. this will require auth token stuff
     $.ajax({
-      url: `/lists/${this.state.listId}/grocery_list_items/${this.state.itemId}`,
+      url: `/lists/${this.state.listId}/` +
+           `grocery_list_items/${this.state.itemId}`,
       data: { grocery_list_item: groceryListItem },
       method: 'PUT',
     }).done(() => {
@@ -102,9 +104,7 @@ export default class EditGroceryListItemForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (
-        <Alert text={this.state.errors} alert_class="danger" />
-      );
+      return (<Alert text={this.state.errors} alert_class="danger" />);
     }
     return '';
   }

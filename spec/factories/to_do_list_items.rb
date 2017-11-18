@@ -2,13 +2,13 @@
 
 FactoryGirl.define do
   factory :to_do_list_item do
-    user nil
-    to_do_list nil
+    user
+    to_do_list
     name "MyString"
-    assignee nil
+    assignee_id nil
     due_by "2017-09-24 14:35:48"
     completed false
     refreshed false
-    archived_at "2017-09-24 14:35:48"
+    archived_at nil
   end
 end

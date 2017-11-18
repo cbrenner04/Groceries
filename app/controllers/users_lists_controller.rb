@@ -2,6 +2,17 @@
 
 # no doc
 class UsersListsController < ApplicationController
+  def index
+    accepted_users =
+      UsersList.where(list_id: params[:list_id]).accepted.map do |user_list|
+        User.find(user_list.user_id)
+      end
+    respond_to do |format|
+      format.html { render template: "lists/index" }
+      format.json { render json: { users: accepted_users } }
+    end
+  end
+
   def new
     list = List.find(params[:list_id])
     users = current_user.related_users_through_lists.select do |user|

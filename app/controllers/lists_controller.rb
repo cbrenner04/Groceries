@@ -27,14 +27,13 @@ class ListsController < ApplicationController
   end
 
   def show
-    set_list
-    set_ordered_items
+    set_up_list
     respond_to do |format|
       format.html { render :index }
       format.json do
         render json: { current_user_id: current_user.id, list: @list,
-                       not_purchased_items: @ordered_items.not_purchased,
-                       purchased_items: @ordered_items.purchased.not_refreshed }
+                       not_purchased_items: @not_purchased_items,
+                       purchased_items: @purchased_items }
       end
     end
   end
@@ -180,12 +179,39 @@ class ListsController < ApplicationController
     end
   end
 
+  def set_up_list
+    set_list
+    set_ordered_items
+    set_not_purchased_items
+    set_purchased_items
+  end
+
   def set_list
     @list = List.find(params[:id])
   end
 
   def set_ordered_items
     @ordered_items = list_items(@list).not_archived.ordered
+  end
+
+  def set_not_purchased_items
+    @not_purchased_items =
+      if @list.type == "ToDoList"
+        @ordered_items.not_completed
+      else
+        @ordered_items.not_purchased
+      end
+  end
+
+  def set_purchased_items
+    @purchased_items =
+      if @list.type == "GroceryList"
+        @ordered_items.purchased.not_refreshed
+      elsif @list.type == "ToDoList"
+        @ordered_items.completed.not_refreshed
+      else
+        @ordered_items.purchased
+      end
   end
 end
 # rubocop:enable Metrics/ClassLength

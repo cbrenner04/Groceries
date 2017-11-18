@@ -4,5 +4,21 @@
 class ToDoListItem < ApplicationRecord
   belongs_to :user
   belongs_to :to_do_list
-  belongs_to :assignee, class_name: "User"
+
+  scope :not_completed, (-> { where(completed: false) })
+  scope :completed, (-> { where(completed: true) })
+  scope :not_archived, (-> { where(archived_at: nil) })
+  scope :not_refreshed, (-> { where(refreshed: false) })
+  scope :refreshed, (-> { where(refreshed: true) })
+
+  validates :user, :to_do_list, :name, presence: true
+  validates :completed, inclusion: { in: [true, false] }
+
+  def self.ordered
+    all.order(:name)
+  end
+
+  def archive
+    update archived_at: Time.zone.now
+  end
 end
