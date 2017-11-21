@@ -15,9 +15,10 @@ class ToDoListItemsController < ApplicationController
 
   def edit
     item = ToDoListItem.find(params[:id])
+    list = ToDoList.find(item.to_do_list_id)
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json { render json: item }
+      format.json { render json: { item: item, list: list } }
     end
   end
 

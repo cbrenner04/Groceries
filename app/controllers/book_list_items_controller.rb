@@ -15,9 +15,10 @@ class BookListItemsController < ApplicationController
 
   def edit
     item = BookListItem.find(params[:id])
+    list = BookList.find(item.book_list_id)
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json { render json: item }
+      format.json { render json: { item: item, list: list } }
     end
   end
 
