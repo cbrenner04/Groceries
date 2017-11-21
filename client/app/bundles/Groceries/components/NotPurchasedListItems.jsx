@@ -20,6 +20,8 @@ export default class NotPurchasedListItems extends Component {
       }).isRequired,
     ),
     onItemPurchase: PropTypes.func.isRequired,
+    onItemRead: PropTypes.func.isRequired,
+    onItemUnRead: PropTypes.func.isRequired,
     onItemDelete: PropTypes.func.isRequired,
     listType: PropTypes.string.isRequired,
     listUsers: PropTypes.arrayOf(
@@ -39,6 +41,14 @@ export default class NotPurchasedListItems extends Component {
     this.props.onItemPurchase(item);
   }
 
+  readItem = (item) => {
+    this.props.onItemRead(item);
+  }
+
+  unReadItem = (item) => {
+    this.props.onItemUnRead(item);
+  }
+
   deleteItem = (item) => {
     this.props.onItemDelete(item);
   }
@@ -53,6 +63,8 @@ export default class NotPurchasedListItems extends Component {
               index={index}
               key={item.id}
               handleItemPurchase={this.purchaseItem}
+              handleItemRead={this.readItem}
+              handleItemUnRead={this.unReadItem}
               handleItemDelete={this.deleteItem}
               listType={this.props.listType}
               listUsers={this.props.listUsers}

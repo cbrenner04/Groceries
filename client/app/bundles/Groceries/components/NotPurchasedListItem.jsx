@@ -16,9 +16,12 @@ export default class NotPurchasedListItem extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
     }).isRequired,
     handleItemDelete: PropTypes.func.isRequired,
     handleItemPurchase: PropTypes.func.isRequired,
+    handleItemRead: PropTypes.func.isRequired,
+    handleItemUnRead: PropTypes.func.isRequired,
     listType: PropTypes.string.isRequired,
     listUsers: PropTypes.arrayOf(
       PropTypes.shape({
@@ -38,6 +41,14 @@ export default class NotPurchasedListItem extends Component {
 
   handleDelete = () => {
     this.props.handleItemDelete(this.props.item);
+  }
+
+  handleRead = () => {
+    this.props.handleItemRead(this.props.item);
+  }
+
+  handleUnRead = () => {
+    this.props.handleItemUnRead(this.props.item);
   }
 
   listTypetoSnakeCase = () => {
@@ -88,12 +99,37 @@ export default class NotPurchasedListItem extends Component {
     return '';
   }
 
+  readIcon = () => {
+    if (this.props.listType === 'BookList') {
+      if (this.props.item.read) {
+        return (
+          <div
+            onClick={this.handleUnRead}
+            className="fa fa-bookmark fa-2x text-info action-button"
+            style={{ marginRight: '1rem' }}
+            role="presentation"
+          />
+        );
+      }
+      return (
+        <div
+          onClick={this.handleRead}
+          className="fa fa-bookmark-o fa-2x text-info action-button"
+          style={{ marginRight: '1rem' }}
+          role="presentation"
+        />
+      );
+    }
+    return '';
+  }
+
   render() {
     return (
       <div className="list-group-item" style={{ display: 'block' }}>
         <div>{ this.itemName() }</div>
         <div>{ this.extraInfo() }</div>
         <div className="btn-group float-right" role="group">
+          <div>{ this.readIcon() }</div>
           <div
             onClick={this.handlePurchase}
             className="fa fa-check-square-o fa-2x text-success action-button"

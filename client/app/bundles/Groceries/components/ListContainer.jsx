@@ -139,6 +139,26 @@ export default class ListContainer extends Component {
     });
   }
 
+  handleItemRead = (item) => {
+    $.ajax({
+      url: `${this.listItemPath(item)}/${item.id}`,
+      type: 'PUT',
+      data: `${this.listTypetoSnakeCase()}_item%5Bread%5D=true`,
+    });
+    // TODO: remove this
+    window.location.reload();
+  }
+
+  handleItemUnRead = (item) => {
+    $.ajax({
+      url: `${this.listItemPath(item)}/${item.id}`,
+      type: 'PUT',
+      data: `${this.listTypetoSnakeCase()}_item%5Bread%5D=false`,
+    });
+    // TODO: remove this
+    window.location.reload();
+  }
+
   handleUnPurchase = (item) => {
     const newItem = {
       user_id: item.user_id,
@@ -231,6 +251,8 @@ export default class ListContainer extends Component {
           notPurchasedItems={this.state.notPurchasedItems}
           purchasedItems={this.state.purchasedItems}
           handlePurchaseOfItem={this.handleItemPurchase}
+          handleReadOfItem={this.handleItemRead}
+          handleUnReadOfItem={this.handleItemUnRead}
           handleItemDelete={this.handleDelete}
           handleItemUnPurchase={this.handleUnPurchase}
           listType={this.state.list.type}
