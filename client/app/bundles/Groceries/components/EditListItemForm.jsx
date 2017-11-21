@@ -35,7 +35,7 @@ export default class EditListItemForm extends Component {
       itemTitle: '',
       itemRead: false,
       itemArtist: '',
-      itemDueBy: '',
+      itemDueBy: moment().format('YYYY-MM-DD'),
       itemAssigneeId: 0,
       itemAlbum: '',
       listUsers: [],
