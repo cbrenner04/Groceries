@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Alert from './Alert';
 
@@ -12,7 +13,7 @@ const initialState = {
   artist: '',
   album: '',
   assigneeId: '',
-  dueBy: '',
+  dueBy: moment().format('YYYY-MM-DD'),
   errors: '',
   success: '',
 };
