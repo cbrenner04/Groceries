@@ -30,7 +30,7 @@ RSpec.describe MusicListItemsController do
         }, format: :json
 
         expect(response).to be_success
-        expect(JSON.parse(response.body).to_h).to include(
+        expect(JSON.parse(response.body)["item"].to_h).to include(
           "archived_at" => item[:archived_at],
           "id" => item[:id],
           "music_list_id" => item[:music_list_id],

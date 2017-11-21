@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import formatDate from '../utils/format';
+import moment from 'moment';
 
 export default class NotPurchasedListItem extends Component {
   static propTypes = {
@@ -69,7 +68,7 @@ export default class NotPurchasedListItem extends Component {
 
   assigned = () => `Assigned To: ${this.assignee(this.props.item.assignee_id)}`
 
-  due = () => `Due By: ${formatDate(this.props.item.due_by).split(',')[0]}`
+  due = () => `Due By: ${moment(this.props.item.due_by).format('LL')}`
 
   assignee = (assigneeId) => {
     const users =
