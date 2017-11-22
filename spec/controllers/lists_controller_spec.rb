@@ -10,7 +10,7 @@ RSpec.describe ListsController do
 
   describe "GET #index" do
     describe "format HTML" do
-      it "assigns renders index" do
+      it "renders index" do
         get :index
 
         expect(response).to render_template :index
@@ -21,10 +21,11 @@ RSpec.describe ListsController do
       it "responds with success and correct payload" do
         get :index, format: :json
 
+        response_body = JSON.parse(response.body)
         expect(response).to be_success
-        expect(JSON.parse(response.body)["accepted_lists"].count)
+        expect(response_body["accepted_lists"].count)
           .to eq user.lists.accepted(user).count
-        expect(JSON.parse(response.body)["not_accepted_lists"].count)
+        expect(response_body["not_accepted_lists"].count)
           .to eq user.lists.not_accepted(user).count
       end
     end
@@ -37,6 +38,191 @@ RSpec.describe ListsController do
       }
 
       expect(assigns(:list)).to eq list
+    end
+
+    describe "format HTML" do
+      it "renders index" do
+        get :show, params: {
+          id: list.id
+        }
+        expect(response).to render_template :index
+      end
+    end
+
+    describe "format JSON" do
+      describe "when BookList" do
+        let(:list) { BookList.create!(name: "foo") }
+
+        it "responds with success and correct payload" do
+          BookListItem.create!(
+            user_id: user.id,
+            book_list_id: list.id,
+            title: "foo",
+            purchased: false
+          )
+          BookListItem.create!(
+            user_id: user.id,
+            book_list_id: list.id,
+            title: "foobar",
+            purchased: true
+          )
+          get :show, params: {
+            id: list.id
+          }, format: :json
+
+          response_body = JSON.parse(response.body)
+          expect(response).to be_success
+          expect(response_body["current_user_id"]).to eq user.id
+          expect(response_body["list"]).to include(
+            "id" => list.id,
+            "name" => list.name
+          )
+          expect(response_body["not_purchased_items"].first["id"]).to eq(
+            BookListItem.where(book_list: list)
+            .not_archived.ordered.not_purchased.first.id
+          )
+          expect(response_body["purchased_items"].first["id"]).to eq(
+            BookListItem.where(book_list: list)
+            .not_archived.ordered.purchased.first.id
+          )
+        end
+      end
+
+      describe "when GroceryList" do
+        let(:list) { GroceryList.create!(name: "foo") }
+
+        it "responds with success and correct payload" do
+          GroceryListItem.create!(
+            user_id: user.id,
+            grocery_list_id: list.id,
+            name: "foo",
+            quantity: 1,
+            quantity_name: "bar",
+            purchased: false
+          )
+          GroceryListItem.create!(
+            user_id: user.id,
+            grocery_list_id: list.id,
+            name: "foobar",
+            quantity: 1,
+            quantity_name: "baz",
+            purchased: true,
+            refreshed: false
+          )
+          GroceryListItem.create!(
+            user_id: user.id,
+            grocery_list_id: list.id,
+            name: "foobar",
+            quantity: 1,
+            quantity_name: "baz",
+            purchased: true,
+            refreshed: true
+          )
+          get :show, params: {
+            id: list.id
+          }, format: :json
+
+          response_body = JSON.parse(response.body)
+          expect(response).to be_success
+          expect(response_body["current_user_id"]).to eq user.id
+          expect(response_body["list"]).to include(
+            "id" => list.id,
+            "name" => list.name
+          )
+          expect(response_body["not_purchased_items"].first["id"]).to eq(
+            GroceryListItem.where(grocery_list: list)
+            .not_archived.ordered.not_purchased.first.id
+          )
+          expect(response_body["purchased_items"].first["id"]).to eq(
+            GroceryListItem.where(grocery_list: list)
+            .not_archived.ordered.purchased.not_refreshed.first.id
+          )
+        end
+      end
+
+      describe "when MusicList" do
+        let(:list) { MusicList.create!(name: "foo") }
+
+        it "responds with success and correct payload" do
+          MusicListItem.create!(
+            user_id: user.id,
+            music_list_id: list.id,
+            title: "foo",
+            purchased: false
+          )
+          MusicListItem.create!(
+            user_id: user.id,
+            music_list_id: list.id,
+            title: "foobar",
+            purchased: true
+          )
+          get :show, params: {
+            id: list.id
+          }, format: :json
+
+          response_body = JSON.parse(response.body)
+          expect(response).to be_success
+          expect(response_body["current_user_id"]).to eq user.id
+          expect(response_body["list"]).to include(
+            "id" => list.id,
+            "name" => list.name
+          )
+          expect(response_body["not_purchased_items"].first["id"]).to eq(
+            MusicListItem.where(music_list: list)
+            .not_archived.ordered.not_purchased.first.id
+          )
+          expect(response_body["purchased_items"].first["id"]).to eq(
+            MusicListItem.where(music_list: list)
+            .not_archived.ordered.purchased.first.id
+          )
+        end
+      end
+
+      describe "when ToDoList" do
+        let(:list) { ToDoList.create!(name: "foo") }
+
+        it "responds with success and correct payload" do
+          ToDoListItem.create!(
+            user_id: user.id,
+            to_do_list_id: list.id,
+            name: "foo",
+            completed: false
+          )
+          ToDoListItem.create!(
+            user_id: user.id,
+            to_do_list_id: list.id,
+            name: "foobar",
+            completed: true,
+            refreshed: false
+          )
+          ToDoListItem.create!(
+            user_id: user.id,
+            to_do_list_id: list.id,
+            name: "foobar",
+            completed: true,
+            refreshed: true
+          )
+          get :show, params: {
+            id: list.id
+          }, format: :json
+
+          response_body = JSON.parse(response.body)
+          expect(response).to be_success
+          expect(response_body["current_user_id"]).to eq user.id
+          expect(response_body["list"]).to include(
+            "id" => list.id,
+            "name" => list.name
+          )
+          expect(response_body["not_purchased_items"].first["id"]).to eq(
+            ToDoListItem.where(to_do_list: list)
+            .not_archived.ordered.not_completed.first.id
+          )
+          expect(response_body["purchased_items"].first["id"]).to eq(
+            ToDoListItem.where(to_do_list: list)
+            .not_archived.ordered.completed.not_refreshed.first.id
+          )
+        end
+      end
     end
   end
 
@@ -198,28 +384,106 @@ RSpec.describe ListsController do
   end
 
   describe "POST #refresh_list" do
-    it "creates new list" do
-      expect do
-        post :refresh_list, params: {
-          id: list.id
-        }
-      end.to change(List, :count).by 1
+    describe "when old list is a BookList" do
+      it "creates new list" do
+        list = BookList.create!(name: "NewBookList")
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(List, :count).by 1
+      end
+
+      it "creates new items" do
+        list = BookList.create!(name: "NewBookList")
+        BookListItem.create!(
+          user: user,
+          book_list: list,
+          title: "foo"
+        )
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(BookListItem, :count).by 1
+      end
     end
 
-    it "creates new items" do
-      list = GroceryList.create!(name: "NewGroceryList")
-      GroceryListItem.create!(
-        user: user,
-        grocery_list: list,
-        name: "foo",
-        quantity: 1,
-        quantity_name: "bar"
-      )
-      expect do
-        post :refresh_list, params: {
-          id: list.id
-        }
-      end.to change(GroceryListItem, :count).by 1
+    describe "when old list is a GroceryList" do
+      it "creates new list" do
+        list = GroceryList.create!(name: "NewGroceryList")
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(List, :count).by 1
+      end
+
+      it "creates new items" do
+        list = GroceryList.create!(name: "NewGroceryList")
+        GroceryListItem.create!(
+          user: user,
+          grocery_list: list,
+          name: "foo",
+          quantity: 1,
+          quantity_name: "bar"
+        )
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(GroceryListItem, :count).by 1
+      end
+    end
+
+    describe "when old list is a BookList" do
+      it "creates new list" do
+        list = MusicList.create!(name: "NewMusicList")
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(List, :count).by 1
+      end
+
+      it "creates new items" do
+        list = MusicList.create!(name: "NewMusicList")
+        MusicListItem.create!(
+          user: user,
+          music_list: list,
+          title: "foo"
+        )
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(MusicListItem, :count).by 1
+      end
+    end
+
+    describe "when old list is a GroceryList" do
+      it "creates new list" do
+        list = ToDoList.create!(name: "NewToDoList")
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(List, :count).by 1
+      end
+
+      it "creates new items" do
+        list = ToDoList.create!(name: "NewToDoList")
+        ToDoListItem.create!(
+          user: user,
+          to_do_list: list,
+          name: "foo"
+        )
+        expect do
+          post :refresh_list, params: {
+            id: list.id
+          }
+        end.to change(ToDoListItem, :count).by 1
+      end
     end
   end
 end

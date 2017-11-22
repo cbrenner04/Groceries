@@ -30,7 +30,8 @@ RSpec.describe GroceryListItemsController do
         }, format: :json
 
         expect(response).to be_success
-        expect(JSON.parse(response.body)["item"].to_h).to include(
+        response_body = JSON.parse(response.body).to_h
+        expect(response_body["item"]).to include(
           "archived_at" => item[:archived_at],
           "id" => item[:id],
           "grocery_list_id" => item[:grocery_list_id],
@@ -40,6 +41,14 @@ RSpec.describe GroceryListItemsController do
           "quantity_name" => item[:quantity_name],
           "refreshed" => item[:refreshed],
           "user_id" => item[:user_id]
+        )
+        expect(response_body["list"]).to include(
+          "id" => list[:id],
+          "name" => list[:name],
+          "archived_at" => list[:archived_at],
+          "completed" => list[:completed],
+          "refreshed" => list[:refreshed],
+          "type" => list[:type]
         )
       end
     end
@@ -62,7 +71,7 @@ RSpec.describe GroceryListItemsController do
     end
 
     describe "with invalid params" do
-      it "returns 422" do
+      it "returns 422 and error message" do
         post :create, params: {
           grocery_list_item: {
             grocery_list_id: list.id,
@@ -72,6 +81,7 @@ RSpec.describe GroceryListItemsController do
         }
 
         expect(response.status).to eq 422
+        expect(response.body).to_not be_blank
       end
     end
   end
@@ -92,7 +102,7 @@ RSpec.describe GroceryListItemsController do
     end
 
     describe "with invalid params" do
-      it "returns 422" do
+      it "returns 422 and error message" do
         item = create :grocery_list_item
         put :update, params: {
           id: item.id,
@@ -101,6 +111,7 @@ RSpec.describe GroceryListItemsController do
         }
 
         expect(response.status).to eq 422
+        expect(response.body).to_not be_blank
       end
     end
   end

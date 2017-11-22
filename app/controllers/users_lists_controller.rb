@@ -40,7 +40,8 @@ class UsersListsController < ApplicationController
   def accept_list
     set_users_list
     if @users_list
-      render_json(@users_list.update!(has_accepted: true, responded: true))
+      @users_list.update!(has_accepted: true, responded: true)
+      render json: @users_list
     else
       render json: { list: ["must exist", "can't be blank"] },
              status: :unprocessable_entity
@@ -50,7 +51,8 @@ class UsersListsController < ApplicationController
   def reject_list
     set_users_list
     if @users_list
-      render_json(@users_list.update!(responded: true))
+      @users_list.update!(responded: true)
+      render json: @users_list
     else
       render json: { list: ["must exist", "can't be blank"] },
              status: :unprocessable_entity
@@ -66,13 +68,5 @@ class UsersListsController < ApplicationController
   def set_users_list
     @users_list =
       UsersList.find_by(user_id: current_user.id, list_id: params[:list_id])
-  end
-
-  def render_json(condition)
-    if condition
-      render json: @users_list
-    else
-      render json: @users_list.errors, status: :unprocessable_entity
-    end
   end
 end
