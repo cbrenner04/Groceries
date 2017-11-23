@@ -47,37 +47,35 @@ RSpec.describe UsersListsController do
 
     describe "format JSON" do
       before do
+        new_user = User.create!(email: "new_user@example.com")
         new_list = GroceryList.create!(name: "foobar")
-        new_user = User.create!(email: "test@test.org")
-        UsersList.create!(
-          user: new_user,
-          list: new_list,
-          has_accepted: true,
-          responded: true
-        )
         UsersList.create!(
           user: user,
           list: new_list,
           has_accepted: true,
           responded: true
         )
-        # TODO: figure out why this needs to be called
-        user.related_users_through_lists
+        UsersList.create!(
+          user: new_user,
+          list: new_list,
+          has_accepted: true,
+          responded: true
+        )
       end
 
       it "responds with success and correct payload" do
         get :new, params: {
-          list_id: list.id
+          list_id: other_list.id
         }, format: :json
 
         expect(response).to be_success
         response_body = JSON.parse(response.body)
         expect(response_body["list"].to_h).to include(
-          "id" => list[:id],
-          "name" => list[:name],
-          "archived_at" => list[:archived_at],
-          "completed" => list[:completed],
-          "refreshed" => list[:refreshed]
+          "id" => other_list[:id],
+          "name" => other_list[:name],
+          "archived_at" => other_list[:archived_at],
+          "completed" => other_list[:completed],
+          "refreshed" => other_list[:refreshed]
         )
         expect(response_body["users"].count).to eq 1
       end
