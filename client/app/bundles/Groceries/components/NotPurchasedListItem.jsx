@@ -125,7 +125,11 @@ export default class NotPurchasedListItem extends Component {
 
   render() {
     return (
-      <div className="list-group-item" style={{ display: 'block' }}>
+      <div
+        className="list-group-item"
+        style={{ display: 'block' }}
+        data-test-class="non-purchased-item"
+      >
         <div>{ this.itemName() }</div>
         <div>{ this.extraInfo() }</div>
         <div className="btn-group float-right" role="group">

@@ -132,6 +132,7 @@ export default class PurchasedListItem extends Component {
         className="list-group-item"
         key={this.props.item.id}
         style={{ display: 'block' }}
+        data-test-class="purchased-item"
       >
         <div>{ this.itemName() }</div>
         <div>{ this.extraInfo() }</div>

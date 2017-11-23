@@ -41,30 +41,34 @@ export default class Lists extends Component {
           These are lists you&apos;ve created or you&apos;ve accepted an
           invitation from someone else.
         </p>
-        {
-          this.props.nonCompletedLists.map(list => (
-            <List
-              list={list}
-              key={list.id}
-              onListDeletion={this.onDeleteOfList}
-              onListCompletion={this.onCompletionOfList}
-              completed={list.completed}
-            />
-          ))
-        }
+        <div className="list-group">
+          {
+            this.props.nonCompletedLists.map(list => (
+              <List
+                list={list}
+                key={list.id}
+                onListDeletion={this.onDeleteOfList}
+                onListCompletion={this.onCompletionOfList}
+                completed={list.completed}
+              />
+            ))
+          }
+        </div>
         <br />
         <h2>Completed Lists</h2>
-        {
-          this.props.completedLists.map(list => (
-            <CompletedList
-              list={list}
-              key={list.id}
-              onListDeletion={this.onDeleteOfList}
-              completed={list.completed}
-              onListRefresh={this.onRefreshOfList}
-            />
-          ))
-        }
+        <div className="list-group">
+          {
+            this.props.completedLists.map(list => (
+              <CompletedList
+                list={list}
+                key={list.id}
+                onListDeletion={this.onDeleteOfList}
+                completed={list.completed}
+                onListRefresh={this.onRefreshOfList}
+              />
+            ))
+          }
+        </div>
       </div>
     );
   }
