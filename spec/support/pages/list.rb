@@ -2,79 +2,40 @@
 
 module Pages
   class List < Page
-    def fill_in_name_with(name)
-      fill_in "name", with: name
+    def has_non_purchased_item?(name)
+      has_css? "div[data-test-class='non-purchased-item']", text: name
     end
 
-    def fill_in_edit_name_with(name)
-      fill_in "Name", with: name
+    def has_purchased_item?(name)
+      has_css? "div[data-test-class='purchased-item']", text: name
     end
 
-    def create_list
-      click_on "Create List"
+    def name_input
+      find("input[name='name']")
     end
 
-    def submit
-      click_on "Update List"
+    def quantity_input
+      find("input[name='quantity']")
     end
 
-    def load_index
-      visit lists_path
+    def quantity_name_input
+      find("input[name='quantityName']")
     end
 
-    def load_list(list)
-      visit list_path(list)
+    def submit_button
+      find("input[type='submit']")
     end
 
-    def has_list?(title)
-      has_css? ".list-group-item", text: title
+    def item_name_input
+      find("input[name='itemName']")
     end
 
-    def has_list_title?(title)
-      has_css? "h1", text: title
+    def item_quantity_input
+      find("input[name='itemQuantity']")
     end
 
-    def has_item?(item)
-      has_css? ".list-group-item", text: item
-    end
-
-    def first_list
-      first(".accepted-list")
-    end
-
-    def add_item
-      find("input[type='submit']").click
-    end
-
-    def complete_list
-      find(".fa-check-square-o").trigger("click")
-    end
-
-    def share_list(name)
-      find(".list-group-item", text: name)
-        .find(".fa-users").click
-    end
-
-    def edit_list(name)
-      find(".accepted-list", text: name)
-        .find(".fa-pencil-square-o").click
-    end
-
-    def destroy_list(name)
-      find(".list-group-item", text: name)
-        .find(".fa-trash").trigger("click")
-    end
-
-    def fill_in_new_item_quantity(quantity)
-      find("input[name='quantity']").set(quantity)
-    end
-
-    def fill_in_new_item_quantity_type(quantity_name)
-      find("input[name='quantityName']").set(quantity_name)
-    end
-
-    def fill_in_new_item_name(name)
-      find("input[name='name']").set(name)
+    def item_quantity_name_input
+      find("input[name='itemQuantityName']")
     end
   end
 end

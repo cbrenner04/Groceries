@@ -5,7 +5,6 @@ class BookListItemsController < ApplicationController
   def create
     @item = BookListItem
             .create(item_params.merge!(book_list_id: params[:list_id]))
-
     if @item.save
       render json: @item
     else

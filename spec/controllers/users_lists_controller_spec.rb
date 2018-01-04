@@ -10,6 +10,30 @@ RSpec.describe UsersListsController do
 
   before { sign_in user }
 
+  describe "GET #index" do
+    describe "format HTML" do
+      it "renders 'lists/index'" do
+        get :index, params: {
+          list_id: list.id
+        }
+
+        expect(response).to render_template "lists/index"
+      end
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :index, params: {
+          list_id: list.id
+        }, format: :json
+
+        expect(response).to be_success
+        expect(JSON.parse(response.body)["users"].count)
+          .to eq UsersList.where(list: list).accepted.count
+      end
+    end
+  end
+
   describe "GET #new" do
     describe "format HTML" do
       it "renders 'lists/index'" do
@@ -22,19 +46,38 @@ RSpec.describe UsersListsController do
     end
 
     describe "format JSON" do
+      before do
+        new_user = User.create!(email: "new_user@example.com")
+        new_list = GroceryList.create!(name: "foobar")
+        UsersList.create!(
+          user: user,
+          list: new_list,
+          has_accepted: true,
+          responded: true
+        )
+        UsersList.create!(
+          user: new_user,
+          list: new_list,
+          has_accepted: true,
+          responded: true
+        )
+      end
+
       it "responds with success and correct payload" do
         get :new, params: {
-          list_id: list.id
+          list_id: other_list.id
         }, format: :json
 
         expect(response).to be_success
-        expect(JSON.parse(response.body)["list"].to_h).to include(
-          "id" => list[:id],
-          "name" => list[:name],
-          "archived_at" => list[:archived_at],
-          "completed" => list[:completed],
-          "refreshed" => list[:refreshed]
+        response_body = JSON.parse(response.body)
+        expect(response_body["list"].to_h).to include(
+          "id" => other_list[:id],
+          "name" => other_list[:name],
+          "archived_at" => other_list[:archived_at],
+          "completed" => other_list[:completed],
+          "refreshed" => other_list[:refreshed]
         )
+        expect(response_body["users"].count).to eq 1
       end
     end
   end

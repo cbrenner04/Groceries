@@ -10,13 +10,5 @@ module Users
     def edit
       render template: "lists/index"
     end
-
-    def create
-      super
-    end
-
-    def update
-      super
-    end
   end
 end

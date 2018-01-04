@@ -30,7 +30,8 @@ RSpec.describe BookListItemsController do
         }, format: :json
 
         expect(response).to be_success
-        expect(JSON.parse(response.body)["item"].to_h).to include(
+        response_body = JSON.parse(response.body).to_h
+        expect(response_body["item"]).to include(
           "archived_at" => item[:archived_at],
           "id" => item[:id],
           "book_list_id" => item[:book_list_id],
@@ -39,6 +40,14 @@ RSpec.describe BookListItemsController do
           "title" => item[:title],
           "read" => item[:read],
           "user_id" => item[:user_id]
+        )
+        expect(response_body["list"]).to include(
+          "id" => list[:id],
+          "name" => list[:name],
+          "archived_at" => list[:archived_at],
+          "completed" => list[:completed],
+          "refreshed" => list[:refreshed],
+          "type" => list[:type]
         )
       end
     end
@@ -61,7 +70,7 @@ RSpec.describe BookListItemsController do
     end
 
     describe "with invalid params" do
-      it "returns 422" do
+      it "returns 422 and error message" do
         post :create, params: {
           book_list_item: {
             book_list_id: list.id,
@@ -71,21 +80,43 @@ RSpec.describe BookListItemsController do
         }
 
         expect(response.status).to eq 422
+        expect(response.body).to_not be_blank
       end
     end
   end
 
   describe "PUT #update" do
-    it "updates a item" do
-      update_item = create :book_list_item, author: "foo"
-      put :update, params: {
-        id: update_item.id,
-        book_list_item: { author: "bar" },
-        list_id: list.id
-      }
-      update_item.reload
+    describe "with valid data" do
+      it "updates a item" do
+        update_item = create :book_list_item, author: "foo"
+        put :update, params: {
+          id: update_item.id,
+          book_list_item: {
+            author: "bar"
+          },
+          list_id: list.id
+        }
+        update_item.reload
 
-      expect(update_item.author).to eq "bar"
+        expect(update_item.author).to eq "bar"
+      end
+    end
+
+    describe "with invalid data" do
+      it "return 422 and error message" do
+        update_item = create :book_list_item, author: "foo"
+        put :update, params: {
+          id: update_item.id,
+          book_list_item: {
+            author: "",
+            title: ""
+          },
+          list_id: list.id
+        }
+
+        expect(response.status).to eq 422
+        expect(response.body).to_not be_blank
+      end
     end
   end
 

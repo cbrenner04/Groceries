@@ -37,7 +37,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each) { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: :true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
   config.before(:each) { DatabaseCleaner.start }
   config.after(:each) { DatabaseCleaner.clean }
   config.infer_spec_type_from_file_location!
@@ -47,6 +47,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include AuthenticationHelpers, type: :feature
+  config.include WaitHelpers, type: :feature
 
   config.after :each do
     page.driver.restart if defined?(page.driver.restart)

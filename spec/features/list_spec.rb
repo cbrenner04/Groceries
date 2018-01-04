@@ -2,91 +2,41 @@
 
 require "rails_helper"
 
-feature "Lists", :js do
+RSpec.feature "List", :js do
   let(:user) { create :user_with_lists }
-  let(:another_user) { create :user_with_lists }
-  let!(:first_list) { create :list, name: "foo" }
-  let!(:second_list) { create :grocery_list, name: "bar" }
-  let!(:third_list) { create :list, name: "baz" }
-  let!(:fourth) { create :list, name: "asdf" }
-  let!(:fifth) { create :list, name: "xyz" }
+  let!(:non_purchased_item) do
+    create :grocery_list_item, grocery_list: user.lists.first, name: "foo"
+  end
+  let!(:purchased_item) do
+    create :grocery_list_item,
+           grocery_list: user.lists.first,
+           name: "bar",
+           purchased: true
+  end
   let(:list_page) { Pages::List.new }
 
   before do
-    [first_list, second_list, fourth, fifth].each { |list| user.lists << list }
-    another_user.lists << third_list
     log_in_user user
-    sleep 0.2
+    visit "/lists/#{user.lists.first.id}"
+    wait_for { current_path == %r{\/lists\/\d+} }
   end
 
-  describe "create" do
-    it "creates list" do
-      list_page.fill_in_name_with "foobar"
-      list_page.create_list
-
-      expect(list_page).to have_list "foobar"
-    end
+  it "loads and displays items" do
+    expect(list_page.name_input).to be_present
+    expect(list_page.quantity_input).to be_present
+    expect(list_page.quantity_name_input).to be_present
+    expect(list_page.submit_button).to be_present
+    expect(list_page).to have_non_purchased_item non_purchased_item.name
+    expect(list_page).to have_purchased_item purchased_item.name
   end
 
-  describe "index" do
-    it "has most recent list at top" do
-      list_page.load_index
-      sleep 0.5
-
-      expect(list_page.first_list).to have_text user.lists.last.name
-    end
-
-    it "only show lists for logged in user" do
-      list_page.load_index
-
-      expect(list_page).to have_text "foo"
-      expect(list_page).to_not have_text "baz"
-    end
-  end
-
-  describe "update" do
-    before { list_page.load_index }
-
-    it "completes list"
-
-    # Capybara::Poltergeist::DeadClient no matter what I do
-    it "updates list" # do
-    #   list_page.edit_list(user.lists.last.name)
-    #   list_page.fill_in_edit_name_with "updated"
-    #   list_page.submit
-
-    #   expect(list_page).to have_text "updated"
-    # end
-
-    it "refreshes list"
-  end
-
-  describe "destroy" do
-    context "when there are no items" do
-      before { list_page.load_index }
-
-      it "deletes list" do
-        list_page.destroy_list("foo")
-
-        expect(list_page).to have_text "bar"
-        expect(list_page).to_not have_text "foo"
-      end
-    end
-
-    context "where there are items" do
-      let(:list) { List.find_by(name: "bar") }
-
-      before do
-        create :grocery_list_item, grocery_list: list
-        list_page.load_index
-      end
-
-      it "deletes list with items" do
-        list_page.destroy_list("bar")
-
-        expect(list_page).to_not have_text "bar"
-        expect(list_page).to have_text "xyz"
-      end
-    end
+  it "edit item page" do
+    visit "/lists/#{user.lists.first.id}/grocery_list_items/" \
+          "#{non_purchased_item.id}/edit"
+    wait_for { current_path == %r{\/lists\/\d+\/grocery_list_items\/\d+\/edit} }
+    expect(list_page.item_name_input).to be_present
+    expect(list_page.item_quantity_input).to be_present
+    expect(list_page.item_quantity_name_input).to be_present
+    expect(list_page.submit_button).to be_present
   end
 end
