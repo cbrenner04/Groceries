@@ -154,7 +154,6 @@ export default class ListEditForm extends Component {
               id="name"
               value={this.state.name}
               onChange={this.handleChange}
-              data-test-id="edit-list-name"
             />
           </div>
           <div className="form-group">
