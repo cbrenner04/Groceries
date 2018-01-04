@@ -11,7 +11,7 @@ RSpec.describe SharedListNotificationMailer, type: :mailer do
     Rails.configuration.action_mailer.default_url_options[:host] = host
   end
 
-  describe "srm reminder email" do
+  describe "shared list email" do
     let(:mail) do
       SharedListNotificationMailer.notify(sharer_email, sharee_email)
     end
@@ -28,11 +28,11 @@ RSpec.describe SharedListNotificationMailer, type: :mailer do
       expect(mail.from).to eq ["no-reply@groceries-app.com"]
     end
 
-    it "renders a link to access SRM entry" do
+    it "renders a link to access the app" do
       expect(mail.body.encoded).to have_link "Groceries"
     end
 
-    it "reports the participant and mood rating" do
+    it "reports who shared the list" do
       expect(mail.body.encoded)
         .to include "#{@sharer_email} has shared a list with you."
     end
