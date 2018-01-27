@@ -1,40 +1,51 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
-  static propTypes = {
-    is_user_signed_in: PropTypes.bool.isRequired,
+  constructor() {
+    super();
+    this.state = {
+      isUserSignedIn: false,
+    };
+  }
+
+  componentWillMount() {
+    $.ajax({ type: 'GET', url: '/', dataType: 'JSON' })
+      .done(data => this.setState({ isUserSignedIn: data.is_user_signed_in }));
   }
 
   conditionalBrand() {
-    if (this.props.is_user_signed_in) {
-      return (<a href="/" className="navbar-brand">Groceries</a>);
+    if (this.state.isUserSignedIn) {
+      return (<Link to="/" className="navbar-brand">Groceries</Link>);
     }
-    return (<a href="/users/sign_in" className="navbar-brand">Groceries</a>);
+    return (
+      <Link to="/users/sign_in" className="navbar-brand">Groceries</Link>
+    );
   }
 
   conditionalLinks() {
-    if (this.props.is_user_signed_in) {
+    if (this.state.isUserSignedIn) {
       return (
         <ul className="navbar-nav">
           <li className="nav-item">
-            <div
+            <Link
+              to="/users/invitation/new"
               className="nav-link"
-              onClick={this.handleInvite}
-              role="presentation"
+              id="invite-link"
             >
               Invite
-            </div>
+            </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
+              to="/users/sign_out"
               className="nav-link"
               rel="nofollow"
               data-method="delete"
-              href="/users/sign_out"
+              id="log-out-link"
             >
               Log out
-            </a>
+            </Link>
           </li>
         </ul>
       );
@@ -42,14 +53,9 @@ export default class Navbar extends Component {
     return '';
   }
 
-  handleInvite = () => {
-    // TODO: update to use react router
-    window.location = '/users/invitation/new';
-  }
-
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <nav
           className={'navbar fixed-top navbar-toggleable-md navbar-light' +
                      ' bg-faded navbar-full'}

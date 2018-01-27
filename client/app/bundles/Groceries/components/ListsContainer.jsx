@@ -178,12 +178,14 @@ export default class ListsContainer extends Component {
         { this.alert() }
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
-        <UnacceptedLists
-          lists={this.state.notAcceptedLists}
-          onAccept={this.handleAccept}
-          onReject={this.handleReject}
-        />
-        <hr />
+        {
+          this.state.notAcceptedLists.length > 0 &&
+            <UnacceptedLists
+              lists={this.state.notAcceptedLists}
+              onAccept={this.handleAccept}
+              onReject={this.handleReject}
+            />
+        }
         <Lists
           onListDelete={this.handleDelete}
           onListCompletion={this.handleCompletion}

@@ -39,6 +39,7 @@ export default class UnacceptedLists extends Component {
             />
           ))
         }
+        <hr />
       </div>
     );
   }

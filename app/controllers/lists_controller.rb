@@ -9,7 +9,8 @@ class ListsController < ApplicationController
       format.json do
         render json: {
           accepted_lists: current_user.lists.accepted(current_user),
-          not_accepted_lists: current_user.lists.not_accepted(current_user)
+          not_accepted_lists: current_user.lists.not_accepted(current_user),
+          is_user_signed_in: user_signed_in?
         }
       end
     end
