@@ -49,6 +49,7 @@ gem "devise_invitable", "~> 1.7", ">= 1.7.2"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.1"
 gem "launchy", "~> 2.4", ">= 2.4.3"
 gem "mini_racer", platforms: :ruby
+gem "newrelic_rpm", "~> 4.8", ">= 4.8.0.341"
 gem "poltergeist", "~> 1.16"
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails-erd", "~> 1.5"
