@@ -56,6 +56,7 @@ gem "rails-erd", "~> 1.5"
 gem "rails_real_favicon", "~> 0.0.7"
 gem "react_on_rails", "~> 8.0", ">= 8.0.3"
 gem "rubocop", "~> 0.48.1", require: false
+gem "sentry-raven", "~> 2.7", ">= 2.7.2"
 gem "simplecov", "~> 0.13.0"
 gem "webpacker_lite"
 # error bundling on heroku fixed adding line below
