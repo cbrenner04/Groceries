@@ -17,6 +17,12 @@ gem "sass-rails", "~> 5.0"
 gem "turbolinks", "~> 5"
 gem "uglifier", ">= 1.3.0"
 
+group :production do
+  gem "informant-rails", "~> 1.1"
+  # heroku
+  gem "rails_12factor"
+end
+
 group :development, :test do
   gem "byebug", platform: :mri
   gem "capybara", "~> 2.12.0"
@@ -54,6 +60,4 @@ gem "webpacker_lite"
 # error bundling on heroku fixed adding line below
 gem "libv8", "~> 5.3", ">= 5.3.332.38.5"
 
-# heroku
-gem "rails_12factor", group: :production
 ruby "2.3.0"
