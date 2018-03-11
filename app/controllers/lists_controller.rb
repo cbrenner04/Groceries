@@ -6,21 +6,14 @@ class ListsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json do
-        render json: {
-          accepted_lists: current_user.lists.accepted(current_user),
-          not_accepted_lists: current_user.lists.not_accepted(current_user),
-          is_user_signed_in: user_signed_in?
-        }
-      end
+      format.json { render json: index_response }
     end
   end
 
   def create
     @list = build_new_list
     if @list.save
-      UsersList.create!(user: current_user, list: @list,
-                        has_accepted: true, responded: true)
+      create_users_list(current_user, @list)
       render json: @list
     else
       render json: @list.errors, status: :unprocessable_entity
@@ -31,24 +24,20 @@ class ListsController < ApplicationController
     set_up_list
     respond_to do |format|
       format.html { render :index }
-      format.json do
-        render json: { current_user_id: current_user.id, list: @list,
-                       not_purchased_items: @not_purchased_items,
-                       purchased_items: @purchased_items }
-      end
+      format.json { render json: show_response }
     end
   end
 
   def edit
-    list = List.find(params[:id])
+    set_list
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: list }
+      format.json { render json: @list }
     end
   end
 
   def update
-    @list = List.find(params[:id])
+    set_list
     if @list.update(list_params)
       render json: @list
     else
@@ -57,18 +46,18 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list = List.find(params[:id])
+    set_list
     @list.archive
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end
 
   def refresh_list
-    old_list = List.find(params[:id])
-    old_list.update!(refreshed: true)
-    new_list = create_new_list_from(old_list)
-    UsersList.create!(user: current_user, list: new_list)
+    set_list
+    @list.update!(refreshed: true)
+    new_list = create_new_list_from(@list)
+    create_users_list(current_user, new_list)
     accept_user_list(new_list)
-    create_new_items(old_list, new_list)
+    create_new_items(@list, new_list)
     redirect_to lists_path, notice: "Your list was successfully refreshed"
   end
 
@@ -82,6 +71,32 @@ class ListsController < ApplicationController
     UsersList
       .find_by(list: list)
       .update!(has_accepted: true, responded: true)
+  end
+
+  def create_users_list(user, list)
+    UsersList.create!(
+      user: user,
+      list: list,
+      has_accepted: true,
+      responded: true
+    )
+  end
+
+  def index_response
+    {
+      accepted_lists: current_user.lists.accepted(current_user),
+      not_accepted_lists: current_user.lists.not_accepted(current_user),
+      is_user_signed_in: user_signed_in?
+    }
+  end
+
+  def show_response
+    {
+      current_user_id: current_user.id,
+      list: @list,
+      not_purchased_items: @not_purchased_items,
+      purchased_items: @purchased_items
+    }
   end
 
   def build_new_list
@@ -128,7 +143,9 @@ class ListsController < ApplicationController
       ToDoListItem.create!(
         user: current_user,
         to_do_list: new_list,
-        name: item[:name]
+        name: item[:name],
+        assignee_id: item[:assignee_id],
+        due_by: item[:due_by]
       )
     end
   end
@@ -138,6 +155,7 @@ class ListsController < ApplicationController
       BookListItem.create!(
         user: current_user,
         book_list: new_list,
+        author: item[:author],
         title: item[:title]
       )
     end
