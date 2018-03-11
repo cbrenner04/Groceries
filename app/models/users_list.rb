@@ -11,4 +11,16 @@ class UsersList < ApplicationRecord
   validates :responded, inclusion: { in: [true, false] }
 
   scope :accepted, (-> { where(has_accepted: true) })
+
+  before_destroy :no_to_do_list_assignments?
+
+  def no_to_do_list_assignments?
+    any_assignments = ToDoListItem.where(to_do_list: list).any? do |item|
+      item.assignee_id == user.id
+    end
+    if any_assignments
+      errors.add(:base, "Can't destroy due to ToDoListItem assignments")
+    end
+    !any_assignments
+  end
 end
