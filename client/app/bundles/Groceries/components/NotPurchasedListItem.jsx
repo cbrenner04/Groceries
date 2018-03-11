@@ -82,9 +82,9 @@ export default class NotPurchasedListItem extends Component {
   due = () => `Due By: ${moment(this.props.item.due_by).format('LL')}`
 
   assignee = (assigneeId) => {
-    const users =
-      this.props.listUsers.filter(user => user.id === assigneeId);
-    return users[0].email;
+    const assignedUser =
+      this.props.listUsers.filter(user => user.id === assigneeId)[0];
+    return assignedUser ? assignedUser.email : '';
   }
 
   extraInfo = () => {
