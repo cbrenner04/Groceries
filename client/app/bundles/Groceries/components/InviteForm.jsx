@@ -21,6 +21,9 @@ export default class InviteForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     $.post(
       '/users/invitation',
       { user: { email: this.state.newEmail } },
@@ -35,18 +38,18 @@ export default class InviteForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   render() {
     return (
       <div>
+        { this.alert() }
         <h1>Send Invitation</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
-        { this.alert() }
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input

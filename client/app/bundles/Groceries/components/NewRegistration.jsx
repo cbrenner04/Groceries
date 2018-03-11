@@ -30,6 +30,9 @@ export default class NewRegistration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     const user = {
       email: this.state.email,
       password: this.state.password,
@@ -47,9 +50,9 @@ export default class NewRegistration extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   render() {

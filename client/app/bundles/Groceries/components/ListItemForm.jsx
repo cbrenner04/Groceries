@@ -55,6 +55,10 @@ export default class ListItemForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+      success: '',
+    });
     const listItem = {
       user_id: this.props.userId,
       name: this.state.name,
@@ -76,6 +80,9 @@ export default class ListItemForm extends Component {
     ).done((data) => {
       this.props.handleItemAddition(data);
       this.setState(initialState);
+      this.setState({
+        success: 'Item successfully added.',
+      });
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
@@ -93,11 +100,11 @@ export default class ListItemForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     } else if (this.state.success.length > 0) {
-      return (<Alert text={this.state.success} alert_class="success" />);
+      return (<Alert text={this.state.success} alert_class="success" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   formFields() {
