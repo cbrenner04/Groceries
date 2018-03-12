@@ -80,6 +80,7 @@ export default class ListForm extends Component {
         <div className="form-group">
           <input
             name="name"
+            type="text"
             className="form-control"
             value={this.state.name}
             onChange={this.handleChange}

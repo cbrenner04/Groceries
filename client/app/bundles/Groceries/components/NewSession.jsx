@@ -56,6 +56,7 @@ export default class NewSession extends Component {
           <div className="form-group">
             <input
               name="email"
+              type="email"
               className="form-control"
               value={this.state.email}
               onChange={this.handleChange}
