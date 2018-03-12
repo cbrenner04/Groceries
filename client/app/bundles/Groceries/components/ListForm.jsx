@@ -27,7 +27,7 @@ export default class ListForm extends Component {
       name: this.state.listName,
       type: this.state.listType,
     });
-    this.setState({ name: '', listType: 'GroceryList' });
+    this.setState({ listName: '', listType: 'GroceryList' });
   }
 
   listClass = listType => (
@@ -82,7 +82,7 @@ export default class ListForm extends Component {
             name="listName"
             type="text"
             className="form-control"
-            value={this.state.name}
+            value={this.state.listName}
             onChange={this.handleChange}
             placeholder="New list name"
           />
