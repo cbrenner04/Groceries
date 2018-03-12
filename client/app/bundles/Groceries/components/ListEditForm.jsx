@@ -150,6 +150,7 @@ export default class ListEditForm extends Component {
             <label htmlFor="name">Name</label>
             <input
               name="name"
+              type="text"
               className="form-control"
               id="name"
               value={this.state.name}
