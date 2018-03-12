@@ -9,7 +9,7 @@ export default class ListForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      listName: '',
       listType: 'GroceryList',
     };
   }
@@ -24,7 +24,7 @@ export default class ListForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.onFormSubmit({
-      name: this.state.name,
+      name: this.state.listName,
       type: this.state.listType,
     });
     this.setState({ name: '', listType: 'GroceryList' });
@@ -79,7 +79,7 @@ export default class ListForm extends Component {
       <form className="form" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input
-            name="name"
+            name="listName"
             type="text"
             className="form-control"
             value={this.state.name}

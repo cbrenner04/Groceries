@@ -7,7 +7,7 @@ import Alert from './Alert';
 export default class ListEditForm extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
+    listName: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     listType: PropTypes.string.isRequired,
     match: PropTypes.shape({
@@ -23,7 +23,7 @@ export default class ListEditForm extends Component {
 
   static defaultProps = {
     id: 0,
-    name: '',
+    listName: '',
     completed: false,
     listType: '',
   }
@@ -32,7 +32,7 @@ export default class ListEditForm extends Component {
     super(props);
     this.state = {
       id: props.id,
-      name: props.name,
+      listName: props.listName,
       completed: props.completed,
       listType: props.listType,
       errors: '',
@@ -48,7 +48,7 @@ export default class ListEditForm extends Component {
       }).done((list) => {
         this.setState({
           id: list.id,
-          name: list.name,
+          listName: list.name,
           completed: list.completed,
           listType: list.type,
         });
@@ -67,7 +67,7 @@ export default class ListEditForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const list = {
-      name: this.state.name,
+      name: this.state.listName,
       completed: this.state.completed,
       type: this.state.listType,
     };
@@ -139,7 +139,7 @@ export default class ListEditForm extends Component {
   render() {
     return (
       <div>
-        <h1>Edit { this.state.name }</h1>
+        <h1>Edit { this.state.listName }</h1>
         <Link to={'/lists'} className="pull-right">
           Back to lists
         </Link>
@@ -147,13 +147,13 @@ export default class ListEditForm extends Component {
         { this.alert() }
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="listName">Name</label>
             <input
-              name="name"
+              name="listName"
               type="text"
               className="form-control"
-              id="name"
-              value={this.state.name}
+              id="listName"
+              value={this.state.listName}
               onChange={this.handleChange}
             />
           </div>

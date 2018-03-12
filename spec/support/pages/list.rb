@@ -11,7 +11,7 @@ module Pages
     end
 
     def name_input
-      find("input[name='name']")
+      find("input[name='itemName']")
     end
 
     def quantity_input
