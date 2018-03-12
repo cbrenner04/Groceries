@@ -55,6 +55,10 @@ export default class ListsContainer extends Component {
   }
 
   handleFormSubmit = (list) => {
+    this.setState({
+      errors: '',
+      success: '',
+    });
     $.post('/lists', { list })
       .done(data => this.addNewList(data))
       .fail((response) => {
@@ -164,18 +168,18 @@ export default class ListsContainer extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     } else if (this.state.success.length > 0) {
-      return (<Alert text={this.state.success} alert_class="success" />);
+      return (<Alert text={this.state.success} alert_class="success" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   render() {
     return (
       <div>
-        <h1>Lists</h1>
         { this.alert() }
+        <h1>Lists</h1>
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
         {

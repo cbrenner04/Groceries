@@ -67,6 +67,9 @@ export default class ShareListForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     $.post(
       '/users/invitation',
       { user: { email: this.state.newEmail }, list_id: this.state.listId },
@@ -74,7 +77,9 @@ export default class ShareListForm extends Component {
   }
 
   handleSelectUser(userId) {
-    event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     const usersList = {
       user_id: userId,
       list_id: this.state.listId,
@@ -96,9 +101,9 @@ export default class ShareListForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   render() {

@@ -97,6 +97,9 @@ export default class EditListItemForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     const listItem = {
       user_id: this.state.userId,
       name: this.state.itemName,
@@ -136,9 +139,9 @@ export default class EditListItemForm extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   prettyTitle = () => `"${this.state.itemTitle}"`
@@ -377,12 +380,12 @@ export default class EditListItemForm extends Component {
   render() {
     return (
       <div>
+        { this.alert() }
         <h1>Edit { this.itemName() }</h1>
         <Link to={`/lists/${this.state.listId}`} className="pull-right">
           Back to list
         </Link>
         <br />
-        { this.alert() }
         <form onSubmit={this.handleSubmit}>
           { this.formFields() }
           <input

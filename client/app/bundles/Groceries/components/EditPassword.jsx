@@ -46,6 +46,9 @@ export default class EditPassword extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      errors: '',
+    });
     const user = {
       password: this.state.password,
       password_confirmation: this.state.passwordConfirmation,
@@ -67,9 +70,9 @@ export default class EditPassword extends Component {
 
   alert() {
     if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" />);
+      return (<Alert text={this.state.errors} alert_class="danger" show />);
     }
-    return '';
+    return (<Alert />);
   }
 
   render() {
