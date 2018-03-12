@@ -5,7 +5,7 @@ import moment from 'moment';
 import Alert from './Alert';
 
 const initialState = {
-  name: '',
+  itemName: '',
   quantity: '',
   quantityName: '',
   author: '',
@@ -61,7 +61,7 @@ export default class ListItemForm extends Component {
     });
     const listItem = {
       user_id: this.props.userId,
-      name: this.state.name,
+      name: this.state.itemName,
       quantity: this.state.quantity,
       quantity_name: this.state.quantityName,
       author: this.state.author,
@@ -171,11 +171,11 @@ export default class ListItemForm extends Component {
           <div className="col-7" style={{ padding: 0 }}>
             <label className="sr-only" htmlFor="itemName">Item Name</label>
             <input
-              name="name"
+              name="itemName"
               type="text"
               className="form-control no-border-left"
               id="itemName"
-              value={this.state.name}
+              value={this.state.itemName}
               onChange={this.handleUserInput}
               placeholder="name"
             />
@@ -230,11 +230,11 @@ export default class ListItemForm extends Component {
             <div className="col-12" style={{ padding: '.5rem 0rem' }}>
               <label className="sr-only" htmlFor="itemName">Name</label>
               <input
-                name="name"
+                name="itemName"
                 type="text"
                 className="form-control"
                 id="itemName"
-                value={this.state.name}
+                value={this.state.itemName}
                 onChange={this.handleUserInput}
                 placeholder="thing to do"
               />
