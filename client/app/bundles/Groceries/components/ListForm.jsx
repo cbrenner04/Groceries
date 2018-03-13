@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import listIconClass from '../utils/list_icon';
+
 export default class ListForm extends Component {
   static propTypes ={
     onFormSubmit: PropTypes.func.isRequired,
@@ -30,15 +32,6 @@ export default class ListForm extends Component {
     this.setState({ listName: '', listType: 'GroceryList' });
   }
 
-  listClass = listType => (
-    {
-      BookList: 'fa-book',
-      GroceryList: 'fa-shopping-bag',
-      MusicList: 'fa-music',
-      ToDoList: 'fa-list',
-    }[listType]
-  )
-
   listTypeOptions = () => {
     const listTypes = [
       { name: 'BookList', id: 1 },
@@ -66,7 +59,7 @@ export default class ListForm extends Component {
               onChange={this.handleChange}
               className="form-check-input"
             />
-            <i className={`fa ${this.listClass(listType.name)} text-primary`} />
+            <i className={`fa ${listIconClass(listType.name)} text-primary`} />
           </h3>
         </label>
       </div>

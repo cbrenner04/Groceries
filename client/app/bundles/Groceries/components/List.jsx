@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import formatDate from '../utils/format';
+import listIconClass from '../utils/list_icon';
 
 export default class List extends Component {
   static propTypes = {
@@ -25,15 +26,6 @@ export default class List extends Component {
     this.props.onListCompletion(this.props.list);
   }
 
-  listIconClass = listType => (
-    {
-      BookList: 'fa-book',
-      GroceryList: 'fa-shopping-bag',
-      MusicList: 'fa-music',
-      ToDoList: 'fa-list',
-    }[listType]
-  );
-
   render() {
     return (
       <div
@@ -47,7 +39,7 @@ export default class List extends Component {
               <h5 className="mb-1 action-button">
                 <i
                   className={
-                    `fa ${this.listIconClass(this.props.list.type)} text-info`
+                    `fa ${listIconClass(this.props.list.type)} text-info`
                   }
                   style={{ marginRight: '1rem' }}
                 />
