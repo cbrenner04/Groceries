@@ -60,13 +60,9 @@ export default class NewPassword extends Component {
               placeholder="Email"
             />
           </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Send me reset password instructions"
-              className="btn btn-success btn-block action-button"
-            />
-          </div>
+          <button type="submit" className="btn btn-success btn-block">
+            Send me reset password instructions
+          </button>
         </form>
         <Link to="/users/sign_in">Log in</Link>
       </div>

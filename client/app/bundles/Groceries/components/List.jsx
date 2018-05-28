@@ -18,63 +18,41 @@ export default class List extends Component {
     onListCompletion: PropTypes.func.isRequired,
   }
 
-  handleDelete = () => {
-    this.props.onListDeletion(this.props.list.id);
-  }
+  handleDelete = () => this.props.onListDeletion(this.props.list.id);
 
-  handleComplete = () => {
-    this.props.onListCompletion(this.props.list);
-  }
+  handleComplete = () => this.props.onListCompletion(this.props.list);
 
   render() {
     return (
-      <div
-        className="list-group-item accepted-list"
-        style={{ display: 'block' }}
-        data-test-class="non-completed-list"
-      >
+      <div className="list-group-item accepted-list" style={{ display: 'block' }} data-test-class="non-completed-list">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 pt-1">
             <Link to={`/lists/${this.props.list.id}`} className="router-link">
-              <h5 className="mb-1 action-button">
-                <i
-                  className={
-                    `fa ${listIconClass(this.props.list.type)} text-info`
-                  }
-                  style={{ marginRight: '1rem' }}
-                />
+              <h5 className="mb-1">
+                <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
                 {this.props.list.name}
               </h5>
             </Link>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 pt-1">
             <small className="text-muted">
               {formatDate(this.props.list.created_at)}
             </small>
           </div>
           <div className="col-md-2">
             <div className="btn-group float-right" role="group">
-              <div
-                onClick={this.handleComplete}
-                className="fa fa-check-square-o fa-2x text-success action-button"
-                style={{ marginRight: '1rem' }}
-                role="presentation"
-              />
-              <Link
-                to={`lists/${this.props.list.id}/users_lists/new`}
-                className="fa fa-users fa-2x text-primary router-link"
-                style={{ marginRight: '1rem' }}
-              />
-              <Link
-                to={`/lists/${this.props.list.id}/edit`}
-                className="fa fa-pencil-square-o fa-2x text-warning router-link"
-                style={{ marginRight: '1rem' }}
-              />
-              <div
-                className="fa fa-trash fa-2x text-danger action-button"
-                onClick={this.handleDelete}
-                role="presentation"
-              />
+              <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
+                <i className="fa fa-check-square-o fa-2x text-success" />
+              </button>
+              <Link to={`lists/${this.props.list.id}/users_lists/new`} className="btn btn-link p-0 mr-3">
+                <i className="fa fa-users fa-2x text-primary" />
+              </Link>
+              <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
+                <i className="fa fa-pencil-square-o fa-2x text-warning" />
+              </Link>
+              <button onClick={this.handleDelete} className="btn btn-link p-0">
+                <i className="fa fa-trash fa-2x text-danger" />
+              </button>
             </div>
           </div>
         </div>

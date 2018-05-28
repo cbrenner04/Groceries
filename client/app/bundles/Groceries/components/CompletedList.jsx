@@ -18,53 +18,35 @@ export default class List extends Component {
     onListRefresh: PropTypes.func.isRequired,
   }
 
-  handleDelete = () => {
-    this.props.onListDeletion(this.props.list.id);
-  }
+  handleDelete = () => this.props.onListDeletion(this.props.list.id);
 
-  handleRefresh = () => {
-    this.props.onListRefresh(this.props.list);
-  }
+  handleRefresh = () => this.props.onListRefresh(this.props.list);
 
   render() {
     return (
-      <div
-        className="list-group-item accepted-list"
-        style={{ display: 'block' }}
-        data-test-class="completed-list"
-      >
+      <div className="list-group-item accepted-list" style={{ display: 'block' }} data-test-class="completed-list">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 pt-1">
             <Link to={`/lists/${this.props.list.id}`} className="router-link">
-              <h5 className="mb-1 action-button">
-                <i
-                  className={
-                    `fa ${listIconClass(this.props.list.type)} text-info`
-                  }
-                  style={{ marginRight: '1rem' }}
-                />
+              <h5 className="mb-1">
+                <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
                 {this.props.list.name}
               </h5>
             </Link>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 pt-1">
             <small className="text-muted">
               {formatDate(this.props.list.created_at)}
             </small>
           </div>
           <div className="col-md-2">
             <div className="btn-group float-right" role="group">
-              <div
-                onClick={this.handleRefresh}
-                className="fa fa-refresh fa-2x text-primary action-button"
-                style={{ marginRight: '1rem' }}
-                role="presentation"
-              />
-              <div
-                className="fa fa-trash fa-2x text-danger action-button"
-                onClick={this.handleDelete}
-                role="presentation"
-              />
+              <button onClick={this.handleRefresh} type="button" className="btn btn-link p-0 mr-3">
+                <i className="fa fa-refresh fa-2x text-primary" />
+              </button>
+              <button onClick={this.handleDelete} type="button" className="btn btn-link p-0">
+                <i className="fa fa-trash fa-2x text-danger" />
+              </button>
             </div>
           </div>
         </div>

@@ -93,8 +93,7 @@ export default class ListContainer extends Component {
 
   sortItems = (items) => {
     let sortAttr;
-    if (this.state.list.type === 'BookList' ||
-        this.state.list.type === 'MusicList') {
+    if (this.state.list.type === 'BookList' || this.state.list.type === 'MusicList') {
       sortAttr = 'id';
     } else {
       sortAttr = 'name';
@@ -119,8 +118,7 @@ export default class ListContainer extends Component {
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
 
-  listItemPath = item =>
-    `/lists/${this.listId(item)}/${this.listTypetoSnakeCase()}_items`
+  listItemPath = item => `/lists/${this.listId(item)}/${this.listTypetoSnakeCase()}_items`
 
   listId = item => item[`${this.listTypetoSnakeCase()}_id`]
 
@@ -222,14 +220,12 @@ export default class ListContainer extends Component {
   }
 
   removeItem = (itemId) => {
-    const notPurchasedItems =
-      this.state.notPurchasedItems.filter(item => item.id !== itemId);
+    const notPurchasedItems = this.state.notPurchasedItems.filter(item => item.id !== itemId);
     this.setState({ notPurchasedItems });
   }
 
   removeItemFromPurchased = (item) => {
-    const purchasedItems =
-      this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
+    const purchasedItems = this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
     this.setState({ purchasedItems });
   }
 

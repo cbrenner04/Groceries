@@ -116,8 +116,7 @@ export default class ListsContainer extends Component {
   }
 
   removeList = (listId) => {
-    const acceptedLists =
-      this.state.acceptedLists.filter(list => list.id !== listId);
+    const acceptedLists = this.state.acceptedLists.filter(list => list.id !== listId);
     this.setState({ acceptedLists });
   }
 
@@ -147,14 +146,12 @@ export default class ListsContainer extends Component {
   }
 
   removeListFromUnaccepted = (listId) => {
-    const notAcceptedLists =
-      this.state.notAcceptedLists.filter(list => list.id !== listId);
+    const notAcceptedLists = this.state.notAcceptedLists.filter(list => list.id !== listId);
     this.setState({ notAcceptedLists });
   }
 
   removeListFromCompleted = (listId) => {
-    const completedLists =
-      this.state.completedLists.filter(list => list.id !== listId);
+    const completedLists = this.state.completedLists.filter(list => list.id !== listId);
     this.setState({ completedLists });
   }
 

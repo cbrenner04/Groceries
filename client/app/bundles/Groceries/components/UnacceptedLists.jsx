@@ -14,21 +14,14 @@ export default class UnacceptedLists extends Component {
     onReject: PropTypes.func.isRequired,
   }
 
-  onAcceptOfList = (list) => {
-    this.props.onAccept(list);
-  }
+  onAcceptOfList = list => this.props.onAccept(list);
 
-  onRejectOfList = (listId) => {
-    this.props.onReject(listId);
-  }
+  onRejectOfList = listId => this.props.onReject(listId);
 
   render() {
     return (
       <div>
-        <p>
-          These lists have been shared with you but you have not accepted the
-          invitation.
-        </p>
+        <p>These lists have been shared with you but you have not accepted the invitation.</p>
         {
           this.props.lists.map(list => (
             <UnacceptedList

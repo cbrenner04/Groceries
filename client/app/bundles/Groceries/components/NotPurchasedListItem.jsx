@@ -35,21 +35,13 @@ export default class NotPurchasedListItem extends Component {
     listUsers: [],
   }
 
-  handlePurchase = () => {
-    this.props.handleItemPurchase(this.props.item);
-  }
+  handlePurchase = () => this.props.handleItemPurchase(this.props.item);
 
-  handleDelete = () => {
-    this.props.handleItemDelete(this.props.item);
-  }
+  handleDelete = () => this.props.handleItemDelete(this.props.item);
 
-  handleRead = () => {
-    this.props.handleItemRead(this.props.item);
-  }
+  handleRead = () => this.props.handleItemRead(this.props.item);
 
-  handleUnRead = () => {
-    this.props.handleItemUnRead(this.props.item);
-  }
+  handleUnRead = () => this.props.handleItemUnRead(this.props.item);
 
   listTypetoSnakeCase = () => {
     const listType = this.props.listType;
@@ -65,12 +57,9 @@ export default class NotPurchasedListItem extends Component {
 
   itemName = () => (
     {
-      BookList: `${this.props.item.title ? this.prettyTitle() : ''} ` +
-                 `${this.props.item.author}`,
-      GroceryList: `${this.props.item.quantity} ` +
-                   `${this.props.item.quantity_name} ${this.props.item.name}`,
-      MusicList: `${this.props.item.title ? this.prettyTitle() : ''} ` +
-                 `${this.props.item.artist} ` +
+      BookList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.author}`,
+      GroceryList: `${this.props.item.quantity} ${this.props.item.quantity_name} ${this.props.item.name}`,
+      MusicList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.artist} ` +
                  `${this.props.item.artist && this.props.item.album ? '- ' : ''}` +
                  `${this.props.item.album ? this.props.item.album : ''}`,
       ToDoList: `${this.props.item.name}`,
@@ -82,8 +71,7 @@ export default class NotPurchasedListItem extends Component {
   due = () => `Due By: ${moment(this.props.item.due_by).format('LL')}`
 
   assignee = (assigneeId) => {
-    const assignedUser =
-      this.props.listUsers.filter(user => user.id === assigneeId)[0];
+    const assignedUser = this.props.listUsers.filter(user => user.id === assigneeId)[0];
     return assignedUser ? assignedUser.email : '';
   }
 
@@ -103,21 +91,15 @@ export default class NotPurchasedListItem extends Component {
     if (this.props.listType === 'BookList') {
       if (this.props.item.read) {
         return (
-          <div
-            onClick={this.handleUnRead}
-            className="fa fa-bookmark fa-2x text-info action-button"
-            style={{ marginRight: '1rem' }}
-            role="presentation"
-          />
+          <button onClick={this.handleUnRead} className="btn btn-link p-0 mr-3">
+            <i className="fa fa-bookmark fa-2x text-info" />
+          </button>
         );
       }
       return (
-        <div
-          onClick={this.handleRead}
-          className="fa fa-bookmark-o fa-2x text-info action-button"
-          style={{ marginRight: '1rem' }}
-          role="presentation"
-        />
+        <button onClick={this.handleRead} className="btn btn-link p-0 mr-3">
+          <i className="fa fa-bookmark-o fa-2x text-info" />
+        </button>
       );
     }
     return '';
@@ -125,32 +107,20 @@ export default class NotPurchasedListItem extends Component {
 
   render() {
     return (
-      <div
-        className="list-group-item"
-        style={{ display: 'block' }}
-        data-test-class="non-purchased-item"
-      >
-        <div>{ this.itemName() }</div>
-        <div>{ this.extraInfo() }</div>
+      <div className="list-group-item" style={{ display: 'block' }} data-test-class="non-purchased-item" >
+        <div className="pt-1">{ this.itemName() }</div>
+        <div className="pt-1">{ this.extraInfo() }</div>
         <div className="btn-group float-right" role="group">
           <div>{ this.readIcon() }</div>
-          <div
-            onClick={this.handlePurchase}
-            className="fa fa-check-square-o fa-2x text-success action-button"
-            style={{ marginRight: '1rem' }}
-            role="presentation"
-          />
-          <Link
-            to={`${this.listItemPath()}/${this.props.item.id}/edit`}
-            className="fa fa-pencil-square-o fa-2x text-warning router-link"
-            style={{ marginRight: '1rem' }}
-          />
-          <div
-            onClick={this.handleDelete}
-            className="fa fa-trash fa-2x text-danger action-button"
-            data-confirm="Are you sure?"
-            role="presentation"
-          />
+          <button onClick={this.handlePurchase} className="btn btn-link p-0 mr-3">
+            <i className="fa fa-check-square-o fa-2x text-success" />
+          </button>
+          <Link to={`${this.listItemPath()}/${this.props.item.id}/edit`} className="btn btn-link p-0 mr-3">
+            <i className="fa fa-pencil-square-o fa-2x text-warning" />
+          </Link>
+          <button onClick={this.handleDelete} className="btn btn-link p-0">
+            <i className="fa fa-trash fa-2x text-danger" />
+          </button>
         </div>
       </div>
     );

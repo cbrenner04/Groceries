@@ -33,26 +33,18 @@ export default class Alert extends Component {
     });
   }
 
-  dismissAlert = () => {
-    this.setState(defaultValues);
-  }
+  dismissAlert = () => this.setState(defaultValues);
 
   render() {
     if (this.state.text === '') return (<div />);
     return (
       <div
-        className={`alert alert-${this.state.alert_class} ` +
-                   `alert-dismissible fade ${this.state.show ? 'show' : ''}`}
+        className={`alert alert-${this.state.alert_class} alert-dismissible fade ${this.state.show ? 'show' : ''}`}
         role="alert"
       >
-        <div
-          className="close"
-          onClick={this.dismissAlert}
-          role="presentation"
-          aria-label="Close"
-        >
+        <button className="close" onClick={this.dismissAlert} aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </div>
+        </button>
         { this.state.text }
       </div>
     );

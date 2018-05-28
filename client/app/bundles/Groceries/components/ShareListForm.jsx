@@ -127,11 +127,9 @@ export default class ShareListForm extends Component {
               onChange={this.handleUserInput}
             />
           </div>
-          <input
-            type="submit"
-            value="Share List"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Share List
+          </button>
         </form>
         <br />
         <strong>OR</strong>
@@ -141,14 +139,13 @@ export default class ShareListForm extends Component {
         </p>
         {
           this.state.users.map(user => (
-            <div
+            <button
               key={user.id}
-              className="list-group-item action-button"
+              className="list-group-item list-group-item-action"
               onClick={() => this.handleSelectUser(user.id)}
-              role="presentation"
             >
               {user.email}
-            </div>
+            </button>
           ))
         }
       </div>

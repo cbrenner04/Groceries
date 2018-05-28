@@ -21,17 +21,11 @@ export default class Lists extends Component {
     onListRefresh: PropTypes.func.isRequired,
   }
 
-  onDeleteOfList = (listId) => {
-    this.props.onListDelete(listId);
-  }
+  onDeleteOfList = listId => this.props.onListDelete(listId);
 
-  onCompletionOfList = (list) => {
-    this.props.onListCompletion(list);
-  }
+  onCompletionOfList = list => this.props.onListCompletion(list);
 
-  onRefreshOfList = (list) => {
-    this.props.onListRefresh(list);
-  }
+  onRefreshOfList = list => this.props.onListRefresh(list);
 
   render() {
     return (

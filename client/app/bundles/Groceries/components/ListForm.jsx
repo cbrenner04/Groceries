@@ -50,10 +50,8 @@ export default class ListForm extends Component {
           onChange={this.handleChange}
           className="form-check-input"
         />
-        <label className="form-check-label ml-2" htmlFor={`listType-${listType.name}`}>
-          <h3 className="mb-0">
-            <i className={`fa ${listIconClass(listType.name)} text-primary`} />
-          </h3>
+        <label className="form-check-label ml-3" htmlFor={`listType-${listType.name}`}>
+          <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
         </label>
       </div>
     ));
@@ -76,7 +74,9 @@ export default class ListForm extends Component {
         <div className="form-row mb-3">
           {this.listTypeOptions()}
         </div>
-        <input type="submit" value="Create List" className="btn btn-success btn-block action-button" />
+        <button type="submit" className="btn btn-success btn-block">
+          Create List
+        </button>
       </form>
     );
   }

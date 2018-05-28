@@ -37,21 +37,13 @@ export default class NotPurchasedListItems extends Component {
     listUsers: [],
   }
 
-  purchaseItem = (item) => {
-    this.props.onItemPurchase(item);
-  }
+  purchaseItem = item => this.props.onItemPurchase(item);
 
-  readItem = (item) => {
-    this.props.onItemRead(item);
-  }
+  readItem = item => this.props.onItemRead(item);
 
-  unReadItem = (item) => {
-    this.props.onItemUnRead(item);
-  }
+  unReadItem = item => this.props.onItemUnRead(item);
 
-  deleteItem = (item) => {
-    this.props.onItemDelete(item);
-  }
+  deleteItem = item => this.props.onItemDelete(item);
 
   render() {
     return (

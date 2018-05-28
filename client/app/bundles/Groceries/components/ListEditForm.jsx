@@ -61,8 +61,7 @@ export default class ListEditForm extends Component {
   handleChange = (event) => {
     const target = event.target;
     const obj = {};
-    obj[target.name] =
-      target.type === 'checkbox' ? target.checked : target.value;
+    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -112,10 +111,8 @@ export default class ListEditForm extends Component {
           onChange={this.handleChange}
           className="form-check-input"
         />
-        <label className="form-check-label ml-2" htmlFor={`listType-${listType.name}`}>
-          <h3 className="mb-0">
-            <i className={`fa ${listIconClass(listType.name)} text-primary`} />
-          </h3>
+        <label className="form-check-label ml-3" htmlFor={`listType-${listType.name}`}>
+          <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
         </label>
       </div>
     ));
@@ -143,10 +140,10 @@ export default class ListEditForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-row mb-2">
+          <div className="form-row mb-3">
             {this.listTypeOptions()}
           </div>
-          <div className="form-check mb-2">
+          <div className="form-check mb-3">
             <input
               className="form-check-input"
               id="completed"
@@ -157,11 +154,9 @@ export default class ListEditForm extends Component {
             />
             <label className="form-check-label" htmlFor="completed">Completed</label>
           </div>
-          <input
-            type="submit"
-            value="Update List"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Update List
+          </button>
         </form>
       </div>
     );

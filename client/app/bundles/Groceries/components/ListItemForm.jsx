@@ -88,8 +88,7 @@ export default class ListItemForm extends Component {
       const responseTextKeys = Object.keys(responseJSON);
       const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
       let joinString;
-      if (this.props.listType === 'BookList' ||
-          this.props.listType === 'MusicList') {
+      if (this.props.listType === 'BookList' || this.props.listType === 'MusicList') {
         joinString = ' or ';
       } else {
         joinString = ' and ';
@@ -112,7 +111,7 @@ export default class ListItemForm extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-4" style={{ padding: 0 }}>
+            <div className="col-4 p-0">
               <label className="sr-only" htmlFor="itemAuthor">Author</label>
               <input
                 name="author"
@@ -124,7 +123,7 @@ export default class ListItemForm extends Component {
                 placeholder="author"
               />
             </div>
-            <div className="col-8" style={{ padding: 0 }}>
+            <div className="col-8 p-0">
               <label className="sr-only" htmlFor="itemTitle">Title</label>
               <input
                 name="title"
@@ -142,7 +141,7 @@ export default class ListItemForm extends Component {
     } else if (this.props.listType === 'GroceryList') {
       return (
         <div className="row">
-          <div className="col-2" style={{ padding: 0 }}>
+          <div className="col-2 p-0">
             <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
             <input
               name="quantity"
@@ -154,10 +153,8 @@ export default class ListItemForm extends Component {
               placeholder="#"
             />
           </div>
-          <div className="col-3" style={{ padding: 0 }}>
-            <label className="sr-only" htmlFor="itemQuantityName">
-              Quantity Name
-            </label>
+          <div className="col-3 p-0">
+            <label className="sr-only" htmlFor="itemQuantityName">Quantity Name</label>
             <input
               name="quantityName"
               type="text"
@@ -168,7 +165,7 @@ export default class ListItemForm extends Component {
               placeholder="type"
             />
           </div>
-          <div className="col-7" style={{ padding: 0 }}>
+          <div className="col-7 p-0">
             <label className="sr-only" htmlFor="itemName">Item Name</label>
             <input
               name="itemName"
@@ -185,7 +182,7 @@ export default class ListItemForm extends Component {
     } else if (this.props.listType === 'MusicList') {
       return (
         <div className="row">
-          <div className="col-4" style={{ padding: 0 }}>
+          <div className="col-4 p-0">
             <label className="sr-only" htmlFor="itemTitle">Title</label>
             <input
               name="title"
@@ -197,7 +194,7 @@ export default class ListItemForm extends Component {
               placeholder="title"
             />
           </div>
-          <div className="col-4" style={{ padding: 0 }}>
+          <div className="col-4 p-0">
             <label className="sr-only" htmlFor="itemArtist">Artist</label>
             <input
               name="artist"
@@ -209,7 +206,7 @@ export default class ListItemForm extends Component {
               placeholder="artist"
             />
           </div>
-          <div className="col-4" style={{ padding: 0 }}>
+          <div className="col-4 p-0">
             <label className="sr-only" htmlFor="itemAlbum">Album</label>
             <input
               name="album"
@@ -227,7 +224,7 @@ export default class ListItemForm extends Component {
       return (
         <div>
           <div className="row">
-            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
+            <div className="col-12 py-2 px-0">
               <label className="sr-only" htmlFor="itemName">Name</label>
               <input
                 name="itemName"
@@ -241,7 +238,7 @@ export default class ListItemForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
+            <div className="col-12 py-2 px-0">
               <label className="sr-only" htmlFor="itemAssignee">Assignee</label>
               <select
                 name="assigneeId"
@@ -260,7 +257,7 @@ export default class ListItemForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12" style={{ padding: '.5rem 0rem' }}>
+            <div className="col-12 py-2 px-0">
               <label className="sr-only" htmlFor="itemDueDate">Due By</label>
               <input
                 name="dueBy"
@@ -288,11 +285,9 @@ export default class ListItemForm extends Component {
             { this.formFields() }
           </div>
           <br />
-          <input
-            type="submit"
-            value="Add New Item"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Add New Item
+          </button>
         </form>
       </div>
     );
