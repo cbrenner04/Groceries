@@ -30,8 +30,7 @@ export default class InviteForm extends Component {
     ).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys
-                     .map(key => `${key} ${responseJSON[key].join(' and ')}`);
+      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
       this.setState({ errors: errors.join(' and ') });
     });
   }
@@ -62,11 +61,9 @@ export default class InviteForm extends Component {
               placeholder="Email"
             />
           </div>
-          <input
-            type="submit"
-            value="Share List"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Share List
+          </button>
         </form>
       </div>
     );

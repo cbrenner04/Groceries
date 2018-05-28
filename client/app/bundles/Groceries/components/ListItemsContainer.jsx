@@ -52,25 +52,15 @@ export default class ListItemsContainer extends Component {
     listUsers: [],
   }
 
-  onItemUnPurchase = (item) => {
-    this.props.handleItemUnPurchase(item);
-  }
+  onItemUnPurchase = item => this.props.handleItemUnPurchase(item);
 
-  handlePurchase = (item) => {
-    this.props.handlePurchaseOfItem(item);
-  }
+  handlePurchase = item => this.props.handlePurchaseOfItem(item);
 
-  handleRead = (item) => {
-    this.props.handleReadOfItem(item);
-  }
+  handleRead = item => this.props.handleReadOfItem(item);
 
-  handleUnRead = (item) => {
-    this.props.handleUnReadOfItem(item);
-  }
+  handleUnRead = item => this.props.handleUnReadOfItem(item);
 
-  handleDeletion = (item) => {
-    this.props.handleItemDelete(item);
-  }
+  handleDeletion = item => this.props.handleItemDelete(item);
 
   render() {
     return (

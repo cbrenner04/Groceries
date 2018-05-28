@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import listIconClass from '../utils/list_icon';
+
 import Alert from './Alert';
 
 export default class ListEditForm extends Component {
@@ -59,8 +61,7 @@ export default class ListEditForm extends Component {
   handleChange = (event) => {
     const target = event.target;
     const obj = {};
-    obj[target.name] =
-      target.type === 'checkbox' ? target.checked : target.value;
+    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -92,15 +93,6 @@ export default class ListEditForm extends Component {
     return '';
   }
 
-  listClass = listType => (
-    {
-      BookList: 'fa-book',
-      GroceryList: 'fa-shopping-bag',
-      MusicList: 'fa-music',
-      ToDoList: 'fa-list',
-    }[listType]
-  );
-
   listTypeOptions = () => {
     const listTypes = [
       { name: 'BookList', id: 1 },
@@ -109,27 +101,18 @@ export default class ListEditForm extends Component {
       { name: 'ToDoList', id: 4 },
     ];
     const options = listTypes.map(listType => (
-      <div
-        className="form-check form-check-inline col-3"
-        style={{ marginLeft: 0 }}
-        key={listType.id}
-      >
-        <label
-          className="form-check-label"
-          htmlFor={`listType-${listType.name}`}
-        >
-          <h3>
-            <input
-              id={`listType-${listType.name}`}
-              type="radio"
-              name="listType"
-              value={listType.name}
-              checked={this.state.listType === listType.name}
-              onChange={this.handleChange}
-              className="form-check-input"
-            />
-            <i className={`fa ${this.listClass(listType.name)} text-primary`} />
-          </h3>
+      <div className="form-check form-check-inline col" key={listType.id}>
+        <input
+          id={`listType-${listType.name}`}
+          type="radio"
+          name="listType"
+          value={listType.name}
+          checked={this.state.listType === listType.name}
+          onChange={this.handleChange}
+          className="form-check-input"
+        />
+        <label className="form-check-label ml-3" htmlFor={`listType-${listType.name}`}>
+          <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
         </label>
       </div>
     ));
@@ -157,25 +140,23 @@ export default class ListEditForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-row mb-3">
             {this.listTypeOptions()}
           </div>
-          <div className="form-group">
-            <label className="form-check-label" htmlFor="completed">
-              <input
-                className="form-check-input"
-                name="completed"
-                type="checkbox"
-                checked={this.state.completed}
-                onChange={this.handleChange}
-              /> Completed
-            </label>
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              id="completed"
+              name="completed"
+              type="checkbox"
+              checked={this.state.completed}
+              onChange={this.handleChange}
+            />
+            <label className="form-check-label" htmlFor="completed">Completed</label>
           </div>
-          <input
-            type="submit"
-            value="Update List"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Update List
+          </button>
         </form>
       </div>
     );

@@ -74,25 +74,22 @@ export default class NewSession extends Component {
               autoComplete="off"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="remember-me">
-              <input
-                id="remember-me"
-                name="rememberMe"
-                checked={this.state.rememberMe}
-                onChange={this.handleChange}
-                type="checkbox"
-              />
-              {' '} Remember me
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              id="remember-me"
+              name="rememberMe"
+              checked={this.state.rememberMe}
+              onChange={this.handleChange}
+              type="checkbox"
+            />
+            <label className="form-check-label" htmlFor="remember-me">
+              Remember me
             </label>
           </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Log in"
-              className="btn btn-success btn-block action-button"
-            />
-          </div>
+          <button type="submit" className="btn btn-success btn-block">
+            Log in
+          </button>
         </form>
         <Link to="/users/password/new">Forgot your password?</Link>
       </div>

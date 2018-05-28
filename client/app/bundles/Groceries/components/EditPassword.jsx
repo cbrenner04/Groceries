@@ -30,9 +30,7 @@ export default class EditPassword extends Component {
   componentWillMount() {
     if (this.props.location) {
       this.setState({
-        resetPasswordToken: queryString
-                            .parse(this.props.location.search)
-                            .reset_password_token,
+        resetPasswordToken: queryString.parse(this.props.location.search).reset_password_token,
       });
     }
   }
@@ -104,11 +102,9 @@ export default class EditPassword extends Component {
             />
           </div>
           <div className="form-group">
-            <input
-              type="submit"
-              value="Set my password"
-              className="btn btn-success btn-block action-button"
-            />
+            <button type="submit" className="btn btn-success btn-block">
+              Set my password
+            </button>
           </div>
         </form>
         <Link to="/users/sign_in">Log in</Link>

@@ -18,32 +18,20 @@ export default class Navbar extends Component {
     if (this.state.isUserSignedIn) {
       return (<Link to="/" className="navbar-brand">Groceries</Link>);
     }
-    return (
-      <Link to="/users/sign_in" className="navbar-brand">Groceries</Link>
-    );
+    return (<Link to="/users/sign_in" className="navbar-brand">Groceries</Link>);
   }
 
   conditionalLinks() {
     if (this.state.isUserSignedIn) {
       return (
-        <ul className="navbar-nav">
+        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <li className="nav-item">
-            <Link
-              to="/users/invitation/new"
-              className="nav-link"
-              id="invite-link"
-            >
+            <Link to="/users/invitation/new" className="nav-link" id="invite-link">
               Invite
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              to="/users/sign_out"
-              className="nav-link"
-              rel="nofollow"
-              data-method="delete"
-              id="log-out-link"
-            >
+            <Link to="/users/sign_out" className="nav-link" rel="nofollow" data-method="delete" id="log-out-link">
               Log out
             </Link>
           </li>
@@ -56,12 +44,10 @@ export default class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav
-          className={'navbar fixed-top navbar-toggleable-md navbar-light' +
-                     ' bg-faded navbar-full'}
-        >
+        <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-full">
+          { this.conditionalBrand() }
           <button
-            className="navbar-toggler navbar-toggler-right"
+            className="navbar-toggler"
             type="button"
             data-toggle="collapse"
             data-target="#navbar"
@@ -71,7 +57,6 @@ export default class Navbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          { this.conditionalBrand() }
           <div className="collapse navbar-collapse" id="navbar">
             { this.conditionalLinks() }
           </div>

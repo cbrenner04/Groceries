@@ -37,21 +37,13 @@ export default class PurchasedListItems extends Component {
     listUsers: [],
   }
 
-  handleUnPurchase = (item) => {
-    this.props.handleItemUnPurchase(item);
-  }
+  handleUnPurchase = item => this.props.handleItemUnPurchase(item);
 
-  deleteItem = (item) => {
-    this.props.onItemDelete(item);
-  }
+  deleteItem = item => this.props.onItemDelete(item);
 
-  readItem = (item) => {
-    this.props.onItemRead(item);
-  }
+  readItem = item => this.props.onItemRead(item);
 
-  unReadItem = (item) => {
-    this.props.onItemUnRead(item);
-  }
+  unReadItem = item => this.props.onItemUnRead(item);
 
   title = () => {
     if (this.props.listType === 'ToDoList') {

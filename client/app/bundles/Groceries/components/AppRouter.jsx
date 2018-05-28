@@ -23,11 +23,7 @@ export default function AppRouter() {
         <Route exact path="/lists/:id" component={ListContainer} />
         <Route exact path="/lists/:id/edit" component={ListEditForm} />
         <Route path="/lists/:list_id/*/:id/edit" component={EditListItemForm} />
-        <Route
-          exact
-          path="/lists/:list_id/users_lists/new"
-          component={ShareListForm}
-        />
+        <Route exact path="/lists/:list_id/users_lists/new" component={ShareListForm} />
         <Route exact path="/users/sign_in" component={NewSession} />
         <Route exact path="/users/password/new" component={NewPassword} />
         <Route exact path="/users/password/edit" component={EditPassword} />

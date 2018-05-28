@@ -32,7 +32,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "factory_girl_rails", "~> 4.8"
+  gem "factory_bot_rails", "~> 4.10"
   gem "listen", "~> 3.0.5"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
@@ -40,7 +40,7 @@ group :development do
 end
 
 # add-ons
-gem "bootstrap", "~> 4.0.0.alpha6"
+gem "bootstrap", "~> 4.1", ">= 4.1.1"
 source "https://rails-assets.org" do
   # In combination with Bootstrap
   gem "rails-assets-tether", ">= 1.1.0"

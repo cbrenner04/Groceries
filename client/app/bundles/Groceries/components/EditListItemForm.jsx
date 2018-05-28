@@ -87,8 +87,7 @@ export default class EditListItemForm extends Component {
   handleUserInput = (event) => {
     const target = event.target;
     const obj = {};
-    obj[target.name] =
-      target.type === 'checkbox' ? target.checked : target.value;
+    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
   }
 
@@ -115,11 +114,9 @@ export default class EditListItemForm extends Component {
       due_by: this.state.itemDueBy,
       assignee_id: this.state.itemAssigneeId,
     };
-    listItem[`${this.listTypetoSnakeCase(this.state.listType)}_id`] =
-      this.state.listId;
+    listItem[`${this.listTypetoSnakeCase(this.state.listType)}_id`] = this.state.listId;
     const putData = {};
-    putData[`${this.listTypetoSnakeCase(this.state.listType)}_item`] =
-      listItem;
+    putData[`${this.listTypetoSnakeCase(this.state.listType)}_item`] = listItem;
     // TODO: update to use axios. this will require auth token stuff
     $.ajax({
       url: `/lists/${this.state.listId}/` +
@@ -148,11 +145,9 @@ export default class EditListItemForm extends Component {
 
   itemName = () => (
     {
-      BookList: `${this.state.itemTitle ? this.prettyTitle() : ''} ` +
-                 `${this.state.itemAuthor}`,
+      BookList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemAuthor}`,
       GroceryList: this.state.itemName,
-      MusicList: `${this.state.itemTitle ? this.prettyTitle() : ''} ` +
-                 `${this.state.itemArtist} ` +
+      MusicList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemArtist} ` +
                  `${this.state.itemArtist && this.state.itemAlbum ? '- ' : ''}` +
                  `${this.state.itemAlbum ? this.state.itemAlbum : ''}`,
       ToDoList: this.state.itemName,
@@ -185,8 +180,8 @@ export default class EditListItemForm extends Component {
               onChange={this.handleUserInput}
             />
           </div>
-          <div className="form-group">
-            <label className="form-check-label" htmlFor="itemPurchased">
+          <div className="form-row mb-3">
+            <div className="form-check form-check-inline ml-1">
               <input
                 className="form-check-input"
                 name="itemPurchased"
@@ -194,18 +189,22 @@ export default class EditListItemForm extends Component {
                 type="checkbox"
                 checked={this.state.itemPurchased}
                 onChange={this.handleUserInput}
-              /> Purchased
-            </label>
-            <div className="form-group">
+              />
+              <label className="form-check-label" htmlFor="itemPurchased">
+                Purchased
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                name="itemRead"
+                id="itemRead"
+                type="checkbox"
+                checked={this.state.itemRead}
+                onChange={this.handleUserInput}
+              />
               <label className="form-check-label" htmlFor="itemRead">
-                <input
-                  className="form-check-input"
-                  name="itemRead"
-                  id="itemRead"
-                  type="checkbox"
-                  checked={this.state.itemRead}
-                  onChange={this.handleUserInput}
-                /> Read
+                Read
               </label>
             </div>
           </div>
@@ -251,16 +250,17 @@ export default class EditListItemForm extends Component {
               &quot;1 bag&quot; or &quot;12 ounces&quot;.
             </small>
           </div>
-          <div className="form-group">
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              name="itemPurchased"
+              id="itemPurchased"
+              type="checkbox"
+              checked={this.state.itemPurchased}
+              onChange={this.handleUserInput}
+            />
             <label className="form-check-label" htmlFor="itemPurchased">
-              <input
-                className="form-check-input"
-                name="itemPurchased"
-                id="itemPurchased"
-                type="checkbox"
-                checked={this.state.itemPurchased}
-                onChange={this.handleUserInput}
-              /> Purchased
+              Purchased
             </label>
           </div>
         </div>
@@ -301,16 +301,17 @@ export default class EditListItemForm extends Component {
               onChange={this.handleUserInput}
             />
           </div>
-          <div className="form-group">
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              name="itemPurchased"
+              id="itemPurchased"
+              type="checkbox"
+              checked={this.state.itemPurchased}
+              onChange={this.handleUserInput}
+            />
             <label className="form-check-label" htmlFor="itemPurchased">
-              <input
-                className="form-check-input"
-                name="itemPurchased"
-                id="itemPurchased"
-                type="checkbox"
-                checked={this.state.itemPurchased}
-                onChange={this.handleUserInput}
-              /> Purchased
+              Purchased
             </label>
           </div>
         </div>
@@ -359,16 +360,17 @@ export default class EditListItemForm extends Component {
               placeholder="mm/dd/yyyy"
             />
           </div>
-          <div className="form-group">
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              name="itemCompleted"
+              id="itemCompleted"
+              type="checkbox"
+              checked={this.state.itemCompleted}
+              onChange={this.handleUserInput}
+            />
             <label className="form-check-label" htmlFor="itemCompleted">
-              <input
-                className="form-check-input"
-                name="itemCompleted"
-                id="itemCompleted"
-                type="checkbox"
-                checked={this.state.itemCompleted}
-                onChange={this.handleUserInput}
-              /> Completed
+              Completed
             </label>
           </div>
         </div>
@@ -388,11 +390,9 @@ export default class EditListItemForm extends Component {
         <br />
         <form onSubmit={this.handleSubmit}>
           { this.formFields() }
-          <input
-            type="submit"
-            value="Update Item"
-            className="btn btn-success btn-block action-button"
-          />
+          <button type="submit" className="btn btn-success btn-block">
+            Update Item
+          </button>
         </form>
       </div>
     );

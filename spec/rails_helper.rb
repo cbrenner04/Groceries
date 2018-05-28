@@ -12,7 +12,7 @@ abort("The Rails environment is running in production") if Rails.env.production?
 require "spec_helper"
 require "rspec/rails"
 require "capybara/rails"
-require "factory_girl_rails"
+require "factory_bot_rails"
 require "capybara/poltergeist"
 Capybara.javascript_driver = :poltergeist
 Capybara.register_driver :poltergeist do |app|
@@ -42,7 +42,7 @@ RSpec.configure do |config|
   config.after(:each) { DatabaseCleaner.clean }
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view

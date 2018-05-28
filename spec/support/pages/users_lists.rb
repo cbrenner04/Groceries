@@ -7,7 +7,7 @@ module Pages
     end
 
     def submit_button
-      find("input[type='submit']")
+      find("button[type='submit']")
     end
   end
 end

@@ -29,9 +29,7 @@ export default class EditPassword extends Component {
   componentWillMount() {
     if (this.props.location) {
       this.setState({
-        invitationToken: queryString
-                         .parse(this.props.location.search)
-                         .invitation_token,
+        invitationToken: queryString.parse(this.props.location.search).invitation_token,
       });
     }
   }
@@ -102,13 +100,9 @@ export default class EditPassword extends Component {
               autoComplete="off"
             />
           </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Set my password"
-              className="btn btn-success btn-block action-button"
-            />
-          </div>
+          <button type="submit" className="btn btn-success btn-block">
+            Set my password
+          </button>
         </form>
       </div>
     );
