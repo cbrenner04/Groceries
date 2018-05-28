@@ -40,25 +40,18 @@ export default class ListForm extends Component {
       { name: 'ToDoList', id: 4 },
     ];
     const options = listTypes.map(listType => (
-      <div
-        className="form-check form-check-inline col-3"
-        style={{ marginLeft: 0 }}
-        key={listType.id}
-      >
-        <label
-          className="form-check-label"
-          htmlFor={`listType-${listType.name}`}
-        >
-          <h3>
-            <input
-              id={`listType-${listType.name}`}
-              type="radio"
-              name="listType"
-              value={listType.name}
-              checked={this.state.listType === listType.name}
-              onChange={this.handleChange}
-              className="form-check-input"
-            />
+      <div className="form-check form-check-inline col" key={listType.id}>
+        <input
+          id={`listType-${listType.name}`}
+          type="radio"
+          name="listType"
+          value={listType.name}
+          checked={this.state.listType === listType.name}
+          onChange={this.handleChange}
+          className="form-check-input"
+        />
+        <label className="form-check-label ml-2" htmlFor={`listType-${listType.name}`}>
+          <h3 className="mb-0">
             <i className={`fa ${listIconClass(listType.name)} text-primary`} />
           </h3>
         </label>
@@ -80,14 +73,10 @@ export default class ListForm extends Component {
             placeholder="New list name"
           />
         </div>
-        <div className="form-group">
+        <div className="form-row mb-3">
           {this.listTypeOptions()}
         </div>
-        <input
-          type="submit"
-          value="Create List"
-          className="btn btn-success btn-block action-button"
-        />
+        <input type="submit" value="Create List" className="btn btn-success btn-block action-button" />
       </form>
     );
   }
