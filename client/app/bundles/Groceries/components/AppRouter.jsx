@@ -10,7 +10,6 @@ import ListEditForm from './ListEditForm';
 import ListsContainer from './ListsContainer';
 import Navbar from './Navbar';
 import NewPassword from './NewPassword';
-import NewRegistration from './NewRegistration';
 import NewSession from './NewSession';
 import ShareListForm from './ShareListForm';
 
@@ -29,7 +28,6 @@ export default function AppRouter() {
           path="/lists/:list_id/users_lists/new"
           component={ShareListForm}
         />
-        <Route exact path="/users" component={NewRegistration} />
         <Route exact path="/users/sign_in" component={NewSession} />
         <Route exact path="/users/password/new" component={NewPassword} />
         <Route exact path="/users/password/edit" component={EditPassword} />

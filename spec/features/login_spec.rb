@@ -21,11 +21,6 @@ RSpec.feature "Login", :js do
   end
 
   it "sign up" do
-    click_on "Sign up"
-    expect(current_path).to eq "/users"
-    expect(login_page.email_input).to be_present
-    expect(login_page.password_input).to be_present
-    expect(login_page.password_confirmation_input).to be_present
-    expect(login_page.submit_button).to be_present
+    expect(login_page).to have_no_link "Sign up"
   end
 end

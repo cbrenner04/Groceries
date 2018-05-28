@@ -2,7 +2,7 @@
 
 # no doc
 class User < ApplicationRecord
-  devise :invitable, :database_authenticatable, :registerable, :recoverable,
+  devise :invitable, :database_authenticatable, :recoverable,
          :rememberable, :trackable, :invitable, invite_for: 1.week
 
   has_many :users_lists, dependent: :destroy
