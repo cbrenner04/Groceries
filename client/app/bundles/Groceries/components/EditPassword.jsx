@@ -111,8 +111,7 @@ export default class EditPassword extends Component {
             />
           </div>
         </form>
-        <Link to="/users/sign_in">Log in</Link><br />
-        <Link to="/users">Sign up</Link>
+        <Link to="/users/sign_in">Log in</Link>
       </div>
     );
   }

@@ -94,7 +94,6 @@ export default class NewSession extends Component {
             />
           </div>
         </form>
-        <Link to="/users">Sign up</Link><br />
         <Link to="/users/password/new">Forgot your password?</Link>
       </div>
     );
