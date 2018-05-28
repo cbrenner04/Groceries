@@ -17,4 +17,5 @@ dependencies:
 test:
   post:
     - bundle exec rubocop
+    - bundle exec bundle audit check --update
     - cd client && yarn lint

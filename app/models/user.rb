@@ -6,8 +6,20 @@ class User < ApplicationRecord
          :rememberable, :trackable, :invitable, invite_for: 1.week
 
   has_many :users_lists, dependent: :destroy
-  has_many :lists, through: :users_lists, source: :list, dependent: :destroy
-  has_many :invitations, class_name: to_s, as: :invited_by
+  has_many :lists,
+           through: :users_lists,
+           source: :list,
+           dependent: :restrict_with_exception
+  # rubocop:disable Rails/InverseOf
+  has_many :invitations,
+           class_name: to_s,
+           as: :invited_by,
+           dependent: :restrict_with_exception
+  # rubocop:enable Rails/InverseOf
+  has_many :book_list_items, dependent: :restrict_with_exception
+  has_many :grocery_list_items, dependent: :restrict_with_exception
+  has_many :music_list_items, dependent: :restrict_with_exception
+  has_many :to_do_list_items, dependent: :restrict_with_exception
 
   validates :email, presence: true
 

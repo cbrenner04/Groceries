@@ -6,7 +6,7 @@ SimpleCov.minimum_coverage 90
 SimpleCov.minimum_coverage_by_file 80
 
 ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path("../config/environment", __dir__)
 
 abort("The Rails environment is running in production") if Rails.env.production?
 require "spec_helper"
@@ -19,7 +19,6 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false)
 end
 
-include Warden::Test::Helpers
 Warden.test_mode!
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -27,6 +26,7 @@ ActiveRecord::Migration.maintain_test_schema!
 Dir[Rails.root.join("spec", "support", "**", "*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
+  include Warden::Test::Helpers
   # Ensure that if we are running js tests, we are using latest webpack assets
   # This will use the defaults of :js and :server_rendering meta tags
   ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)

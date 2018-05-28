@@ -24,6 +24,7 @@ group :production do
 end
 
 group :development, :test do
+  gem "bundler-audit", "~> 0.6.0"
   gem "byebug", platform: :mri
   gem "capybara", "~> 2.12.0"
   gem "database_cleaner", "~> 1.5"
@@ -55,7 +56,7 @@ gem "rails-controller-testing", "~> 1.0", ">= 1.0.1"
 gem "rails-erd", "~> 1.5"
 gem "rails_real_favicon", "~> 0.0.7"
 gem "react_on_rails", "~> 8.0", ">= 8.0.3"
-gem "rubocop", "~> 0.48.1", require: false
+gem "rubocop", ">= 0.49.0", require: false
 gem "sentry-raven", "~> 2.7", ">= 2.7.2"
 gem "simplecov", "~> 0.13.0"
 gem "webpacker_lite"
