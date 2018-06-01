@@ -101,7 +101,7 @@ export default class ListEditForm extends Component {
       { name: 'ToDoList', id: 4 },
     ];
     const options = listTypes.map(listType => (
-      <div className="form-check form-check-inline col" key={listType.id}>
+      <div className="form-check form-check-inline" key={listType.id}>
         <input
           id={`listType-${listType.name}`}
           type="radio"
@@ -110,8 +110,9 @@ export default class ListEditForm extends Component {
           checked={this.state.listType === listType.name}
           onChange={this.handleChange}
           className="form-check-input"
+          aria-label={listType.name}
         />
-        <label className="form-check-label ml-3" htmlFor={`listType-${listType.name}`}>
+        <label className="form-check-label mr-1 ml-3" htmlFor={`listType-${listType.name}`}>
           <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
         </label>
       </div>
@@ -140,7 +141,7 @@ export default class ListEditForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-row mb-3">
+          <div className="form-row ml-1 mb-3">
             {this.listTypeOptions()}
           </div>
           <div className="form-check mb-3">
