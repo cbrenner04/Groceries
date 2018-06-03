@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
-import UnacceptedLists from './UnacceptedLists';
 
 export default class ListsContainer extends Component {
   static propTypes = {
@@ -84,7 +83,6 @@ export default class ListsContainer extends Component {
   }
 
   handleDelete = (listId) => {
-    // eslint doesn't like confirms
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
@@ -99,20 +97,19 @@ export default class ListsContainer extends Component {
   }
 
   handleCompletion = (list) => {
+    const theList = list;
+    theList.completed = true;
     $.ajax({
-      url: `/lists/${list.id}`,
+      url: `/lists/${theList.id}`,
       type: 'PUT',
       data: 'list%5Bcompleted%5D=true',
-      success: () => this.moveListToCompleted(list),
+      success: () => {
+        const nonCompletedLists = this.state.nonCompletedLists.filter(nonList => nonList.id !== theList.id);
+        let completedLists = update(this.state.completedLists, { $push: [theList] });
+        completedLists = this.sortLists(completedLists);
+        this.setState({ nonCompletedLists, completedLists });
+      },
     });
-  }
-
-  moveListToCompleted = (list) => {
-    const nonCompletedLists =
-      this.state.nonCompletedLists.filter(nonList => nonList.id !== list.id);
-    let completedLists = update(this.state.completedLists, { $push: [list] });
-    completedLists = this.sortLists(completedLists);
-    this.setState({ nonCompletedLists, completedLists });
   }
 
   removeList = (listId) => {
@@ -126,7 +123,6 @@ export default class ListsContainer extends Component {
   }
 
   handleReject = (listId) => {
-    // eslint doesn't like confirms
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
@@ -150,49 +146,33 @@ export default class ListsContainer extends Component {
     this.setState({ notAcceptedLists });
   }
 
-  removeListFromCompleted = (listId) => {
-    const completedLists = this.state.completedLists.filter(list => list.id !== listId);
-    this.setState({ completedLists });
-  }
-
   handleRefresh = (list) => {
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
-      success: () => this.removeListFromCompleted(list.id),
+      success: () => {
+        const completedLists = this.state.completedLists.filter(compList => compList.id !== list.id);
+        this.setState({ completedLists });
+      },
     });
-  }
-
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    } else if (this.state.success.length > 0) {
-      return (<Alert text={this.state.success} alert_class="success" show />);
-    }
-    return (<Alert />);
   }
 
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} success={this.state.success} />
         <h1>Lists</h1>
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
-        {
-          this.state.notAcceptedLists.length > 0 &&
-            <UnacceptedLists
-              lists={this.state.notAcceptedLists}
-              onAccept={this.handleAccept}
-              onReject={this.handleReject}
-            />
-        }
         <Lists
           onListDelete={this.handleDelete}
           onListCompletion={this.handleCompletion}
+          unacceptedLists={this.state.notAcceptedLists}
           completedLists={this.state.completedLists}
           nonCompletedLists={this.state.nonCompletedLists}
           onListRefresh={this.handleRefresh}
+          onAccept={this.handleAccept}
+          onReject={this.handleReject}
         />
       </div>
     );

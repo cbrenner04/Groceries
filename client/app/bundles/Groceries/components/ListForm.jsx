@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import listIconClass from '../utils/list_icon';
+import ListTypeOptions from './ListTypeOptions';
 
 export default class ListForm extends Component {
-  static propTypes ={
+  static propTypes = {
     onFormSubmit: PropTypes.func.isRequired,
   }
 
@@ -32,33 +32,6 @@ export default class ListForm extends Component {
     this.setState({ listName: '', listType: 'GroceryList' });
   }
 
-  listTypeOptions = () => {
-    const listTypes = [
-      { name: 'BookList', id: 1 },
-      { name: 'GroceryList', id: 2 },
-      { name: 'MusicList', id: 3 },
-      { name: 'ToDoList', id: 4 },
-    ];
-    const options = listTypes.map(listType => (
-      <div className="form-check form-check-inline" key={listType.id}>
-        <input
-          id={`listType-${listType.name}`}
-          type="radio"
-          name="listType"
-          value={listType.name}
-          checked={this.state.listType === listType.name}
-          onChange={this.handleChange}
-          className="form-check-input"
-          aria-label={listType.name}
-        />
-        <label className="form-check-label mr-1 ml-3" htmlFor={`listType-${listType.name}`}>
-          <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
-        </label>
-      </div>
-    ));
-    return options;
-  }
-
   render() {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
@@ -72,9 +45,7 @@ export default class ListForm extends Component {
             placeholder="New list name"
           />
         </div>
-        <div className="form-row ml-1 mb-3">
-          {this.listTypeOptions()}
-        </div>
+        <ListTypeOptions listType={this.state.listType} changeHandler={this.handleChange} />
         <button type="submit" className="btn btn-success btn-block">
           Create List
         </button>

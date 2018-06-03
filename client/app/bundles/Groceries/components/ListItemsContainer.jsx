@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NotPurchasedListItems from './NotPurchasedListItems';
-import PurchasedListItems from './PurchasedListItems';
+import ListItems from '../components/ListItems';
 
 export default class ListItemsContainer extends Component {
   static propTypes = {
@@ -62,11 +61,18 @@ export default class ListItemsContainer extends Component {
 
   handleDeletion = item => this.props.handleItemDelete(item);
 
+  title = () => {
+    if (this.props.listType === 'ToDoList') {
+      return 'Completed';
+    }
+    return 'Purchased';
+  }
+
   render() {
     return (
       <div>
         <h2>Items</h2>
-        <NotPurchasedListItems
+        <ListItems
           items={this.props.notPurchasedItems}
           onItemPurchase={this.handlePurchase}
           onItemRead={this.handleRead}
@@ -76,7 +82,8 @@ export default class ListItemsContainer extends Component {
           listUsers={this.props.listUsers}
         />
         <br />
-        <PurchasedListItems
+        <h2>{this.title()}</h2>
+        <ListItems
           items={this.props.purchasedItems}
           handleItemUnPurchase={this.onItemUnPurchase}
           onItemDelete={this.handleDeletion}
@@ -84,6 +91,7 @@ export default class ListItemsContainer extends Component {
           listUsers={this.props.listUsers}
           onItemRead={this.handleRead}
           onItemUnRead={this.handleUnRead}
+          purchased
         />
       </div>
     );

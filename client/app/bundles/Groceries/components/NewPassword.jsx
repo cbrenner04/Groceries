@@ -37,17 +37,10 @@ export default class NewPassword extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return (<Alert />);
-  }
-
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <h2>Forgot your password?</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">

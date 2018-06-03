@@ -35,17 +35,10 @@ export default class InviteForm extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return (<Alert />);
-  }
-
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <h1>Send Invitation</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
