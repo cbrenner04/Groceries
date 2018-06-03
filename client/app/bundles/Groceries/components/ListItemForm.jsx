@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Alert from './Alert';
+import BookListItemFormFields from './BookListItemFormFields';
+import GroceryListItemFormFields from './GroceryListItemFormFields';
+import MusicListItemFormFields from './MusicListItemFormFields';
+import ToDoListItemFormFields from './ToDoListItemFormFields';
 
 const initialState = {
   itemName: '',
-  quantity: '',
-  quantityName: '',
-  author: '',
-  title: '',
-  artist: '',
-  album: '',
-  assigneeId: '',
-  dueBy: moment().format('YYYY-MM-DD'),
+  itemQuantity: '',
+  itemQuantityName: '',
+  itemAuthor: '',
+  itemTitle: '',
+  itemArtist: '',
+  itemAlbum: '',
+  itemAssigneeId: '',
+  itemDueBy: moment().format('YYYY-MM-DD'),
   errors: '',
   success: '',
 };
@@ -62,14 +66,14 @@ export default class ListItemForm extends Component {
     const listItem = {
       user_id: this.props.userId,
       name: this.state.itemName,
-      quantity: this.state.quantity,
-      quantity_name: this.state.quantityName,
-      author: this.state.author,
-      title: this.state.title,
-      artist: this.state.artist,
-      album: this.state.album,
-      assignee_id: this.state.assigneeId,
-      due_by: this.state.dueBy,
+      quantity: this.state.itemQuantity,
+      quantity_name: this.state.itemQuantityName,
+      author: this.state.itemAuthor,
+      title: this.state.itemTitle,
+      artist: this.state.itemArtist,
+      album: this.state.itemAlbum,
+      assignee_id: this.state.itemAssigneeId,
+      due_by: this.state.itemDueBy,
     };
     listItem[`${this.listTypetoSnakeCase()}_id`] = this.props.listId;
     const postData = {};
@@ -97,180 +101,42 @@ export default class ListItemForm extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    } else if (this.state.success.length > 0) {
-      return (<Alert text={this.state.success} alert_class="success" show />);
-    }
-    return (<Alert />);
-  }
-
   formFields() {
     if (this.props.listType === 'BookList') {
       return (
-        <div>
-          <div className="row">
-            <div className="col-4 p-0">
-              <label className="sr-only" htmlFor="itemAuthor">Author</label>
-              <input
-                name="author"
-                type="text"
-                className="form-control no-border-right"
-                id="itemAuthor"
-                value={this.state.author}
-                onChange={this.handleUserInput}
-                placeholder="author"
-              />
-            </div>
-            <div className="col-8 p-0">
-              <label className="sr-only" htmlFor="itemTitle">Title</label>
-              <input
-                name="title"
-                type="text"
-                className="form-control no-border-left"
-                id="itemTitle"
-                value={this.state.title}
-                onChange={this.handleUserInput}
-                placeholder="title"
-              />
-            </div>
-          </div>
-        </div>
+        <BookListItemFormFields
+          itemAuthor={this.state.itemAuthor}
+          itemTitle={this.state.itemTitle}
+          inputHandler={this.handleUserInput}
+        />
       );
     } else if (this.props.listType === 'GroceryList') {
       return (
-        <div className="row">
-          <div className="col-2 p-0">
-            <label className="sr-only" htmlFor="itemQuantity">Quantity</label>
-            <input
-              name="quantity"
-              type="number"
-              className="form-control no-border-right"
-              id="itemQuantity"
-              value={this.state.quantity}
-              onChange={this.handleUserInput}
-              placeholder="#"
-            />
-          </div>
-          <div className="col-3 p-0">
-            <label className="sr-only" htmlFor="itemQuantityName">Quantity Name</label>
-            <input
-              name="quantityName"
-              type="text"
-              className="form-control no-border-sides"
-              id="itemQuantityName"
-              value={this.state.quantityName}
-              onChange={this.handleUserInput}
-              placeholder="type"
-            />
-          </div>
-          <div className="col-7 p-0">
-            <label className="sr-only" htmlFor="itemName">Item Name</label>
-            <input
-              name="itemName"
-              type="text"
-              className="form-control no-border-left"
-              id="itemName"
-              value={this.state.itemName}
-              onChange={this.handleUserInput}
-              placeholder="name"
-            />
-          </div>
-        </div>
+        <GroceryListItemFormFields
+          itemQuantity={this.state.itemQuantity}
+          itemQuantityName={this.state.itemQuantityName}
+          itemName={this.state.itemName}
+          inputHandler={this.handleUserInput}
+        />
       );
     } else if (this.props.listType === 'MusicList') {
       return (
-        <div className="row">
-          <div className="col-4 p-0">
-            <label className="sr-only" htmlFor="itemTitle">Title</label>
-            <input
-              name="title"
-              type="text"
-              className="form-control no-border-right"
-              id="itemTitle"
-              value={this.state.title}
-              onChange={this.handleUserInput}
-              placeholder="title"
-            />
-          </div>
-          <div className="col-4 p-0">
-            <label className="sr-only" htmlFor="itemArtist">Artist</label>
-            <input
-              name="artist"
-              type="text"
-              className="form-control no-border-sides"
-              id="itemArtist"
-              value={this.state.artist}
-              onChange={this.handleUserInput}
-              placeholder="artist"
-            />
-          </div>
-          <div className="col-4 p-0">
-            <label className="sr-only" htmlFor="itemAlbum">Album</label>
-            <input
-              name="album"
-              type="text"
-              className="form-control no-border-left"
-              id="itemAlbum"
-              value={this.state.album}
-              onChange={this.handleUserInput}
-              placeholder="album"
-            />
-          </div>
-        </div>
+        <MusicListItemFormFields
+          itemTitle={this.state.itemTitle}
+          itemArtist={this.state.itemArtist}
+          itemAlbum={this.state.itemAlbum}
+          inputHandler={this.handleUserInput}
+        />
       );
     } else if (this.props.listType === 'ToDoList') {
       return (
-        <div>
-          <div className="row">
-            <div className="col-12 py-2 px-0">
-              <label className="sr-only" htmlFor="itemName">Name</label>
-              <input
-                name="itemName"
-                type="text"
-                className="form-control"
-                id="itemName"
-                value={this.state.itemName}
-                onChange={this.handleUserInput}
-                placeholder="thing to do"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 py-2 px-0">
-              <label className="sr-only" htmlFor="itemAssignee">Assignee</label>
-              <select
-                name="assigneeId"
-                className="form-control"
-                id="itemAssignee"
-                value={this.state.assigneeId}
-                onChange={this.handleUserInput}
-              >
-                <option value="" disabled>Select Assignee</option>
-                {
-                  this.props.listUsers.map(user => (
-                    <option key={user.id} value={user.id}>{user.email}</option>
-                  ))
-                }
-              </select>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 py-2 px-0">
-              <label className="sr-only" htmlFor="itemDueDate">Due By</label>
-              <input
-                name="dueBy"
-                type="date"
-                className="form-control"
-                id="itemDueDate"
-                value={this.state.dueBy}
-                onChange={this.handleUserInput}
-                placeholder="mm/dd/yyyy"
-              />
-            </div>
-          </div>
-        </div>
+        <ToDoListItemFormFields
+          itemName={this.state.itemName}
+          itemAssigneeId={this.state.itemAssigneeId}
+          listUsers={this.props.listUsers}
+          itemDueBy={this.state.itemDueBy}
+          inputHandler={this.handleUserInput}
+        />
       );
     }
     return '';
@@ -279,11 +145,9 @@ export default class ListItemForm extends Component {
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} success={this.state.success} />
         <form onSubmit={this.handleSubmit}>
-          <div className="container-fluid">
-            { this.formFields() }
-          </div>
+          { this.formFields() }
           <br />
           <button type="submit" className="btn btn-success btn-block">
             Add New Item

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NotPurchasedListItem from './NotPurchasedListItem';
+import ListItem from './ListItem';
 
-export default class NotPurchasedListItems extends Component {
+export default class ListItems extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
@@ -19,10 +19,12 @@ export default class NotPurchasedListItems extends Component {
         due_by: PropTypes.date,
       }).isRequired,
     ),
-    onItemPurchase: PropTypes.func.isRequired,
+    purchased: PropTypes.bool,
+    onItemPurchase: PropTypes.func,
     onItemRead: PropTypes.func.isRequired,
     onItemUnRead: PropTypes.func.isRequired,
     onItemDelete: PropTypes.func.isRequired,
+    handleItemUnPurchase: PropTypes.func,
     listType: PropTypes.string.isRequired,
     listUsers: PropTypes.arrayOf(
       PropTypes.shape({
@@ -35,6 +37,9 @@ export default class NotPurchasedListItems extends Component {
   static defaultProps = {
     items: [],
     listUsers: [],
+    purchased: false,
+    handleItemUnPurchase: null,
+    onItemPurchase: null,
   }
 
   purchaseItem = item => this.props.onItemPurchase(item);
@@ -45,21 +50,24 @@ export default class NotPurchasedListItems extends Component {
 
   deleteItem = item => this.props.onItemDelete(item);
 
+  handleUnPurchase = item => this.props.handleItemUnPurchase(item);
+
   render() {
     return (
       <div className="list-group">
         {
-          this.props.items.map((item, index) => (
-            <NotPurchasedListItem
+          this.props.items.map(item => (
+            <ListItem
               item={item}
-              index={index}
               key={item.id}
+              unPurchaseItem={this.handleUnPurchase}
               handleItemPurchase={this.purchaseItem}
               handleItemRead={this.readItem}
               handleItemUnRead={this.unReadItem}
               handleItemDelete={this.deleteItem}
               listType={this.props.listType}
               listUsers={this.props.listUsers}
+              purchased={this.props.purchased}
             />
           ))
         }

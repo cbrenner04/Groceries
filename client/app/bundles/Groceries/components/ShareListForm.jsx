@@ -94,16 +94,8 @@ export default class ShareListForm extends Component {
   failure(response) {
     const responseJSON = JSON.parse(response.responseText);
     const responseTextKeys = Object.keys(responseJSON);
-    const errors = responseTextKeys
-                   .map(key => `${key} ${responseJSON[key].join(' and ')}`);
+    const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
     this.setState({ errors: errors.join(' and ') });
-  }
-
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return (<Alert />);
   }
 
   render() {
@@ -112,7 +104,7 @@ export default class ShareListForm extends Component {
         <h1>Share {this.state.name}</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="usersListNewEmail">

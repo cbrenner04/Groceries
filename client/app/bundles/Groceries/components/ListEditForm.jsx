@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import listIconClass from '../utils/list_icon';
-
 import Alert from './Alert';
+import ListTypeOptions from './ListTypeOptions';
 
 export default class ListEditForm extends Component {
   static propTypes = {
@@ -86,40 +85,6 @@ export default class ListEditForm extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return '';
-  }
-
-  listTypeOptions = () => {
-    const listTypes = [
-      { name: 'BookList', id: 1 },
-      { name: 'GroceryList', id: 2 },
-      { name: 'MusicList', id: 3 },
-      { name: 'ToDoList', id: 4 },
-    ];
-    const options = listTypes.map(listType => (
-      <div className="form-check form-check-inline" key={listType.id}>
-        <input
-          id={`listType-${listType.name}`}
-          type="radio"
-          name="listType"
-          value={listType.name}
-          checked={this.state.listType === listType.name}
-          onChange={this.handleChange}
-          className="form-check-input"
-          aria-label={listType.name}
-        />
-        <label className="form-check-label mr-1 ml-3" htmlFor={`listType-${listType.name}`}>
-          <i className={`fa ${listIconClass(listType.name)} fa-2x text-primary`} />
-        </label>
-      </div>
-    ));
-    return options;
-  }
-
   render() {
     return (
       <div>
@@ -128,7 +93,7 @@ export default class ListEditForm extends Component {
           Back to lists
         </Link>
         <br />
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="listName">Name</label>
@@ -141,9 +106,7 @@ export default class ListEditForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="form-row ml-1 mb-3">
-            {this.listTypeOptions()}
-          </div>
+          <ListTypeOptions listType={this.state.listType} changeHandler={this.handleChange} />
           <div className="form-check mb-3">
             <input
               className="form-check-input"

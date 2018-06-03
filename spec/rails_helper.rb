@@ -23,8 +23,6 @@ Warden.test_mode!
 
 ActiveRecord::Migration.maintain_test_schema!
 
-Dir[Rails.root.join("spec", "support", "**", "*.rb")].each { |f| require f }
-
 RSpec.configure do |config|
   include Warden::Test::Helpers
   # Ensure that if we are running js tests, we are using latest webpack assets
@@ -43,11 +41,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
-  config.include AuthenticationHelpers, type: :feature
-  config.include WaitHelpers, type: :feature
 
   config.after :each do
     page.driver.restart if defined?(page.driver.restart)

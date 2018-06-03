@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Alert from './Alert';
-
+import BookListItemFormFields from './BookListItemFormFields';
+import GroceryListItemFormFields from './GroceryListItemFormFields';
+import MusicListItemFormFields from './MusicListItemFormFields';
+import ToDoListItemFormFields from './ToDoListItemFormFields';
 
 export default class EditListItemForm extends Component {
   static propTypes = {
@@ -36,7 +39,7 @@ export default class EditListItemForm extends Component {
       itemRead: false,
       itemArtist: '',
       itemDueBy: moment().format('YYYY-MM-DD'),
-      itemAssigneeId: 0,
+      itemAssigneeId: '',
       itemAlbum: '',
       listUsers: [],
       errors: '',
@@ -62,7 +65,7 @@ export default class EditListItemForm extends Component {
           itemId: item.id,
           itemName: item.name,
           itemPurchased: item.purchased,
-          itemQuantity: item.quantity,
+          itemQuantity: String(item.quantity),
           itemQuantityName: item.quantity_name,
           itemCompleted: item.completed,
           itemAuthor: item.author,
@@ -70,7 +73,7 @@ export default class EditListItemForm extends Component {
           itemRead: item.read,
           itemArtist: item.artist,
           itemDueBy: dueByDate,
-          itemAssigneeId: item.assignee_id,
+          itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
           itemAlbum: item.album,
         });
       });
@@ -134,13 +137,6 @@ export default class EditListItemForm extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return (<Alert />);
-  }
-
   prettyTitle = () => `"${this.state.itemTitle}"`
 
   itemName = () => (
@@ -157,223 +153,48 @@ export default class EditListItemForm extends Component {
   formFields() {
     if (this.state.listType === 'BookList') {
       return (
-        <div>
-          <div className="form-group">
-            <label htmlFor="itemAuthor">Author</label>
-            <input
-              name="itemAuthor"
-              type="text"
-              className="form-control"
-              id="itemAuthor"
-              value={this.state.itemAuthor}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemTitle">Title</label>
-            <input
-              name="itemTitle"
-              type="text"
-              className="form-control"
-              id="itemTitle"
-              value={this.state.itemTitle}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-row mb-3">
-            <div className="form-check form-check-inline ml-1">
-              <input
-                className="form-check-input"
-                name="itemPurchased"
-                id="itemPurchased"
-                type="checkbox"
-                checked={this.state.itemPurchased}
-                onChange={this.handleUserInput}
-              />
-              <label className="form-check-label" htmlFor="itemPurchased">
-                Purchased
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                name="itemRead"
-                id="itemRead"
-                type="checkbox"
-                checked={this.state.itemRead}
-                onChange={this.handleUserInput}
-              />
-              <label className="form-check-label" htmlFor="itemRead">
-                Read
-              </label>
-            </div>
-          </div>
-        </div>
+        <BookListItemFormFields
+          itemAuthor={this.state.itemAuthor}
+          itemTitle={this.state.itemTitle}
+          itemPurchased={this.state.itemPurchased}
+          itemRead={this.state.itemRead}
+          inputHandler={this.handleUserInput}
+          editForm
+        />
       );
     } else if (this.state.listType === 'GroceryList') {
       return (
-        <div>
-          <div className="form-group">
-            <label htmlFor="itemName">Item Name</label>
-            <input
-              name="itemName"
-              type="text"
-              className="form-control"
-              id="itemName"
-              value={this.state.itemName}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemQuantity">Quantity</label>
-            <input
-              name="itemQuantity"
-              type="text"
-              className="form-control"
-              id="itemQuantity"
-              value={this.state.itemQuantity}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemQuantityName">Quantity Name</label>
-            <input
-              name="itemQuantityName"
-              type="text"
-              className="form-control"
-              id="itemQuantityName"
-              value={this.state.itemQuantityName}
-              onChange={this.handleUserInput}
-            />
-            <small className="help-block text-muted">
-              This is meant to be used in conjunction with quantity. For example
-              &quot;1 bag&quot; or &quot;12 ounces&quot;.
-            </small>
-          </div>
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              name="itemPurchased"
-              id="itemPurchased"
-              type="checkbox"
-              checked={this.state.itemPurchased}
-              onChange={this.handleUserInput}
-            />
-            <label className="form-check-label" htmlFor="itemPurchased">
-              Purchased
-            </label>
-          </div>
-        </div>
+        <GroceryListItemFormFields
+          itemName={this.state.itemName}
+          itemQuantity={this.state.itemQuantity}
+          itemQuantityName={this.state.itemQuantityName}
+          itemPurchased={this.state.itemPurchased}
+          inputHandler={this.handleUserInput}
+          editForm
+        />
       );
     } else if (this.state.listType === 'MusicList') {
       return (
-        <div>
-          <div className="form-group">
-            <label htmlFor="itemTitle">Title</label>
-            <input
-              name="itemTitle"
-              type="text"
-              className="form-control"
-              id="itemTitle"
-              value={this.state.itemTitle}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemArtist">Artist</label>
-            <input
-              name="itemArtist"
-              type="text"
-              className="form-control"
-              id="itemArtist"
-              value={this.state.itemArtist}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemAlbum">Album</label>
-            <input
-              name="itemAlbum"
-              type="text"
-              className="form-control"
-              id="itemAlbum"
-              value={this.state.itemAlbum}
-              onChange={this.handleUserInput}
-            />
-          </div>
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              name="itemPurchased"
-              id="itemPurchased"
-              type="checkbox"
-              checked={this.state.itemPurchased}
-              onChange={this.handleUserInput}
-            />
-            <label className="form-check-label" htmlFor="itemPurchased">
-              Purchased
-            </label>
-          </div>
-        </div>
+        <MusicListItemFormFields
+          itemTitle={this.state.itemTitle}
+          itemArtist={this.state.itemArtist}
+          itemAlbum={this.state.itemAlbum}
+          itemPurchased={this.state.itemPurchased}
+          inputHandler={this.handleUserInput}
+          editForm
+        />
       );
     } else if (this.state.listType === 'ToDoList') {
       return (
-        <div>
-          <div className="form-group">
-            <label htmlFor="itemName">Name</label>
-            <input
-              name="itemName"
-              type="text"
-              className="form-control"
-              id="itemName"
-              value={this.state.itemName}
-              onChange={this.handleUserInput}
-              placeholder="thing to do"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemAssignee">Assignee</label>
-            <select
-              name="itemAssigneeId"
-              className="form-control"
-              id="itemAssignee"
-              value={this.state.itemAssigneeId ? this.state.itemAssigneeId : ''}
-              onChange={this.handleUserInput}
-            >
-              <option value="" disabled>Select Assignee</option>
-              {
-                this.state.listUsers.map(user => (
-                  <option key={user.id} value={user.id}>{user.email}</option>
-                ))
-              }
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemDueDate">Due By</label>
-            <input
-              name="itemDueBy"
-              type="date"
-              className="form-control"
-              id="itemDueDate"
-              value={this.state.itemDueBy}
-              onChange={this.handleUserInput}
-              placeholder="mm/dd/yyyy"
-            />
-          </div>
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              name="itemCompleted"
-              id="itemCompleted"
-              type="checkbox"
-              checked={this.state.itemCompleted}
-              onChange={this.handleUserInput}
-            />
-            <label className="form-check-label" htmlFor="itemCompleted">
-              Completed
-            </label>
-          </div>
-        </div>
+        <ToDoListItemFormFields
+          itemName={this.state.itemName}
+          itemAssigneeId={this.state.itemAssigneeId}
+          itemDueBy={this.state.itemDueBy}
+          itemCompleted={this.state.itemCompleted}
+          listUsers={this.state.listUsers}
+          inputHandler={this.handleUserInput}
+          editForm
+        />
       );
     }
     return '';
@@ -382,7 +203,7 @@ export default class EditListItemForm extends Component {
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <h1>Edit { this.itemName() }</h1>
         <Link to={`/lists/${this.state.listId}`} className="pull-right">
           Back to list

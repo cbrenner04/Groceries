@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import Alert from './Alert';
+import PasswordForm from './PasswordForm';
 
 export default class EditPassword extends Component {
   static propTypes = {
@@ -65,45 +66,17 @@ export default class EditPassword extends Component {
     });
   }
 
-  alert() {
-    if (this.state.errors.length > 0) {
-      return (<Alert text={this.state.errors} alert_class="danger" show />);
-    }
-    return (<Alert />);
-  }
-
   render() {
     return (
       <div>
-        { this.alert() }
+        <Alert errors={this.state.errors} />
         <h2>Set your password</h2>
-        <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input
-              name="password"
-              className="form-control"
-              value={this.state.password}
-              onChange={this.handleChange}
-              placeholder="New password"
-              type="password"
-              autoComplete="off"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="passwordConfirmation"
-              className="form-control"
-              value={this.state.passwordConfirmation}
-              onChange={this.handleChange}
-              placeholder="Confirm new password"
-              type="password"
-              autoComplete="off"
-            />
-          </div>
-          <button type="submit" className="btn btn-success btn-block">
-            Set my password
-          </button>
-        </form>
+        <PasswordForm
+          submissionHandler={this.handleSubmit}
+          password={this.state.password}
+          passwordConfirmation={this.state.passwordConfirmation}
+          changeHandler={this.handleChange}
+        />
       </div>
     );
   }
