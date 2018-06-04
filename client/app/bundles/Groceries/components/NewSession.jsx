@@ -47,22 +47,26 @@ export default class NewSession extends Component {
         <h2>Log in</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               name="email"
+              id="email"
               type="email"
               className="form-control"
               value={this.state.email}
               onChange={this.handleChange}
-              placeholder="Email"
+              placeholder="jane.smith@example.com"
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               name="password"
+              id="password"
               className="form-control"
               value={this.state.password}
               onChange={this.handleChange}
-              placeholder="Password"
+              placeholder="password"
               type="password"
               autoComplete="off"
             />

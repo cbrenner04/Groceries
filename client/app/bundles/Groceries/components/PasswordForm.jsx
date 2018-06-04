@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const PasswordForm = props => (
   <form className="form" onSubmit={props.submissionHandler}>
     <div className="form-group">
+      <label htmlFor="password">Password</label>
       <input
         name="password"
         className="form-control"
@@ -15,7 +16,9 @@ const PasswordForm = props => (
       />
     </div>
     <div className="form-group">
+      <label htmlFor="passwordConfirmation">Password confirmation</label>
       <input
+        id="passwordConfirmation"
         name="passwordConfirmation"
         className="form-control"
         value={props.passwordConfirmation}

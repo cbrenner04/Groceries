@@ -44,13 +44,15 @@ export default class NewPassword extends Component {
         <h2>Forgot your password?</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
+              id="email"
               name="email"
               type="email"
               className="form-control"
               value={this.state.email}
               onChange={this.handleChange}
-              placeholder="Email"
+              placeholder="jane.smith@example.com"
             />
           </div>
           <button type="submit" className="btn btn-success btn-block">

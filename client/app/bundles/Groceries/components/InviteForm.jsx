@@ -44,6 +44,7 @@ export default class InviteForm extends Component {
         <br />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
+            <label htmlFor="newEmail">Email</label>
             <input
               id="new-email"
               type="email"
@@ -51,11 +52,11 @@ export default class InviteForm extends Component {
               className="form-control"
               value={this.state.newEmail}
               onChange={this.handleUserInput}
-              placeholder="Email"
+              placeholder="jane.smith@example.com"
             />
           </div>
           <button type="submit" className="btn btn-success btn-block">
-            Share List
+            Invite User
           </button>
         </form>
       </div>

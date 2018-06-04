@@ -117,6 +117,7 @@ export default class ShareListForm extends Component {
               className="form-control"
               value={this.state.newEmail}
               onChange={this.handleUserInput}
+              placeholder="jane.smith@example.com"
             />
           </div>
           <button type="submit" className="btn btn-success btn-block">
