@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+
+import { prettyDueBy } from '../utils/format';
 
 export default class ListItem extends Component {
   static propTypes = {
@@ -70,7 +71,7 @@ export default class ListItem extends Component {
 
   assigned = () => `Assigned To: ${this.assignee(this.props.item.assignee_id)}`;
 
-  due = () => `Due By: ${moment(this.props.item.due_by).format('LL')}`;
+  due = () => `Due By: ${prettyDueBy(this.props.item.due_by)}`;
 
   assignee = (assigneeId) => {
     const assignedUser = this.props.listUsers.filter(user => user.id === assigneeId)[0];

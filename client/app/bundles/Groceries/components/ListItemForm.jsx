@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+
+import { defaultDueBy } from '../utils/format';
 
 import Alert from './Alert';
 import BookListItemFormFields from './BookListItemFormFields';
@@ -16,7 +17,7 @@ const initialState = {
   itemArtist: '',
   itemAlbum: '',
   itemAssigneeId: '',
-  itemDueBy: moment().format('YYYY-MM-DD'),
+  itemDueBy: defaultDueBy(),
   errors: '',
   success: '',
 };

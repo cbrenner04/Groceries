@@ -39,6 +39,8 @@ const config = {
       DEBUG: false,
     }),
     new ManifestPlugin({ fileName: manifest, writeToFileEmit: true }),
+    // Ignore all locale files of moment.js
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 
   module: {
