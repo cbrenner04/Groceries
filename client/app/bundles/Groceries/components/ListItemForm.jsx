@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+
+import { defaultDueBy } from '../utils/format';
 
 import Alert from './Alert';
 import BookListItemFormFields from './BookListItemFormFields';
@@ -16,7 +17,7 @@ const initialState = {
   itemArtist: '',
   itemAlbum: '',
   itemAssigneeId: '',
-  itemDueBy: moment().format('YYYY-MM-DD'),
+  itemDueBy: defaultDueBy(),
   errors: '',
   success: '',
 };
@@ -26,12 +27,10 @@ export default class ListItemForm extends Component {
     userId: PropTypes.number.isRequired,
     listId: PropTypes.number.isRequired,
     listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        email: PropTypes.string.isRequired,
-      }),
-    ),
+    listUsers: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+    })),
     handleItemAddition: PropTypes.func.isRequired,
   }
 
@@ -45,14 +44,14 @@ export default class ListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const name = event.target.name;
+    const { name } = event.target;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
   }
 
   listTypetoSnakeCase = () => {
-    const listType = this.props.listType;
+    const { listType } = this.props;
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
 

@@ -13,7 +13,7 @@ export default class InviteForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const name = event.target.name;
+    const { name } = event.target;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);

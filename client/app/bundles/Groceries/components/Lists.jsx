@@ -5,21 +5,15 @@ import List from './List';
 
 export default class Lists extends Component {
   static propTypes = {
-    completedLists: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-      }).isRequired,
-    ).isRequired,
-    nonCompletedLists: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-      }).isRequired,
-    ).isRequired,
-    unacceptedLists: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-      }).isRequired,
-    ).isRequired,
+    completedLists: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired).isRequired,
+    nonCompletedLists: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired).isRequired,
+    unacceptedLists: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired).isRequired,
     onAccept: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
     onListCompletion: PropTypes.func.isRequired,
@@ -41,22 +35,24 @@ export default class Lists extends Component {
     return (
       <div>
         { this.props.unacceptedLists.length > 0 &&
-          (<div>
-            <p>These lists have been shared with you but you have not accepted the invitation.</p>
-            <div className="list-group">
-              {
-                this.props.unacceptedLists.map(list => (
-                  <List
-                    list={list}
-                    key={list.id}
-                    onListAcceptance={this.onAcceptOfList}
-                    onListRejection={this.onRejectOfList}
-                  />
-                ))
-              }
+          (
+            <div>
+              <p>These lists have been shared with you but you have not accepted the invitation.</p>
+              <div className="list-group">
+                {
+                  this.props.unacceptedLists.map(list => (
+                    <List
+                      list={list}
+                      key={list.id}
+                      onListAcceptance={this.onAcceptOfList}
+                      onListRejection={this.onRejectOfList}
+                    />
+                  ))
+                }
+              </div>
+              <hr />
             </div>
-            <hr />
-          </div>)
+          )
         }
         <h1>Your Lists</h1>
         <p>

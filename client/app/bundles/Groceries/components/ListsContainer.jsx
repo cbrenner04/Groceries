@@ -8,12 +8,8 @@ import Lists from './Lists';
 
 export default class ListsContainer extends Component {
   static propTypes = {
-    accepted_lists: PropTypes.arrayOf(
-      PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired,
-    ).isRequired,
-    not_accepted_lists: PropTypes.arrayOf(
-      PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired,
-    ).isRequired,
+    accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
+    not_accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
   }
 
   static defaultProps = {
@@ -63,8 +59,7 @@ export default class ListsContainer extends Component {
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);
         const responseTextKeys = Object.keys(responseJSON);
-        const errors = responseTextKeys
-                       .map(key => `${key} ${responseJSON[key].join(' and ')}`);
+        const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
         this.setState({ errors: errors.join(' and ') });
       });
   }

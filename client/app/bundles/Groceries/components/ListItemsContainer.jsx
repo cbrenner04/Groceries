@@ -10,39 +10,33 @@ export default class ListItemsContainer extends Component {
     handleReadOfItem: PropTypes.func.isRequired,
     handleUnReadOfItem: PropTypes.func.isRequired,
     handleItemUnPurchase: PropTypes.func.isRequired,
-    notPurchasedItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string,
-        quantity: PropTypes.string,
-        author: PropTypes.string,
-        title: PropTypes.string,
-        artist: PropTypes.string,
-        album: PropTypes.string,
-        assignee_id: PropTypes.number,
-        due_by: PropTypes.date,
-      }).isRequired,
-    ).isRequired,
-    purchasedItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string,
-        quantity: PropTypes.string,
-        author: PropTypes.string,
-        title: PropTypes.string,
-        artist: PropTypes.string,
-        album: PropTypes.string,
-        assignee_id: PropTypes.number,
-        due_by: PropTypes.date,
-      }).isRequired,
-    ).isRequired,
+    notPurchasedItems: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.string,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
+    }).isRequired).isRequired,
+    purchasedItems: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.string,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
+    }).isRequired).isRequired,
     listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        email: PropTypes.string.isRequired,
-      }),
-    ),
+    listUsers: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+    })),
   }
 
   static defaultProps = {

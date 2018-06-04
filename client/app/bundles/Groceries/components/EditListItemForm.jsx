@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+
+import { defaultDueBy, formatDueBy } from '../utils/format';
 
 import Alert from './Alert';
 import BookListItemFormFields from './BookListItemFormFields';
@@ -37,7 +38,7 @@ export default class EditListItemForm extends Component {
       itemTitle: '',
       itemRead: false,
       itemArtist: '',
-      itemDueBy: moment().format('YYYY-MM-DD'),
+      itemDueBy: defaultDueBy(),
       itemAssigneeId: '',
       itemAlbum: '',
       listUsers: [],
@@ -54,9 +55,8 @@ export default class EditListItemForm extends Component {
              `/${this.props.match.params.id}/edit`,
         dataType: 'JSON',
       }).done((data) => {
-        const item = data.item;
-        const list = data.list;
-        const dueByDate = moment(item.due_by).format('YYYY-MM-DD');
+        const { item, list } = data;
+        const dueByDate = formatDueBy(item.due_by);
         this.setState({
           userId: item.user_id,
           listId: list.id,
@@ -86,7 +86,7 @@ export default class EditListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const target = event.target;
+    const { target } = event;
     const obj = {};
     obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);

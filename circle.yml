@@ -1,10 +1,10 @@
 machine:
   node:
-    version: v10.0.0
+    version: v10.3.0
   yarn:
     version: 1.7.0
   ruby:
-    version: 2.3.0
+    version: 2.5.1
 
 dependencies:
   pre:
