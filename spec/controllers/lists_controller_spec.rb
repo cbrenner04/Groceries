@@ -22,7 +22,7 @@ RSpec.describe ListsController do
         get :index, format: :json
 
         response_body = JSON.parse(response.body)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(response_body["accepted_lists"].count)
           .to eq user.lists.accepted(user).count
         expect(response_body["not_accepted_lists"].count)
@@ -71,7 +71,7 @@ RSpec.describe ListsController do
           }, format: :json
 
           response_body = JSON.parse(response.body)
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response_body["current_user_id"]).to eq user.id
           expect(response_body["list"]).to include(
             "id" => list.id,
@@ -120,7 +120,7 @@ RSpec.describe ListsController do
           }, format: :json
 
           response_body = JSON.parse(response.body)
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response_body["current_user_id"]).to eq user.id
           expect(response_body["list"]).to include(
             "id" => list.id,
@@ -158,7 +158,7 @@ RSpec.describe ListsController do
           }, format: :json
 
           response_body = JSON.parse(response.body)
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response_body["current_user_id"]).to eq user.id
           expect(response_body["list"]).to include(
             "id" => list.id,
@@ -204,7 +204,7 @@ RSpec.describe ListsController do
           }, format: :json
 
           response_body = JSON.parse(response.body)
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response_body["current_user_id"]).to eq user.id
           expect(response_body["list"]).to include(
             "id" => list.id,

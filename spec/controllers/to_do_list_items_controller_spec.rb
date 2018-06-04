@@ -29,7 +29,7 @@ RSpec.describe ToDoListItemsController do
           list_id: list.id
         }, format: :json
 
-        expect(response).to be_success
+        expect(response).to be_successful
         response_body = JSON.parse(response.body).to_h
         expect(response_body["item"]).to include(
           "archived_at" => item[:archived_at],

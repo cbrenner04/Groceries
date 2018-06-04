@@ -27,7 +27,7 @@ RSpec.describe UsersListsController do
           list_id: list.id
         }, format: :json
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(JSON.parse(response.body)["users"].count)
           .to eq UsersList.where(list: list).accepted.count
       end
@@ -68,7 +68,7 @@ RSpec.describe UsersListsController do
           list_id: other_list.id
         }, format: :json
 
-        expect(response).to be_success
+        expect(response).to be_successful
         response_body = JSON.parse(response.body)
         expect(response_body["list"].to_h).to include(
           "id" => other_list[:id],
