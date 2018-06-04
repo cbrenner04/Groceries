@@ -12,6 +12,7 @@ const EditGroceryListItemFormFields = props => (
         id="itemName"
         value={props.itemName}
         onChange={props.inputHandler}
+        placeholder="apples"
       />
     </div>
     <div className="form-group">
@@ -23,22 +24,8 @@ const EditGroceryListItemFormFields = props => (
         id="itemQuantity"
         value={props.itemQuantity}
         onChange={props.inputHandler}
+        placeholder="3 bags"
       />
-    </div>
-    <div className="form-group">
-      <label htmlFor="itemQuantityName">Quantity Name</label>
-      <input
-        name="itemQuantityName"
-        type="text"
-        className="form-control"
-        id="itemQuantityName"
-        value={props.itemQuantityName}
-        onChange={props.inputHandler}
-      />
-      <small className="help-block text-muted">
-        This is meant to be used in conjunction with quantity. For example
-        &quot;1 bag&quot; or &quot;12 ounces&quot;.
-      </small>
     </div>
     {
       props.editForm && (
@@ -63,7 +50,6 @@ const EditGroceryListItemFormFields = props => (
 EditGroceryListItemFormFields.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemQuantity: PropTypes.string.isRequired,
-  itemQuantityName: PropTypes.string.isRequired,
   itemPurchased: PropTypes.bool,
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,

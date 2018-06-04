@@ -31,7 +31,6 @@ export default class EditListItemForm extends Component {
       listType: 'GroceryList',
       itemName: '',
       itemPurchased: false,
-      itemQuantityName: '',
       itemQuantity: '',
       itemCompleted: false,
       itemAuthor: '',
@@ -65,8 +64,7 @@ export default class EditListItemForm extends Component {
           itemId: item.id,
           itemName: item.name,
           itemPurchased: item.purchased,
-          itemQuantity: String(item.quantity),
-          itemQuantityName: item.quantity_name,
+          itemQuantity: item.quantity,
           itemCompleted: item.completed,
           itemAuthor: item.author,
           itemTitle: item.title,
@@ -107,7 +105,6 @@ export default class EditListItemForm extends Component {
       name: this.state.itemName,
       quantity: this.state.itemQuantity,
       purchased: this.state.itemPurchased,
-      quantity_name: this.state.itemQuantityName,
       completed: this.state.itemCompleted,
       author: this.state.itemAuthor,
       title: this.state.itemTitle,
@@ -167,7 +164,6 @@ export default class EditListItemForm extends Component {
         <GroceryListItemFormFields
           itemName={this.state.itemName}
           itemQuantity={this.state.itemQuantity}
-          itemQuantityName={this.state.itemQuantityName}
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
           editForm

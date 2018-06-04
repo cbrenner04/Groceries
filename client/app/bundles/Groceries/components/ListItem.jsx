@@ -8,8 +8,7 @@ export default class ListItem extends Component {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string,
-      quantity: PropTypes.number,
-      quantity_name: PropTypes.string,
+      quantity: PropTypes.string,
       author: PropTypes.string,
       title: PropTypes.string,
       artist: PropTypes.string,
@@ -63,7 +62,7 @@ export default class ListItem extends Component {
   itemName = () => (
     {
       BookList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.author}`,
-      GroceryList: `${this.props.item.quantity} ${this.props.item.quantity_name} ${this.props.item.name}`,
+      GroceryList: `${this.props.item.quantity} ${this.props.item.name}`,
       MusicList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.artist} ` +
                  `${this.props.item.artist && this.props.item.album ? '- ' : ''}` +
                  `${this.props.item.album ? this.props.item.album : ''}`,

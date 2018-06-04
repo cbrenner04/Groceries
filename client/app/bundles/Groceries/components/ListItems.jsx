@@ -9,8 +9,7 @@ export default class ListItems extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
-        quantity: PropTypes.number,
-        quantity_name: PropTypes.string,
+        quantity: PropTypes.string,
         author: PropTypes.string,
         title: PropTypes.string,
         artist: PropTypes.string,

@@ -179,8 +179,7 @@ class ListsController < ApplicationController
         user: current_user,
         grocery_list: new_list,
         name: item[:name],
-        quantity: item[:quantity],
-        quantity_name: item[:quantity_name]
+        quantity: item[:quantity]
       )
     end
   end

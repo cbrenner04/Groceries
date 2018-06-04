@@ -11,7 +11,6 @@ import ToDoListItemFormFields from './ToDoListItemFormFields';
 const initialState = {
   itemName: '',
   itemQuantity: '',
-  itemQuantityName: '',
   itemAuthor: '',
   itemTitle: '',
   itemArtist: '',
@@ -67,7 +66,6 @@ export default class ListItemForm extends Component {
       user_id: this.props.userId,
       name: this.state.itemName,
       quantity: this.state.itemQuantity,
-      quantity_name: this.state.itemQuantityName,
       author: this.state.itemAuthor,
       title: this.state.itemTitle,
       artist: this.state.itemArtist,
@@ -114,7 +112,6 @@ export default class ListItemForm extends Component {
       return (
         <GroceryListItemFormFields
           itemQuantity={this.state.itemQuantity}
-          itemQuantityName={this.state.itemQuantityName}
           itemName={this.state.itemName}
           inputHandler={this.handleUserInput}
         />

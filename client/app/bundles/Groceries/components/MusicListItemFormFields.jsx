@@ -12,6 +12,7 @@ const EditMusicListItemFormFields = props => (
         id="itemTitle"
         value={props.itemTitle}
         onChange={props.inputHandler}
+        placeholder="Baby Got Back"
       />
     </div>
     <div className="form-group">
@@ -23,6 +24,7 @@ const EditMusicListItemFormFields = props => (
         id="itemArtist"
         value={props.itemArtist}
         onChange={props.inputHandler}
+        placeholder="Sir Mix-a-Lot"
       />
     </div>
     <div className="form-group">
@@ -34,6 +36,7 @@ const EditMusicListItemFormFields = props => (
         id="itemAlbum"
         value={props.itemAlbum}
         onChange={props.inputHandler}
+        placeholder="Mack Daddy"
       />
     </div>
     {

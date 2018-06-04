@@ -38,7 +38,6 @@ RSpec.describe GroceryListItemsController do
           "name" => item[:name],
           "purchased" => item[:purchased],
           "quantity" => item[:quantity],
-          "quantity_name" => item[:quantity_name],
           "refreshed" => item[:refreshed],
           "user_id" => item[:user_id]
         )
