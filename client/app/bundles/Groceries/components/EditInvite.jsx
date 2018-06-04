@@ -13,10 +13,6 @@ export default class EditPassword extends Component {
     }).isRequired,
   }
 
-  static defaultProps = {
-    invitation_token: '',
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +32,7 @@ export default class EditPassword extends Component {
   }
 
   handleChange = (event) => {
-    const name = event.target.name;
+    const { name } = event.target;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);

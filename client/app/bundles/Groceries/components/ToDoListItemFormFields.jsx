@@ -69,12 +69,10 @@ EditToDoListItemFormFields.propTypes = {
   itemAssigneeId: PropTypes.string.isRequired,
   itemDueBy: PropTypes.string.isRequired,
   itemCompleted: PropTypes.bool,
-  listUsers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      email: PropTypes.string,
-    }),
-  ).isRequired,
+  listUsers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    email: PropTypes.string,
+  })).isRequired,
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
 };

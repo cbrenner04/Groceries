@@ -6,13 +6,10 @@ import Alert from './Alert';
 
 export default class ShareListForm extends Component {
   static propTypes = {
-    listName: PropTypes.string.isRequired,
-    listId: PropTypes.number.isRequired,
-    users: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-      }).isRequired,
-    ).isRequired,
+    listId: PropTypes.number,
+    users: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -26,7 +23,6 @@ export default class ShareListForm extends Component {
 
   static defaultProps = {
     listId: 0,
-    listName: '',
     users: [],
   }
 
@@ -35,8 +31,6 @@ export default class ShareListForm extends Component {
     this.state = {
       listId: this.props.listId,
       users: this.props.users,
-      listName: this.props.listName,
-      userId: '',
       newEmail: '',
       errors: '',
     };
@@ -52,14 +46,13 @@ export default class ShareListForm extends Component {
         this.setState({
           users: data.users,
           listId: data.list.id,
-          listName: data.list.name,
         });
       });
     }
   }
 
   handleUserInput = (event) => {
-    const name = event.target.name;
+    const { name } = event.target;
     const obj = {};
     obj[name] = event.target.value;
     this.setState(obj);
@@ -87,8 +80,9 @@ export default class ShareListForm extends Component {
     $.post(
       `/lists/${this.state.listId}/users_lists`,
       { users_list: usersList },
-    ).done(this.props.history.push('/lists'))
-    .fail(response => this.failure(response));
+    )
+      .done(this.props.history.push('/lists'))
+      .fail(response => this.failure(response));
   }
 
   failure(response) {

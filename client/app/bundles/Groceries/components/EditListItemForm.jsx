@@ -54,8 +54,7 @@ export default class EditListItemForm extends Component {
              `/${this.props.match.params.id}/edit`,
         dataType: 'JSON',
       }).done((data) => {
-        const item = data.item;
-        const list = data.list;
+        const { item, list } = data;
         const dueByDate = moment(item.due_by).format('YYYY-MM-DD');
         this.setState({
           userId: item.user_id,
@@ -86,7 +85,7 @@ export default class EditListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const target = event.target;
+    const { target } = event;
     const obj = {};
     obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);

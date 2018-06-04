@@ -3,42 +3,39 @@ import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
+import Alert from './Alert';
 import ListItemForm from './ListItemForm';
 import ListItemsContainer from './ListItemsContainer';
 
 export default class ListContainer extends Component {
   static propTypes = {
-    current_user_id: PropTypes.number.isRequired,
+    current_user_id: PropTypes.number,
     list: PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
-    }).isRequired,
-    not_purchased_items: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string,
-        quantity: PropTypes.number,
-        author: PropTypes.string,
-        title: PropTypes.string,
-        artist: PropTypes.string,
-        album: PropTypes.string,
-        assignee_id: PropTypes.number,
-        due_by: PropTypes.date,
-      }).isRequired,
-    ),
-    purchased_items: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string,
-        quantity: PropTypes.number,
-        author: PropTypes.string,
-        title: PropTypes.string,
-        artist: PropTypes.string,
-        album: PropTypes.string,
-        assignee_id: PropTypes.number,
-        due_by: PropTypes.date,
-      }).isRequired,
-    ),
+    }),
+    not_purchased_items: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.number,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
+    }).isRequired),
+    purchased_items: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      quantity: PropTypes.number,
+      author: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      album: PropTypes.string,
+      assignee_id: PropTypes.number,
+      due_by: PropTypes.date,
+    }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -49,7 +46,10 @@ export default class ListContainer extends Component {
 
   static defaultProps = {
     current_user_id: 0,
-    list: { id: 0, type: 'GroceryList' },
+    list: {
+      id: 0,
+      type: 'GroceryList',
+    },
     not_purchased_items: [],
     purchased_items: [],
   }
@@ -96,12 +96,10 @@ export default class ListContainer extends Component {
     } else {
       sortAttr = 'name';
     }
-    const sortedItems = items.sort(
-      (a, b) => {
-        const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
-        return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
-      },
-    );
+    const sortedItems = items.sort((a, b) => {
+      const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
+      return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
+    });
     return sortedItems;
   }
 
@@ -169,20 +167,20 @@ export default class ListContainer extends Component {
     const postData = {};
     postData[`${this.listTypetoSnakeCase()}_item`] = newItem;
     $.post(`${this.listItemPath(newItem)}`, postData)
-    .done((data) => {
-      this.handleAddItem(data);
-      $.ajax({
-        url: `${this.listItemPath(item)}/${item.id}`,
-        type: 'PUT',
-        data: `${this.listTypetoSnakeCase()}_item%5Brefreshed%5D=true`,
-        success: () => this.removeItemFromPurchased(item),
+      .done((data) => {
+        this.handleAddItem(data);
+        $.ajax({
+          url: `${this.listItemPath(item)}/${item.id}`,
+          type: 'PUT',
+          data: `${this.listTypetoSnakeCase()}_item%5Brefreshed%5D=true`,
+          success: () => this.removeItemFromPurchased(item),
+        });
+      }).fail((response) => {
+        const responseJSON = JSON.parse(response.responseText);
+        const responseTextKeys = Object.keys(responseJSON);
+        const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+        this.setState({ errors: errors.join(' and ') });
       });
-    }).fail((response) => {
-      const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
-    });
   }
 
   moveItemToPurchased = (item) => {
@@ -231,6 +229,7 @@ export default class ListContainer extends Component {
       <div>
         <h1>{ this.state.list.name }</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
+        <Alert errors={this.state.errors} />
         <br />
         <ListItemForm
           listId={this.state.list.id}

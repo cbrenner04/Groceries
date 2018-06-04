@@ -23,12 +23,10 @@ export default class ListItem extends Component {
     handleItemRead: PropTypes.func.isRequired,
     handleItemUnRead: PropTypes.func.isRequired,
     listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        email: PropTypes.string.isRequired,
-      }),
-    ),
+    listUsers: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+    })),
     unPurchaseItem: PropTypes.func.isRequired,
   }
 
@@ -50,7 +48,7 @@ export default class ListItem extends Component {
   prettyTitle = () => `"${this.props.item.title}"`
 
   listTypetoSnakeCase = () => {
-    const listType = this.props.listType;
+    const { listType } = this.props;
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
 

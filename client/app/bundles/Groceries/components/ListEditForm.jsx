@@ -22,13 +22,6 @@ export default class ListEditForm extends Component {
     }).isRequired,
   }
 
-  static defaultProps = {
-    id: 0,
-    listName: '',
-    completed: false,
-    listType: '',
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +51,7 @@ export default class ListEditForm extends Component {
   }
 
   handleChange = (event) => {
-    const target = event.target;
+    const { target } = event;
     const obj = {};
     obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
     this.setState(obj);
@@ -89,7 +82,7 @@ export default class ListEditForm extends Component {
     return (
       <div>
         <h1>Edit { this.state.listName }</h1>
-        <Link to={'/lists'} className="pull-right">
+        <Link to="/lists" className="pull-right">
           Back to lists
         </Link>
         <br />
