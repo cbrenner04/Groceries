@@ -36,13 +36,14 @@ export default class ListForm extends Component {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <div className="form-group">
+          <label htmlFor="listName">Name</label>
           <input
             name="listName"
             type="text"
             className="form-control"
             value={this.state.listName}
             onChange={this.handleChange}
-            placeholder="New list name"
+            placeholder="My super cool list"
           />
         </div>
         <ListTypeOptions listType={this.state.listType} changeHandler={this.handleChange} />
