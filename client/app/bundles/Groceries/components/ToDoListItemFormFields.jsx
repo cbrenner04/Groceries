@@ -12,7 +12,7 @@ const EditToDoListItemFormFields = props => (
         id="itemName"
         value={props.itemName}
         onChange={props.inputHandler}
-        placeholder="thing to do"
+        placeholder="Clean the toilets"
       />
     </div>
     <div className="form-group">

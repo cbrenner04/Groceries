@@ -18,7 +18,6 @@ export default class ListContainer extends Component {
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
         quantity: PropTypes.number,
-        quantity_name: PropTypes.string,
         author: PropTypes.string,
         title: PropTypes.string,
         artist: PropTypes.string,
@@ -32,7 +31,6 @@ export default class ListContainer extends Component {
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
         quantity: PropTypes.number,
-        quantity_name: PropTypes.string,
         author: PropTypes.string,
         title: PropTypes.string,
         artist: PropTypes.string,
@@ -164,7 +162,6 @@ export default class ListContainer extends Component {
       quantity: item.quantity,
       purchased: false,
       completed: false,
-      quantity_name: item.quantity_name,
       assignee_id: item.assignee_id,
       due_by: item.due_by,
     };

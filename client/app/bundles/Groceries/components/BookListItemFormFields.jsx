@@ -12,6 +12,7 @@ const EditBookListItemFormFields = props => (
         id="itemAuthor"
         value={props.itemAuthor}
         onChange={props.inputHandler}
+        placeholder="Kurt Vonnegut"
       />
     </div>
     <div className="form-group">
@@ -23,6 +24,7 @@ const EditBookListItemFormFields = props => (
         id="itemTitle"
         value={props.itemTitle}
         onChange={props.inputHandler}
+        placeholder="Slaughterhouse-Five"
       />
     </div>
     {

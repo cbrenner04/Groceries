@@ -97,7 +97,6 @@ RSpec.describe ListsController do
             grocery_list_id: list.id,
             name: "foo",
             quantity: 1,
-            quantity_name: "bar",
             purchased: false
           )
           GroceryListItem.create!(
@@ -105,7 +104,6 @@ RSpec.describe ListsController do
             grocery_list_id: list.id,
             name: "foobar",
             quantity: 1,
-            quantity_name: "baz",
             purchased: true,
             refreshed: false
           )
@@ -114,7 +112,6 @@ RSpec.describe ListsController do
             grocery_list_id: list.id,
             name: "foobar",
             quantity: 1,
-            quantity_name: "baz",
             purchased: true,
             refreshed: true
           )
@@ -425,8 +422,7 @@ RSpec.describe ListsController do
           user: user,
           grocery_list: list,
           name: "foo",
-          quantity: 1,
-          quantity_name: "bar"
+          quantity: 1
         )
         expect do
           post :refresh_list, params: {
