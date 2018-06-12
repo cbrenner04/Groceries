@@ -2,11 +2,11 @@
   "name": "groceries",
   "private": true,
   "engines": {
-    "node": "10.3.0",
-    "yarn": "1.7.0"
+    "node": ">=8.11.2",
+    "yarn": "^1.6.0"
   },
   "dependencies": {
-    "yarn": "^1.7.0"
+    "yarn": "^1.6.0"
   },
   "scripts": {
     "postinstall": "cd client && yarn install"
