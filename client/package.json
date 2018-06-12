@@ -2,8 +2,8 @@
   "name": "groceries",
   "private": true,
   "engines": {
-    "node": "10.3.0",
-    "yarn": "1.7.0"
+    "node": ">=8.11.2",
+    "yarn": "^1.6.0"
   },
   "scripts": {
     "build:test": "NODE_ENV=test webpack --config webpack.config.js",

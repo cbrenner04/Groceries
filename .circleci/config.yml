@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/Groceries
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: Groceries
+          RAILS_ENV: test
+      - image: circleci/postgres:10.4-alpine
+        environment:
+          POSTGRES_USER: Groceries
+          POSTGRES_DB: Groceries_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+          - v2-ruby-dependencies-
+      - run:
+          name: install ruby dependencies
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - save_cache:
+          key: v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+      - restore_cache:
+          keys:
+            - v2-js-dependencies-{{ checksum "yarn.lock" }}
+            - v2-js-dependencies-
+      - run:
+          name: install js dependencies
+          command: yarn install --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: v2-js-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: setup db
+          command: bin/rails db:schema:load --trace
+      - run:
+          name: precompile assets
+          command: bundle exec rake assets:precompile
+      - run:
+          name: ruby tests
+          command: bundle exec rspec
+      - run:
+          name: rubocop
+          command: bundle exec rubocop
+      - run:
+          name: bundle audit
+          command: bundle exec bundle audit check --update
+      - run:
+          name: lint frontend
+          command: cd client && yarn lint
