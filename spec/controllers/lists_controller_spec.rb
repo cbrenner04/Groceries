@@ -24,9 +24,9 @@ RSpec.describe ListsController do
         response_body = JSON.parse(response.body)
         expect(response).to be_successful
         expect(response_body["accepted_lists"].count)
-          .to eq user.lists.accepted(user).count
+          .to eq List.accepted(user).count
         expect(response_body["not_accepted_lists"].count)
-          .to eq user.lists.not_accepted(user).count
+          .to eq List.not_accepted(user).count
       end
     end
   end

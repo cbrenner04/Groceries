@@ -51,6 +51,12 @@ RSpec.describe UsersListsController do
         new_list = GroceryList.create!(name: "foobar")
         UsersList.create!(
           user: user,
+          list: other_list,
+          has_accepted: true,
+          responded: true
+        )
+        UsersList.create!(
+          user: user,
           list: new_list,
           has_accepted: true,
           responded: true
