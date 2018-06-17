@@ -2,18 +2,12 @@
 
 Check out the production version at <https://www.groceries-app.com>.
 
-You will need to sign up to use the app.
+Signing up has been removed. If you would like access to the app please email me
+at cbrenner265@gmail.com.
 
 Once signed up you can create a list. Lists can be shared between users.
 
 From there you can perform all CRUD functionality for items for the list.
-
-You will notice when adding items to the list you can either add a new item or
-choose from previously added items. Because of this feature items are soft-
-deleted. They will no long appear in the list but they are not actually deleted
-from the database so that they are still available in the previously added
-dropdown. Similarly lists can only be soft-deleted as items are related to lists
-and if a list is deleted it would delete the items.
 
 Please submit an issue if you find one.
 
@@ -21,41 +15,29 @@ Please submit an issue if you find one.
 
 Seed data can be found in `db/seeds.rb`.
 
-To run the app with fresh data:
+Setup the database:
 
 ```
-rails db:drop db:create db:migrate; rails db:seed; rails s
+rails db:setup
 ```
 
-When updating React components you will need to run:
+Build the front end and watch for changes:
 
 ```
 sh -c 'rm app/assets/webpack/* || true && cd client && yarn run build:development'
 ```
 
-Just to run the app:
+In a separate terminal, run the server:
 
 ```
 rails s
 ```
 
-When developing, it may be easiest to have two terminals open running the two
-previous commands.
-
 You can sign in using any of the users in the seeds file listed above.
 
 ## Todos
 
-* Update front-end to use React.
-  * Currently the page needs to reload to tell when items have been purchased or
-    not. This can make decision making a little difficult if multiple parties
-    are shopping at the same time.
-    - [x] Lists
-    - [x] Items
-    - [ ] Update/add tests
 * Update front-end UI.
-  * Gestures for updating items in list. Swipe left for purchased or right for
-    deleted, click to edit. There should be settings for preferred gestures.
   * Sort options for items on list and for lists. Suggested options would be:
     * Alphabetically
     * By department
