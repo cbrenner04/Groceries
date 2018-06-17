@@ -21,15 +21,30 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  def self.unattached_to_list(list)
-    users = UsersList.all.where(list_id: list.id).map(&:user_id)
-    User.where.not(id: users)
+  def users_that_list_can_be_shared_with(list)
+    User.find_by_sql(related_users_query(list.id))
   end
 
-  def related_users_through_lists
-    user_lists = lists.map(&:users_lists).flatten.uniq.reject do |user_list|
-      user_list.user_id == id || !user_list.has_accepted
-    end
-    user_lists.map { |user_list| User.find(user_list.user_id) }.uniq
+  private
+
+  def related_users_query(list_id)
+    <<-SQL
+      SELECT DISTINCT "users".*
+      FROM "users"
+      INNER JOIN "users_lists"
+              ON "users"."id" = "users_lists"."user_id"
+      WHERE "users_lists"."list_id" IN (
+        SELECT "lists"."id"
+        FROM "lists"
+        INNER JOIN "users_lists"
+                ON "lists"."id" = "users_lists"."list_id"
+        WHERE "users_lists"."user_id" = #{id}
+      )
+      AND NOT "users"."id" IN (
+        SELECT "users_lists"."user_id"
+        FROM "users_lists"
+        WHERE "users_lists"."list_id" = #{list_id}
+      );
+    SQL
   end
 end

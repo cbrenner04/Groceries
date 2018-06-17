@@ -15,9 +15,7 @@ class UsersListsController < ApplicationController
 
   def new
     list = List.find(params[:list_id])
-    users = current_user.related_users_through_lists.select do |user|
-      User.unattached_to_list(list).include? user
-    end
+    users = current_user.users_that_list_can_be_shared_with(list)
     respond_to do |format|
       format.html { render template: "lists/index" }
       format.json { render json: { list: list, users: users } }
