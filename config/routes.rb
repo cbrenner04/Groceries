@@ -17,5 +17,6 @@ Rails.application.routes.draw do
       get :reject_list, on: :collection
     end
   end
+  resources :completed_lists, only: :index
   root to: "lists#index"
 end

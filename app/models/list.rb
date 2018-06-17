@@ -22,8 +22,13 @@ class List < ApplicationRecord
   def self.accepted(user)
     not_completed_lists =
       List.find_by_sql(not_completed_accepted_lists_query(user.id))
-    completed_lists = List.find_by_sql(completed_accepted_lists_query(user.id))
+    completed_lists =
+      List.find_by_sql(limited_completed_accepted_lists_query(user.id))
     not_completed_lists.concat(completed_lists)
+  end
+
+  def self.all_completed_lists(user)
+    List.find_by_sql(completed_accepted_lists_query(user.id))
   end
 
   def self.not_accepted(user)
@@ -55,6 +60,21 @@ class List < ApplicationRecord
       AND "lists"."archived_at" IS NULL
       AND "lists"."completed" = true
       ORDER BY "lists"."created_at" DESC;
+    SQL
+  end
+
+  def self.limited_completed_accepted_lists_query(user_id)
+    <<-SQL
+      SELECT "lists".*
+      FROM "lists"
+      INNER JOIN "users_lists"
+              ON "lists"."id" = "users_lists"."list_id"
+      WHERE "users_lists"."user_id" = #{user_id}
+      AND "users_lists"."has_accepted" = true
+      AND "lists"."archived_at" IS NULL
+      AND "lists"."completed" = true
+      ORDER BY "lists"."created_at" DESC
+      LIMIT 10;
     SQL
   end
 

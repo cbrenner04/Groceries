@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import List from './List';
 
@@ -75,6 +76,10 @@ export default class Lists extends Component {
         </div>
         <br />
         <h2>Completed Lists</h2>
+        <p>
+          These are the completed lists most recently created.&nbsp;
+          <Link to="/completed_lists">See all completed lists here.</Link>
+        </p>
         <div className="list-group">
           {
             this.props.completedLists.map(list => (

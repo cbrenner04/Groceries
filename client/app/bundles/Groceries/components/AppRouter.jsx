@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import CompletedLists from './CompletedLists';
 import EditInvite from './EditInvite';
 import EditListItemForm from './EditListItemForm';
 import EditPassword from './EditPassword';
@@ -19,6 +20,7 @@ export default function AppRouter() {
       <div>
         <Route path="*" component={Navbar} />
         <Route exact path="/" component={ListsContainer} />
+        <Route exact path="/completed_lists" component={CompletedLists} />
         <Route exact path="/lists" component={ListsContainer} />
         <Route exact path="/lists/:id" component={ListContainer} />
         <Route exact path="/lists/:id/edit" component={ListEditForm} />
