@@ -43,16 +43,24 @@ RSpec.describe List do
     end
 
     it "returns lists accepted by user" do
-      expect(GroceryList.accepted(user).count).to eq 1
+      expect(List.accepted(user).count).to eq 1
     end
   end
 
   describe ".not_accepted" do
     let(:new_user) { create :user }
 
-    it "returns lists accepted by user" do
-      other_list # because `let` is lazy
-      expect(GroceryList.not_accepted(new_user).count).to eq 1
+    before do
+      UsersList.create!(
+        user: new_user,
+        list: other_list,
+        has_accepted: false,
+        responded: false
+      )
+    end
+
+    it "returns lists not yet accepted by user" do
+      expect(List.not_accepted(new_user).count).to eq 1
     end
   end
 end

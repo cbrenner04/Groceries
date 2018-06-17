@@ -84,8 +84,8 @@ class ListsController < ApplicationController
 
   def index_response
     {
-      accepted_lists: current_user.lists.accepted(current_user),
-      not_accepted_lists: current_user.lists.not_accepted(current_user),
+      accepted_lists: List.accepted(current_user),
+      not_accepted_lists: List.not_accepted(current_user),
       is_user_signed_in: user_signed_in?
     }
   end

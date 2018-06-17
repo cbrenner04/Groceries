@@ -20,15 +20,56 @@ class List < ApplicationRecord
   end
 
   def self.accepted(user)
-    not_archived.descending.select do |list|
-      UsersList.find_by(user: user, list: list)&.has_accepted
-    end
+    not_completed_lists = List.find_by_sql(not_completed_accepted_lists_query(user.id))
+    completed_lists = List.find_by_sql(completed_accepted_lists_query(user.id))
+    not_completed_lists.concat(completed_lists)
   end
 
   def self.not_accepted(user)
-    not_archived.descending.reject do |list|
-      users_list = UsersList.find_by(user: user, list: list)
-      users_list&.has_accepted || users_list&.responded
-    end
+    List.find_by_sql(not_accepted_lists_query(user.id))
+  end
+
+  private
+
+  def self.not_completed_accepted_lists_query(user_id)
+    <<-SQL
+      SELECT "lists".*
+      FROM "lists"
+      INNER JOIN "users_lists"
+              ON "lists"."id" = "users_lists"."list_id"
+      WHERE "users_lists"."user_id" = #{user_id}
+      AND "users_lists"."has_accepted" = true
+      AND "lists"."archived_at" IS NULL
+      AND "lists"."completed" = false
+      ORDER BY "lists"."created_at" DESC;
+    SQL
+  end
+
+  def self.completed_accepted_lists_query(user_id)
+    <<-SQL
+      SELECT "lists".*
+      FROM "lists"
+      INNER JOIN "users_lists"
+              ON "lists"."id" = "users_lists"."list_id"
+      WHERE "users_lists"."user_id" = #{user_id}
+      AND "users_lists"."has_accepted" = true
+      AND "lists"."archived_at" IS NULL
+      AND "lists"."completed" = true
+      ORDER BY "lists"."created_at" DESC;
+    SQL
+  end
+
+  def self.not_accepted_lists_query(user_id)
+    <<-SQL
+      SELECT "lists".*
+      FROM "lists"
+      INNER JOIN "users_lists"
+              ON "lists"."id" = "users_lists"."list_id"
+      WHERE "users_lists"."user_id" = #{user_id}
+      AND "users_lists"."has_accepted" = false
+      AND "users_lists"."responded" = false
+      AND "lists"."archived_at" IS NULL
+      ORDER BY "lists"."created_at" DESC
+    SQL
   end
 end
