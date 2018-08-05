@@ -143,7 +143,7 @@ class ListsController < ApplicationController
       ToDoListItem.create!(
         user: current_user,
         to_do_list: new_list,
-        name: item[:name],
+        task: item[:task],
         assignee_id: item[:assignee_id],
         due_by: item[:due_by]
       )
@@ -178,7 +178,7 @@ class ListsController < ApplicationController
       GroceryListItem.create!(
         user: current_user,
         grocery_list: new_list,
-        name: item[:name],
+        product: item[:product],
         quantity: item[:quantity]
       )
     end

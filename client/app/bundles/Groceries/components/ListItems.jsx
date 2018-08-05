@@ -7,7 +7,8 @@ export default class ListItems extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.string,
       author: PropTypes.string,
       title: PropTypes.string,

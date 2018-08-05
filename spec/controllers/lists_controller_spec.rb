@@ -95,14 +95,14 @@ RSpec.describe ListsController do
           GroceryListItem.create!(
             user_id: user.id,
             grocery_list_id: list.id,
-            name: "foo",
+            product: "foo",
             quantity: 1,
             purchased: false
           )
           GroceryListItem.create!(
             user_id: user.id,
             grocery_list_id: list.id,
-            name: "foobar",
+            product: "foobar",
             quantity: 1,
             purchased: true,
             refreshed: false
@@ -110,7 +110,7 @@ RSpec.describe ListsController do
           GroceryListItem.create!(
             user_id: user.id,
             grocery_list_id: list.id,
-            name: "foobar",
+            product: "foobar",
             quantity: 1,
             purchased: true,
             refreshed: true
@@ -182,20 +182,20 @@ RSpec.describe ListsController do
           ToDoListItem.create!(
             user_id: user.id,
             to_do_list_id: list.id,
-            name: "foo",
+            task: "foo",
             completed: false
           )
           ToDoListItem.create!(
             user_id: user.id,
             to_do_list_id: list.id,
-            name: "foobar",
+            task: "foobar",
             completed: true,
             refreshed: false
           )
           ToDoListItem.create!(
             user_id: user.id,
             to_do_list_id: list.id,
-            name: "foobar",
+            task: "foobar",
             completed: true,
             refreshed: true
           )
@@ -421,7 +421,7 @@ RSpec.describe ListsController do
         GroceryListItem.create!(
           user: user,
           grocery_list: list,
-          name: "foo",
+          product: "foo",
           quantity: 1
         )
         expect do
@@ -472,7 +472,7 @@ RSpec.describe ListsController do
         ToDoListItem.create!(
           user: user,
           to_do_list: list,
-          name: "foo"
+          task: "foo"
         )
         expect do
           post :refresh_list, params: {

@@ -11,11 +11,11 @@ class ToDoListItem < ApplicationRecord
   scope :not_refreshed, (-> { where(refreshed: false) })
   scope :refreshed, (-> { where(refreshed: true) })
 
-  validates :user, :to_do_list, :name, presence: true
+  validates :user, :to_do_list, :task, presence: true
   validates :completed, inclusion: { in: [true, false] }
 
   def self.ordered
-    all.order(:name)
+    all.order(:task)
   end
 
   def archive

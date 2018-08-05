@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe ToDoListItem, type: :model do
-  let(:item) { create :to_do_list_item, name: "foo" }
-  let(:another_item) { create :to_do_list_item, name: "bar" }
+  let(:item) { create :to_do_list_item, task: "foo" }
+  let(:another_item) { create :to_do_list_item, task: "bar" }
 
   describe "validations" do
     it { expect(item).to be_valid }
@@ -14,8 +14,8 @@ RSpec.describe ToDoListItem, type: :model do
       expect(item).to_not be_valid
     end
 
-    it "is invalid when name is blank" do
-      item.name = nil
+    it "is invalid when task is blank" do
+      item.task = nil
       expect(item).to_not be_valid
     end
 

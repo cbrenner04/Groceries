@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 const EditToDoListItemFormFields = props => (
   <div>
     <div className="form-group">
-      <label htmlFor="itemName">Name</label>
+      <label htmlFor="task">Task</label>
       <input
-        name="itemName"
+        name="task"
         type="text"
         className="form-control"
-        id="itemName"
-        value={props.itemName}
+        id="task"
+        value={props.task}
         onChange={props.inputHandler}
         placeholder="Clean the toilets"
       />
@@ -65,7 +65,7 @@ const EditToDoListItemFormFields = props => (
 );
 
 EditToDoListItemFormFields.propTypes = {
-  itemName: PropTypes.string.isRequired,
+  task: PropTypes.string.isRequired,
   itemAssigneeId: PropTypes.string.isRequired,
   itemDueBy: PropTypes.string.isRequired,
   itemCompleted: PropTypes.bool,

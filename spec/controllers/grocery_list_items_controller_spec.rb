@@ -35,7 +35,7 @@ RSpec.describe GroceryListItemsController do
           "archived_at" => item[:archived_at],
           "id" => item[:id],
           "grocery_list_id" => item[:grocery_list_id],
-          "name" => item[:name],
+          "product" => item[:product],
           "purchased" => item[:purchased],
           "quantity" => item[:quantity],
           "refreshed" => item[:refreshed],
@@ -61,7 +61,7 @@ RSpec.describe GroceryListItemsController do
             grocery_list_item: {
               grocery_list_id: list.id,
               user_id: user.id,
-              name: "foo"
+              product: "foo"
             },
             list_id: list.id
           }
@@ -74,7 +74,7 @@ RSpec.describe GroceryListItemsController do
         post :create, params: {
           grocery_list_item: {
             grocery_list_id: list.id,
-            name: nil
+            product: nil
           },
           list_id: list.id
         }
@@ -88,15 +88,15 @@ RSpec.describe GroceryListItemsController do
   describe "PUT #update" do
     describe "with valid params" do
       it "updates a item" do
-        update_item = create :grocery_list_item, name: "foo"
+        update_item = create :grocery_list_item, product: "foo"
         put :update, params: {
           id: update_item.id,
-          grocery_list_item: { name: "bar" },
+          grocery_list_item: { product: "bar" },
           list_id: list.id
         }
         update_item.reload
 
-        expect(update_item.name).to eq "bar"
+        expect(update_item.product).to eq "bar"
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe GroceryListItemsController do
         item = create :grocery_list_item
         put :update, params: {
           id: item.id,
-          grocery_list_item: { name: nil },
+          grocery_list_item: { product: nil },
           list_id: list.id
         }
 
@@ -117,7 +117,7 @@ RSpec.describe GroceryListItemsController do
 
   describe "DELETE #destroy" do
     it "destroys a item" do
-      delete_item = create :grocery_list_item, name: "foo"
+      delete_item = create :grocery_list_item, product: "foo"
       delete :destroy, params: {
         id: delete_item.id,
         list_id: list.id

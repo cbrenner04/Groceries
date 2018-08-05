@@ -10,7 +10,8 @@ import MusicListItemFormFields from './MusicListItemFormFields';
 import ToDoListItemFormFields from './ToDoListItemFormFields';
 
 const initialState = {
-  itemName: '',
+  product: '',
+  task: '',
   itemQuantity: '',
   itemAuthor: '',
   itemTitle: '',
@@ -44,13 +45,13 @@ export default class ListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const { name } = event.target;
+    const { name, value } = event.target;
     const obj = {};
-    obj[name] = event.target.value;
+    obj[name] = value;
     this.setState(obj);
   }
 
-  listTypetoSnakeCase = () => {
+  listTypeToSnakeCase = () => {
     const { listType } = this.props;
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
@@ -63,7 +64,8 @@ export default class ListItemForm extends Component {
     });
     const listItem = {
       user_id: this.props.userId,
-      name: this.state.itemName,
+      product: this.state.product,
+      task: this.state.task,
       quantity: this.state.itemQuantity,
       author: this.state.itemAuthor,
       title: this.state.itemTitle,
@@ -72,11 +74,11 @@ export default class ListItemForm extends Component {
       assignee_id: this.state.itemAssigneeId,
       due_by: this.state.itemDueBy,
     };
-    listItem[`${this.listTypetoSnakeCase()}_id`] = this.props.listId;
+    listItem[`${this.listTypeToSnakeCase()}_id`] = this.props.listId;
     const postData = {};
-    postData[`${this.listTypetoSnakeCase()}_item`] = listItem;
+    postData[`${this.listTypeToSnakeCase()}_item`] = listItem;
     $.post(
-      `/lists/${this.props.listId}/${this.listTypetoSnakeCase()}_items`,
+      `/lists/${this.props.listId}/${this.listTypeToSnakeCase()}_items`,
       postData,
     ).done((data) => {
       this.props.handleItemAddition(data);
@@ -111,7 +113,7 @@ export default class ListItemForm extends Component {
       return (
         <GroceryListItemFormFields
           itemQuantity={this.state.itemQuantity}
-          itemName={this.state.itemName}
+          product={this.state.product}
           inputHandler={this.handleUserInput}
         />
       );
@@ -127,7 +129,7 @@ export default class ListItemForm extends Component {
     } else if (this.props.listType === 'ToDoList') {
       return (
         <ToDoListItemFormFields
-          itemName={this.state.itemName}
+          task={this.state.task}
           itemAssigneeId={this.state.itemAssigneeId}
           listUsers={this.props.listUsers}
           itemDueBy={this.state.itemDueBy}

@@ -12,7 +12,8 @@ export default class ListItemsContainer extends Component {
     handleItemUnPurchase: PropTypes.func.isRequired,
     notPurchasedItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.string,
       author: PropTypes.string,
       title: PropTypes.string,
@@ -23,7 +24,8 @@ export default class ListItemsContainer extends Component {
     }).isRequired).isRequired,
     purchasedItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.string,
       author: PropTypes.string,
       title: PropTypes.string,

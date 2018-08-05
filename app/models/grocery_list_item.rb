@@ -11,15 +11,11 @@ class GroceryListItem < ApplicationRecord
   scope :not_refreshed, (-> { where(refreshed: false) })
   scope :refreshed, (-> { where(refreshed: true) })
 
-  validates :user, :grocery_list, :name, :quantity, presence: true
+  validates :user, :grocery_list, :product, :quantity, presence: true
   validates :purchased, inclusion: { in: [true, false] }
 
   def self.ordered
-    all.order(:name)
-  end
-
-  def self.unique_names
-    ordered.select(:name).distinct
+    all.order(:product)
   end
 
   def archive

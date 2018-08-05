@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :grocery_list_item do
     user
     grocery_list
-    name "MyString"
+    product "MyString"
     quantity 1
     purchased false
   end
