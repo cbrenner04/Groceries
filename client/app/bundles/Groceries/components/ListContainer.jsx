@@ -16,7 +16,8 @@ export default class ListContainer extends Component {
     }),
     not_purchased_items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.number,
       author: PropTypes.string,
       title: PropTypes.string,
@@ -27,7 +28,8 @@ export default class ListContainer extends Component {
     }).isRequired),
     purchased_items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.number,
       author: PropTypes.string,
       title: PropTypes.string,
@@ -109,14 +111,14 @@ export default class ListContainer extends Component {
     this.setState({ notPurchasedItems });
   }
 
-  listTypetoSnakeCase = () => {
+  listTypeToSnakeCase = () => {
     const listType = this.state.list.type;
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
 
-  listItemPath = item => `/lists/${this.listId(item)}/${this.listTypetoSnakeCase()}_items`
+  listItemPath = item => `/lists/${this.listId(item)}/${this.listTypeToSnakeCase()}_items`
 
-  listId = item => item[`${this.listTypetoSnakeCase()}_id`]
+  listId = item => item[`${this.listTypeToSnakeCase()}_id`]
 
   handleItemPurchase = (item) => {
     let completionType;
@@ -128,7 +130,7 @@ export default class ListContainer extends Component {
     $.ajax({
       url: `${this.listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${this.listTypetoSnakeCase()}_item%5B${completionType}%5D=true`,
+      data: `${this.listTypeToSnakeCase()}_item%5B${completionType}%5D=true`,
       success: () => this.moveItemToPurchased(item),
     });
   }
@@ -137,7 +139,7 @@ export default class ListContainer extends Component {
     $.ajax({
       url: `${this.listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${this.listTypetoSnakeCase()}_item%5Bread%5D=true`,
+      data: `${this.listTypeToSnakeCase()}_item%5Bread%5D=true`,
     });
     // TODO: remove this
     window.location.reload();
@@ -147,7 +149,7 @@ export default class ListContainer extends Component {
     $.ajax({
       url: `${this.listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${this.listTypetoSnakeCase()}_item%5Bread%5D=false`,
+      data: `${this.listTypeToSnakeCase()}_item%5Bread%5D=false`,
     });
     // TODO: remove this
     window.location.reload();
@@ -156,23 +158,24 @@ export default class ListContainer extends Component {
   handleUnPurchase = (item) => {
     const newItem = {
       user_id: item.user_id,
-      name: item.name,
+      product: item.product,
+      task: item.task,
       quantity: item.quantity,
       purchased: false,
       completed: false,
       assignee_id: item.assignee_id,
       due_by: item.due_by,
     };
-    newItem[`${this.listTypetoSnakeCase()}_id`] = this.listId(item);
+    newItem[`${this.listTypeToSnakeCase()}_id`] = this.listId(item);
     const postData = {};
-    postData[`${this.listTypetoSnakeCase()}_item`] = newItem;
+    postData[`${this.listTypeToSnakeCase()}_item`] = newItem;
     $.post(`${this.listItemPath(newItem)}`, postData)
       .done((data) => {
         this.handleAddItem(data);
         $.ajax({
           url: `${this.listItemPath(item)}/${item.id}`,
           type: 'PUT',
-          data: `${this.listTypetoSnakeCase()}_item%5Brefreshed%5D=true`,
+          data: `${this.listTypeToSnakeCase()}_item%5Brefreshed%5D=true`,
           success: () => this.removeItemFromPurchased(item),
         });
       }).fail((response) => {

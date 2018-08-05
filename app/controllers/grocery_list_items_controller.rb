@@ -41,8 +41,8 @@ class GroceryListItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:grocery_list_item).permit(
-      :user_id, :name, :list_id, :quantity, :purchased, :refreshed
-    )
+    params
+      .require(:grocery_list_item)
+      .permit(:user_id, :product, :list_id, :quantity, :purchased, :refreshed)
   end
 end

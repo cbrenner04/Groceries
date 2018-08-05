@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 const EditGroceryListItemFormFields = props => (
   <div>
     <div className="form-group">
-      <label htmlFor="itemName">Item Name</label>
+      <label htmlFor="product">Product</label>
       <input
-        name="itemName"
+        name="product"
         type="text"
         className="form-control"
-        id="itemName"
-        value={props.itemName}
+        id="product"
+        value={props.product}
         onChange={props.inputHandler}
         placeholder="apples"
       />
@@ -48,7 +48,7 @@ const EditGroceryListItemFormFields = props => (
 );
 
 EditGroceryListItemFormFields.propTypes = {
-  itemName: PropTypes.string.isRequired,
+  product: PropTypes.string.isRequired,
   itemQuantity: PropTypes.string.isRequired,
   itemPurchased: PropTypes.bool,
   inputHandler: PropTypes.func.isRequired,

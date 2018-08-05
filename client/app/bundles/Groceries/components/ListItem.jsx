@@ -8,7 +8,8 @@ export default class ListItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string,
+      product: PropTypes.string,
+      task: PropTypes.string,
       quantity: PropTypes.string,
       author: PropTypes.string,
       title: PropTypes.string,
@@ -48,24 +49,24 @@ export default class ListItem extends Component {
 
   prettyTitle = () => `"${this.props.item.title}"`
 
-  listTypetoSnakeCase = () => {
+  listTypeToSnakeCase = () => {
     const { listType } = this.props;
     return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   }
 
   listItemPath = () => {
-    const listId = this.props.item[`${this.listTypetoSnakeCase()}_id`];
-    return `/lists/${listId}/${this.listTypetoSnakeCase()}_items`;
+    const listId = this.props.item[`${this.listTypeToSnakeCase()}_id`];
+    return `/lists/${listId}/${this.listTypeToSnakeCase()}_items`;
   }
 
   itemName = () => (
     {
       BookList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.author}`,
-      GroceryList: `${this.props.item.quantity} ${this.props.item.name}`,
+      GroceryList: `${this.props.item.quantity} ${this.props.item.product}`,
       MusicList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.artist} ` +
                  `${this.props.item.artist && this.props.item.album ? '- ' : ''}` +
                  `${this.props.item.album ? this.props.item.album : ''}`,
-      ToDoList: `${this.props.item.name}`,
+      ToDoList: `${this.props.item.task}`,
     }[this.props.listType]
   )
 

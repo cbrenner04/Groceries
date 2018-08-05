@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe GroceryListItem do
-  let(:item) { create :grocery_list_item, name: "foo" }
-  let(:another_item) { create :grocery_list_item, name: "bar" }
+  let(:item) { create :grocery_list_item, product: "foo" }
+  let(:another_item) { create :grocery_list_item, product: "bar" }
 
   describe "validations" do
     it { expect(item).to be_valid }
@@ -15,8 +15,8 @@ RSpec.describe GroceryListItem do
       expect(item).to_not be_valid
     end
 
-    it "is invalid without name" do
-      item.name = nil
+    it "is invalid without product" do
+      item.product = nil
 
       expect(item).to_not be_valid
     end
@@ -35,20 +35,8 @@ RSpec.describe GroceryListItem do
   end
 
   describe ".ordered" do
-    it "returns items ordered by name" do
+    it "returns items ordered by product" do
       expect(GroceryListItem.ordered).to eq [another_item, item]
-    end
-  end
-
-  describe ".unique_names" do
-    let(:third_item) { create :grocery_list_item, name: "foo" }
-
-    it "returns unique items based on name" do
-      item
-      another_item
-      third_item
-      item_names = GroceryListItem.unique_names.map(&:name)
-      expect(item_names).to eq [another_item.name, item.name]
     end
   end
 

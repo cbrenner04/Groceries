@@ -35,7 +35,7 @@ RSpec.describe ToDoListItemsController do
           "archived_at" => item[:archived_at],
           "id" => item[:id],
           "to_do_list_id" => item[:to_do_list_id],
-          "name" => item[:name],
+          "task" => item[:task],
           "completed" => item[:completed],
           "assignee_id" => item[:assignee_id],
           "due_by" => item[:due_by],
@@ -62,7 +62,7 @@ RSpec.describe ToDoListItemsController do
             to_do_list_item: {
               to_do_list_id: list.id,
               user_id: user.id,
-              name: "foo"
+              task: "foo"
             },
             list_id: list.id
           }
@@ -75,7 +75,7 @@ RSpec.describe ToDoListItemsController do
         post :create, params: {
           to_do_list_item: {
             to_do_list_id: list.id,
-            name: nil
+            task: nil
           },
           list_id: list.id
         }
@@ -89,24 +89,24 @@ RSpec.describe ToDoListItemsController do
   describe "PUT #update" do
     describe "with valid data" do
       it "updates a item" do
-        update_item = create :to_do_list_item, name: "foo", assignee_id: user.id
+        update_item = create :to_do_list_item, task: "foo", assignee_id: user.id
         put :update, params: {
           id: update_item.id,
-          to_do_list_item: { name: "bar" },
+          to_do_list_item: { task: "bar" },
           list_id: list.id
         }
         update_item.reload
 
-        expect(update_item.name).to eq "bar"
+        expect(update_item.task).to eq "bar"
       end
     end
 
     describe "with invalid data" do
       it "returns 422 and error message" do
-        update_item = create :to_do_list_item, name: "foo", assignee_id: user.id
+        update_item = create :to_do_list_item, task: "foo", assignee_id: user.id
         put :update, params: {
           id: update_item.id,
-          to_do_list_item: { name: "" },
+          to_do_list_item: { task: "" },
           list_id: list.id
         }
 
@@ -118,7 +118,7 @@ RSpec.describe ToDoListItemsController do
 
   describe "DELETE #destroy" do
     it "destroys a item" do
-      delete_item = create :to_do_list_item, name: "foo", assignee_id: user.id
+      delete_item = create :to_do_list_item, task: "foo", assignee_id: user.id
       delete :destroy, params: {
         id: delete_item.id,
         list_id: list.id

@@ -30,7 +30,8 @@ export default class EditListItemForm extends Component {
       listId: 0,
       itemId: 0,
       listType: 'GroceryList',
-      itemName: '',
+      product: '',
+      task: '',
       itemPurchased: false,
       itemQuantity: '',
       itemCompleted: false,
@@ -62,7 +63,8 @@ export default class EditListItemForm extends Component {
           listId: list.id,
           listType: list.type,
           itemId: item.id,
-          itemName: item.name,
+          product: item.product,
+          task: item.task,
           itemPurchased: item.purchased,
           itemQuantity: item.quantity,
           itemCompleted: item.completed,
@@ -92,7 +94,7 @@ export default class EditListItemForm extends Component {
     this.setState(obj);
   }
 
-  listTypetoSnakeCase = listType =>
+  listTypeToSnakeCase = listType =>
     listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
 
   handleSubmit = (event) => {
@@ -102,7 +104,8 @@ export default class EditListItemForm extends Component {
     });
     const listItem = {
       user_id: this.state.userId,
-      name: this.state.itemName,
+      product: this.state.product,
+      task: this.state.task,
       quantity: this.state.itemQuantity,
       purchased: this.state.itemPurchased,
       completed: this.state.itemCompleted,
@@ -114,13 +117,13 @@ export default class EditListItemForm extends Component {
       due_by: this.state.itemDueBy,
       assignee_id: this.state.itemAssigneeId,
     };
-    listItem[`${this.listTypetoSnakeCase(this.state.listType)}_id`] = this.state.listId;
+    listItem[`${this.listTypeToSnakeCase(this.state.listType)}_id`] = this.state.listId;
     const putData = {};
-    putData[`${this.listTypetoSnakeCase(this.state.listType)}_item`] = listItem;
+    putData[`${this.listTypeToSnakeCase(this.state.listType)}_item`] = listItem;
     // TODO: update to use axios. this will require auth token stuff
     $.ajax({
       url: `/lists/${this.state.listId}/` +
-           `${this.listTypetoSnakeCase(this.state.listType)}_items/` +
+           `${this.listTypeToSnakeCase(this.state.listType)}_items/` +
            `${this.state.itemId}`,
       data: putData,
       method: 'PUT',
@@ -139,11 +142,11 @@ export default class EditListItemForm extends Component {
   itemName = () => (
     {
       BookList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemAuthor}`,
-      GroceryList: this.state.itemName,
+      GroceryList: this.state.product,
       MusicList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemArtist} ` +
                  `${this.state.itemArtist && this.state.itemAlbum ? '- ' : ''}` +
                  `${this.state.itemAlbum ? this.state.itemAlbum : ''}`,
-      ToDoList: this.state.itemName,
+      ToDoList: this.state.task,
     }[this.state.listType]
   )
 
@@ -162,7 +165,7 @@ export default class EditListItemForm extends Component {
     } else if (this.state.listType === 'GroceryList') {
       return (
         <GroceryListItemFormFields
-          itemName={this.state.itemName}
+          product={this.state.product}
           itemQuantity={this.state.itemQuantity}
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
@@ -183,7 +186,7 @@ export default class EditListItemForm extends Component {
     } else if (this.state.listType === 'ToDoList') {
       return (
         <ToDoListItemFormFields
-          itemName={this.state.itemName}
+          task={this.state.task}
           itemAssigneeId={this.state.itemAssigneeId}
           itemDueBy={this.state.itemDueBy}
           itemCompleted={this.state.itemCompleted}
