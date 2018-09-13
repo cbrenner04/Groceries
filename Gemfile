@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "bootstrap", "~> 4.1", ">= 4.1.1"
+gem "bootstrap", "~> 4.1.2", ">= 4.1.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.4", ">= 4.4.3"
 gem "devise_invitable", "~> 1.7", ">= 1.7.4"
