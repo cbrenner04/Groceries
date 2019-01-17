@@ -20,24 +20,9 @@ RSpec.describe User do
   describe "#users_that_list_can_be_shared_with" do
     before do
       new_user = User.create!(email: "test@test.org")
-      UsersList.create!(
-        user: new_user,
-        list: list,
-        has_accepted: true,
-        responded: true
-      )
-      UsersList.create!(
-        user: user,
-        list: list,
-        has_accepted: true,
-        responded: true
-      )
-      UsersList.create!(
-        user: user,
-        list: other_list,
-        has_accepted: true,
-        responded: true
-      )
+      UsersList.create!(user: new_user, list: list, has_accepted: true)
+      UsersList.create!(user: user, list: list, has_accepted: true)
+      UsersList.create!(user: user, list: other_list, has_accepted: true)
     end
 
     it "return all users related to current user through shared lists" do

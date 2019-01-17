@@ -85,8 +85,7 @@ class List < ApplicationRecord
       INNER JOIN "users_lists"
               ON "lists"."id" = "users_lists"."list_id"
       WHERE "users_lists"."user_id" = #{user_id}
-      AND "users_lists"."has_accepted" = false
-      AND "users_lists"."responded" = false
+      AND "users_lists"."has_accepted" IS NULL
       AND "lists"."archived_at" IS NULL
       ORDER BY "lists"."created_at" DESC
     SQL

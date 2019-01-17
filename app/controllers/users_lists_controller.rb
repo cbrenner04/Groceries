@@ -38,7 +38,7 @@ class UsersListsController < ApplicationController
   def accept_list
     set_users_list
     if @users_list
-      @users_list.update!(has_accepted: true, responded: true)
+      @users_list.update!(has_accepted: true)
       render json: @users_list
     else
       render json: { list: ["must exist", "can't be blank"] },
@@ -49,7 +49,7 @@ class UsersListsController < ApplicationController
   def reject_list
     set_users_list
     if @users_list
-      @users_list.update!(responded: true)
+      @users_list.update!(has_accepted: false)
       render json: @users_list
     else
       render json: { list: ["must exist", "can't be blank"] },

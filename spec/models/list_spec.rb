@@ -34,12 +34,7 @@ RSpec.describe List do
     let(:user) { create :user }
 
     before do
-      UsersList.create!(
-        user: user,
-        list: other_list,
-        has_accepted: true,
-        responded: true
-      )
+      UsersList.create!(user: user, list: other_list, has_accepted: true)
     end
 
     it "returns lists accepted by user" do
@@ -51,12 +46,7 @@ RSpec.describe List do
     let(:new_user) { create :user }
 
     before do
-      UsersList.create!(
-        user: new_user,
-        list: other_list,
-        has_accepted: false,
-        responded: false
-      )
+      UsersList.create!(user: new_user, list: other_list)
     end
 
     it "returns lists not yet accepted by user" do

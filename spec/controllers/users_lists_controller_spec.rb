@@ -49,24 +49,9 @@ RSpec.describe UsersListsController do
       before do
         new_user = User.create!(email: "new_user@example.com")
         new_list = GroceryList.create!(name: "foobar")
-        UsersList.create!(
-          user: user,
-          list: other_list,
-          has_accepted: true,
-          responded: true
-        )
-        UsersList.create!(
-          user: user,
-          list: new_list,
-          has_accepted: true,
-          responded: true
-        )
-        UsersList.create!(
-          user: new_user,
-          list: new_list,
-          has_accepted: true,
-          responded: true
-        )
+        UsersList.create!(user: user, list: other_list, has_accepted: true)
+        UsersList.create!(user: user, list: new_list, has_accepted: true)
+        UsersList.create!(user: new_user, list: new_list, has_accepted: true)
       end
 
       it "responds with success and correct payload" do
@@ -116,7 +101,7 @@ RSpec.describe UsersListsController do
           list_id: list.id
         }
         users_list = JSON.parse(response.body)
-        expect(users_list["responded"]).to eq true
+        expect(users_list["has_accepted"]).to eq false
       end
     end
 

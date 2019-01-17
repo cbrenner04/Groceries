@@ -68,18 +68,11 @@ class ListsController < ApplicationController
   end
 
   def accept_user_list(list)
-    UsersList
-      .find_by(list: list)
-      .update!(has_accepted: true, responded: true)
+    UsersList.find_by(list: list).update!(has_accepted: true)
   end
 
   def create_users_list(user, list)
-    UsersList.create!(
-      user: user,
-      list: list,
-      has_accepted: true,
-      responded: true
-    )
+    UsersList.create!(user: user, list: list, has_accepted: true)
   end
 
   def index_response
