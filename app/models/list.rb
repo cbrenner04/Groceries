@@ -37,7 +37,8 @@ class List < ApplicationRecord
 
   def self.not_completed_accepted_lists_query(user_id)
     <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed, lists.type
+      SELECT lists.id, lists.name, lists.created_at, lists.completed,
+             lists.type, lists.refreshed
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -51,7 +52,8 @@ class List < ApplicationRecord
 
   def self.completed_accepted_lists_query(user_id)
     <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed, lists.type
+      SELECT lists.id, lists.name, lists.created_at, lists.completed,
+             lists.type, lists.refreshed
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -65,7 +67,8 @@ class List < ApplicationRecord
 
   def self.limited_completed_accepted_lists_query(user_id)
     <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed, lists.type
+      SELECT lists.id, lists.name, lists.created_at, lists.completed,
+             lists.type, lists.refreshed
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -81,7 +84,7 @@ class List < ApplicationRecord
   def self.not_accepted_lists_query(user_id)
     <<-SQL
       SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, users_lists.id as users_list_id
+             lists.type, lists.refreshed, users_lists.id as users_list_id
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
