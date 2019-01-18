@@ -12,10 +12,7 @@ Rails.application.routes.draw do
     resources :grocery_list_items, only: [:create, :edit, :update, :destroy]
     resources :music_list_items, only: [:create, :edit, :update, :destroy]
     resources :to_do_list_items, only: [:create, :edit, :update, :destroy]
-    resources :users_lists, only: [:index, :new, :create] do
-      get :accept_list, on: :collection
-      get :reject_list, on: :collection
-    end
+    resources :users_lists, only: [:index, :new, :create, :update]
   end
   resources :completed_lists, only: :index
   root to: "lists#index"

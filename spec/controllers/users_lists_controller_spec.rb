@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe UsersListsController do
   let(:user) { create :user_with_lists }
   let(:list) { user.lists.last }
+  let(:users_list) { list.users_lists.find_by(user: user) }
   let(:other_list) { create :list }
   let(:other_user) { create :user }
 
@@ -73,44 +74,59 @@ RSpec.describe UsersListsController do
     end
   end
 
-  describe "GET #accept_list" do
+  describe "PATCH #update" do
     context "users_list exists" do
-      it "returns a 200" do
-        get :accept_list, params: {
-          list_id: list.id
+      it "accepts list" do
+        patch :update, params: {
+          list_id: list.id,
+          id: users_list.id,
+          users_list: {
+            has_accepted: true
+          }
         }
         users_list = JSON.parse(response.body)
         expect(users_list["has_accepted"]).to eq true
       end
-    end
 
-    context "users_list does not exist" do
-      it "returns a 422" do
-        get :accept_list, params: {
-          list_id: other_list.id
-        }
-        expect(response.status).to eq 422
-      end
-    end
-  end
-
-  describe "GET #reject_list" do
-    context "users_list exists" do
-      it "returns updated users list" do
-        get :reject_list, params: {
-          list_id: list.id
+      it "rejects list" do
+        patch :update, params: {
+          list_id: list.id,
+          id: users_list.id,
+          users_list: {
+            has_accepted: false
+          }
         }
         users_list = JSON.parse(response.body)
         expect(users_list["has_accepted"]).to eq false
       end
-    end
 
-    context "users_list does not exist" do
-      it "returns a 422" do
-        get :reject_list, params: {
-          list_id: other_list.id
-        }
-        expect(response.status).to eq 422
+      describe "permissions" do
+        context "with good data" do
+          it "updates permissions" do
+            patch :update, params: {
+              list_id: list.id,
+              id: users_list.id,
+              users_list: {
+                permissions: "read"
+              }
+            }
+            users_list = JSON.parse(response.body)
+            expect(users_list["permissions"]).to eq "read"
+          end
+        end
+
+        context "with bad data" do
+          it "returns 422" do
+            patch :update, params: {
+              list_id: list.id,
+              id: users_list.id,
+              users_list: {
+                permissions: "foo"
+              }
+            }
+            expect(response.status).to eq 422
+          end
+        end
       end
     end
   end

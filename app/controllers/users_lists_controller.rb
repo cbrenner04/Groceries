@@ -35,36 +35,21 @@ class UsersListsController < ApplicationController
     end
   end
 
-  def accept_list
-    set_users_list
-    if @users_list
-      @users_list.update!(has_accepted: true)
+  def update
+    @users_list = UsersList.find(params[:id])
+    begin
+      @users_list.update(users_list_params)
       render json: @users_list
-    else
-      render json: { list: ["must exist", "can't be blank"] },
-             status: :unprocessable_entity
-    end
-  end
-
-  def reject_list
-    set_users_list
-    if @users_list
-      @users_list.update!(has_accepted: false)
-      render json: @users_list
-    else
-      render json: { list: ["must exist", "can't be blank"] },
-             status: :unprocessable_entity
+    rescue ArgumentError => error
+      render json: error, status: :unprocessable_entity
     end
   end
 
   private
 
   def users_list_params
-    params.require(:users_list).permit(:user_id, :list_id)
-  end
-
-  def set_users_list
-    @users_list =
-      UsersList.find_by(user_id: current_user.id, list_id: params[:list_id])
+    params
+      .require(:users_list)
+      .permit(:user_id, :list_id, :has_accepted, :permissions)
   end
 end

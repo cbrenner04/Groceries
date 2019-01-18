@@ -13,6 +13,7 @@ export default class List extends Component {
       type: PropTypes.string.isRequired,
       created_at: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
     }).isRequired,
     accepted: PropTypes.bool,
     onListDeletion: PropTypes.func,
@@ -39,7 +40,7 @@ export default class List extends Component {
 
   handleAccept = () => this.props.onListAcceptance(this.props.list);
 
-  handleReject = () => this.props.onListRejection(this.props.list.id);
+  handleReject = () => this.props.onListRejection(this.props.list);
 
   notCompletedListButtons = () => (
     <div className="btn-group float-right" role="group">

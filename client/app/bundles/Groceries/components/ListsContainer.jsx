@@ -117,22 +117,28 @@ export default class ListsContainer extends Component {
     this.acceptList(list);
   }
 
-  handleReject = (listId) => {
+  handleReject = (list) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/lists/${listId}/users_lists/reject_list`,
-        type: 'GET',
-        success: () => this.removeListFromUnaccepted(listId),
+        url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
+        type: 'PATCH',
+        data: 'users_list%5Bhas_accepted%5D=false',
+        success: () => {
+          this.removeListFromUnaccepted(list.id);
+        },
       });
     }
   }
 
   acceptList = (list) => {
     $.ajax({
-      url: `/lists/${list.id}/users_lists/accept_list`,
-      type: 'GET',
-      success: () => this.addNewList(list),
+      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
+      type: 'PATCH',
+      data: 'users_list%5Bhas_accepted%5D=true',
+      success: () => {
+        this.addNewList(list);
+      },
     });
   }
 
