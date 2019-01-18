@@ -1,6 +1,6 @@
 class SimplifyAcceptedLogic < ActiveRecord::Migration[5.2]
   def up
-    change_column :users_lists, :has_accepted, :boolean, null: true
+    change_column :users_lists, :has_accepted, :boolean, null: true, default: nil
 
     UsersList.find_each do |user_list|
       if !user_list.has_accepted && !user_list.responded

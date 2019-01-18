@@ -108,7 +108,18 @@ ActiveRecord::Schema.define(version: 2019_01_17_142447) do
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_lists", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "list_id", null: false
+    t.boolean "has_accepted"
+    t.string "permissions", default: "write", null: false
+    t.index ["list_id"], name: "index_users_lists_on_list_id"
+    t.index ["user_id", "list_id"], name: "index_users_lists_on_user_id_and_list_id", unique: true
+    t.index ["user_id"], name: "index_users_lists_on_user_id"
   end
 
   add_foreign_key "book_list_items", "lists", column: "book_list_id"

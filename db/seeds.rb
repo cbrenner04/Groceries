@@ -40,7 +40,7 @@ item_names.each do |item|
   GroceryListItem.create!(
     user: User.find_by(email: 'foo@ex.co'),
     grocery_list: List.find_by(name: 'foobar'),
-    name: item,
+    product: item,
     quantity: "#{(1..10).to_a.sample} #{%w(bag bunch case).sample}"
   )
 end
