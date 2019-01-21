@@ -11,6 +11,8 @@ class UsersList < ApplicationRecord
   validates :user, uniqueness: { scope: :list }
 
   scope :accepted, (-> { where(has_accepted: true) })
+  scope :pending, (-> { where(has_accepted: nil) })
+  scope :refused, (-> { where(has_accepted: false) })
 
   before_destroy :no_to_do_list_assignments?
 

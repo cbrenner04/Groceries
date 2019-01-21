@@ -3,22 +3,15 @@
 # no doc
 class UsersListsController < ApplicationController
   def index
-    accepted_users =
-      UsersList.where(list_id: params[:list_id]).accepted.map do |user_list|
-        User.find(user_list.user_id)
-      end
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json { render json: { users: accepted_users } }
-    end
-  end
-
-  def new
     list = List.find(params[:list_id])
-    users = current_user.users_that_list_can_be_shared_with(list)
+    invitable_users = current_user.users_that_list_can_be_shared_with(list)
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json { render json: { list: list, users: users } }
+      format.json do
+        render json: { list: list, invitable_users: invitable_users,
+                       accepted: accepted_users, pending: pending_users,
+                       refused: refused_users }
+      end
     end
   end
 
@@ -51,5 +44,32 @@ class UsersListsController < ApplicationController
     params
       .require(:users_list)
       .permit(:user_id, :list_id, :has_accepted, :permissions)
+  end
+
+  def pending_users
+    UsersList.where(list_id: params[:list_id]).pending.map do |user_list|
+      { user: User.find(user_list.user_id), users_list: {
+        id: user_list.id,
+        permissions: user_list.permissions
+      } }
+    end
+  end
+
+  def accepted_users
+    UsersList.where(list_id: params[:list_id]).accepted.map do |user_list|
+      { user: User.find(user_list.user_id), users_list: {
+        id: user_list.id,
+        permissions: user_list.permissions
+      } }
+    end
+  end
+
+  def refused_users
+    UsersList.where(list_id: params[:list_id]).refused.map do |user_list|
+      { user: User.find(user_list.user_id), users_list: {
+        id: user_list.id,
+        permissions: user_list.permissions
+      } }
+    end
   end
 end

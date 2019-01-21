@@ -81,8 +81,10 @@ export default class EditListItemForm extends Component {
         type: 'GET',
         url: `/lists/${this.props.match.params.list_id}/users_lists`,
         dataType: 'JSON',
-      }).done((data) => {
-        this.setState({ listUsers: data.users });
+      }).done(({ accepted, pending }) => {
+        const acceptedUsers = accepted.map(({ user }) => user);
+        const pendingUsers = pending.map(({ user }) => user);
+        this.setState({ listUsers: acceptedUsers.concat(pendingUsers) });
       });
     }
   }

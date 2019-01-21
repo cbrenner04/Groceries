@@ -89,15 +89,13 @@ RSpec.describe Users::InvitationsController, type: :controller do
             end.to_not change(UsersList, :count)
           end
 
-          it "redirects and gives correct alert" do
+          it "gives correct alert" do
             post :create, params: {
               user: {
                 email: other_user.email
               },
               list_id: list.id
             }
-            expect(response)
-              .to redirect_to new_list_users_list_path(list_id: list.id)
             expect(flash[:notice]).to be_present
             expect(flash[:notice])
               .to eq "List already shared with #{other_user.email}"
@@ -116,15 +114,13 @@ RSpec.describe Users::InvitationsController, type: :controller do
             end.to change(UsersList, :count).by(1)
           end
 
-          it "redirects and gives correct alert" do
+          it "gives correct alert" do
             post :create, params: {
               user: {
                 email: other_user.email
               },
               list_id: list.id
             }
-            expect(response)
-              .to redirect_to new_list_users_list_path(list_id: list.id)
             expect(flash[:notice]).to be_present
             expect(flash[:notice])
               .to eq "List has been shared with #{other_user.email}"

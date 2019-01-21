@@ -28,6 +28,7 @@ export default class ListItems extends Component {
       id: PropTypes.number.isRequired,
       email: PropTypes.string.isRequired,
     })),
+    permission: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -64,6 +65,7 @@ export default class ListItems extends Component {
               listType={this.props.listType}
               listUsers={this.props.listUsers}
               purchased={this.props.purchased}
+              permission={this.props.permission}
             />
           ))
         }

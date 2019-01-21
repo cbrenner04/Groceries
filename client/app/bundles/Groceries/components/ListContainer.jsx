@@ -44,6 +44,9 @@ export default class ListContainer extends Component {
         list_id: PropTypes.string,
       }).isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -64,6 +67,7 @@ export default class ListContainer extends Component {
       notPurchasedItems: props.not_purchased_items,
       purchasedItems: props.purchased_items,
       listUsers: [],
+      permission: 'write',
     };
   }
 
@@ -85,8 +89,26 @@ export default class ListContainer extends Component {
         type: 'GET',
         url: `/lists/${this.props.match.params.id}/users_lists`,
         dataType: 'JSON',
-      }).done((data) => {
-        this.setState({ listUsers: data.users });
+      }).done(({ accepted, pending }) => {
+        const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
+        const allAcceptedUsers = accepted.map(({ user }) => user);
+        if (userInAccepted) {
+          this.setState({ listUsers: allAcceptedUsers, permission: userInAccepted.users_list.permissions });
+        } else {
+          const userInPending = pending.find(pendingList => pendingList.user.id === this.state.userId);
+          if (userInPending) {
+            $.ajax({
+              url: `/lists/${this.state.list.id}/users_lists/${userInPending.users_list.id}`,
+              type: 'PATCH',
+              data: 'users_list%5Bhas_accepted%5D=true',
+            }).done(() => {
+              allAcceptedUsers.push(userInPending.user);
+              this.setState({ listUsers: allAcceptedUsers, permission: userInPending.users_list.permissions });
+            });
+          } else {
+            this.props.history.push('/lists');
+          }
+        }
       });
     }
   }
@@ -231,16 +253,19 @@ export default class ListContainer extends Component {
     return (
       <div>
         <h1>{ this.state.list.name }</h1>
+        { this.state.permission === 'read' ? <p>You only have permission to read this list</p> : '' }
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <Alert errors={this.state.errors} />
         <br />
-        <ListItemForm
-          listId={this.state.list.id}
-          listType={this.state.list.type}
-          listUsers={this.state.listUsers}
-          userId={this.state.userId}
-          handleItemAddition={this.handleAddItem}
-        />
+        {
+          this.state.permission === 'write' ? <ListItemForm
+            listId={this.state.list.id}
+            listType={this.state.list.type}
+            listUsers={this.state.listUsers}
+            userId={this.state.userId}
+            handleItemAddition={this.handleAddItem}
+          /> : ''
+        }
         <br />
         <ListItemsContainer
           notPurchasedItems={this.state.notPurchasedItems}
@@ -252,6 +277,7 @@ export default class ListContainer extends Component {
           handleItemUnPurchase={this.handleUnPurchase}
           listType={this.state.list.type}
           listUsers={this.state.listUsers}
+          permission={this.state.permission}
         />
       </div>
     );

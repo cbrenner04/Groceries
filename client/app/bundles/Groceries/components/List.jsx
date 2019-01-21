@@ -47,7 +47,7 @@ export default class List extends Component {
       <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
         <i className="fa fa-check-square-o fa-2x text-success" />
       </button>
-      <Link to={`lists/${this.props.list.id}/users_lists/new`} className="btn btn-link p-0 mr-3">
+      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
         <i className="fa fa-users fa-2x text-primary" />
       </Link>
       <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
