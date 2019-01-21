@@ -92,8 +92,10 @@ export default class ListContainer extends Component {
       }).done(({ accepted, pending }) => {
         const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
         const allAcceptedUsers = accepted.map(({ user }) => user);
+        const allPendingUsers = pending.map(({ user }) => user);
+        const listUsers = allAcceptedUsers.concat(allPendingUsers);
         if (userInAccepted) {
-          this.setState({ listUsers: allAcceptedUsers, permission: userInAccepted.users_list.permissions });
+          this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
         } else {
           const userInPending = pending.find(pendingList => pendingList.user.id === this.state.userId);
           if (userInPending) {
@@ -102,8 +104,7 @@ export default class ListContainer extends Component {
               type: 'PATCH',
               data: 'users_list%5Bhas_accepted%5D=true',
             }).done(() => {
-              allAcceptedUsers.push(userInPending.user);
-              this.setState({ listUsers: allAcceptedUsers, permission: userInPending.users_list.permissions });
+              this.setState({ listUsers, permission: userInPending.users_list.permissions });
             });
           } else {
             this.props.history.push('/lists');

@@ -98,7 +98,7 @@ export default class ShareListForm extends Component {
           ],
         });
         this.setState({
-          users: newUsers,
+          invitableUsers: newUsers,
           pending: newPending,
         });
       })
