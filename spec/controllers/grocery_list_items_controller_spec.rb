@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe GroceryListItemsController do
   let(:user) { create :user }
-  let(:list) { create :grocery_list }
+  let(:list) { create :grocery_list, owner: user }
   let(:users_list) { create :users_list, user: user, list: list }
   let(:item) { create :grocery_list_item, grocery_list: list }
 

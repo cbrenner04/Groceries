@@ -71,7 +71,7 @@ export default class ListContainer extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -84,32 +84,32 @@ export default class ListContainer extends Component {
           notPurchasedItems: data.not_purchased_items,
           purchasedItems: data.purchased_items,
         });
-      });
-      $.ajax({
-        type: 'GET',
-        url: `/lists/${this.props.match.params.id}/users_lists`,
-        dataType: 'JSON',
-      }).done(({ accepted, pending }) => {
-        const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
-        const allAcceptedUsers = accepted.map(({ user }) => user);
-        const allPendingUsers = pending.map(({ user }) => user);
-        const listUsers = allAcceptedUsers.concat(allPendingUsers);
-        if (userInAccepted) {
-          this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
-        } else {
-          const userInPending = pending.find(pendingList => pendingList.user.id === this.state.userId);
-          if (userInPending) {
-            $.ajax({
-              url: `/lists/${this.state.list.id}/users_lists/${userInPending.users_list.id}`,
-              type: 'PATCH',
-              data: 'users_list%5Bhas_accepted%5D=true',
-            }).done(() => {
-              this.setState({ listUsers, permission: userInPending.users_list.permissions });
-            });
+        $.ajax({
+          type: 'GET',
+          url: `/lists/${this.props.match.params.id}/users_lists`,
+          dataType: 'JSON',
+        }).done(({ accepted, pending }) => {
+          const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
+          const allAcceptedUsers = accepted.map(({ user }) => user);
+          const allPendingUsers = pending.map(({ user }) => user);
+          const listUsers = allAcceptedUsers.concat(allPendingUsers);
+          if (userInAccepted) {
+            this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
           } else {
-            this.props.history.push('/lists');
+            const userInPending = pending.find(pendingList => pendingList.user.id === this.state.userId);
+            if (userInPending) {
+              $.ajax({
+                url: `/lists/${this.state.list.id}/users_lists/${userInPending.users_list.id}`,
+                type: 'PATCH',
+                data: 'users_list%5Bhas_accepted%5D=true',
+              }).done(() => {
+                this.setState({ listUsers, permission: userInPending.users_list.permissions });
+              });
+            } else {
+              this.props.history.push('/lists');
+            }
           }
-        }
+        });
       });
     }
   }

@@ -7,6 +7,7 @@ import listIconClass from '../utils/list_icon';
 
 export default class List extends Component {
   static propTypes = {
+    userId: PropTypes.number.isRequired,
     list: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
@@ -14,6 +15,7 @@ export default class List extends Component {
       created_at: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
       users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
     }).isRequired,
     accepted: PropTypes.bool,
     onListDeletion: PropTypes.func,
@@ -32,6 +34,25 @@ export default class List extends Component {
     onListRejection: null,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUserPermissions: 'read',
+    };
+  }
+
+  componentWillMount() {
+    $.ajax({
+      type: 'GET',
+      url: `/lists/${this.props.list.id}/users_lists/${this.props.list.users_list_id}`,
+      dataType: 'JSON',
+    }).done((data) => {
+      this.setState({
+        currentUserPermissions: data.permissions,
+      });
+    });
+  }
+
   handleDelete = () => this.props.onListDeletion(this.props.list.id);
 
   handleComplete = () => this.props.onListCompletion(this.props.list);
@@ -42,33 +63,50 @@ export default class List extends Component {
 
   handleReject = () => this.props.onListRejection(this.props.list);
 
-  notCompletedListButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-check-square-o fa-2x text-success" />
-      </button>
-      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-users fa-2x text-primary" />
-      </Link>
-      <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-pencil-square-o fa-2x text-warning" />
-      </Link>
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
-  );
+  notCompletedListButtons = () => {
+    if (this.props.userId !== this.props.list.owner_id) {
+      if (this.state.currentUserPermissions === 'write') {
+        return (
+          <div className="btn-group float-right" role="group">
+            <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
+              <i className="fa fa-users fa-2x text-primary" />
+            </Link>
+          </div>
+        );
+      }
+      return '';
+    }
+    return (
+      <div className="btn-group float-right" role="group">
+        <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
+          <i className="fa fa-check-square-o fa-2x text-success" />
+        </button>
+        <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
+          <i className="fa fa-users fa-2x text-primary" />
+        </Link>
+        <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
+          <i className="fa fa-pencil-square-o fa-2x text-warning" />
+        </Link>
+        <button onClick={this.handleDelete} className="btn btn-link p-0">
+          <i className="fa fa-trash fa-2x text-danger" />
+        </button>
+      </div>
+    );
+  }
 
-  completedListButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button onClick={this.handleRefresh} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-refresh fa-2x text-primary" />
-      </button>
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
-  );
+  completedListButtons = () => {
+    if (this.props.userId !== this.props.list.owner_id) return '';
+    return (
+      <div className="btn-group float-right" role="group">
+        <button onClick={this.handleRefresh} className="btn btn-link p-0 mr-3">
+          <i className="fa fa-refresh fa-2x text-primary" />
+        </button>
+        <button onClick={this.handleDelete} className="btn btn-link p-0">
+          <i className="fa fa-trash fa-2x text-danger" />
+        </button>
+      </div>
+    );
+  }
 
   unacceptedListButtons = () => (
     <div className="btn-group float-right" role="group">

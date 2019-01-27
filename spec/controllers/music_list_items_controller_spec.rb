@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe MusicListItemsController do
   let(:user) { create :user }
-  let(:list) { create :music_list }
+  let(:list) { create :music_list, owner: user }
   let(:users_list) { create :users_list, user: user, list: list }
   let(:item) { create :music_list_item, music_list: list }
 

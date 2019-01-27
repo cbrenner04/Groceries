@@ -30,6 +30,8 @@ export default class ShareListForm extends Component {
       pending: [],
       accepted: [],
       refused: [],
+      userId: 0,
+      userIsOwner: false,
     };
   }
 
@@ -44,9 +46,11 @@ export default class ShareListForm extends Component {
           name: data.list.name,
           invitableUsers: data.invitable_users,
           listId: data.list.id,
+          userIsOwner: data.user_is_owner,
           pending: data.pending,
           accepted: data.accepted,
           refused: data.refused,
+          userId: data.current_user_id,
         });
       });
     }
@@ -112,16 +116,23 @@ export default class ShareListForm extends Component {
     this.setState({ errors: errors.join(' and ') });
   }
 
-  sharedUsers = sharedState => this.state[sharedState].map(({ user, users_list: { id, permissions } }) => (
-    <button
-      key={id}
-      className="list-group-item list-group-item-action d-flex justify-content-between align-items-center btn btn-link"
-      onClick={() => this.togglePermission(id, permissions, sharedState)}
-    >
-      <span>{user.email}</span>
-      <span className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}>{permissions}</span>
-    </button>
-  ));
+  sharedUsers = sharedState => this.state[sharedState].map(({ user, users_list: { id, permissions } }) => {
+    if (user.id === this.state.userId) return '';
+    if (this.state.userIsOwner) {
+      return (
+        <button
+          key={id}
+          className={'list-group-item list-group-item-action d-flex justify-content-between align-items-center'
+            + 'btn btn-link'}
+          onClick={() => this.togglePermission(id, permissions, sharedState)}
+        >
+          <span>{user.email}</span>
+          <span className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}>{permissions}</span>
+        </button>
+      );
+    }
+    return (<div key={id} className="list-group-item">{user.email}</div>);
+  });
 
   togglePermission = (id, currentPermission, sharedState) => {
     const permissions = currentPermission === 'write' ? 'read' : 'write';

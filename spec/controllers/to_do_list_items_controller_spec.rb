@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe ToDoListItemsController do
   let(:user) { create :user }
-  let(:list) { create :to_do_list }
+  let(:list) { create :to_do_list, owner: user }
   let(:users_list) { create :users_list, user: user, list: list }
   let(:item) { create :to_do_list_item, to_do_list: list, assignee_id: user.id }
 

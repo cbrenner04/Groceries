@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe BookListItemsController do
   let(:user) { create :user }
-  let(:list) { create :book_list }
+  let(:list) { create :book_list, owner: user }
   let(:users_list) { create :users_list, user: user, list: list }
   let(:item) { create :book_list_item, book_list: list }
 

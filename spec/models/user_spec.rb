@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe User do
   let(:user) { create :user }
-  let(:list) { create :grocery_list }
-  let(:other_list) { create :grocery_list }
+  let(:list) { create :grocery_list, owner: user }
+  let(:other_list) { create :grocery_list, owner: user }
 
   describe "validations" do
     it { expect(user).to be_valid }

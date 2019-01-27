@@ -8,8 +8,24 @@ import Lists from './Lists';
 
 export default class ListsContainer extends Component {
   static propTypes = {
-    accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
-    not_accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
+    accepted_lists: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
+    }).isRequired),
+    not_accepted_lists: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
+    }).isRequired),
   }
 
   static defaultProps = {
@@ -20,6 +36,7 @@ export default class ListsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: 0,
       acceptedLists: props.accepted_lists,
       notAcceptedLists: props.not_accepted_lists,
       errors: '',
@@ -35,12 +52,13 @@ export default class ListsContainer extends Component {
       url: '/lists/',
       dataType: 'JSON',
     }).done((data) => {
+      const userId = data.current_user_id;
       const acceptedLists = data.accepted_lists;
       const notAcceptedLists = data.not_accepted_lists;
-      const completedLists =
-        acceptedLists.filter(list => list.completed && !list.refreshed);
+      const completedLists = acceptedLists.filter(list => list.completed && !list.refreshed);
       const nonCompletedLists = acceptedLists.filter(list => !list.completed);
       this.setState({
+        userId,
         acceptedLists,
         notAcceptedLists,
         completedLists,
@@ -64,16 +82,21 @@ export default class ListsContainer extends Component {
       });
   }
 
-  sortLists = lists =>
-    lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  sortLists = lists => lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   addNewList = (list) => {
     const lists = update(this.state.acceptedLists, { $push: [list] });
-    const nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
+    let { nonCompletedLists, completedLists } = this.state;
+    if (list.completed) {
+      completedLists = update(this.state.completedLists, { $push: [list] });
+    } else {
+      nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
+    }
     this.setState({
       acceptedLists: this.sortLists(lists),
       success: 'List successfully added.',
       nonCompletedLists: this.sortLists(nonCompletedLists),
+      completedLists: this.sortLists(completedLists),
     });
   }
 
@@ -85,10 +108,7 @@ export default class ListsContainer extends Component {
         type: 'DELETE',
         success: () => this.removeList(listId),
       });
-    } else {
-      return false;
     }
-    return '';
   }
 
   handleCompletion = (list) => {
@@ -166,6 +186,7 @@ export default class ListsContainer extends Component {
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
         <Lists
+          userId={this.state.userId}
           onListDelete={this.handleDelete}
           onListCompletion={this.handleCompletion}
           unacceptedLists={this.state.notAcceptedLists}

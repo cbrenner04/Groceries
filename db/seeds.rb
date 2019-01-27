@@ -7,8 +7,8 @@ user_emails.each do |email|
   )
 end
 
-list_names = %w(foobar foobaz)
-list_names.each { |list| GroceryList.create!(name: list) }
+GroceryList.create!(name: 'foobar', owner: User.find_by(email: 'foo@ex.co'))
+GroceryList.create!(name: 'foobaz', owner: User.find_by(email: 'bar@ex.co'))
 
 UsersList.create!(
   user: User.find_by(email: 'foo@ex.co'),

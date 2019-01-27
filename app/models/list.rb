@@ -4,6 +4,7 @@
 class List < ApplicationRecord
   has_many :users_lists, dependent: :destroy
   has_many :users, through: :users_lists, source: :user, dependent: :destroy
+  belongs_to :owner, class_name: "User", inverse_of: :lists
 
   scope :descending, (-> { order(created_at: :desc) })
   scope :not_archived, (-> { where(archived_at: nil) })
@@ -38,7 +39,8 @@ class List < ApplicationRecord
   def self.not_completed_accepted_lists_query(user_id)
     <<-SQL
       SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed
+             lists.type, lists.refreshed, lists.owner_id,
+             users_lists.id as users_list_id
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -53,7 +55,8 @@ class List < ApplicationRecord
   def self.completed_accepted_lists_query(user_id)
     <<-SQL
       SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed
+             lists.type, lists.refreshed, lists.owner_id,
+             users_lists.id as users_list_id
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -68,7 +71,8 @@ class List < ApplicationRecord
   def self.limited_completed_accepted_lists_query(user_id)
     <<-SQL
       SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed
+             lists.type, lists.refreshed, lists.owner_id,
+             users_lists.id as users_list_id
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id
@@ -84,7 +88,8 @@ class List < ApplicationRecord
   def self.not_accepted_lists_query(user_id)
     <<-SQL
       SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed, users_lists.id as users_list_id
+             lists.type, lists.refreshed, lists.owner_id,
+             users_lists.id as users_list_id
       FROM lists
       INNER JOIN users_lists
               ON lists.id = users_lists.list_id

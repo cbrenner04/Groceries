@@ -12,6 +12,7 @@ class ListsController < ApplicationController
 
   def create
     @list = build_new_list
+    @list.update(owner: current_user)
     if @list.save
       create_users_list(current_user, @list)
       render json: @list
@@ -79,7 +80,8 @@ class ListsController < ApplicationController
     {
       accepted_lists: List.accepted(current_user),
       not_accepted_lists: List.not_accepted(current_user),
-      is_user_signed_in: user_signed_in?
+      is_user_signed_in: user_signed_in?,
+      current_user_id: current_user&.id
     }
   end
 
@@ -108,13 +110,13 @@ class ListsController < ApplicationController
   def create_new_list_from(old_list)
     case old_list.type
     when "ToDoList"
-      ToDoList.create!(name: old_list[:name])
+      ToDoList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     when "BookList"
-      BookList.create!(name: old_list[:name])
+      BookList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     when "MusicList"
-      MusicList.create!(name: old_list[:name])
+      MusicList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     else
-      GroceryList.create!(name: old_list[:name])
+      GroceryList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     end
   end
 
