@@ -36,67 +36,33 @@ class List < ApplicationRecord
     List.find_by_sql(not_accepted_lists_query(user.id))
   end
 
-  def self.not_completed_accepted_lists_query(user_id)
+  def self.accepted_lists_query(user_id)
     <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed, lists.owner_id,
-             users_lists.id as users_list_id
-      FROM lists
-      INNER JOIN users_lists
-              ON lists.id = users_lists.list_id
-      WHERE users_lists.user_id = #{user_id}
-      AND users_lists.has_accepted = true
-      AND lists.archived_at IS NULL
-      AND lists.completed = false
-      ORDER BY lists.created_at DESC;
-    SQL
-  end
-
-  def self.completed_accepted_lists_query(user_id)
-    <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed, lists.owner_id,
-             users_lists.id as users_list_id
-      FROM lists
-      INNER JOIN users_lists
-              ON lists.id = users_lists.list_id
-      WHERE users_lists.user_id = #{user_id}
-      AND users_lists.has_accepted = true
-      AND lists.archived_at IS NULL
-      AND lists.completed = true
-      ORDER BY lists.created_at DESC;
-    SQL
-  end
-
-  def self.limited_completed_accepted_lists_query(user_id)
-    <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed, lists.owner_id,
-             users_lists.id as users_list_id
-      FROM lists
-      INNER JOIN users_lists
-              ON lists.id = users_lists.list_id
-      WHERE users_lists.user_id = #{user_id}
-      AND users_lists.has_accepted = true
-      AND lists.archived_at IS NULL
-      AND lists.completed = true
-      ORDER BY lists.created_at DESC
-      LIMIT 10;
+      SELECT *
+      FROM active_lists
+      WHERE user_id = #{user_id}
+      AND has_accepted = true
     SQL
   end
 
   def self.not_accepted_lists_query(user_id)
     <<-SQL
-      SELECT lists.id, lists.name, lists.created_at, lists.completed,
-             lists.type, lists.refreshed, lists.owner_id,
-             users_lists.id as users_list_id
-      FROM lists
-      INNER JOIN users_lists
-              ON lists.id = users_lists.list_id
-      WHERE users_lists.user_id = #{user_id}
-      AND users_lists.has_accepted IS NULL
-      AND lists.archived_at IS NULL
-      ORDER BY lists.created_at DESC;
+      SELECT *
+      FROM active_lists
+      WHERE user_id = #{user_id}
+      AND has_accepted = false;
     SQL
+  end
+
+  def self.completed_accepted_lists_query(user_id)
+    "#{accepted_lists_query(user_id)} AND completed = true"
+  end
+
+  def self.limited_completed_accepted_lists_query(user_id)
+    "#{completed_accepted_lists_query(user_id)} LIMIT 10"
+  end
+
+  def self.not_completed_accepted_lists_query(user_id)
+    "#{accepted_lists_query(user_id)} AND completed = false"
   end
 end

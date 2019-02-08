@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_25_205454) do
+ActiveRecord::Schema.define(version: 2019_02_08_151444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2019_01_25_205454) do
   create_table "users_lists", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "list_id", null: false
-    t.boolean "has_accepted"
+    t.boolean "has_accepted", default: false, null: false
     t.string "permissions", default: "write", null: false
     t.index ["list_id"], name: "index_users_lists_on_list_id"
     t.index ["user_id", "list_id"], name: "index_users_lists_on_user_id_and_list_id", unique: true
