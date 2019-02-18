@@ -37,9 +37,47 @@ RSpec.describe UsersListsController do
           "refreshed" => list[:refreshed]
         )
         expect(response_body["accepted"].count).to eq 1
+        expect(response_body["invitable_users"].count).to eq 0
+        expect(response_body["pending"].count).to eq 0
+        expect(response_body["refused"].count).to eq 0
+        expect(response_body["current_user_id"]).to eq user.id
+        expect(response_body["user_is_owner"]).to eq false
       end
     end
   end
+
+  describe "GET #show" do
+    describe "format HTML" do
+      it "renders list/index" do
+        get :show, params: {
+          id: users_list.id,
+          list_id: list.id
+        }
+
+        expect(response).to render_template "lists/index"
+      end
+
+    end
+
+    describe "format JSON" do
+      it "responds with success and correct payload" do
+        get :show, params: {
+          id: users_list.id,
+          list_id: list.id
+        }, format: :json
+
+        response_body = JSON.parse(response.body)
+        expect(response).to be_successful
+        expect(response_body["id"]).to eq users_list.id
+        expect(response_body["user_id"]).to eq users_list.user_id
+        expect(response_body["list_id"]).to eq users_list.list_id
+        expect(response_body["has_accepted"]).to eq users_list.has_accepted
+        expect(response_body["permissions"]).to eq users_list.permissions
+
+      end
+    end
+  end
+
 
   describe "PATCH #update" do
     context "users_list exists" do

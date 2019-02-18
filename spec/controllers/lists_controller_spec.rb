@@ -27,6 +27,8 @@ RSpec.describe ListsController do
           .to eq List.accepted(user).count
         expect(response_body["not_accepted_lists"].count)
           .to eq List.not_accepted(user).count
+        expect(response_body["is_user_signed_in"]).to eq true
+        expect(response_body["current_user_id"]).to eq user.id
       end
     end
   end
@@ -264,6 +266,7 @@ RSpec.describe ListsController do
               }
             }
           end.to change(ToDoList, :count).by 1
+          expect(ToDoList.last.owner).to eq user
         end
       end
 
@@ -278,6 +281,7 @@ RSpec.describe ListsController do
               }
             }
           end.to change(BookList, :count).by 1
+          expect(BookList.last.owner).to eq user
         end
       end
 
@@ -292,6 +296,7 @@ RSpec.describe ListsController do
               }
             }
           end.to change(MusicList, :count).by 1
+          expect(MusicList.last.owner).to eq user
         end
       end
 
@@ -306,6 +311,7 @@ RSpec.describe ListsController do
               }
             }
           end.to change(GroceryList, :count).by 1
+          expect(GroceryList.last.owner).to eq user
         end
       end
 

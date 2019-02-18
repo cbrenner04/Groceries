@@ -10,7 +10,6 @@ class User < ApplicationRecord
            through: :users_lists,
            source: :list,
            dependent: :restrict_with_exception
-  # has_many :lists, inverse_of: :owner, dependent: :destroy
   has_many :invitations,
            class_name: to_s,
            as: :invited_by,
