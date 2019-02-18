@@ -122,12 +122,18 @@ export default class ShareListForm extends Component {
       return (
         <button
           key={id}
+          id={`${sharedState}-user-${user.id}`}
           className={'list-group-item list-group-item-action d-flex justify-content-between align-items-center'
             + 'btn btn-link'}
           onClick={() => this.togglePermission(id, permissions, sharedState)}
         >
           <span>{user.email}</span>
-          <span className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}>{permissions}</span>
+          <span
+            id={`perm-${permissions}`}
+            className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}
+          >
+            {permissions}
+          </span>
         </button>
       );
     }
@@ -184,6 +190,7 @@ export default class ShareListForm extends Component {
           this.state.invitableUsers.map(user => (
             <button
               key={user.id}
+              id={`invite-user-${user.id}`}
               className="list-group-item list-group-item-action btn btn-link"
               onClick={() => this.handleSelectUser(user)}
             >
