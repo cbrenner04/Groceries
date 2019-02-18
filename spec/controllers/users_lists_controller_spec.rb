@@ -56,7 +56,6 @@ RSpec.describe UsersListsController do
 
         expect(response).to render_template "lists/index"
       end
-
     end
 
     describe "format JSON" do
@@ -73,11 +72,9 @@ RSpec.describe UsersListsController do
         expect(response_body["list_id"]).to eq users_list.list_id
         expect(response_body["has_accepted"]).to eq users_list.has_accepted
         expect(response_body["permissions"]).to eq users_list.permissions
-
       end
     end
   end
-
 
   describe "PATCH #update" do
     context "users_list exists" do
