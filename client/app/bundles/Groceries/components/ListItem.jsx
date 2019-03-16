@@ -16,7 +16,7 @@ export default class ListItem extends Component {
       artist: PropTypes.string,
       album: PropTypes.string,
       assignee_id: PropTypes.number,
-      due_by: PropTypes.date,
+      due_by: PropTypes.string,
       read: PropTypes.bool,
     }).isRequired,
     purchased: PropTypes.bool,
