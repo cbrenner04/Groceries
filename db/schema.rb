@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_151444) do
   create_table "users_lists", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "list_id", null: false
-    t.boolean "has_accepted", default: false, null: false
+    t.boolean "has_accepted"
     t.string "permissions", default: "write", null: false
     t.index ["list_id"], name: "index_users_lists_on_list_id"
     t.index ["user_id", "list_id"], name: "index_users_lists_on_user_id_and_list_id", unique: true

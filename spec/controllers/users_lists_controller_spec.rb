@@ -7,6 +7,7 @@ RSpec.describe UsersListsController do
   let(:list) { user.lists.last }
   let(:users_list) { list.users_lists.find_by(user: user) }
   let(:other_user) { create :user }
+  let(:third_user) { create :user }
 
   before { sign_in user }
 
@@ -23,6 +24,9 @@ RSpec.describe UsersListsController do
 
     describe "format JSON" do
       it "responds with success and correct payload" do
+        UsersList.create(user: other_user, list: list)
+        UsersList.create(user: third_user, list: list, has_accepted: false)
+
         get :index, params: {
           list_id: list.id
         }, format: :json
@@ -38,8 +42,8 @@ RSpec.describe UsersListsController do
         )
         expect(response_body["accepted"].count).to eq 1
         expect(response_body["invitable_users"].count).to eq 0
-        expect(response_body["pending"].count).to eq 0
-        expect(response_body["refused"].count).to eq 0
+        expect(response_body["pending"].count).to eq 1
+        expect(response_body["refused"].count).to eq 1
         expect(response_body["current_user_id"]).to eq user.id
         expect(response_body["user_is_owner"]).to eq false
       end

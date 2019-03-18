@@ -50,7 +50,8 @@ class List < ApplicationRecord
       SELECT *
       FROM active_lists
       WHERE user_id = #{user_id}
-      AND has_accepted = false;
+      AND has_accepted IS NULL
+      OR has_accepted = false
     SQL
   end
 

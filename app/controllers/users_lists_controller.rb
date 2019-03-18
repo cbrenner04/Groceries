@@ -64,8 +64,8 @@ class UsersListsController < ApplicationController
     }
   end
 
-  def pending_users
-    UsersList.where(list_id: params[:list_id]).pending.map do |user_list|
+  def map_users(users_lists)
+    users_lists.map do |user_list|
       {
         user: User.find(user_list.user_id),
         users_list: {
@@ -74,29 +74,20 @@ class UsersListsController < ApplicationController
         }
       }
     end
+  end
+
+  def pending_users
+    users_lists = UsersList.where(list_id: params[:list_id]).pending
+    map_users(users_lists)
   end
 
   def accepted_users
-    UsersList.where(list_id: params[:list_id]).accepted.map do |user_list|
-      {
-        user: User.find(user_list.user_id),
-        users_list: {
-          id: user_list.id,
-          permissions: user_list.permissions
-        }
-      }
-    end
+    users_lists = UsersList.where(list_id: params[:list_id]).accepted
+    map_users(users_lists)
   end
 
   def refused_users
-    UsersList.where(list_id: params[:list_id]).refused.map do |user_list|
-      {
-        user: User.find(user_list.user_id),
-        users_list: {
-          id: user_list.id,
-          permissions: user_list.permissions
-        }
-      }
-    end
+    users_lists = UsersList.where(list_id: params[:list_id]).refused
+    map_users(users_lists)
   end
 end
