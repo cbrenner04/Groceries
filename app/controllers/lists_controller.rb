@@ -10,16 +10,24 @@ class ListsController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def create
     @list = build_new_list
-    @list.update(owner: current_user)
     if @list.save
-      create_users_list(current_user, @list)
-      render json: @list
+      users_list = create_users_list(current_user, @list)
+      # return object needs to be updated to inclued the users_list as this is
+      # what the client expects, similar to the index_response > accepted_lists
+      return_object = @list.attributes.merge!(
+        has_accepted: true,
+        user_id: current_user.id,
+        users_list_id: users_list.id
+      ).to_json
+      render json: return_object
     else
       render json: @list.errors, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def show
     set_up_list
@@ -94,18 +102,21 @@ class ListsController < ApplicationController
     }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def build_new_list
-    case list_params[:type]
+    new_list_params = list_params.merge!(owner: current_user)
+    case new_list_params[:type]
     when "ToDoList"
-      ToDoList.new(list_params)
+      ToDoList.new(new_list_params)
     when "BookList"
-      BookList.new(list_params)
+      BookList.new(new_list_params)
     when "MusicList"
-      MusicList.new(list_params)
+      MusicList.new(new_list_params)
     else
-      GroceryList.new(list_params)
+      GroceryList.new(new_list_params)
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def create_new_list_from(old_list)
     case old_list.type

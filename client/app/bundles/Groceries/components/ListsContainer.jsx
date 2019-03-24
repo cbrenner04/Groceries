@@ -73,7 +73,9 @@ export default class ListsContainer extends Component {
       success: '',
     });
     $.post('/lists', { list })
-      .done(data => this.addNewList(data))
+      .done((data) => {
+        this.addNewList(data);
+      })
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);
         const responseTextKeys = Object.keys(responseJSON);

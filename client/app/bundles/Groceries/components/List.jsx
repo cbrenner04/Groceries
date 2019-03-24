@@ -42,9 +42,10 @@ export default class List extends Component {
   }
 
   componentWillMount() {
+    const { list } = this.props;
     $.ajax({
       type: 'GET',
-      url: `/lists/${this.props.list.id}/users_lists/${this.props.list.users_list_id}`,
+      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
       dataType: 'JSON',
     }).done((data) => {
       this.setState({
