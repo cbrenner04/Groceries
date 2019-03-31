@@ -2,6 +2,8 @@
 
 # no doc
 class BookListItemsController < ApplicationController
+  before_action :require_list_access
+
   def create
     @item = BookListItem
             .create(item_params.merge!(book_list_id: params[:list_id]))
@@ -43,5 +45,12 @@ class BookListItemsController < ApplicationController
     params
       .require(:book_list_item)
       .permit(:user_id, :list_id, :author, :title, :purchased, :read)
+  end
+
+  def require_list_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list&.permissions == "write"
+    redirect_to lists_path
   end
 end

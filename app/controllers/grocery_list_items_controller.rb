@@ -2,6 +2,8 @@
 
 # no doc
 class GroceryListItemsController < ApplicationController
+  before_action :require_list_access
+
   def create
     @item = GroceryListItem
             .create(item_params.merge!(grocery_list_id: params[:list_id]))
@@ -44,5 +46,12 @@ class GroceryListItemsController < ApplicationController
     params
       .require(:grocery_list_item)
       .permit(:user_id, :product, :list_id, :quantity, :purchased, :refreshed)
+  end
+
+  def require_list_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list&.permissions == "write"
+    redirect_to lists_path
   end
 end

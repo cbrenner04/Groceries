@@ -3,6 +3,9 @@
 # no doc
 # rubocop:disable Metrics/ClassLength
 class ListsController < ApplicationController
+  before_action :require_list_access, only: %i[show]
+  before_action :require_list_owner, only: %i[edit update destroy refresh_list]
+
   def index
     respond_to do |format|
       format.html
@@ -10,24 +13,15 @@ class ListsController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def create
     @list = build_new_list
     if @list.save
       users_list = create_users_list(current_user, @list)
-      # return object needs to be updated to inclued the users_list as this is
-      # what the client expects, similar to the index_response > accepted_lists
-      return_object = @list.attributes.merge!(
-        has_accepted: true,
-        user_id: current_user.id,
-        users_list_id: users_list.id
-      ).to_json
-      render json: return_object
+      render json: create_response(users_list)
     else
       render json: @list.errors, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def show
     set_up_list
@@ -41,7 +35,12 @@ class ListsController < ApplicationController
     set_list
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: @list }
+      format.json do
+        render json: {
+          list: @list,
+          current_user_id: current_user&.id
+        }
+      end
     end
   end
 
@@ -76,6 +75,19 @@ class ListsController < ApplicationController
     params.require(:list).permit(:user, :name, :completed, :refreshed, :type)
   end
 
+  def require_list_access
+    list = List.find(params[:id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list
+    redirect_to lists_path
+  end
+
+  def require_list_owner
+    list = List.find(params[:id])
+    return if list.owner == current_user
+    redirect_to lists_path
+  end
+
   def accept_user_list(list)
     UsersList.find_by(list: list).update!(has_accepted: true)
   end
@@ -100,6 +112,16 @@ class ListsController < ApplicationController
       not_purchased_items: @not_purchased_items,
       purchased_items: @purchased_items
     }
+  end
+
+  def create_response(users_list)
+    # return object needs to be updated to include the users_list as this is
+    # what the client expects, similar to the index_response > accepted_lists
+    @list.attributes.merge!(
+      has_accepted: true,
+      user_id: current_user.id,
+      users_list_id: users_list.id
+    ).to_json
   end
 
   # rubocop:disable Metrics/MethodLength

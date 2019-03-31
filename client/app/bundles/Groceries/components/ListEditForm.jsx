@@ -7,10 +7,10 @@ import ListTypeOptions from './ListTypeOptions';
 
 export default class ListEditForm extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
-    listName: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    listType: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    listName: PropTypes.string,
+    completed: PropTypes.bool,
+    listType: PropTypes.string,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -20,6 +20,13 @@ export default class ListEditForm extends Component {
     history: PropTypes.shape({
       push: PropTypes.func,
     }).isRequired,
+  }
+
+  static defaultProps = {
+    id: 0,
+    listName: '',
+    completed: false,
+    listType: 'GroceryList',
   }
 
   constructor(props) {
@@ -39,15 +46,24 @@ export default class ListEditForm extends Component {
         type: 'GET',
         url: `/lists/${this.props.match.params.id}/edit`,
         dataType: 'JSON',
-      }).done((list) => {
-        this.setState({
-          id: list.id,
-          listName: list.name,
-          completed: list.completed,
-          listType: list.type,
-        });
+      }).done(({ list, current_user_id: currentUserId }) => {
+        if (list.owner_id === currentUserId) {
+          this.setState({
+            id: list.id,
+            listName: list.name,
+            completed: list.completed,
+            listType: list.type,
+          });
+        } else {
+          this.props.history.push('/lists');
+        }
       });
+    } else {
+      this.props.history.push('/lists');
     }
+  }
+
+  getList = () => {
   }
 
   handleChange = (event) => {

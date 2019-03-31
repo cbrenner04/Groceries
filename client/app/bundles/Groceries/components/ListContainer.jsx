@@ -111,6 +111,8 @@ export default class ListContainer extends Component {
           }
         });
       });
+    } else {
+      this.props.history.push('/lists');
     }
   }
 
@@ -254,7 +256,6 @@ export default class ListContainer extends Component {
     return (
       <div>
         <h1>{ this.state.list.name }</h1>
-        { this.state.permission === 'read' ? <p>You only have permission to read this list</p> : '' }
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <Alert errors={this.state.errors} />
         <br />
@@ -265,7 +266,7 @@ export default class ListContainer extends Component {
             listUsers={this.state.listUsers}
             userId={this.state.userId}
             handleItemAddition={this.handleAddItem}
-          /> : ''
+          /> : <p>You only have permission to read this list</p>
         }
         <br />
         <ListItemsContainer

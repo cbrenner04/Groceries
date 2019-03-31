@@ -15,6 +15,9 @@ export default class ShareListForm extends Component {
         list_id: PropTypes.string,
       }).isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -53,6 +56,10 @@ export default class ShareListForm extends Component {
           refused: data.refused,
           userId: data.current_user_id,
         });
+        const userInAccepted = data.accepted.find(acceptedList => acceptedList.user.id === data.current_user_id);
+        if (!userInAccepted || !userInAccepted.users_list.permissions === 'write') {
+          this.props.history.push('/lists');
+        }
       });
     }
   }

@@ -2,6 +2,8 @@
 
 # no doc
 class UsersListsController < ApplicationController
+  before_action :require_list_access
+
   def index
     respond_to do |format|
       format.html { render template: "lists/index" }
@@ -48,6 +50,13 @@ class UsersListsController < ApplicationController
     params
       .require(:users_list)
       .permit(:user_id, :list_id, :has_accepted, :permissions)
+  end
+
+  def require_list_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list&.permissions == "write"
+    redirect_to lists_path
   end
 
   def index_response
