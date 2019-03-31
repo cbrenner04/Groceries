@@ -34,6 +34,12 @@ UsersList.create!(
   has_accepted: true
 )
 
+UsersList.create!(
+  user: User.find_by(email: 'bar@ex.co'),
+  list: List.find_by(name: 'foobaz'),
+  has_accepted: true
+)
+
 item_names = %w(apples bananas oranges chocolate beer)
 
 item_names.each do |item|

@@ -5,9 +5,7 @@ class UsersListsController < ApplicationController
   def index
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json do
-        render json: index_response
-      end
+      format.json { render json: index_response }
     end
   end
 
@@ -15,9 +13,7 @@ class UsersListsController < ApplicationController
     users_list = UsersList.find(params[:id])
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json do
-        render json: users_list
-      end
+      format.json { render json: users_list }
     end
   end
 
@@ -36,6 +32,8 @@ class UsersListsController < ApplicationController
 
   def update
     @users_list = UsersList.find(params[:id])
+    # the rescue here is in case a bad value is sent for `permissions`
+    # `permissions` accepts `read` and `write` only
     begin
       @users_list.update(users_list_params)
       render json: @users_list
@@ -76,18 +74,20 @@ class UsersListsController < ApplicationController
     end
   end
 
-  def pending_users
-    users_lists = UsersList.where(list_id: params[:list_id]).pending
+  def list_users_by_status(status)
+    users_lists = UsersList.where(list_id: params[:list_id]).public_send(status)
     map_users(users_lists)
+  end
+
+  def pending_users
+    list_users_by_status "pending"
   end
 
   def accepted_users
-    users_lists = UsersList.where(list_id: params[:list_id]).accepted
-    map_users(users_lists)
+    list_users_by_status "accepted"
   end
 
   def refused_users
-    users_lists = UsersList.where(list_id: params[:list_id]).refused
-    map_users(users_lists)
+    list_users_by_status "refused"
   end
 end

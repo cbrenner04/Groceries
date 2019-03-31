@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 
 import Alert from './Alert';
+import PermissionsButtons from './PermissionsButtons';
 
 export default class ShareListForm extends Component {
   static propTypes = {
@@ -116,52 +117,6 @@ export default class ShareListForm extends Component {
     this.setState({ errors: errors.join(' and ') });
   }
 
-  sharedUsers = sharedState => this.state[sharedState].map(({ user, users_list: { id, permissions } }) => {
-    if (user.id === this.state.userId) return '';
-    if (this.state.userIsOwner) {
-      return (
-        <button
-          key={id}
-          id={`${sharedState}-user-${user.id}`}
-          className={'list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-            + 'btn btn-link'}
-          onClick={() => this.togglePermission(id, permissions, sharedState)}
-        >
-          <span>{user.email}</span>
-          <span
-            id={`perm-${permissions}`}
-            className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}
-          >
-            {permissions}
-          </span>
-        </button>
-      );
-    }
-    return (<div key={id} className="list-group-item">{user.email}</div>);
-  });
-
-  togglePermission = (id, currentPermission, sharedState) => {
-    const permissions = currentPermission === 'write' ? 'read' : 'write';
-    $.ajax({
-      type: 'PATCH',
-      url: `/lists/${this.state.listId}/users_lists/${id}`,
-      dataType: 'JSON',
-      data: `users_list%5Bpermissions%5D=${permissions}`,
-    })
-      .done(() => {
-        const updatedUsers = this.state[sharedState].map((usersList) => {
-          const newList = usersList;
-          const tmpUsersList = newList.users_list;
-          if (tmpUsersList.id === id) tmpUsersList.permissions = permissions;
-          return newList;
-        });
-        const tmpObj = {};
-        tmpObj[sharedState] = updatedUsers;
-        this.setState(tmpObj);
-      })
-      .fail(response => this.failure(response));
-  }
-
   render() {
     return (
       <div>
@@ -202,14 +157,20 @@ export default class ShareListForm extends Component {
         <h2>Already shared</h2>
         <p className="text-lead">Click to toggle permissions between read and write</p>
         <br />
-        <h3>Pending</h3>
-        <br />
-        { this.sharedUsers('pending') }
-        <br />
-        <h3>Accepted</h3>
-        <br />
-        { this.sharedUsers('accepted') }
-        <br />
+        <PermissionsButtons
+          status="pending"
+          users={this.state.pending}
+          listId={this.state.listId}
+          userIsOwner={this.state.userIsOwner}
+          userId={this.state.userId}
+        />
+        <PermissionsButtons
+          status="accepted"
+          users={this.state.accepted}
+          listId={this.state.listId}
+          userIsOwner={this.state.userIsOwner}
+          userId={this.state.userId}
+        />
         <h3>Refused</h3>
         <br />
         { this.state.refused.map(({ user }) => <div key={user.id} className="list-group-item">{user.email}</div>) }
