@@ -2,7 +2,8 @@
 
 # no doc
 class UsersListsController < ApplicationController
-  before_action :require_list_access
+  before_action :require_list_access, only: %i[index]
+  before_action :require_write_access, only: %i[show create update]
 
   def index
     respond_to do |format|
@@ -53,6 +54,13 @@ class UsersListsController < ApplicationController
   end
 
   def require_list_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list
+    redirect_to lists_path
+  end
+
+  def require_write_access
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list&.permissions == "write"

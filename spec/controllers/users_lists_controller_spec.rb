@@ -13,8 +13,8 @@ RSpec.describe UsersListsController do
 
   describe "GET #index" do
     describe "format HTML" do
-      describe "with read access" do
-        before { users_list.update!(permissions: "read") }
+      describe "as a user who has not been invited" do
+        before { list.users_lists.delete_all }
 
         it "redirects to lists_path" do
           get :index, params: {
@@ -25,9 +25,7 @@ RSpec.describe UsersListsController do
         end
       end
 
-      describe "with write access" do
-        before { users_list.update!(permissions: "write") }
-
+      describe "as a user who has not been invited" do
         it "renders 'lists/index'" do
           get :index, params: {
             list_id: list.id
@@ -40,7 +38,7 @@ RSpec.describe UsersListsController do
 
     describe "format JSON" do
       describe "with read access" do
-        before { users_list.update!(permissions: "read") }
+        before { list.users_lists.delete_all }
 
         it "redirects to lists_path" do
           get :index, params: {
@@ -52,8 +50,6 @@ RSpec.describe UsersListsController do
       end
 
       describe "with write access" do
-        before { users_list.update!(permissions: "write") }
-
         it "responds with success and correct payload" do
           UsersList.create(user: other_user, list: list)
           UsersList.create(user: third_user, list: list, has_accepted: false)
