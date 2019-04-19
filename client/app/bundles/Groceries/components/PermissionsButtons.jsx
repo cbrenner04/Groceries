@@ -44,7 +44,7 @@ export default class PermissionsButtons extends Component {
         </button>
       );
     }
-    return (<div key={id} className="list-group-item">{user.email}</div>);
+    return (<div key={id} id={`${this.props.status}-user-${user.id}`} className="list-group-item">{user.email}</div>);
   });
 
   togglePermission = (id, currentPermission, sharedState) => {

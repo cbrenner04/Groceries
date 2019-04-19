@@ -180,7 +180,8 @@ export default class ShareListForm extends Component {
         />
         <h3>Refused</h3>
         <br />
-        { this.state.refused.map(({ user }) => <div key={user.id} className="list-group-item">{user.email}</div>) }
+        { this.state.refused.map(({ user }) =>
+          <div key={user.id} id={`refused-user-${user.id}`} className="list-group-item">{user.email}</div>) }
       </div>
     );
   }
