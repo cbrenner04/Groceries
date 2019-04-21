@@ -5,25 +5,24 @@ module Users
   class InvitationsController < Devise::InvitationsController
     # this overrides the default redirect after invitation is made
     # it needs to have the argument or an error would be thrown
-    # rubocop:disable UnusedMethodArgument
-    def after_invite_path_for(resource)
+    def after_invite_path_for(_resource)
       list_id ? list_users_lists_path(list_id) : root_path
     end
-    # rubocop:enable UnusedMethodArgument
 
     def new
       render "lists/index"
     end
 
     def create
+      # do nothing if user already exists and this isn't related to list sharing
+      return redirect_to root_path if invited_user && !list_id
+      # if this isn't related to list sharing, just do regular invitation
       return super unless list_id
-      new_user = User.find_by(email: params[:user][:email])
-      if new_user && find_users_list(new_user)
-        flash[:notice] = "List already shared with #{new_user.email}"
-      elsif new_user
-        create_users_list(new_user)
-        flash[:notice] = "List has been shared with #{new_user.email}"
+      # if the user exists, just create the users list
+      if invited_user
+        share_list(invited_user)
       else
+        # if the user doesn't exist, do the inviting and create the users list
         super { |user| create_users_list(user) if user.valid? }
       end
     end
@@ -38,8 +37,21 @@ module Users
       params[:list_id]
     end
 
-    def find_users_list(user)
+    def invited_user
+      @invited_user ||= User.find_by(email: params[:user][:email])
+    end
+
+    def existing_users_list(user)
       UsersList.find_by(user_id: user.id, list_id: list_id)
+    end
+
+    def share_list(user)
+      if existing_users_list(user)
+        flash[:notice] = "List already shared with #{user.email}"
+      else
+        create_users_list(user)
+        flash[:notice] = "List has been shared with #{user.email}"
+      end
     end
 
     def create_users_list(user)
