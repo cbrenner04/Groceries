@@ -6,14 +6,33 @@ import List from './List';
 
 export default class Lists extends Component {
   static propTypes = {
+    userId: PropTypes.number.isRequired,
     completedLists: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
     }).isRequired).isRequired,
     nonCompletedLists: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
     }).isRequired).isRequired,
-    unacceptedLists: PropTypes.arrayOf(PropTypes.shape({
+    pendingLists: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      users_list_id: PropTypes.number,
+      owner_id: PropTypes.number,
     }).isRequired).isRequired,
     onAccept: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
@@ -35,14 +54,15 @@ export default class Lists extends Component {
   render() {
     return (
       <div>
-        { this.props.unacceptedLists.length > 0 &&
+        { this.props.pendingLists.length > 0 &&
           (
             <div>
               <p>These lists have been shared with you but you have not accepted the invitation.</p>
               <div className="list-group">
                 {
-                  this.props.unacceptedLists.map(list => (
+                  this.props.pendingLists.map(list => (
                     <List
+                      userId={this.props.userId}
                       list={list}
                       key={list.id}
                       onListAcceptance={this.onAcceptOfList}
@@ -64,6 +84,7 @@ export default class Lists extends Component {
           {
             this.props.nonCompletedLists.map(list => (
               <List
+                userId={this.props.userId}
                 list={list}
                 key={list.id}
                 onListDeletion={this.onDeleteOfList}
@@ -84,6 +105,7 @@ export default class Lists extends Component {
           {
             this.props.completedLists.map(list => (
               <List
+                userId={this.props.userId}
                 list={list}
                 key={list.id}
                 onListDeletion={this.onDeleteOfList}

@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
-import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
 
 export default class ListsContainer extends Component {
-  static propTypes = {
-    accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
-    not_accepted_lists: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }).isRequired),
-  }
-
-  static defaultProps = {
-    accepted_lists: [],
-    not_accepted_lists: [],
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      acceptedLists: props.accepted_lists,
-      notAcceptedLists: props.not_accepted_lists,
+      userId: 0,
+      acceptedLists: [],
+      pendingLists: [],
       errors: '',
       success: '',
       completedLists: [],
@@ -35,14 +25,15 @@ export default class ListsContainer extends Component {
       url: '/lists/',
       dataType: 'JSON',
     }).done((data) => {
+      const userId = data.current_user_id;
       const acceptedLists = data.accepted_lists;
-      const notAcceptedLists = data.not_accepted_lists;
-      const completedLists =
-        acceptedLists.filter(list => list.completed && !list.refreshed);
+      const pendingLists = data.pending_lists;
+      const completedLists = acceptedLists.filter(list => list.completed && !list.refreshed);
       const nonCompletedLists = acceptedLists.filter(list => !list.completed);
       this.setState({
+        userId,
         acceptedLists,
-        notAcceptedLists,
+        pendingLists,
         completedLists,
         nonCompletedLists,
       });
@@ -55,7 +46,9 @@ export default class ListsContainer extends Component {
       success: '',
     });
     $.post('/lists', { list })
-      .done(data => this.addNewList(data))
+      .done((data) => {
+        this.addNewList(data);
+      })
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);
         const responseTextKeys = Object.keys(responseJSON);
@@ -64,16 +57,21 @@ export default class ListsContainer extends Component {
       });
   }
 
-  sortLists = lists =>
-    lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  sortLists = lists => lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   addNewList = (list) => {
     const lists = update(this.state.acceptedLists, { $push: [list] });
-    const nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
+    let { nonCompletedLists, completedLists } = this.state;
+    if (list.completed) {
+      completedLists = update(this.state.completedLists, { $push: [list] });
+    } else {
+      nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
+    }
     this.setState({
       acceptedLists: this.sortLists(lists),
       success: 'List successfully added.',
       nonCompletedLists: this.sortLists(nonCompletedLists),
+      completedLists: this.sortLists(completedLists),
     });
   }
 
@@ -85,10 +83,7 @@ export default class ListsContainer extends Component {
         type: 'DELETE',
         success: () => this.removeList(listId),
       });
-    } else {
-      return false;
     }
-    return '';
   }
 
   handleCompletion = (list) => {
@@ -117,28 +112,34 @@ export default class ListsContainer extends Component {
     this.acceptList(list);
   }
 
-  handleReject = (listId) => {
+  handleReject = (list) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/lists/${listId}/users_lists/reject_list`,
-        type: 'GET',
-        success: () => this.removeListFromUnaccepted(listId),
+        url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
+        type: 'PATCH',
+        data: 'users_list%5Bhas_accepted%5D=false',
+        success: () => {
+          this.removeListFromUnaccepted(list.id);
+        },
       });
     }
   }
 
   acceptList = (list) => {
     $.ajax({
-      url: `/lists/${list.id}/users_lists/accept_list`,
-      type: 'GET',
-      success: () => this.addNewList(list),
+      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
+      type: 'PATCH',
+      data: 'users_list%5Bhas_accepted%5D=true',
+      success: () => {
+        this.addNewList(list);
+      },
     });
   }
 
   removeListFromUnaccepted = (listId) => {
-    const notAcceptedLists = this.state.notAcceptedLists.filter(list => list.id !== listId);
-    this.setState({ notAcceptedLists });
+    const pendingLists = this.state.pendingLists.filter(list => list.id !== listId);
+    this.setState({ pendingLists });
   }
 
   handleRefresh = (list) => {
@@ -160,9 +161,10 @@ export default class ListsContainer extends Component {
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />
         <Lists
+          userId={this.state.userId}
           onListDelete={this.handleDelete}
           onListCompletion={this.handleCompletion}
-          unacceptedLists={this.state.notAcceptedLists}
+          pendingLists={this.state.pendingLists}
           completedLists={this.state.completedLists}
           nonCompletedLists={this.state.nonCompletedLists}
           onListRefresh={this.handleRefresh}

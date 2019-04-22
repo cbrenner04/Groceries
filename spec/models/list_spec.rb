@@ -3,8 +3,9 @@
 require "rails_helper"
 
 RSpec.describe List do
-  let(:list) { create :grocery_list }
-  let(:other_list) { create :grocery_list }
+  let(:user) { create :user }
+  let(:list) { create :grocery_list, owner: user }
+  let(:other_list) { create :grocery_list, owner: user }
 
   describe "validations" do
     it { expect(list).to be_valid }
@@ -34,12 +35,7 @@ RSpec.describe List do
     let(:user) { create :user }
 
     before do
-      UsersList.create!(
-        user: user,
-        list: other_list,
-        has_accepted: true,
-        responded: true
-      )
+      UsersList.create!(user: user, list: other_list, has_accepted: true)
     end
 
     it "returns lists accepted by user" do
@@ -47,20 +43,27 @@ RSpec.describe List do
     end
   end
 
-  describe ".not_accepted" do
+  describe ".pending" do
     let(:new_user) { create :user }
 
     before do
-      UsersList.create!(
-        user: new_user,
-        list: other_list,
-        has_accepted: false,
-        responded: false
-      )
+      UsersList.create!(user: new_user, list: other_list, has_accepted: nil)
     end
 
     it "returns lists not yet accepted by user" do
-      expect(List.not_accepted(new_user).count).to eq 1
+      expect(List.pending(new_user).count).to eq 1
+    end
+  end
+
+  describe ".refused" do
+    let(:new_user) { create :user }
+
+    before do
+      UsersList.create!(user: new_user, list: other_list, has_accepted: false)
+    end
+
+    it "returns lists not yet accepted by user" do
+      expect(List.refused(new_user).count).to eq 1
     end
   end
 end

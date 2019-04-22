@@ -30,12 +30,15 @@ export default class ListItem extends Component {
       email: PropTypes.string.isRequired,
     })),
     unPurchaseItem: PropTypes.func.isRequired,
+    permission: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
     listUsers: [],
     purchased: false,
   }
+
+  setButtons = () => (this.props.purchased ? this.purchasedItemButtons() : this.notPurchaseItemButtons());
 
   unPurchase = () => this.props.unPurchaseItem(this.props.item);
 
@@ -157,7 +160,7 @@ export default class ListItem extends Component {
       >
         <div className="pt-1">{ this.itemName() }</div>
         <div className="pt-1">{ this.extraInfo() }</div>
-        { this.props.purchased ? this.purchasedItemButtons() : this.notPurchaseItemButtons() }
+        { this.props.permission === 'write' ? this.setButtons() : '' }
       </div>
     );
   }

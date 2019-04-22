@@ -4,6 +4,7 @@
 class List < ApplicationRecord
   has_many :users_lists, dependent: :destroy
   has_many :users, through: :users_lists, source: :user, dependent: :destroy
+  belongs_to :owner, class_name: "User", inverse_of: :lists
 
   scope :descending, (-> { order(created_at: :desc) })
   scope :not_archived, (-> { where(archived_at: nil) })
@@ -31,64 +32,50 @@ class List < ApplicationRecord
     List.find_by_sql(completed_accepted_lists_query(user.id))
   end
 
-  def self.not_accepted(user)
-    List.find_by_sql(not_accepted_lists_query(user.id))
+  def self.pending(user)
+    List.find_by_sql(pending_lists_query(user.id))
   end
 
-  def self.not_completed_accepted_lists_query(user_id)
+  def self.refused(user)
+    List.find_by_sql(refused_lists_query(user.id))
+  end
+
+  def self.accepted_lists_query(user_id)
     <<-SQL
-      SELECT "lists".*
-      FROM "lists"
-      INNER JOIN "users_lists"
-              ON "lists"."id" = "users_lists"."list_id"
-      WHERE "users_lists"."user_id" = #{user_id}
-      AND "users_lists"."has_accepted" = true
-      AND "lists"."archived_at" IS NULL
-      AND "lists"."completed" = false
-      ORDER BY "lists"."created_at" DESC;
+      SELECT *
+      FROM active_lists
+      WHERE user_id = #{user_id}
+      AND has_accepted = true
+    SQL
+  end
+
+  def self.pending_lists_query(user_id)
+    <<-SQL
+      SELECT *
+      FROM active_lists
+      WHERE user_id = #{user_id}
+      AND has_accepted IS NULL
+    SQL
+  end
+
+  def self.refused_lists_query(user_id)
+    <<-SQL
+      SELECT *
+      FROM active_lists
+      WHERE user_id = #{user_id}
+      AND has_accepted = false
     SQL
   end
 
   def self.completed_accepted_lists_query(user_id)
-    <<-SQL
-      SELECT "lists".*
-      FROM "lists"
-      INNER JOIN "users_lists"
-              ON "lists"."id" = "users_lists"."list_id"
-      WHERE "users_lists"."user_id" = #{user_id}
-      AND "users_lists"."has_accepted" = true
-      AND "lists"."archived_at" IS NULL
-      AND "lists"."completed" = true
-      ORDER BY "lists"."created_at" DESC;
-    SQL
+    "#{accepted_lists_query(user_id)} AND completed = true"
   end
 
   def self.limited_completed_accepted_lists_query(user_id)
-    <<-SQL
-      SELECT "lists".*
-      FROM "lists"
-      INNER JOIN "users_lists"
-              ON "lists"."id" = "users_lists"."list_id"
-      WHERE "users_lists"."user_id" = #{user_id}
-      AND "users_lists"."has_accepted" = true
-      AND "lists"."archived_at" IS NULL
-      AND "lists"."completed" = true
-      ORDER BY "lists"."created_at" DESC
-      LIMIT 10;
-    SQL
+    "#{completed_accepted_lists_query(user_id)} LIMIT 10"
   end
 
-  def self.not_accepted_lists_query(user_id)
-    <<-SQL
-      SELECT "lists".*
-      FROM "lists"
-      INNER JOIN "users_lists"
-              ON "lists"."id" = "users_lists"."list_id"
-      WHERE "users_lists"."user_id" = #{user_id}
-      AND "users_lists"."has_accepted" = false
-      AND "users_lists"."responded" = false
-      AND "lists"."archived_at" IS NULL
-      ORDER BY "lists"."created_at" DESC
-    SQL
+  def self.not_completed_accepted_lists_query(user_id)
+    "#{accepted_lists_query(user_id)} AND completed = false"
   end
 end

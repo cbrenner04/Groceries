@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class ToDoListItemsController < ApplicationController
+class ToDoListItemsController < ListItemsController
   def create
     @item = ToDoListItem
             .create(item_params.merge!(to_do_list_id: params[:list_id]))

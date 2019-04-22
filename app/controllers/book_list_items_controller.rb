@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class BookListItemsController < ApplicationController
+class BookListItemsController < ListItemsController
   def create
     @item = BookListItem
             .create(item_params.merge!(book_list_id: params[:list_id]))

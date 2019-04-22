@@ -44,6 +44,9 @@ export default class ListContainer extends Component {
         list_id: PropTypes.string,
       }).isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -64,10 +67,11 @@ export default class ListContainer extends Component {
       notPurchasedItems: props.not_purchased_items,
       purchasedItems: props.purchased_items,
       listUsers: [],
+      permission: 'write',
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -80,14 +84,24 @@ export default class ListContainer extends Component {
           notPurchasedItems: data.not_purchased_items,
           purchasedItems: data.purchased_items,
         });
+        $.ajax({
+          type: 'GET',
+          url: `/lists/${this.props.match.params.id}/users_lists`,
+          dataType: 'JSON',
+        }).done(({ accepted, pending }) => {
+          const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
+          const allAcceptedUsers = accepted.map(({ user }) => user);
+          const allPendingUsers = pending.map(({ user }) => user);
+          const listUsers = allAcceptedUsers.concat(allPendingUsers);
+          if (userInAccepted) {
+            this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
+          } else {
+            this.props.history.push('/lists');
+          }
+        });
       });
-      $.ajax({
-        type: 'GET',
-        url: `/lists/${this.props.match.params.id}/users_lists`,
-        dataType: 'JSON',
-      }).done((data) => {
-        this.setState({ listUsers: data.users });
-      });
+    } else {
+      this.props.history.push('/lists');
     }
   }
 
@@ -234,13 +248,15 @@ export default class ListContainer extends Component {
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <Alert errors={this.state.errors} />
         <br />
-        <ListItemForm
-          listId={this.state.list.id}
-          listType={this.state.list.type}
-          listUsers={this.state.listUsers}
-          userId={this.state.userId}
-          handleItemAddition={this.handleAddItem}
-        />
+        {
+          this.state.permission === 'write' ? <ListItemForm
+            listId={this.state.list.id}
+            listType={this.state.list.type}
+            listUsers={this.state.listUsers}
+            userId={this.state.userId}
+            handleItemAddition={this.handleAddItem}
+          /> : <p>You only have permission to read this list</p>
+        }
         <br />
         <ListItemsContainer
           notPurchasedItems={this.state.notPurchasedItems}
@@ -252,6 +268,7 @@ export default class ListContainer extends Component {
           handleItemUnPurchase={this.handleUnPurchase}
           listType={this.state.list.type}
           listUsers={this.state.listUsers}
+          permission={this.state.permission}
         />
       </div>
     );

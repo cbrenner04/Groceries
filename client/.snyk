@@ -1,0 +1,37 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:chownr:20180731':
+    - webpack > uglifyjs-webpack-plugin > cacache > chownr:
+        reason: no upgrade or patch availabel
+        expires: '2019-03-02T02:42:14.130Z'
+    - webpack > watchpack > chokidar > fsevents > node-pre-gyp > tar > chownr:
+        reason: no upgrade or patch available
+        expires: '2019-03-02T02:42:14.131Z'
+    - node-pre-gyp > tar > chownr:
+        reason: no upgrad
+        expires: '2019-03-02T02:42:14.131Z'
+  SNYK-JS-JUSTEXTEND-72674:
+    - just-extend:
+        reason: no upgrad
+        expires: '2019-03-02T02:42:14.131Z'
+    - nise > just-extend:
+        reason: no upgrad
+        expires: '2019-03-02T02:42:14.131Z'
+    - singel > sinon > nise > just-extend:
+        reason: no upgrad
+        expires: '2019-03-02T02:42:14.131Z'
+  'npm:react-dom:20180802':
+    - singel > react-dom:
+        reason: extraneous package cannot be upgraded
+        expires: '2019-03-02T02:42:14.131Z'
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:extend:20180424':
+    - jsdom > request > extend:
+        patched: '2019-01-31T02:39:34.273Z'
+    - singel > jsdom > request > extend:
+        patched: '2019-01-31T02:39:34.273Z'
+    - extend:
+        patched: '2019-01-31T02:39:34.273Z'

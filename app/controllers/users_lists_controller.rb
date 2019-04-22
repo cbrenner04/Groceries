@@ -2,23 +2,21 @@
 
 # no doc
 class UsersListsController < ApplicationController
+  before_action :require_list_access, only: %i[index update]
+  before_action :require_write_access, only: %i[show create]
+
   def index
-    accepted_users =
-      UsersList.where(list_id: params[:list_id]).accepted.map do |user_list|
-        User.find(user_list.user_id)
-      end
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json { render json: { users: accepted_users } }
+      format.json { render json: index_response }
     end
   end
 
-  def new
-    list = List.find(params[:list_id])
-    users = current_user.users_that_list_can_be_shared_with(list)
+  def show
+    users_list = UsersList.find(params[:id])
     respond_to do |format|
       format.html { render template: "lists/index" }
-      format.json { render json: { list: list, users: users } }
+      format.json { render json: users_list }
     end
   end
 
@@ -35,36 +33,78 @@ class UsersListsController < ApplicationController
     end
   end
 
-  def accept_list
-    set_users_list
-    if @users_list
-      @users_list.update!(has_accepted: true, responded: true)
+  def update
+    @users_list = UsersList.find(params[:id])
+    # the rescue here is in case a bad value is sent for `permissions`
+    # `permissions` accepts `read` and `write` only
+    begin
+      @users_list.update(users_list_params)
       render json: @users_list
-    else
-      render json: { list: ["must exist", "can't be blank"] },
-             status: :unprocessable_entity
-    end
-  end
-
-  def reject_list
-    set_users_list
-    if @users_list
-      @users_list.update!(responded: true)
-      render json: @users_list
-    else
-      render json: { list: ["must exist", "can't be blank"] },
-             status: :unprocessable_entity
+    rescue ArgumentError => error
+      render json: error, status: :unprocessable_entity
     end
   end
 
   private
 
   def users_list_params
-    params.require(:users_list).permit(:user_id, :list_id)
+    params
+      .require(:users_list)
+      .permit(:user_id, :list_id, :has_accepted, :permissions)
   end
 
-  def set_users_list
-    @users_list =
-      UsersList.find_by(user_id: current_user.id, list_id: params[:list_id])
+  def require_list_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list
+    redirect_to lists_path
+  end
+
+  def require_write_access
+    list = List.find(params[:list_id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list&.permissions == "write"
+    redirect_to lists_path
+  end
+
+  def index_response
+    list = List.find(params[:list_id])
+    user_is_owner = list.owner == current_user
+    invitable_users = current_user.users_that_list_can_be_shared_with(list)
+    {
+      list: list, invitable_users: invitable_users,
+      accepted: accepted_users, pending: pending_users,
+      refused: refused_users, current_user_id: current_user.id,
+      user_is_owner: user_is_owner
+    }
+  end
+
+  def map_users(users_lists)
+    users_lists.map do |user_list|
+      {
+        user: User.find(user_list.user_id),
+        users_list: {
+          id: user_list.id,
+          permissions: user_list.permissions
+        }
+      }
+    end
+  end
+
+  def list_users_by_status(status)
+    users_lists = UsersList.where(list_id: params[:list_id]).public_send(status)
+    map_users(users_lists)
+  end
+
+  def pending_users
+    list_users_by_status "pending"
+  end
+
+  def accepted_users
+    list_users_by_status "accepted"
+  end
+
+  def refused_users
+    list_users_by_status "refused"
   end
 end

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import update from 'immutability-helper';
 
 import Alert from './Alert';
+import PermissionsButtons from './PermissionsButtons';
 
 export default class ShareListForm extends Component {
   static propTypes = {
     listId: PropTypes.number,
-    users: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -23,16 +22,20 @@ export default class ShareListForm extends Component {
 
   static defaultProps = {
     listId: 0,
-    users: [],
   }
 
   constructor(props) {
     super(props);
     this.state = {
       listId: this.props.listId,
-      users: this.props.users,
+      invitableUsers: [],
       newEmail: '',
       errors: '',
+      pending: [],
+      accepted: [],
+      refused: [],
+      userId: 0,
+      userIsOwner: false,
     };
   }
 
@@ -40,13 +43,23 @@ export default class ShareListForm extends Component {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
-        url: `/lists/${this.props.match.params.list_id}/users_lists/new`,
+        url: `/lists/${this.props.match.params.list_id}/users_lists`,
         dataType: 'JSON',
       }).done((data) => {
         this.setState({
-          users: data.users,
+          name: data.list.name,
+          invitableUsers: data.invitable_users,
           listId: data.list.id,
+          userIsOwner: data.user_is_owner,
+          pending: data.pending,
+          accepted: data.accepted,
+          refused: data.refused,
+          userId: data.current_user_id,
         });
+        const userInAccepted = data.accepted.find(acceptedList => acceptedList.user.id === data.current_user_id);
+        if (!(userInAccepted && userInAccepted.users_list.permissions === 'write')) {
+          this.props.history.push('/lists');
+        }
       });
     }
   }
@@ -63,25 +76,44 @@ export default class ShareListForm extends Component {
     this.setState({
       errors: '',
     });
-    $.post(
-      '/users/invitation',
-      { user: { email: this.state.newEmail }, list_id: this.state.listId },
-    ).fail(response => this.failure(response));
+    $.post('/users/invitation', {
+      user: {
+        email: this.state.newEmail,
+      },
+      list_id: this.state.listId,
+    }).fail(response => this.failure(response));
   }
 
-  handleSelectUser(userId) {
+  handleSelectUser(user) {
     this.setState({
       errors: '',
     });
     const usersList = {
-      user_id: userId,
+      user_id: user.id,
       list_id: this.state.listId,
     };
-    $.post(
-      `/lists/${this.state.listId}/users_lists`,
-      { users_list: usersList },
-    )
-      .done(this.props.history.push('/lists'))
+    $.post(`/lists/${this.state.listId}/users_lists`, { users_list: usersList })
+      .done((data) => {
+        const newUsers = this.state.invitableUsers.filter(tmpUser => tmpUser.id !== user.id);
+        const newPending = update(this.state.pending, {
+          $push: [
+            {
+              user: {
+                id: data.user_id,
+                email: user.email,
+              },
+              users_list: {
+                id: data.id,
+                permissions: data.permissions,
+              },
+            },
+          ],
+        });
+        this.setState({
+          invitableUsers: newUsers,
+          pending: newPending,
+        });
+      })
       .fail(response => this.failure(response));
   }
 
@@ -101,9 +133,7 @@ export default class ShareListForm extends Component {
         <Alert errors={this.state.errors} />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="usersListNewEmail">
-              Enter an email to invite someone to share this list:
-            </label>
+            <label htmlFor="usersListNewEmail">Enter an email to invite someone to share this list:</label>
             <input
               id="usersListNewEmail"
               type="email"
@@ -114,27 +144,44 @@ export default class ShareListForm extends Component {
               placeholder="jane.smith@example.com"
             />
           </div>
-          <button type="submit" className="btn btn-success btn-block">
-            Share List
-          </button>
+          <button type="submit" className="btn btn-success btn-block">Share List</button>
         </form>
         <br />
-        <strong>OR</strong>
-        <br />
-        <p className="text-lead">
-          Select someone you&apos;ve previously shared with:
-        </p>
+        <p className="text-lead">Or select someone you&apos;ve previously shared with:</p>
         {
-          this.state.users.map(user => (
+          this.state.invitableUsers.map(user => (
             <button
               key={user.id}
-              className="list-group-item list-group-item-action"
-              onClick={() => this.handleSelectUser(user.id)}
+              id={`invite-user-${user.id}`}
+              className="list-group-item list-group-item-action btn btn-link"
+              onClick={() => this.handleSelectUser(user)}
             >
               {user.email}
             </button>
           ))
         }
+        <br />
+        <h2>Already shared</h2>
+        <p className="text-lead">Click to toggle permissions between read and write</p>
+        <br />
+        <PermissionsButtons
+          status="pending"
+          users={this.state.pending}
+          listId={this.state.listId}
+          userIsOwner={this.state.userIsOwner}
+          userId={this.state.userId}
+        />
+        <PermissionsButtons
+          status="accepted"
+          users={this.state.accepted}
+          listId={this.state.listId}
+          userIsOwner={this.state.userIsOwner}
+          userId={this.state.userId}
+        />
+        <h3>Refused</h3>
+        <br />
+        { this.state.refused.map(({ user }) =>
+          <div key={user.id} id={`refused-user-${user.id}`} className="list-group-item">{user.email}</div>) }
       </div>
     );
   }

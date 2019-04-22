@@ -76,13 +76,21 @@ export default class EditListItemForm extends Component {
           itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
           itemAlbum: item.album,
         });
-      });
-      $.ajax({
-        type: 'GET',
-        url: `/lists/${this.props.match.params.list_id}/users_lists`,
-        dataType: 'JSON',
-      }).done((data) => {
-        this.setState({ listUsers: data.users });
+        $.ajax({
+          type: 'GET',
+          url: `/lists/${this.props.match.params.list_id}/users_lists`,
+          dataType: 'JSON',
+        }).done(({ accepted, pending, current_user_id: currentUserId }) => {
+          const acceptedUsers = accepted.map(({ user }) => user);
+          const pendingUsers = pending.map(({ user }) => user);
+          const listUsers = acceptedUsers.concat(pendingUsers);
+          const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === currentUserId);
+          if (userInAccepted && userInAccepted.users_list.permissions === 'write') {
+            this.setState({ listUsers });
+          } else {
+            this.props.history.push('/lists');
+          }
+        });
       });
     }
   }

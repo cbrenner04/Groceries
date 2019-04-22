@@ -3,22 +3,33 @@
 module Users
   # override invitations controller
   class InvitationsController < Devise::InvitationsController
+    # this overrides the default redirect after invitation is made
+    # it needs to have the argument or an error would be thrown
+    def after_invite_path_for(_resource)
+      list_id ? list_users_lists_path(list_id) : root_path
+    end
+
     def new
       render "lists/index"
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def create
+      # do nothing if user already exists and this isn't related to list sharing
+      return redirect_to root_path if invited_user && !list_id
+      # if this isn't related to list sharing, just do regular invitation
       return super unless list_id
-      new_user = User.find_by(email: params[:user][:email])
-      if new_user && find_users_list(new_user)
-        flash_and_redirect("List already shared with #{new_user.email}")
-      elsif new_user
-        create_users_list(new_user)
-        flash_and_redirect("List has been shared with #{new_user.email}")
+      # if sharing a list, current user must have write permissions
+      return unless current_user_has_write_access
+      # if the user exists, just create the users list
+      if invited_user
+        share_list(invited_user)
       else
+        # if the user doesn't exist, do the inviting and create the users list
         super { |user| create_users_list(user) if user.valid? }
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def edit
       render "lists/index"
@@ -30,18 +41,32 @@ module Users
       params[:list_id]
     end
 
-    def find_users_list(user)
+    def invited_user
+      @invited_user ||= User.find_by(email: params[:user][:email])
+    end
+
+    def existing_users_list(user)
       UsersList.find_by(user_id: user.id, list_id: list_id)
     end
 
-    def flash_and_redirect(flash_message)
-      flash[:notice] = flash_message
-      redirect_to new_list_users_list_path(list_id: list_id)
+    def share_list(user)
+      if existing_users_list(user)
+        flash[:notice] = "List already shared with #{user.email}"
+      else
+        create_users_list(user)
+        flash[:notice] = "List has been shared with #{user.email}"
+      end
     end
 
     def create_users_list(user)
       UsersList.create!(user_id: user.id, list_id: list_id)
       SharedListNotification.send_notification_for(current_user, user.id)
+    end
+
+    def current_user_has_write_access
+      list = List.find(params[:list_id])
+      users_list = UsersList.find_by(list: list, user: current_user)
+      users_list&.permissions == "write"
     end
   end
 end

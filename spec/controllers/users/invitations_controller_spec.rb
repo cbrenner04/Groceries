@@ -89,15 +89,13 @@ RSpec.describe Users::InvitationsController, type: :controller do
             end.to_not change(UsersList, :count)
           end
 
-          it "redirects and gives correct alert" do
+          it "gives correct alert" do
             post :create, params: {
               user: {
                 email: other_user.email
               },
               list_id: list.id
             }
-            expect(response)
-              .to redirect_to new_list_users_list_path(list_id: list.id)
             expect(flash[:notice]).to be_present
             expect(flash[:notice])
               .to eq "List already shared with #{other_user.email}"
@@ -116,15 +114,13 @@ RSpec.describe Users::InvitationsController, type: :controller do
             end.to change(UsersList, :count).by(1)
           end
 
-          it "redirects and gives correct alert" do
+          it "gives correct alert" do
             post :create, params: {
               user: {
                 email: other_user.email
               },
               list_id: list.id
             }
-            expect(response)
-              .to redirect_to new_list_users_list_path(list_id: list.id)
             expect(flash[:notice]).to be_present
             expect(flash[:notice])
               .to eq "List has been shared with #{other_user.email}"
@@ -135,14 +131,29 @@ RSpec.describe Users::InvitationsController, type: :controller do
 
     context "when list_id param does not exist" do
       context "with valid params" do
-        it "creates a new user" do
-          expect do
+        context "when user does not already exist" do
+          it "creates a new user" do
+            expect do
+              post :create, params: {
+                user: {
+                  email: "foo@bar.com"
+                }
+              }
+            end.to change(User, :count).by 1
+          end
+        end
+
+        context "when user does already exist" do
+          it "redirects to root" do
+            user_email = "foo@bar.com"
+            User.create!(email: user_email)
             post :create, params: {
               user: {
-                email: "foo@bar.com"
+                email: user_email
               }
             }
-          end.to change(User, :count).by 1
+            expect(response).to redirect_to root_path
+          end
         end
       end
 

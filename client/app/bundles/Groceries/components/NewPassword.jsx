@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 
 export default class NewPassword extends Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -28,12 +34,8 @@ export default class NewPassword extends Component {
       email: this.state.email,
     };
     $.post('/users/password', { user }).done(() => {
-      // noop
-    }).fail((response) => {
-      const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      // devise returns 200 no matter what is entered. On bad emails we need to redirect to /users/sign_in
+      this.props.history.push('/users/sign_in');
     });
   }
 

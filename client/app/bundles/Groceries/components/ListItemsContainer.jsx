@@ -39,6 +39,7 @@ export default class ListItemsContainer extends Component {
       id: PropTypes.number.isRequired,
       email: PropTypes.string.isRequired,
     })),
+    permission: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -74,6 +75,7 @@ export default class ListItemsContainer extends Component {
           onItemDelete={this.handleDeletion}
           listType={this.props.listType}
           listUsers={this.props.listUsers}
+          permission={this.props.permission}
         />
         <br />
         <h2>{this.title()}</h2>
@@ -86,6 +88,7 @@ export default class ListItemsContainer extends Component {
           onItemRead={this.handleRead}
           onItemUnRead={this.handleUnRead}
           purchased
+          permission={this.props.permission}
         />
       </div>
     );

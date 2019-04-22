@@ -32,7 +32,7 @@ RSpec.describe UsersList do
   describe "#no_to_do_list_assignments?" do
     let(:user) { create :user }
     let(:other_user) { create :user }
-    let(:list) { create :to_do_list }
+    let(:list) { create :to_do_list, owner: user }
     let(:users_list) { create :users_list, user: user, list: list }
     let(:other_users_list) { create :users_list, user: other_user, list: list }
     let!(:to_do_list_item) do

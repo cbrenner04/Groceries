@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class GroceryListItemsController < ApplicationController
+class GroceryListItemsController < ListItemsController
   def create
     @item = GroceryListItem
             .create(item_params.merge!(grocery_list_id: params[:list_id]))

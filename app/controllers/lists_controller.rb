@@ -3,6 +3,9 @@
 # no doc
 # rubocop:disable Metrics/ClassLength
 class ListsController < ApplicationController
+  before_action :require_list_access, only: %i[show]
+  before_action :require_list_owner, only: %i[edit update destroy refresh_list]
+
   def index
     respond_to do |format|
       format.html
@@ -13,8 +16,8 @@ class ListsController < ApplicationController
   def create
     @list = build_new_list
     if @list.save
-      create_users_list(current_user, @list)
-      render json: @list
+      users_list = create_users_list(current_user, @list)
+      render json: create_response(users_list)
     else
       render json: @list.errors, status: :unprocessable_entity
     end
@@ -32,7 +35,12 @@ class ListsController < ApplicationController
     set_list
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: @list }
+      format.json do
+        render json: {
+          list: @list,
+          current_user_id: current_user&.id
+        }
+      end
     end
   end
 
@@ -67,26 +75,33 @@ class ListsController < ApplicationController
     params.require(:list).permit(:user, :name, :completed, :refreshed, :type)
   end
 
+  def require_list_access
+    list = List.find(params[:id])
+    users_list = UsersList.find_by(list: list, user: current_user)
+    return if users_list&.has_accepted
+    redirect_to lists_path
+  end
+
+  def require_list_owner
+    list = List.find(params[:id])
+    return if list.owner == current_user
+    redirect_to lists_path
+  end
+
   def accept_user_list(list)
-    UsersList
-      .find_by(list: list)
-      .update!(has_accepted: true, responded: true)
+    UsersList.find_by(list: list).update!(has_accepted: true)
   end
 
   def create_users_list(user, list)
-    UsersList.create!(
-      user: user,
-      list: list,
-      has_accepted: true,
-      responded: true
-    )
+    UsersList.create!(user: user, list: list, has_accepted: true)
   end
 
   def index_response
     {
       accepted_lists: List.accepted(current_user),
-      not_accepted_lists: List.not_accepted(current_user),
-      is_user_signed_in: user_signed_in?
+      pending_lists: List.pending(current_user),
+      is_user_signed_in: user_signed_in?,
+      current_user_id: current_user&.id
     }
   end
 
@@ -99,29 +114,42 @@ class ListsController < ApplicationController
     }
   end
 
+  def create_response(users_list)
+    # return object needs to be updated to include the users_list as this is
+    # what the client expects, similar to the index_response > accepted_lists
+    @list.attributes.merge!(
+      has_accepted: true,
+      user_id: current_user.id,
+      users_list_id: users_list.id
+    ).to_json
+  end
+
+  # rubocop:disable Metrics/MethodLength
   def build_new_list
-    case list_params[:type]
+    new_list_params = list_params.merge!(owner: current_user)
+    case new_list_params[:type]
     when "ToDoList"
-      ToDoList.new(list_params)
+      ToDoList.new(new_list_params)
     when "BookList"
-      BookList.new(list_params)
+      BookList.new(new_list_params)
     when "MusicList"
-      MusicList.new(list_params)
+      MusicList.new(new_list_params)
     else
-      GroceryList.new(list_params)
+      GroceryList.new(new_list_params)
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def create_new_list_from(old_list)
     case old_list.type
     when "ToDoList"
-      ToDoList.create!(name: old_list[:name])
+      ToDoList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     when "BookList"
-      BookList.create!(name: old_list[:name])
+      BookList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     when "MusicList"
-      MusicList.create!(name: old_list[:name])
+      MusicList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     else
-      GroceryList.create!(name: old_list[:name])
+      GroceryList.create!(name: old_list[:name], owner_id: old_list[:owner_id])
     end
   end
 

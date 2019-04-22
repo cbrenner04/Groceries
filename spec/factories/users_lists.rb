@@ -5,6 +5,5 @@ FactoryBot.define do
     association :user
     association :list
     has_accepted true
-    responded true
   end
 end
