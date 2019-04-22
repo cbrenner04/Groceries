@@ -96,18 +96,7 @@ export default class ListContainer extends Component {
           if (userInAccepted) {
             this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
           } else {
-            const userInPending = pending.find(pendingList => pendingList.user.id === this.state.userId);
-            if (userInPending) {
-              $.ajax({
-                url: `/lists/${this.state.list.id}/users_lists/${userInPending.users_list.id}`,
-                type: 'PATCH',
-                data: 'users_list%5Bhas_accepted%5D=true',
-              }).done(() => {
-                this.setState({ listUsers, permission: userInPending.users_list.permissions });
-              });
-            } else {
-              this.props.history.push('/lists');
-            }
+            this.props.history.push('/lists');
           }
         });
       });
