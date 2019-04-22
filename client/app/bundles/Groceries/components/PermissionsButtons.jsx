@@ -23,29 +23,29 @@ export default class PermissionsButtons extends Component {
     users: [],
   }
 
-  sharedUsers = () => this.props.users.map(({ user, users_list: { id, permissions } }) => {
-    if (user.id === this.props.userId) return '';
-    if (this.props.userIsOwner) {
-      return (
-        <button
-          key={id}
-          id={`${this.props.status}-user-${user.id}`}
-          className={'list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-            + 'btn btn-link'}
-          onClick={() => this.togglePermission(id, permissions, this.props.status)}
-        >
-          <span>{user.email}</span>
-          <span
-            id={`perm-${permissions}`}
-            className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}
-          >
-            {permissions}
-          </span>
-        </button>
-      );
-    }
-    return (<div key={id} id={`${this.props.status}-user-${user.id}`} className="list-group-item">{user.email}</div>);
-  });
+  toggleButton = (user, id, permissions) => (
+    <button
+      key={id}
+      id={`${this.props.status}-user-${user.id}`}
+      className={'list-group-item list-group-item-action d-flex justify-content-between align-items-center'
+        + 'btn btn-link'}
+      onClick={() => this.togglePermission(id, permissions, this.props.status)}
+    >
+      <span>{user.email}</span>
+      <span id={`perm-${permissions}`} className={`badge badge-${permissions === 'write' ? 'success' : 'primary'}`}>
+        {permissions}
+      </span>
+    </button>
+  );
+
+  userListItem = (user, id, permissions) => (
+    this.props.userIsOwner ? this.toggleButton(user, id, permissions) :
+    <div key={id} id={`${this.props.status}-user-${user.id}`} className="list-group-item">{user.email}</div>
+  );
+
+  sharedUsers = () => this.props.users.map(({ user, users_list: { id, permissions } }) => (
+    user.id === this.props.userId ? '' : this.userListItem(user, id, permissions)
+  ));
 
   togglePermission = (id, currentPermission, sharedState) => {
     const permissions = currentPermission === 'write' ? 'read' : 'write';

@@ -7,10 +7,6 @@ import ListTypeOptions from './ListTypeOptions';
 
 export default class ListEditForm extends Component {
   static propTypes = {
-    id: PropTypes.number,
-    listName: PropTypes.string,
-    completed: PropTypes.bool,
-    listType: PropTypes.string,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -22,20 +18,13 @@ export default class ListEditForm extends Component {
     }).isRequired,
   }
 
-  static defaultProps = {
-    id: 0,
-    listName: '',
-    completed: false,
-    listType: 'GroceryList',
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      id: props.id,
-      listName: props.listName,
-      completed: props.completed,
-      listType: props.listType,
+      id: 0,
+      listName: '',
+      completed: false,
+      listType: 'GroceryList',
       errors: '',
     };
   }
@@ -61,9 +50,6 @@ export default class ListEditForm extends Component {
     } else {
       this.props.history.push('/lists');
     }
-  }
-
-  getList = () => {
   }
 
   handleChange = (event) => {

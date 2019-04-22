@@ -47,10 +47,8 @@ export default class List extends Component {
       type: 'GET',
       url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
       dataType: 'JSON',
-    }).done((data) => {
-      this.setState({
-        currentUserPermissions: data.permissions,
-      });
+    }).done(({ permissions: currentUserPermissions }) => {
+      this.setState({ currentUserPermissions });
     });
   }
 
@@ -64,52 +62,51 @@ export default class List extends Component {
 
   handleReject = () => this.props.onListRejection(this.props.list);
 
-  notCompletedListButtons = () => {
-    if (this.props.userId !== this.props.list.owner_id) {
-      if (this.state.currentUserPermissions === 'write') {
-        return (
-          <div className="btn-group float-right" role="group">
-            <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
-              <i className="fa fa-users fa-2x text-primary" />
-            </Link>
-          </div>
-        );
-      }
-      return '';
-    }
-    return (
-      <div className="btn-group float-right" role="group">
-        <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-check-square-o fa-2x text-success" />
-        </button>
-        <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-users fa-2x text-primary" />
-        </Link>
-        <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-pencil-square-o fa-2x text-warning" />
-        </Link>
-        <button onClick={this.handleDelete} className="btn btn-link p-0">
-          <i className="fa fa-trash fa-2x text-danger" />
-        </button>
-      </div>
-    );
-  }
+  incompleteListOwnerButtons = () => (
+    <div className="btn-group float-right" role="group">
+      <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
+        <i className="fa fa-check-square-o fa-2x text-success" />
+      </button>
+      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
+        <i className="fa fa-users fa-2x text-primary" />
+      </Link>
+      <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
+        <i className="fa fa-pencil-square-o fa-2x text-warning" />
+      </Link>
+      <button onClick={this.handleDelete} className="btn btn-link p-0">
+        <i className="fa fa-trash fa-2x text-danger" />
+      </button>
+    </div>
+  );
 
-  completedListButtons = () => {
-    if (this.props.userId !== this.props.list.owner_id) return '';
-    return (
-      <div className="btn-group float-right" role="group">
-        <button onClick={this.handleRefresh} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-refresh fa-2x text-primary" />
-        </button>
-        <button onClick={this.handleDelete} className="btn btn-link p-0">
-          <i className="fa fa-trash fa-2x text-danger" />
-        </button>
-      </div>
-    );
-  }
+  incompleteListWriterButtons = () => (
+    <div className="btn-group float-right" role="group">
+      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
+        <i className="fa fa-users fa-2x text-primary" />
+      </Link>
+    </div>
+  );
 
-  unacceptedListButtons = () => (
+  nonOwnerListButtons = () => (this.state.currentUserPermissions === 'write' ? this.incompleteListWriterButtons() : '');
+
+  incompleteListButtons = () => (
+    this.props.userId === this.props.list.owner_id ? this.incompleteListOwnerButtons() : this.nonOwnerListButtons()
+  );
+
+  completeListOwnerButtons = () => (
+    <div className="btn-group float-right" role="group">
+      <button onClick={this.handleRefresh} className="btn btn-link p-0 mr-3">
+        <i className="fa fa-refresh fa-2x text-primary" />
+      </button>
+      <button onClick={this.handleDelete} className="btn btn-link p-0">
+        <i className="fa fa-trash fa-2x text-danger" />
+      </button>
+    </div>
+  );
+
+  completedListButtons = () => (this.props.userId === this.props.list.owner_id ? this.completeListOwnerButtons() : '');
+
+  pendingListButtons = () => (
     <div className="btn-group float-right" role="group">
       <button onClick={this.handleAccept} className="btn btn-link p-0 mr-3">
         <i className="fa fa-check-square-o fa-2x text-success" />
@@ -120,54 +117,33 @@ export default class List extends Component {
     </div>
   );
 
-  acceptedListButtons = () => {
-    if (this.props.list.completed) return this.completedListButtons();
-    return this.notCompletedListButtons();
-  };
+  acceptedListButtons = () => (this.props.list.completed ? this.completedListButtons() : this.incompleteListButtons());
 
-  testClass = () => {
-    if (this.props.accepted) {
-      return this.props.list.completed ? 'completed-list' : 'non-completed-list';
-    }
-    return 'pending-list';
-  }
+  acceptedListTestClass = () => (this.props.list.completed ? 'completed-list' : 'non-completed-list');
 
-  acceptedListClass = () => (this.props.accepted ? 'accepted-list' : 'pending-list');
+  listTitle = () => (
+    <h5 className="mb-1">
+      <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
+      {this.props.list.name}
+    </h5>
+  );
 
-  conditionalLink = () => {
-    if (this.props.accepted) {
-      return (
-        <Link to={`/lists/${this.props.list.id}`} className="router-link">
-          <h5 className="mb-1">
-            <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
-            {this.props.list.name}
-          </h5>
-        </Link>
-      );
-    }
-    return (
-      <h5 className="mb-1">
-        <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
-        {this.props.list.name}
-      </h5>
-    );
-  }
-
-  conditionalButtons = () => {
-    if (this.props.accepted) return this.acceptedListButtons();
-    return this.unacceptedListButtons();
-  }
+  acceptedListLink = () => (
+    <Link to={`/lists/${this.props.list.id}`} className="router-link">
+      {this.listTitle()}
+    </Link>
+  );
 
   render() {
     return (
       <div
-        className={`list-group-item ${this.acceptedListClass()}`}
+        className={`list-group-item ${this.props.accepted ? 'accepted-list' : 'pending-list'}`}
         style={{ display: 'block' }}
-        data-test-class={this.testClass()}
+        data-test-class={this.props.accepted ? this.acceptedListTestClass() : 'pending-list'}
       >
         <div className="row">
           <div className="col-md-6 pt-1">
-            { this.conditionalLink() }
+            {this.props.accepted ? this.acceptedListLink() : this.listTitle()}
           </div>
           <div className="col-md-4 pt-1">
             <small className="text-muted">
@@ -175,7 +151,7 @@ export default class List extends Component {
             </small>
           </div>
           <div className="col-md-2">
-            { this.conditionalButtons() }
+            {this.props.accepted ? this.acceptedListButtons() : this.pendingListButtons()}
           </div>
         </div>
       </div>
