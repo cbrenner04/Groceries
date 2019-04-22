@@ -146,16 +146,59 @@ RSpec.describe UsersListsController do
     describe "with read access" do
       before { users_list.update!(permissions: "read") }
 
-      it "redirects to lists_path" do
-        patch :update, params: {
-          list_id: list.id,
-          id: users_list.id,
-          users_list: {
-            has_accepted: true
+      context "users_list exists" do
+        it "accepts list" do
+          patch :update, params: {
+            list_id: list.id,
+            id: users_list.id,
+            users_list: {
+              has_accepted: true
+            }
           }
-        }
+          users_list = JSON.parse(response.body)
+          expect(users_list["has_accepted"]).to eq true
+        end
 
-        expect(response).to redirect_to lists_path
+        it "rejects list" do
+          patch :update, params: {
+            list_id: list.id,
+            id: users_list.id,
+            users_list: {
+              has_accepted: false
+            }
+          }
+          users_list = JSON.parse(response.body)
+          expect(users_list["has_accepted"]).to eq false
+        end
+
+        describe "permissions" do
+          context "with good data" do
+            it "updates permissions" do
+              patch :update, params: {
+                list_id: list.id,
+                id: users_list.id,
+                users_list: {
+                  permissions: "read"
+                }
+              }
+              users_list = JSON.parse(response.body)
+              expect(users_list["permissions"]).to eq "read"
+            end
+          end
+
+          context "with bad data" do
+            it "returns 422" do
+              patch :update, params: {
+                list_id: list.id,
+                id: users_list.id,
+                users_list: {
+                  permissions: "foo"
+                }
+              }
+              expect(response.status).to eq 422
+            end
+          end
+        end
       end
     end
 

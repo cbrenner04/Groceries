@@ -78,7 +78,7 @@ class ListsController < ApplicationController
   def require_list_access
     list = List.find(params[:id])
     users_list = UsersList.find_by(list: list, user: current_user)
-    return if users_list
+    return if users_list&.has_accepted
     redirect_to lists_path
   end
 
@@ -99,7 +99,7 @@ class ListsController < ApplicationController
   def index_response
     {
       accepted_lists: List.accepted(current_user),
-      not_accepted_lists: List.not_accepted(current_user),
+      pending_lists: List.pending(current_user),
       is_user_signed_in: user_signed_in?,
       current_user_id: current_user&.id
     }

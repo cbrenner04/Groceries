@@ -1,44 +1,17 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
-import PropTypes from 'prop-types';
 
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
 
 export default class ListsContainer extends Component {
-  static propTypes = {
-    accepted_lists: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      created_at: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired,
-      users_list_id: PropTypes.number,
-      owner_id: PropTypes.number,
-    }).isRequired),
-    not_accepted_lists: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      created_at: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired,
-      users_list_id: PropTypes.number,
-      owner_id: PropTypes.number,
-    }).isRequired),
-  }
-
-  static defaultProps = {
-    accepted_lists: [],
-    not_accepted_lists: [],
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       userId: 0,
-      acceptedLists: props.accepted_lists,
-      notAcceptedLists: props.not_accepted_lists,
+      acceptedLists: [],
+      pendingLists: [],
       errors: '',
       success: '',
       completedLists: [],
@@ -54,13 +27,13 @@ export default class ListsContainer extends Component {
     }).done((data) => {
       const userId = data.current_user_id;
       const acceptedLists = data.accepted_lists;
-      const notAcceptedLists = data.not_accepted_lists;
+      const pendingLists = data.pending_lists;
       const completedLists = acceptedLists.filter(list => list.completed && !list.refreshed);
       const nonCompletedLists = acceptedLists.filter(list => !list.completed);
       this.setState({
         userId,
         acceptedLists,
-        notAcceptedLists,
+        pendingLists,
         completedLists,
         nonCompletedLists,
       });
@@ -165,8 +138,8 @@ export default class ListsContainer extends Component {
   }
 
   removeListFromUnaccepted = (listId) => {
-    const notAcceptedLists = this.state.notAcceptedLists.filter(list => list.id !== listId);
-    this.setState({ notAcceptedLists });
+    const pendingLists = this.state.pendingLists.filter(list => list.id !== listId);
+    this.setState({ pendingLists });
   }
 
   handleRefresh = (list) => {
@@ -191,7 +164,7 @@ export default class ListsContainer extends Component {
           userId={this.state.userId}
           onListDelete={this.handleDelete}
           onListCompletion={this.handleCompletion}
-          unacceptedLists={this.state.notAcceptedLists}
+          pendingLists={this.state.pendingLists}
           completedLists={this.state.completedLists}
           nonCompletedLists={this.state.nonCompletedLists}
           onListRefresh={this.handleRefresh}

@@ -2,8 +2,8 @@
 
 # no doc
 class UsersListsController < ApplicationController
-  before_action :require_list_access, only: %i[index]
-  before_action :require_write_access, only: %i[show create update]
+  before_action :require_list_access, only: %i[index update]
+  before_action :require_write_access, only: %i[show create]
 
   def index
     respond_to do |format|

@@ -25,8 +25,8 @@ RSpec.describe ListsController do
         expect(response).to be_successful
         expect(response_body["accepted_lists"].count)
           .to eq List.accepted(user).count
-        expect(response_body["not_accepted_lists"].count)
-          .to eq List.not_accepted(user).count
+        expect(response_body["pending_lists"].count)
+          .to eq List.pending(user).count
         expect(response_body["is_user_signed_in"]).to eq true
         expect(response_body["current_user_id"]).to eq user.id
       end
@@ -65,188 +65,214 @@ RSpec.describe ListsController do
     end
 
     context "when a user has been invited" do
-      describe "format HTML" do
-        it "renders index" do
-          get :show, params: {
-            id: list.id
-          }
-          expect(response).to render_template :index
+      context "when invitee has not accepted" do
+        before do
+          list.users_lists.find_by(user: user).update!(has_accepted: nil)
+        end
+
+        describe "format HTML" do
+          it "redirects to lists_path" do
+            get :show, params: {
+              id: list.id
+            }
+            expect(response).to redirect_to lists_path
+          end
+        end
+
+        describe "format JSON" do
+          it "redirects to lists_path" do
+            get :show, params: {
+              id: list.id
+            }, format: :json
+            expect(response).to redirect_to lists_path
+          end
         end
       end
 
-      describe "format JSON" do
-        describe "when BookList" do
-          let(:list) { BookList.create!(name: "foo", owner: user) }
-          let!(:users_list) { create :users_list, user: user, list: list }
-
-          it "responds with success and correct payload" do
-            BookListItem.create!(
-              user_id: user.id,
-              book_list_id: list.id,
-              title: "foo",
-              purchased: false
-            )
-            BookListItem.create!(
-              user_id: user.id,
-              book_list_id: list.id,
-              title: "foobar",
-              purchased: true
-            )
+      context "when invitee has accepted" do
+        describe "format HTML" do
+          it "renders index" do
             get :show, params: {
               id: list.id
-            }, format: :json
-
-            response_body = JSON.parse(response.body)
-            expect(response).to be_successful
-            expect(response_body["current_user_id"]).to eq user.id
-            expect(response_body["list"]).to include(
-              "id" => list.id,
-              "name" => list.name
-            )
-            expect(response_body["not_purchased_items"].first["id"]).to eq(
-              BookListItem.where(book_list: list)
-              .not_archived.ordered.not_purchased.first.id
-            )
-            expect(response_body["purchased_items"].first["id"]).to eq(
-              BookListItem.where(book_list: list)
-              .not_archived.ordered.purchased.first.id
-            )
+            }
+            expect(response).to render_template :index
           end
         end
 
-        describe "when GroceryList" do
-          let(:list) { GroceryList.create!(name: "foo", owner: user) }
-          let!(:users_list) { create :users_list, user: user, list: list }
+        describe "format JSON" do
+          describe "when BookList" do
+            let(:list) { BookList.create!(name: "foo", owner: user) }
+            let!(:users_list) { create :users_list, user: user, list: list }
 
-          it "responds with success and correct payload" do
-            GroceryListItem.create!(
-              user_id: user.id,
-              grocery_list_id: list.id,
-              product: "foo",
-              quantity: 1,
-              purchased: false
-            )
-            GroceryListItem.create!(
-              user_id: user.id,
-              grocery_list_id: list.id,
-              product: "foobar",
-              quantity: 1,
-              purchased: true,
-              refreshed: false
-            )
-            GroceryListItem.create!(
-              user_id: user.id,
-              grocery_list_id: list.id,
-              product: "foobar",
-              quantity: 1,
-              purchased: true,
-              refreshed: true
-            )
-            get :show, params: {
-              id: list.id
-            }, format: :json
+            it "responds with success and correct payload" do
+              BookListItem.create!(
+                user_id: user.id,
+                book_list_id: list.id,
+                title: "foo",
+                purchased: false
+              )
+              BookListItem.create!(
+                user_id: user.id,
+                book_list_id: list.id,
+                title: "foobar",
+                purchased: true
+              )
+              get :show, params: {
+                id: list.id
+              }, format: :json
 
-            response_body = JSON.parse(response.body)
-            expect(response).to be_successful
-            expect(response_body["current_user_id"]).to eq user.id
-            expect(response_body["list"]).to include(
-              "id" => list.id,
-              "name" => list.name
-            )
-            expect(response_body["not_purchased_items"].first["id"]).to eq(
-              GroceryListItem.where(grocery_list: list)
-              .not_archived.ordered.not_purchased.first.id
-            )
-            expect(response_body["purchased_items"].first["id"]).to eq(
-              GroceryListItem.where(grocery_list: list)
-              .not_archived.ordered.purchased.not_refreshed.first.id
-            )
+              response_body = JSON.parse(response.body)
+              expect(response).to be_successful
+              expect(response_body["current_user_id"]).to eq user.id
+              expect(response_body["list"]).to include(
+                "id" => list.id,
+                "name" => list.name
+              )
+              expect(response_body["not_purchased_items"].first["id"]).to eq(
+                BookListItem.where(book_list: list)
+                .not_archived.ordered.not_purchased.first.id
+              )
+              expect(response_body["purchased_items"].first["id"]).to eq(
+                BookListItem.where(book_list: list)
+                .not_archived.ordered.purchased.first.id
+              )
+            end
           end
-        end
 
-        describe "when MusicList" do
-          let(:list) { MusicList.create!(name: "foo", owner: user) }
-          let!(:users_list) { create :users_list, user: user, list: list }
+          describe "when GroceryList" do
+            let(:list) { GroceryList.create!(name: "foo", owner: user) }
+            let!(:users_list) { create :users_list, user: user, list: list }
 
-          it "responds with success and correct payload" do
-            MusicListItem.create!(
-              user_id: user.id,
-              music_list_id: list.id,
-              title: "foo",
-              purchased: false
-            )
-            MusicListItem.create!(
-              user_id: user.id,
-              music_list_id: list.id,
-              title: "foobar",
-              purchased: true
-            )
-            get :show, params: {
-              id: list.id
-            }, format: :json
+            it "responds with success and correct payload" do
+              GroceryListItem.create!(
+                user_id: user.id,
+                grocery_list_id: list.id,
+                product: "foo",
+                quantity: 1,
+                purchased: false
+              )
+              GroceryListItem.create!(
+                user_id: user.id,
+                grocery_list_id: list.id,
+                product: "foobar",
+                quantity: 1,
+                purchased: true,
+                refreshed: false
+              )
+              GroceryListItem.create!(
+                user_id: user.id,
+                grocery_list_id: list.id,
+                product: "foobar",
+                quantity: 1,
+                purchased: true,
+                refreshed: true
+              )
+              get :show, params: {
+                id: list.id
+              }, format: :json
 
-            response_body = JSON.parse(response.body)
-            expect(response).to be_successful
-            expect(response_body["current_user_id"]).to eq user.id
-            expect(response_body["list"]).to include(
-              "id" => list.id,
-              "name" => list.name
-            )
-            expect(response_body["not_purchased_items"].first["id"]).to eq(
-              MusicListItem.where(music_list: list)
-              .not_archived.ordered.not_purchased.first.id
-            )
-            expect(response_body["purchased_items"].first["id"]).to eq(
-              MusicListItem.where(music_list: list)
-              .not_archived.ordered.purchased.first.id
-            )
+              response_body = JSON.parse(response.body)
+              expect(response).to be_successful
+              expect(response_body["current_user_id"]).to eq user.id
+              expect(response_body["list"]).to include(
+                "id" => list.id,
+                "name" => list.name
+              )
+              expect(response_body["not_purchased_items"].first["id"]).to eq(
+                GroceryListItem.where(grocery_list: list)
+                .not_archived.ordered.not_purchased.first.id
+              )
+              expect(response_body["purchased_items"].first["id"]).to eq(
+                GroceryListItem.where(grocery_list: list)
+                .not_archived.ordered.purchased.not_refreshed.first.id
+              )
+            end
           end
-        end
 
-        describe "when ToDoList" do
-          let(:list) { ToDoList.create!(name: "foo", owner: user) }
-          let!(:users_list) { create :users_list, user: user, list: list }
+          describe "when MusicList" do
+            let(:list) { MusicList.create!(name: "foo", owner: user) }
+            let!(:users_list) { create :users_list, user: user, list: list }
 
-          it "responds with success and correct payload" do
-            ToDoListItem.create!(
-              user_id: user.id,
-              to_do_list_id: list.id,
-              task: "foo",
-              completed: false
-            )
-            ToDoListItem.create!(
-              user_id: user.id,
-              to_do_list_id: list.id,
-              task: "foobar",
-              completed: true,
-              refreshed: false
-            )
-            ToDoListItem.create!(
-              user_id: user.id,
-              to_do_list_id: list.id,
-              task: "foobar",
-              completed: true,
-              refreshed: true
-            )
-            get :show, params: {
-              id: list.id
-            }, format: :json
+            it "responds with success and correct payload" do
+              MusicListItem.create!(
+                user_id: user.id,
+                music_list_id: list.id,
+                title: "foo",
+                purchased: false
+              )
+              MusicListItem.create!(
+                user_id: user.id,
+                music_list_id: list.id,
+                title: "foobar",
+                purchased: true
+              )
+              get :show, params: {
+                id: list.id
+              }, format: :json
 
-            response_body = JSON.parse(response.body)
-            expect(response).to be_successful
-            expect(response_body["current_user_id"]).to eq user.id
-            expect(response_body["list"]).to include(
-              "id" => list.id,
-              "name" => list.name
-            )
-            expect(response_body["not_purchased_items"].first["id"]).to eq(
-              ToDoListItem.where(to_do_list: list)
-              .not_archived.ordered.not_completed.first.id
-            )
-            expect(response_body["purchased_items"].first["id"]).to eq(
-              ToDoListItem.where(to_do_list: list)
-              .not_archived.ordered.completed.not_refreshed.first.id
-            )
+              response_body = JSON.parse(response.body)
+              expect(response).to be_successful
+              expect(response_body["current_user_id"]).to eq user.id
+              expect(response_body["list"]).to include(
+                "id" => list.id,
+                "name" => list.name
+              )
+              expect(response_body["not_purchased_items"].first["id"]).to eq(
+                MusicListItem.where(music_list: list)
+                .not_archived.ordered.not_purchased.first.id
+              )
+              expect(response_body["purchased_items"].first["id"]).to eq(
+                MusicListItem.where(music_list: list)
+                .not_archived.ordered.purchased.first.id
+              )
+            end
+          end
+
+          describe "when ToDoList" do
+            let(:list) { ToDoList.create!(name: "foo", owner: user) }
+            let!(:users_list) { create :users_list, user: user, list: list }
+
+            it "responds with success and correct payload" do
+              ToDoListItem.create!(
+                user_id: user.id,
+                to_do_list_id: list.id,
+                task: "foo",
+                completed: false
+              )
+              ToDoListItem.create!(
+                user_id: user.id,
+                to_do_list_id: list.id,
+                task: "foobar",
+                completed: true,
+                refreshed: false
+              )
+              ToDoListItem.create!(
+                user_id: user.id,
+                to_do_list_id: list.id,
+                task: "foobar",
+                completed: true,
+                refreshed: true
+              )
+              get :show, params: {
+                id: list.id
+              }, format: :json
+
+              response_body = JSON.parse(response.body)
+              expect(response).to be_successful
+              expect(response_body["current_user_id"]).to eq user.id
+              expect(response_body["list"]).to include(
+                "id" => list.id,
+                "name" => list.name
+              )
+              expect(response_body["not_purchased_items"].first["id"]).to eq(
+                ToDoListItem.where(to_do_list: list)
+                .not_archived.ordered.not_completed.first.id
+              )
+              expect(response_body["purchased_items"].first["id"]).to eq(
+                ToDoListItem.where(to_do_list: list)
+                .not_archived.ordered.completed.not_refreshed.first.id
+              )
+            end
           end
         end
       end

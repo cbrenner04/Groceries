@@ -125,9 +125,33 @@ export default class List extends Component {
     return this.notCompletedListButtons();
   };
 
-  testClass = () => (this.props.list.completed ? 'completed-list' : 'non-completed-list');
+  testClass = () => {
+    if (this.props.accepted) {
+      return this.props.list.completed ? 'completed-list' : 'non-completed-list';
+    }
+    return 'pending-list';
+  }
 
-  acceptedListClass = () => (this.props.accepted ? 'accepted-list' : '');
+  acceptedListClass = () => (this.props.accepted ? 'accepted-list' : 'pending-list');
+
+  conditionalLink = () => {
+    if (this.props.accepted) {
+      return (
+        <Link to={`/lists/${this.props.list.id}`} className="router-link">
+          <h5 className="mb-1">
+            <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
+            {this.props.list.name}
+          </h5>
+        </Link>
+      );
+    }
+    return (
+      <h5 className="mb-1">
+        <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
+        {this.props.list.name}
+      </h5>
+    );
+  }
 
   conditionalButtons = () => {
     if (this.props.accepted) return this.acceptedListButtons();
@@ -143,12 +167,7 @@ export default class List extends Component {
       >
         <div className="row">
           <div className="col-md-6 pt-1">
-            <Link to={`/lists/${this.props.list.id}`} className="router-link">
-              <h5 className="mb-1">
-                <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
-                {this.props.list.name}
-              </h5>
-            </Link>
+            { this.conditionalLink() }
           </div>
           <div className="col-md-4 pt-1">
             <small className="text-muted">

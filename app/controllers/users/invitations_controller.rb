@@ -13,11 +13,14 @@ module Users
       render "lists/index"
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def create
       # do nothing if user already exists and this isn't related to list sharing
       return redirect_to root_path if invited_user && !list_id
       # if this isn't related to list sharing, just do regular invitation
       return super unless list_id
+      # if sharing a list, current user must have write permissions
+      return unless current_user_has_write_access
       # if the user exists, just create the users list
       if invited_user
         share_list(invited_user)
@@ -26,6 +29,7 @@ module Users
         super { |user| create_users_list(user) if user.valid? }
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def edit
       render "lists/index"
@@ -57,6 +61,12 @@ module Users
     def create_users_list(user)
       UsersList.create!(user_id: user.id, list_id: list_id)
       SharedListNotification.send_notification_for(current_user, user.id)
+    end
+
+    def current_user_has_write_access
+      list = List.find(params[:list_id])
+      users_list = UsersList.find_by(list: list, user: current_user)
+      users_list&.permissions == "write"
     end
   end
 end
