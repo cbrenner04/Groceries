@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class ToDoListItemsController < ApplicationController
-  before_action :require_list_access
-
+class ToDoListItemsController < ListItemsController
   def create
     @item = ToDoListItem
             .create(item_params.merge!(to_do_list_id: params[:list_id]))
@@ -46,12 +44,5 @@ class ToDoListItemsController < ApplicationController
     params.require(:to_do_list_item).permit(
       :user_id, :list_id, :task, :assignee_id, :due_by, :completed, :refreshed
     )
-  end
-
-  def require_list_access
-    list = List.find(params[:list_id])
-    users_list = UsersList.find_by(list: list, user: current_user)
-    return if users_list&.permissions == "write"
-    redirect_to lists_path
   end
 end

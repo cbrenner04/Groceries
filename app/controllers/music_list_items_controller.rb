@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class MusicListItemsController < ApplicationController
-  before_action :require_list_access
-
+class MusicListItemsController < ListItemsController
   def create
     @item = MusicListItem
             .create(item_params.merge!(music_list_id: params[:list_id]))
@@ -46,12 +44,5 @@ class MusicListItemsController < ApplicationController
     params
       .require(:music_list_item)
       .permit(:user_id, :list_id, :title, :artist, :album, :purchased)
-  end
-
-  def require_list_access
-    list = List.find(params[:list_id])
-    users_list = UsersList.find_by(list: list, user: current_user)
-    return if users_list&.permissions == "write"
-    redirect_to lists_path
   end
 end
