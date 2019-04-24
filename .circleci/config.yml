@@ -59,6 +59,3 @@ jobs:
       - run:
           name: lint frontend
           command: cd client && yarn lint
-      - run:
-          name: frontend dependency audit
-          command: npx snyk test
