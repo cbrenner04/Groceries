@@ -21,6 +21,7 @@ module Users
       return super unless list_id
       # if sharing a list, current user must have write permissions
       return unless current_user_has_write_access
+
       # if the user exists, just create the users list
       if invited_user
         share_list(invited_user)

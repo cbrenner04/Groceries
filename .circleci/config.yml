@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
+          BUNDLER_VERSION: 2.0.2
           BUNDLE_PATH: vendor/bundle
           PGHOST: 127.0.0.1
           PGUSER: Groceries
@@ -22,7 +23,10 @@ jobs:
           - v2-ruby-dependencies-
       - run:
           name: install ruby dependencies
-          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+          command: |
+            gem update --system
+            gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
       - save_cache:
           key: v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
@@ -57,5 +61,8 @@ jobs:
           name: bundle audit
           command: bundle exec bundle audit check --update
       - run:
-          name: lint frontend
+          name: lint client
           command: cd client && yarn lint
+      - run:
+          name: test client
+          command: cd client && yarn test

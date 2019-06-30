@@ -57,6 +57,7 @@ class UsersListsController < ApplicationController
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list
+
     redirect_to lists_path
   end
 
@@ -64,6 +65,7 @@ class UsersListsController < ApplicationController
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list&.permissions == "write"
+
     redirect_to lists_path
   end
 
