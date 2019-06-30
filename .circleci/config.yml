@@ -23,10 +23,7 @@ jobs:
           - v2-ruby-dependencies-
       - run:
           name: install ruby dependencies
-          command: |
-            gem update --system
-            gem install bundler
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
       - save_cache:
           key: v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
@@ -61,5 +58,8 @@ jobs:
           name: bundle audit
           command: bundle exec bundle audit check --update
       - run:
-          name: lint frontend
+          name: lint client
           command: cd client && yarn lint
+      - run:
+          name: test client
+          command: cd client && yarn test
