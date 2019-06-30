@@ -13,7 +13,7 @@ gem "devise", "~> 4.4", ">= 4.6.1"
 gem "devise_invitable", "~> 1.7", ">= 1.7.4"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.4"
 gem "jbuilder", "~> 2.7"
-gem "jquery-rails"
+gem "jquery-rails", ">= 4.3.4"
 # error bundling on heroku fixed adding line below
 gem "libv8", "~> 5.3", ">= 5.3.332.38.5"
 gem "mini_racer", platforms: :ruby

@@ -129,7 +129,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jquery-rails (4.3.3)
+    jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -179,7 +179,7 @@ GEM
     powerpack (0.1.1)
     public_suffix (3.0.2)
     puma (3.11.4)
-    rack (2.0.6)
+    rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.2.1)
@@ -360,7 +360,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7, >= 4.7.0.4)
   informant-rails (~> 1.1)
   jbuilder (~> 2.7)
-  jquery-rails
+  jquery-rails (>= 4.3.4)
   launchy (~> 2.4, >= 2.4.3)
   libv8 (~> 5.3, >= 5.3.332.38.5)
   listen (~> 3.1, >= 3.1.5)
@@ -392,4 +392,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.2
+   1.17.3
