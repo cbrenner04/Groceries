@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :book_list do
     sequence(:name) { |n| "MyString#{n}" }
     association :owner, factory: :user
-    type "BookList"
+    type { "BookList" }
   end
 end

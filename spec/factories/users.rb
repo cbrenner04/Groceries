@@ -3,12 +3,12 @@
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "foo#{n}@bar.com" }
-    password "foobar!"
-    password_confirmation "foobar!"
+    password { "foobar!" }
+    password_confirmation { "foobar!" }
 
     factory :user_with_lists do
       transient do
-        lists_count 5
+        lists_count { 5 }
       end
 
       after(:create) do |user, evaluator|

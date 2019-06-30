@@ -48,7 +48,8 @@ group :development, :test do
   gem "launchy", "~> 2.4", ">= 2.4.3"
   gem "poltergeist", "~> 1.18", ">= 1.18.1"
   gem "rspec-rails", "~> 3.7", ">= 3.7.2"
-  gem "rubocop", "~> 0.56.0", require: false
+  gem "rubocop", "~> 0.60.0", require: false
+  gem "rubocop-rspec", "~> 1.33"
   gem "simplecov", "~> 0.16.1"
 end
 
