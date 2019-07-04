@@ -12,7 +12,8 @@
     "lint": "./node_modules/.bin/eslint eslint --ext .jsx,.js ./app/",
     "test": "snyk test",
     "snyk-protect": "snyk protect",
-    "prepare": "yarn run snyk-protect"
+    "prepare": "yarn run snyk-protect",
+    "prepublish": "npm run snyk-protect"
   },
   "cacheDirectories": [
     "node_modules",
@@ -41,7 +42,7 @@
     "webpack": "^4.10.2",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3",
-    "snyk": "^1.123.0"
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
