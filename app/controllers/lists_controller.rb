@@ -171,7 +171,7 @@ class ListsController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   def create_to_do_list_items(old_list, new_list)
     filtered_list = list_items(old_list).reject do |item|
-      !!(item.refreshed || item.archived_at)
+      item.refreshed || item.archived_at.present?
     end
     filtered_list.each do |item|
       ToDoListItem.create!(
@@ -186,7 +186,7 @@ class ListsController < ApplicationController
 
   def create_book_list_items(old_list, new_list)
     filtered_list = list_items(old_list).reject do |item|
-      !!item.archived_at
+      item.archived_at.present?
     end
     filtered_list.each do |item|
       BookListItem.create!(
@@ -200,7 +200,7 @@ class ListsController < ApplicationController
 
   def create_music_list_items(old_list, new_list)
     filtered_list = list_items(old_list).reject do |item|
-      !!item.archived_at
+      item.archived_at.present?
     end
     filtered_list.each do |item|
       MusicListItem.create!(
@@ -215,7 +215,7 @@ class ListsController < ApplicationController
 
   def create_grocery_list_items(old_list, new_list)
     filtered_list = list_items(old_list).reject do |item|
-      !!(item.refreshed || item.archived_at)
+      item.refreshed || item.archived_at.present?
     end
     filtered_list.each do |item|
       GroceryListItem.create!(
