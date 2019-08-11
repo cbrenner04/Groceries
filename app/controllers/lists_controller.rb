@@ -168,8 +168,12 @@ class ListsController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def create_to_do_list_items(old_list, new_list)
-    list_items(old_list).each do |item|
+    filtered_list = list_items(old_list).reject do |item|
+      item.refreshed || item.archived_at.present?
+    end
+    filtered_list.each do |item|
       ToDoListItem.create!(
         user: current_user,
         to_do_list: new_list,
@@ -181,7 +185,10 @@ class ListsController < ApplicationController
   end
 
   def create_book_list_items(old_list, new_list)
-    list_items(old_list).each do |item|
+    filtered_list = list_items(old_list).reject do |item|
+      item.archived_at.present?
+    end
+    filtered_list.each do |item|
       BookListItem.create!(
         user: current_user,
         book_list: new_list,
@@ -192,7 +199,10 @@ class ListsController < ApplicationController
   end
 
   def create_music_list_items(old_list, new_list)
-    list_items(old_list).each do |item|
+    filtered_list = list_items(old_list).reject do |item|
+      item.archived_at.present?
+    end
+    filtered_list.each do |item|
       MusicListItem.create!(
         user: current_user,
         music_list: new_list,
@@ -204,7 +214,10 @@ class ListsController < ApplicationController
   end
 
   def create_grocery_list_items(old_list, new_list)
-    list_items(old_list).each do |item|
+    filtered_list = list_items(old_list).reject do |item|
+      item.refreshed || item.archived_at.present?
+    end
+    filtered_list.each do |item|
       GroceryListItem.create!(
         user: current_user,
         grocery_list: new_list,
@@ -213,6 +226,7 @@ class ListsController < ApplicationController
       )
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def list_items(list)
     case list.type
