@@ -9,7 +9,7 @@ end
 
 gem "bootstrap", "~> 4.3", ">= 4.3.1"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
-gem "devise", "~> 4.6", ">= 4.6.2"
+gem "devise", "~> 4.7", ">= 4.7.1"
 gem "devise_invitable", "~> 1.7", ">= 1.7.5"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.5"
 gem "jbuilder", "~> 2.7"
