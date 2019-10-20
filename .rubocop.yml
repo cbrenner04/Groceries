@@ -4,6 +4,7 @@ AllCops:
     - config/**/*
     - db/**/*
     - vendor/**/*
+    - client/**/*
   TargetRubyVersion: 2.3
   DisplayCopNames: true
 
