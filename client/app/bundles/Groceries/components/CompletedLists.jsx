@@ -23,6 +23,29 @@ export default class CompletedLists extends Component {
       });
     });
   }
+
+  handleDelete = (listId) => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure?')) {
+      $.ajax({
+        url: `/lists/${listId}`,
+        type: 'DELETE',
+        success: () => this.removeList(listId),
+      });
+    }
+  }
+
+  handleRefresh = (list) => {
+    $.ajax({
+      url: `/lists/${list.id}/refresh_list`,
+      type: 'POST',
+      success: () => {
+        const completedLists = this.state.completedLists.filter(compList => compList.id !== list.id);
+        this.setState({ completedLists });
+      },
+    });
+  }
+
   render() {
     return (
       <div>
@@ -36,9 +59,9 @@ export default class CompletedLists extends Component {
                 userId={list.user_id}
                 list={list}
                 key={list.id}
-                onListDeletion={this.onDeleteOfList}
+                onListDeletion={this.handleDelete}
                 completed={list.completed}
-                onListRefresh={this.onRefreshOfList}
+                onListRefresh={this.handleRefresh}
                 accepted
               />
             ))
