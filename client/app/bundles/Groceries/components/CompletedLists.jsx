@@ -33,6 +33,7 @@ export default class CompletedLists extends Component {
           {
             this.state.completedLists.map(list => (
               <List
+                userId={list.user_id}
                 list={list}
                 key={list.id}
                 onListDeletion={this.onDeleteOfList}
