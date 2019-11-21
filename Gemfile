@@ -43,7 +43,7 @@ end
 group :development, :test do
   gem "bundler-audit", "~> 0.6.0"
   gem "byebug", platform: :mri
-  gem "capybara", "~> 3.25", ">= 3.25.0"
+  gem "capybara", "~> 3.28", ">= 3.28.0"
   gem "database_cleaner", "~> 1.7"
   gem "launchy", "~> 2.4", ">= 2.4.3"
   gem "poltergeist", "~> 1.18", ">= 1.18.1"
