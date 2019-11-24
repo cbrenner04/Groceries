@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
+# TODO: This needs a service object
 # rubocop:disable Metrics/ClassLength
 class ListsController < ApplicationController
   before_action :require_list_access, only: %i[show]
@@ -59,6 +60,7 @@ class ListsController < ApplicationController
     redirect_to lists_path, notice: "Your list was successfully deleted"
   end
 
+  # TODO: Should this be another controller?
   def refresh_list
     set_list
     @list.update!(refreshed: true)

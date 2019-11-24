@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
+# TODO: This needs a service object
 class UsersListsController < ApplicationController
   before_action :require_list_access, only: %i[index update]
   before_action :require_write_access, only: %i[show create]

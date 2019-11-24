@@ -27,6 +27,9 @@ class User < ApplicationRecord
 
   private
 
+  # TODO: What attributes are needed here? shouldn't be returning *
+  # Find users where they have been shared on the same lists as current user
+  # Filter out usere that are already shared on the supplied list
   def related_users_query(list_id)
     <<-SQL
       SELECT DISTINCT "users".*
