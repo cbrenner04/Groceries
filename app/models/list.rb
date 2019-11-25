@@ -40,6 +40,7 @@ class List < ApplicationRecord
     List.find_by_sql(refused_lists_query(user.id))
   end
 
+  # TODO: These should not be *, set the columns needed
   def self.accepted_lists_query(user_id)
     <<-SQL
       SELECT *
@@ -49,6 +50,7 @@ class List < ApplicationRecord
     SQL
   end
 
+  # TODO: These should not be *, set the columns needed
   def self.pending_lists_query(user_id)
     <<-SQL
       SELECT *
@@ -58,6 +60,7 @@ class List < ApplicationRecord
     SQL
   end
 
+  # TODO: These should not be *, set the columns needed
   def self.refused_lists_query(user_id)
     <<-SQL
       SELECT *

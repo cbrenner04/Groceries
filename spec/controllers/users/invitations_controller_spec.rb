@@ -86,7 +86,7 @@ RSpec.describe Users::InvitationsController, type: :controller do
                 },
                 list_id: list.id
               }
-            end.to_not change(UsersList, :count)
+            end.not_to change(UsersList, :count)
           end
 
           it "gives correct alert" do

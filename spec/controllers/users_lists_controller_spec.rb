@@ -146,7 +146,7 @@ RSpec.describe UsersListsController do
     describe "with read access" do
       before { users_list.update!(permissions: "read") }
 
-      context "users_list exists" do
+      context "when users_list exists" do
         it "accepts list" do
           patch :update, params: {
             list_id: list.id,
@@ -205,7 +205,7 @@ RSpec.describe UsersListsController do
     describe "with write access" do
       before { users_list.update!(permissions: "write") }
 
-      context "users_list exists" do
+      context "when users_list exists" do
         it "accepts list" do
           patch :update, params: {
             list_id: list.id,

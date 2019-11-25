@@ -26,6 +26,13 @@ ignore:
     - singel > react-dom:
         reason: extraneous package cannot be upgraded
         expires: '2019-03-02T02:42:14.131Z'
+  SNYK-JS-ELLIPTIC-511941:
+    - webpack > node-libs-browser > crypto-browserify > browserify-sign > elliptic:
+        reason: No remediation available
+        expires: '2019-12-24T22:29:49.980Z'
+    - webpack > node-libs-browser > crypto-browserify > create-ecdh > elliptic:
+        reason: No remediation available
+        expires: '2019-12-24T22:29:49.980Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:extend:20180424':

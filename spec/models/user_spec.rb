@@ -13,13 +13,13 @@ RSpec.describe User do
     it "is invalid without email" do
       user.email = nil
 
-      expect(user).to_not be_valid
+      expect(user).not_to be_valid
     end
   end
 
   describe "#users_that_list_can_be_shared_with" do
     before do
-      new_user = User.create!(email: "test@test.org")
+      new_user = described_class.create!(email: "test@test.org")
       UsersList.create!(user: new_user, list: list, has_accepted: true)
       UsersList.create!(user: user, list: list, has_accepted: true)
       UsersList.create!(user: user, list: other_list, has_accepted: true)

@@ -13,13 +13,13 @@ RSpec.describe BookListItem, type: :model do
 
     it "is invalid when user is blank" do
       item.user = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid when author and title is blank" do
       item.author = nil
       item.title = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is valid when author is blank" do
@@ -34,12 +34,12 @@ RSpec.describe BookListItem, type: :model do
 
     it "is invalid when purchased is blank" do
       item.purchased = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid when read is blank" do
       item.read = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe BookListItem, type: :model do
     it "archives item" do
       expect(item.archived_at).to be_nil
       item.archive
-      expect(item.archived_at).to_not be_nil
+      expect(item.archived_at).not_to be_nil
     end
   end
 end

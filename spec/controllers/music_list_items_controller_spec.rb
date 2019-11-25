@@ -134,7 +134,7 @@ RSpec.describe MusicListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -183,7 +183,7 @@ RSpec.describe MusicListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -214,7 +214,7 @@ RSpec.describe MusicListItemsController do
           list_id: list.id
         }
 
-        expect(MusicListItem.not_archived).to_not include delete_item
+        expect(MusicListItem.not_archived).not_to include delete_item
       end
     end
   end

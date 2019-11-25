@@ -100,9 +100,10 @@ RSpec.describe ListsController do
         end
 
         describe "format JSON" do
+          before { create :users_list, user: user, list: list }
+
           describe "when BookList" do
             let(:list) { BookList.create!(name: "foo", owner: user) }
-            let!(:users_list) { create :users_list, user: user, list: list }
 
             it "responds with success and correct payload" do
               BookListItem.create!(
@@ -141,7 +142,6 @@ RSpec.describe ListsController do
 
           describe "when GroceryList" do
             let(:list) { GroceryList.create!(name: "foo", owner: user) }
-            let!(:users_list) { create :users_list, user: user, list: list }
 
             it "responds with success and correct payload" do
               GroceryListItem.create!(
@@ -191,7 +191,6 @@ RSpec.describe ListsController do
 
           describe "when MusicList" do
             let(:list) { MusicList.create!(name: "foo", owner: user) }
-            let!(:users_list) { create :users_list, user: user, list: list }
 
             it "responds with success and correct payload" do
               MusicListItem.create!(
@@ -230,7 +229,6 @@ RSpec.describe ListsController do
 
           describe "when ToDoList" do
             let(:list) { ToDoList.create!(name: "foo", owner: user) }
-            let!(:users_list) { create :users_list, user: user, list: list }
 
             it "responds with success and correct payload" do
               ToDoListItem.create!(
@@ -492,7 +490,7 @@ RSpec.describe ListsController do
           id: delete_list.id
         }
 
-        expect(List.not_archived).to_not include delete_list
+        expect(List.not_archived).not_to include delete_list
       end
     end
   end
