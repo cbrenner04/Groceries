@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require "simplecov"
-SimpleCov.start "rails"
+SimpleCov.start "rails" do
+  add_filter 'app/models/item.rb'
+end
 SimpleCov.minimum_coverage 90
 SimpleCov.minimum_coverage_by_file 80
 
