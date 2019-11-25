@@ -12,31 +12,31 @@ RSpec.describe GroceryListItem do
     it "is invalid without user" do
       item.user = nil
 
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid without product" do
       item.product = nil
 
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid without quantity" do
       item.quantity = nil
 
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid without purchased" do
       item.purchased = nil
 
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
   end
 
   describe ".ordered" do
     it "returns items ordered by product" do
-      expect(GroceryListItem.ordered).to eq [another_item, item]
+      expect(described_class.ordered).to eq [another_item, item]
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe GroceryListItem do
     it "archives item" do
       expect(item.archived_at).to be_nil
       item.archive
-      expect(item.archived_at).to_not be_nil
+      expect(item.archived_at).not_to be_nil
     end
   end
 end

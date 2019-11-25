@@ -34,7 +34,7 @@ RSpec.describe SharedListNotificationMailer, type: :mailer do
 
     it "reports who shared the list" do
       expect(mail.body.encoded)
-        .to include "#{@sharer_email} has shared a list with you."
+        .to include "#{sharer_email} has shared a list with you."
     end
   end
 end

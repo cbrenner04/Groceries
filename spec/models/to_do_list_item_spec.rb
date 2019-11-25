@@ -11,17 +11,17 @@ RSpec.describe ToDoListItem, type: :model do
 
     it "is invalid when user is blank" do
       item.user = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid when task is blank" do
       item.task = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
 
     it "is invalid when completed is blank" do
       item.completed = nil
-      expect(item).to_not be_valid
+      expect(item).not_to be_valid
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe ToDoListItem, type: :model do
     it "archives item" do
       expect(item.archived_at).to be_nil
       item.archive
-      expect(item.archived_at).to_not be_nil
+      expect(item.archived_at).not_to be_nil
     end
   end
 end

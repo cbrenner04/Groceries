@@ -135,7 +135,7 @@ RSpec.describe ToDoListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -188,7 +188,7 @@ RSpec.describe ToDoListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -219,7 +219,7 @@ RSpec.describe ToDoListItemsController do
           list_id: list.id
         }
 
-        expect(ToDoListItem.not_archived).to_not include delete_item
+        expect(ToDoListItem.not_archived).not_to include delete_item
       end
     end
   end

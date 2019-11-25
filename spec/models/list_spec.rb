@@ -13,7 +13,7 @@ RSpec.describe List do
     it "is invalid without name" do
       list.name = nil
 
-      expect(list).to_not be_valid
+      expect(list).not_to be_valid
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe List do
 
   describe "#as_json" do
     it "returns list as json with type" do
-      expect(list.as_json["type"]).to_not be_blank
+      expect(list.as_json["type"]).not_to be_blank
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe List do
     end
 
     it "returns lists accepted by user" do
-      expect(List.accepted(user).count).to eq 1
+      expect(described_class.accepted(user).count).to eq 1
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe List do
     end
 
     it "returns lists not yet accepted by user" do
-      expect(List.pending(new_user).count).to eq 1
+      expect(described_class.pending(new_user).count).to eq 1
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe List do
     end
 
     it "returns lists not yet accepted by user" do
-      expect(List.refused(new_user).count).to eq 1
+      expect(described_class.refused(new_user).count).to eq 1
     end
   end
 end

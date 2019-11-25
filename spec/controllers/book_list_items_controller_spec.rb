@@ -134,7 +134,7 @@ RSpec.describe BookListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -190,7 +190,7 @@ RSpec.describe BookListItemsController do
           }
 
           expect(response.status).to eq 422
-          expect(response.body).to_not be_blank
+          expect(response.body).not_to be_blank
         end
       end
     end
@@ -221,7 +221,7 @@ RSpec.describe BookListItemsController do
           list_id: list.id
         }
 
-        expect(BookListItem.not_archived).to_not include delete_item
+        expect(BookListItem.not_archived).not_to include delete_item
       end
     end
   end

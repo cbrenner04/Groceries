@@ -12,20 +12,20 @@ RSpec.describe UsersList do
     it "is invalid without user" do
       users_list.user = nil
 
-      expect(users_list).to_not be_valid
+      expect(users_list).not_to be_valid
     end
 
     it "is invalid without list" do
       users_list.list = nil
 
-      expect(users_list).to_not be_valid
+      expect(users_list).not_to be_valid
     end
 
     it "is invalid if user and list combination is not unique" do
       second_list.user = users_list.user
       second_list.list = users_list.list
 
-      expect(second_list).to_not be_valid
+      expect(second_list).not_to be_valid
     end
   end
 
@@ -35,7 +35,8 @@ RSpec.describe UsersList do
     let(:list) { create :to_do_list, owner: user }
     let(:users_list) { create :users_list, user: user, list: list }
     let(:other_users_list) { create :users_list, user: other_user, list: list }
-    let!(:to_do_list_item) do
+
+    before do
       create :to_do_list_item,
              user: user,
              to_do_list: list,

@@ -10,7 +10,7 @@ RSpec.describe SharedListNotification do
     it "calls SharedListNotificationMailer" do
       expect(SharedListNotificationMailer)
         .to receive_message_chain(:notify, :deliver_now)
-      SharedListNotification.send_notification_for(sharer, sharee.id)
+      described_class.send_notification_for(sharer, sharee.id)
     end
   end
 end
