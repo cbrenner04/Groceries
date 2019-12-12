@@ -19,7 +19,7 @@ gem "libv8", "~> 5.3", ">= 5.3.332.38.5"
 gem "mini_racer", platforms: :ruby
 gem "newrelic_rpm", "~> 5.1", ">= 5.1.0.344"
 gem "pg", "~> 1.0"
-gem "puma", "~> 3.11", ">= 3.11.4"
+gem "puma", "~> 3.12", ">= 3.12.2"
 gem "rails", "~> 5.2", ">= 5.2.3"
 source "https://rails-assets.org" do
   # In combination with Bootstrap
