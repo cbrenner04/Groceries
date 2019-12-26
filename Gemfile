@@ -26,9 +26,9 @@ source "https://rails-assets.org" do
   gem "rails-assets-tether", "~> 1.1", ">= 1.1.1"
 end
 gem "rails-controller-testing", "~> 1.0", ">= 1.0.4"
-gem "rails_real_favicon", "~> 0.0.12"
+gem "rails_real_favicon", "~> 0.0.13"
 gem "react_on_rails", "~> 8.0", ">= 8.0.6"
-gem "sass-rails", "~> 5.0", ">= 5.0.7"
+gem "sass-rails", "~> 5.1", ">= 5.1.0"
 gem "sentry-raven", "~> 2.7", ">= 2.7.3"
 gem "turbolinks", "~> 5.1", ">= 5.1.1"
 gem "uglifier", "~> 4.1", ">= 4.1.11"
@@ -43,11 +43,11 @@ end
 group :development, :test do
   gem "bundler-audit", "~> 0.6.0"
   gem "byebug", platform: :mri
-  gem "capybara", "~> 3.28", ">= 3.28.0"
+  gem "capybara", "~> 3.29", ">= 3.29.0"
   gem "database_cleaner", "~> 1.7"
   gem "launchy", "~> 2.4", ">= 2.4.3"
   gem "poltergeist", "~> 1.18", ">= 1.18.1"
-  gem "rspec-rails", "~> 3.8", ">= 3.8.2"
+  gem "rspec-rails", "~> 3.9", ">= 3.9.0"
   gem "rubocop", "~> 0.60.0", require: false
   gem "rubocop-rspec", "~> 1.33"
   gem "simplecov", "~> 0.16.1"
