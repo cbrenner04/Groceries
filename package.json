@@ -6,7 +6,7 @@
     "yarn": "^1.6.0"
   },
   "dependencies": {
-    "yarn": "1.17.3"
+    "yarn": "1.21.1"
   },
   "scripts": {
     "postinstall": "cd client && yarn install"
