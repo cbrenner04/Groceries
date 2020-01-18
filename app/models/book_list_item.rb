@@ -18,7 +18,7 @@ class BookListItem < ApplicationRecord
   validates :purchased, inclusion: { in: [true, false] }
 
   def self.ordered
-    all.order(:created_at)
+    all.order(author: :asc, title: :asc)
   end
 
   def archive

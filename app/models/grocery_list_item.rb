@@ -15,7 +15,7 @@ class GroceryListItem < ApplicationRecord
   validates :purchased, inclusion: { in: [true, false] }
 
   def self.ordered
-    all.order(:product)
+    all.order(product: :asc)
   end
 
   def archive

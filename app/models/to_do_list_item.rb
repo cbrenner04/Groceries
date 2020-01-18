@@ -15,7 +15,7 @@ class ToDoListItem < ApplicationRecord
   validates :completed, inclusion: { in: [true, false] }
 
   def self.ordered
-    all.order(:task)
+    all.order(due_by: :asc, assignee_id: :asc, task: :asc)
   end
 
   def archive

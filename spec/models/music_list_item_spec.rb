@@ -3,9 +3,12 @@
 require "rails_helper"
 
 RSpec.describe MusicListItem, type: :model do
-  let(:item) { create :music_list_item, title: "foo" }
+  let(:item) { create :music_list_item, album: "a", artist: "a", title: "a" }
   let(:another_item) do
-    create :music_list_item, title: "bar", created_at: Time.zone.now - 1.day
+    create :music_list_item, album: "b", artist: "a", title: "b"
+  end
+  let(:third_item) do
+    create :music_list_item, album: "b", artist: "a", title: "a"
   end
 
   describe "validations" do
@@ -45,8 +48,8 @@ RSpec.describe MusicListItem, type: :model do
   end
 
   describe ".ordered" do
-    it "returns items ordered by created at" do
-      expect(MusicListItem.ordered).to eq [another_item, item]
+    it "returns items ordered by artist then album then title" do
+      expect(MusicListItem.ordered).to eq [item, third_item, another_item]
     end
   end
 

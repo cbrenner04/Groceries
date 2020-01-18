@@ -3,10 +3,9 @@
 require "rails_helper"
 
 RSpec.describe BookListItem, type: :model do
-  let(:item) { create :book_list_item, title: "foo" }
-  let(:another_item) do
-    create :book_list_item, title: "bar", created_at: Time.zone.now - 1.day
-  end
+  let(:item) { create :book_list_item, title: "foo", author: "a" }
+  let(:another_item) { create :book_list_item, title: "bar", author: "a" }
+  let(:third_item) { create :book_list_item, title: "foo", author: "b" }
 
   describe "validations" do
     it { expect(item).to be_valid }
@@ -44,8 +43,8 @@ RSpec.describe BookListItem, type: :model do
   end
 
   describe ".ordered" do
-    it "returns items ordered by created at" do
-      expect(BookListItem.ordered).to eq [another_item, item]
+    it "returns items ordered by author then title" do
+      expect(BookListItem.ordered).to eq [another_item, item, third_item]
     end
   end
 
