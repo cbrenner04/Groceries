@@ -3,8 +3,26 @@
 require "rails_helper"
 
 RSpec.describe ToDoListItem, type: :model do
-  let(:item) { create :to_do_list_item, task: "foo" }
-  let(:another_item) { create :to_do_list_item, task: "bar" }
+  let(:user) { create :user }
+  let(:another_user) { create :user }
+  let(:item) do
+    create :to_do_list_item,
+           due_by: Time.zone.now,
+           assignee_id: user.id,
+           task: "foo"
+  end
+  let(:another_item) do
+    create :to_do_list_item,
+           due_by: Time.zone.now,
+           assignee_id: another_user.id,
+           task: "bar"
+  end
+  let(:third_item) do
+    create :to_do_list_item,
+           due_by: Time.zone.now - 1,
+           assignee_id: user.id,
+           task: "bar"
+  end
 
   describe "validations" do
     it { expect(item).to be_valid }
@@ -26,8 +44,8 @@ RSpec.describe ToDoListItem, type: :model do
   end
 
   describe ".ordered" do
-    it "returns items ordered by created at" do
-      expect(ToDoListItem.ordered).to eq [another_item, item]
+    it "returns items ordered by due by then assignee id then task" do
+      expect(ToDoListItem.ordered).to eq [third_item, another_item, item]
     end
   end
 
