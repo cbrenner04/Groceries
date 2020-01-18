@@ -44,6 +44,7 @@ export default class EditListItemForm extends Component {
       itemAlbum: '',
       listUsers: [],
       errors: '',
+      numberInSeries: 0,
     };
   }
 
@@ -75,6 +76,7 @@ export default class EditListItemForm extends Component {
           itemDueBy: dueByDate,
           itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
           itemAlbum: item.album,
+          numberInSeries: Number(item.number_in_series),
         });
         $.ajax({
           type: 'GET',
@@ -96,9 +98,11 @@ export default class EditListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const { target } = event;
+    const { name, value } = event.target;
+    let targetValue = value;
+    if (name === 'numberInSeries') targetValue = Number(value);
     const obj = {};
-    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
+    obj[name] = targetValue;
     this.setState(obj);
   }
 
@@ -124,6 +128,7 @@ export default class EditListItemForm extends Component {
       album: this.state.itemAlbum,
       due_by: this.state.itemDueBy,
       assignee_id: this.state.itemAssigneeId,
+      number_in_series: this.state.numberInSeries,
     };
     listItem[`${this.listTypeToSnakeCase(this.state.listType)}_id`] = this.state.listId;
     const putData = {};
@@ -167,6 +172,7 @@ export default class EditListItemForm extends Component {
           itemPurchased={this.state.itemPurchased}
           itemRead={this.state.itemRead}
           inputHandler={this.handleUserInput}
+          numberInSeries={this.state.numberInSeries}
           editForm
         />
       );

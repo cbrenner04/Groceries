@@ -42,6 +42,12 @@ class BookListItemsController < ListItemsController
   def item_params
     params
       .require(:book_list_item)
-      .permit(:user_id, :list_id, :author, :title, :purchased, :read)
+      .permit(:user_id,
+              :list_id,
+              :author,
+              :title,
+              :purchased,
+              :read,
+              :number_in_series)
   end
 end

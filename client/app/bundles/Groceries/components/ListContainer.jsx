@@ -25,6 +25,8 @@ export default class ListContainer extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired),
     purchased_items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -37,6 +39,8 @@ export default class ListContainer extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -109,6 +113,8 @@ export default class ListContainer extends Component {
     if (sortAttrs.length === 0) return items;
     const sortAttr = sortAttrs.pop();
     const sorted = items.sort((a, b) => {
+      if (a[sortAttr] === null) return 1;
+      if (b[sortAttr] === null) return -1;
       const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
       return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
     });
@@ -118,7 +124,7 @@ export default class ListContainer extends Component {
   sortItems = (items) => {
     let sortAttrs = [];
     if (this.state.list.type === 'BookList') {
-      sortAttrs = ['author', 'title'];
+      sortAttrs = ['author', 'number_in_series', 'title'];
     } else if (this.state.list.type === 'GroceryList') {
       sortAttrs = ['product'];
     } else if (this.state.list.type === 'MusicList') {

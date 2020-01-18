@@ -4,8 +4,16 @@ require "rails_helper"
 
 RSpec.describe BookListItem, type: :model do
   let(:item) { create :book_list_item, title: "foo", author: "a" }
-  let(:another_item) { create :book_list_item, title: "bar", author: "a" }
-  let(:third_item) { create :book_list_item, title: "foo", author: "b" }
+  let(:second_item) do
+    create :book_list_item, title: "bar", number_in_series: 1, author: "a"
+  end
+  let(:third_item) do
+    create :book_list_item, title: "foo", number_in_series: 2, author: "a"
+  end
+  let(:fourth_item) do
+    create :book_list_item, title: "baz", number_in_series: 2, author: "a"
+  end
+  let(:fifth_item) { create :book_list_item, title: "foo", author: "b" }
 
   describe "validations" do
     it { expect(item).to be_valid }
@@ -43,8 +51,14 @@ RSpec.describe BookListItem, type: :model do
   end
 
   describe ".ordered" do
-    it "returns items ordered by author then title" do
-      expect(BookListItem.ordered).to eq [another_item, item, third_item]
+    it "returns items ordered by author then number_in_series then title" do
+      expect(BookListItem.ordered).to eq [
+        second_item,
+        fourth_item,
+        third_item,
+        item,
+        fifth_item
+      ]
     end
   end
 

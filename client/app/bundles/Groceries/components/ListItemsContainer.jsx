@@ -21,6 +21,8 @@ export default class ListItemsContainer extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired).isRequired,
     purchasedItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -33,6 +35,8 @@ export default class ListItemsContainer extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired).isRequired,
     listType: PropTypes.string.isRequired,
     listUsers: PropTypes.arrayOf(PropTypes.shape({
