@@ -105,17 +105,28 @@ export default class ListContainer extends Component {
     }
   }
 
-  sortItems = (items) => {
-    let sortAttr;
-    if (this.state.list.type === 'BookList' || this.state.list.type === 'MusicList') {
-      sortAttr = 'id';
-    } else {
-      sortAttr = 'name';
-    }
-    const sortedItems = items.sort((a, b) => {
+  performSort = (items, sortAttrs) => {
+    if (sortAttrs.length === 0) return items;
+    const sortAttr = sortAttrs.pop();
+    const sorted = items.sort((a, b) => {
       const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
       return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
     });
+    return this.performSort(sorted, sortAttrs);
+  }
+
+  sortItems = (items) => {
+    let sortAttrs = [];
+    if (this.state.list.type === 'BookList') {
+      sortAttrs = ['author', 'title'];
+    } else if (this.state.list.type === 'GroceryList') {
+      sortAttrs = ['product'];
+    } else if (this.state.list.type === 'MusicList') {
+      sortAttrs = ['artist', 'album', 'title'];
+    } else if (this.state.list.type === 'ToDoList') {
+      sortAttrs = ['due_by', 'assignee_id', 'task'];
+    }
+    const sortedItems = this.performSort(items, sortAttrs);
     return sortedItems;
   }
 
