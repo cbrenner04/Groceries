@@ -17,9 +17,8 @@ export default class CompletedLists extends Component {
       url: '/completed_lists/',
       dataType: 'JSON',
     }).done((data) => {
-      const completedLists = data.completed_lists.filter(list => !list.refreshed);
       this.setState({
-        completedLists,
+        completedLists: data.completed_lists,
       });
     });
   }
@@ -39,10 +38,6 @@ export default class CompletedLists extends Component {
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
-      success: () => {
-        const completedLists = this.state.completedLists.filter(compList => compList.id !== list.id);
-        this.setState({ completedLists });
-      },
     });
   }
 
@@ -52,6 +47,7 @@ export default class CompletedLists extends Component {
         <h1>Completed Lists</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
+        <div>Previously refreshed lists are marked with an asterisk (*).</div>
         <div className="list-group">
           {
             this.state.completedLists.map(list => (

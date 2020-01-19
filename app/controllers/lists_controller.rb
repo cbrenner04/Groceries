@@ -100,6 +100,8 @@ class ListsController < ApplicationController
     UsersList.create!(user: user, list: list, has_accepted: true)
   end
 
+  # TODO: why split the lists? If we continue to split them,
+  # why not split accepted into complete/incomplete as well?
   def index_response
     {
       accepted_lists: List.accepted(current_user),

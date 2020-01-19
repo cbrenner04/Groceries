@@ -28,7 +28,7 @@ export default class ListsContainer extends Component {
       const userId = data.current_user_id;
       const acceptedLists = data.accepted_lists;
       const pendingLists = data.pending_lists;
-      const completedLists = acceptedLists.filter(list => list.completed && !list.refreshed);
+      const completedLists = acceptedLists.filter(list => list.completed);
       const nonCompletedLists = acceptedLists.filter(list => !list.completed);
       this.setState({
         userId,
@@ -146,10 +146,6 @@ export default class ListsContainer extends Component {
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
-      success: () => {
-        const completedLists = this.state.completedLists.filter(compList => compList.id !== list.id);
-        this.setState({ completedLists });
-      },
     });
   }
 
