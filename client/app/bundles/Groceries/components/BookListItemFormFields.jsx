@@ -87,7 +87,7 @@ EditBookListItemFormFields.defaultProps = {
   itemPurchased: false,
   itemRead: false,
   editForm: false,
-  numberInSeries: null,
+  numberInSeries: 0,
 };
 
 export default EditBookListItemFormFields;
