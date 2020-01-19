@@ -10,5 +10,6 @@ FactoryBot.define do
     completed { false }
     refreshed { false }
     archived_at { nil }
+    category { "MyString" }
   end
 end

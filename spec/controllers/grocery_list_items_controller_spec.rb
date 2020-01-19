@@ -72,7 +72,8 @@ RSpec.describe GroceryListItemsController do
             "purchased" => item[:purchased],
             "quantity" => item[:quantity],
             "refreshed" => item[:refreshed],
-            "user_id" => item[:user_id]
+            "user_id" => item[:user_id],
+            "category" => item[:category]
           )
           expect(response_body["list"]).to include(
             "id" => list[:id],
@@ -96,7 +97,8 @@ RSpec.describe GroceryListItemsController do
           grocery_list_item: {
             grocery_list_id: list.id,
             user_id: user.id,
-            product: "foo"
+            product: "foo",
+            category: "foo"
           },
           list_id: list.id
         }
@@ -115,7 +117,8 @@ RSpec.describe GroceryListItemsController do
               grocery_list_item: {
                 grocery_list_id: list.id,
                 user_id: user.id,
-                product: "foo"
+                product: "foo",
+                category: "foo"
               },
               list_id: list.id
             }

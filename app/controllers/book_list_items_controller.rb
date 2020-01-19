@@ -48,6 +48,7 @@ class BookListItemsController < ListItemsController
               :title,
               :purchased,
               :read,
-              :number_in_series)
+              :number_in_series,
+              :category)
   end
 end

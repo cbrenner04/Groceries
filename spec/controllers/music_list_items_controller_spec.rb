@@ -72,7 +72,8 @@ RSpec.describe MusicListItemsController do
             "purchased" => item[:purchased],
             "artist" => item[:artist],
             "album" => item[:album],
-            "user_id" => item[:user_id]
+            "user_id" => item[:user_id],
+            "category" => item[:category]
           )
           expect(response_body["list"]).to include(
             "id" => list[:id],
@@ -96,7 +97,8 @@ RSpec.describe MusicListItemsController do
           music_list_item: {
             music_list_id: list.id,
             user_id: user.id,
-            title: "foo"
+            title: "foo",
+            category: "foo"
           },
           list_id: list.id
         }
@@ -115,7 +117,8 @@ RSpec.describe MusicListItemsController do
               music_list_item: {
                 music_list_id: list.id,
                 user_id: user.id,
-                title: "foo"
+                title: "foo",
+                category: "foo"
               },
               list_id: list.id
             }

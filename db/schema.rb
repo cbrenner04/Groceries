@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_18_210739) do
+ActiveRecord::Schema.define(version: 2020_01_19_175701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_210739) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "number_in_series"
+    t.string "category"
     t.index ["book_list_id"], name: "index_book_list_items_on_book_list_id"
     t.index ["user_id"], name: "index_book_list_items_on_user_id"
   end
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_210739) do
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
     t.boolean "refreshed", default: false, null: false
+    t.string "category"
     t.index ["grocery_list_id"], name: "index_grocery_list_items_on_grocery_list_id"
     t.index ["user_id"], name: "index_grocery_list_items_on_user_id"
   end
@@ -66,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_210739) do
     t.datetime "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
     t.index ["music_list_id"], name: "index_music_list_items_on_music_list_id"
     t.index ["user_id"], name: "index_music_list_items_on_user_id"
   end
@@ -81,6 +84,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_210739) do
     t.datetime "archived_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
     t.index ["to_do_list_id"], name: "index_to_do_list_items_on_to_do_list_id"
     t.index ["user_id"], name: "index_to_do_list_items_on_user_id"
   end

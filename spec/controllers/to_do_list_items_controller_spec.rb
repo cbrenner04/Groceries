@@ -73,7 +73,8 @@ RSpec.describe ToDoListItemsController do
             "assignee_id" => item[:assignee_id],
             "due_by" => item[:due_by],
             "refreshed" => item[:refreshed],
-            "user_id" => item[:user_id]
+            "user_id" => item[:user_id],
+            "category" => item[:category]
           )
           expect(response_body["list"]).to include(
             "id" => list[:id],
@@ -97,7 +98,8 @@ RSpec.describe ToDoListItemsController do
           to_do_list_item: {
             to_do_list_id: list.id,
             user_id: user.id,
-            task: "foo"
+            task: "foo",
+            category: "foo"
           },
           list_id: list.id
         }
@@ -116,7 +118,8 @@ RSpec.describe ToDoListItemsController do
               to_do_list_item: {
                 to_do_list_id: list.id,
                 user_id: user.id,
-                task: "foo"
+                task: "foo",
+                category: "foo"
               },
               list_id: list.id
             }

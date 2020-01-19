@@ -27,6 +27,7 @@ export default class ListContainer extends Component {
       due_by: PropTypes.date,
       read: PropTypes.bool,
       number_in_series: PropTypes.number,
+      category: PropTypes.string,
     }).isRequired),
     purchased_items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -41,6 +42,7 @@ export default class ListContainer extends Component {
       due_by: PropTypes.date,
       read: PropTypes.bool,
       number_in_series: PropTypes.number,
+      category: PropTypes.string,
     }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({

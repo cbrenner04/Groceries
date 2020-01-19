@@ -5,6 +5,7 @@ import ListItem from './ListItem';
 
 export default class ListItems extends Component {
   static propTypes = {
+    category: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       product: PropTypes.string,
@@ -18,6 +19,7 @@ export default class ListItems extends Component {
       due_by: PropTypes.date,
       read: PropTypes.bool,
       number_in_series: PropTypes.number,
+      category: PropTypes.string,
     }).isRequired),
     purchased: PropTypes.bool,
     onItemPurchase: PropTypes.func,
@@ -39,6 +41,7 @@ export default class ListItems extends Component {
     purchased: false,
     handleItemUnPurchase: null,
     onItemPurchase: null,
+    category: '',
   }
 
   purchaseItem = item => this.props.onItemPurchase(item);
@@ -54,6 +57,8 @@ export default class ListItems extends Component {
   render() {
     return (
       <div className="list-group">
+        {this.props.category !== 'none' &&
+          <h5 data-test-class="category-header">{this.props.category}</h5>}
         {
           this.props.items.map(item => (
             <ListItem

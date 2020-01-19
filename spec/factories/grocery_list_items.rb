@@ -7,5 +7,6 @@ FactoryBot.define do
     product { "MyString" }
     quantity { 1 }
     purchased { false }
+    category { "MyString" }
   end
 end

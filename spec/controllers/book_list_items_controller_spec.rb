@@ -73,7 +73,8 @@ RSpec.describe BookListItemsController do
             "title" => item[:title],
             "read" => item[:read],
             "user_id" => item[:user_id],
-            "number_in_series" => item[:number_in_series]
+            "number_in_series" => item[:number_in_series],
+            "category" => item[:category]
           )
           expect(response_body["list"]).to include(
             "id" => list[:id],
@@ -98,7 +99,8 @@ RSpec.describe BookListItemsController do
             book_list_id: list.id,
             user_id: user.id,
             author: "foo",
-            number_in_series: 1
+            number_in_series: 1,
+            category: "foo"
           },
           list_id: list.id
         }
@@ -118,7 +120,8 @@ RSpec.describe BookListItemsController do
                 book_list_id: list.id,
                 user_id: user.id,
                 author: "foo",
-                number_in_series: 1
+                number_in_series: 1,
+                category: "foo"
               },
               list_id: list.id
             }
@@ -131,8 +134,7 @@ RSpec.describe BookListItemsController do
           post :create, params: {
             book_list_item: {
               book_list_id: list.id,
-              author: nil,
-              number_in_series: nil
+              author: nil
             },
             list_id: list.id
           }

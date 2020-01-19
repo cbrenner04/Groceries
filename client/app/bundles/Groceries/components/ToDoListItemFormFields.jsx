@@ -44,6 +44,17 @@ const EditToDoListItemFormFields = props => (
         placeholder="mm/dd/yyyy"
       />
     </div>
+    <div className="form-group">
+      <label htmlFor="category">Label</label>
+      <input
+        name="category"
+        type="text"
+        className="form-control"
+        id="category"
+        value={props.category}
+        onChange={props.inputHandler}
+      />
+    </div>
     {
       props.editForm && (
         <div className="form-check mb-3">
@@ -75,11 +86,13 @@ EditToDoListItemFormFields.propTypes = {
   })).isRequired,
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
+  category: PropTypes.string,
 };
 
 EditToDoListItemFormFields.defaultProps = {
   itemCompleted: false,
   editForm: false,
+  category: '',
 };
 
 export default EditToDoListItemFormFields;
