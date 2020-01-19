@@ -27,6 +27,17 @@ const EditBookListItemFormFields = props => (
         placeholder="Slaughterhouse-Five"
       />
     </div>
+    <div className="form-group">
+      <label htmlFor="numberInSeries">Number in series</label>
+      <input
+        name="numberInSeries"
+        type="number"
+        className="form-control"
+        id="numberInSeries"
+        value={props.numberInSeries || ''}
+        onChange={props.inputHandler}
+      />
+    </div>
     {
       props.editForm && (
         <div className="form-row mb-3">
@@ -69,12 +80,14 @@ EditBookListItemFormFields.propTypes = {
   itemRead: PropTypes.bool,
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
+  numberInSeries: PropTypes.number,
 };
 
 EditBookListItemFormFields.defaultProps = {
   itemPurchased: false,
   itemRead: false,
   editForm: false,
+  numberInSeries: 0,
 };
 
 export default EditBookListItemFormFields;

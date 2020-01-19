@@ -21,6 +21,7 @@ const initialState = {
   itemDueBy: defaultDueBy(),
   errors: '',
   success: '',
+  numberInSeries: 0,
 };
 
 export default class ListItemForm extends Component {
@@ -46,8 +47,10 @@ export default class ListItemForm extends Component {
 
   handleUserInput = (event) => {
     const { name, value } = event.target;
+    let targetValue = value;
+    if (name === 'numberInSeries') targetValue = Number(value);
     const obj = {};
-    obj[name] = value;
+    obj[name] = targetValue;
     this.setState(obj);
   }
 
@@ -73,6 +76,7 @@ export default class ListItemForm extends Component {
       album: this.state.itemAlbum,
       assignee_id: this.state.itemAssigneeId,
       due_by: this.state.itemDueBy,
+      number_in_series: this.state.numberInSeries || null,
     };
     listItem[`${this.listTypeToSnakeCase()}_id`] = this.props.listId;
     const postData = {};
@@ -107,6 +111,7 @@ export default class ListItemForm extends Component {
           itemAuthor={this.state.itemAuthor}
           itemTitle={this.state.itemTitle}
           inputHandler={this.handleUserInput}
+          numberInSeries={this.state.numberInSeries}
         />
       );
     } else if (this.props.listType === 'GroceryList') {

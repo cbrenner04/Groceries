@@ -18,6 +18,7 @@ export default class ListItem extends Component {
       assignee_id: PropTypes.number,
       due_by: PropTypes.string,
       read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired,
     purchased: PropTypes.bool,
     handleItemDelete: PropTypes.func.isRequired,

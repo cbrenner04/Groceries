@@ -16,6 +16,8 @@ export default class ListItems extends Component {
       album: PropTypes.string,
       assignee_id: PropTypes.number,
       due_by: PropTypes.date,
+      read: PropTypes.bool,
+      number_in_series: PropTypes.number,
     }).isRequired),
     purchased: PropTypes.bool,
     onItemPurchase: PropTypes.func,
