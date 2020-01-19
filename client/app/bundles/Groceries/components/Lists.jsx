@@ -99,7 +99,8 @@ export default class Lists extends Component {
         <h2>Completed Lists</h2>
         <p>
           These are the completed lists most recently created.&nbsp;
-          <Link to="/completed_lists">See all completed lists here.</Link>
+          <Link to="/completed_lists">See all completed lists here.</Link>&nbsp;
+          Previously refreshed lists are marked with an asterisk (*).
         </p>
         <div className="list-group">
           {

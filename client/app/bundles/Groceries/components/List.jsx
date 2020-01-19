@@ -16,6 +16,7 @@ export default class List extends Component {
       completed: PropTypes.bool.isRequired,
       users_list_id: PropTypes.number,
       owner_id: PropTypes.number,
+      refreshed: PropTypes.bool,
     }).isRequired,
     accepted: PropTypes.bool,
     onListDeletion: PropTypes.func,
@@ -124,7 +125,7 @@ export default class List extends Component {
   listTitle = () => (
     <h5 className="mb-1">
       <i className={`fa ${listIconClass(this.props.list.type)} text-info mr-3`} />
-      {this.props.list.name}
+      {this.props.list.name}{this.props.list.refreshed && '*'}
     </h5>
   );
 
