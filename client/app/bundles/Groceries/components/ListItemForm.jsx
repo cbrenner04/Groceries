@@ -22,6 +22,7 @@ const initialState = {
   errors: '',
   success: '',
   numberInSeries: 0,
+  category: '',
 };
 
 export default class ListItemForm extends Component {
@@ -77,6 +78,7 @@ export default class ListItemForm extends Component {
       assignee_id: this.state.itemAssigneeId,
       due_by: this.state.itemDueBy,
       number_in_series: this.state.numberInSeries || null,
+      category: this.state.category,
     };
     listItem[`${this.listTypeToSnakeCase()}_id`] = this.props.listId;
     const postData = {};
@@ -112,6 +114,7 @@ export default class ListItemForm extends Component {
           itemTitle={this.state.itemTitle}
           inputHandler={this.handleUserInput}
           numberInSeries={this.state.numberInSeries}
+          category={this.state.category}
         />
       );
     } else if (this.props.listType === 'GroceryList') {
@@ -120,6 +123,7 @@ export default class ListItemForm extends Component {
           itemQuantity={this.state.itemQuantity}
           product={this.state.product}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
         />
       );
     } else if (this.props.listType === 'MusicList') {
@@ -129,6 +133,7 @@ export default class ListItemForm extends Component {
           itemArtist={this.state.itemArtist}
           itemAlbum={this.state.itemAlbum}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
         />
       );
     } else if (this.props.listType === 'ToDoList') {
@@ -139,6 +144,7 @@ export default class ListItemForm extends Component {
           listUsers={this.props.listUsers}
           itemDueBy={this.state.itemDueBy}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
         />
       );
     }

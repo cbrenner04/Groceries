@@ -39,6 +39,17 @@ const EditMusicListItemFormFields = props => (
         placeholder="Mack Daddy"
       />
     </div>
+    <div className="form-group">
+      <label htmlFor="category">Label</label>
+      <input
+        name="category"
+        type="text"
+        className="form-control"
+        id="category"
+        value={props.category}
+        onChange={props.inputHandler}
+      />
+    </div>
     {
       props.editForm && (
         <div className="form-check mb-3">
@@ -66,11 +77,13 @@ EditMusicListItemFormFields.propTypes = {
   itemPurchased: PropTypes.bool,
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
+  category: PropTypes.string,
 };
 
 EditMusicListItemFormFields.defaultProps = {
   itemPurchased: false,
   editForm: false,
+  category: '',
 };
 
 export default EditMusicListItemFormFields;

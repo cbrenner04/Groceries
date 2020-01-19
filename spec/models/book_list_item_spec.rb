@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe BookListItem, type: :model do
-  let(:item) { create :book_list_item, title: "foo", author: "a" }
+  let(:item) do
+    create :book_list_item, title: "foo", author: "a", number_in_series: nil
+  end
   let(:second_item) do
     create :book_list_item, title: "bar", number_in_series: 1, author: "a"
   end
@@ -13,7 +15,9 @@ RSpec.describe BookListItem, type: :model do
   let(:fourth_item) do
     create :book_list_item, title: "baz", number_in_series: 2, author: "a"
   end
-  let(:fifth_item) { create :book_list_item, title: "foo", author: "b" }
+  let(:fifth_item) do
+    create :book_list_item, title: "foo", author: "b", number_in_series: nil
+  end
 
   describe "validations" do
     it { expect(item).to be_valid }

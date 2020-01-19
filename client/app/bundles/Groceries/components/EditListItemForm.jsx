@@ -45,6 +45,7 @@ export default class EditListItemForm extends Component {
       listUsers: [],
       errors: '',
       numberInSeries: 0,
+      category: '',
     };
   }
 
@@ -77,6 +78,7 @@ export default class EditListItemForm extends Component {
           itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
           itemAlbum: item.album,
           numberInSeries: Number(item.number_in_series),
+          category: item.category,
         });
         $.ajax({
           type: 'GET',
@@ -129,6 +131,7 @@ export default class EditListItemForm extends Component {
       due_by: this.state.itemDueBy,
       assignee_id: this.state.itemAssigneeId,
       number_in_series: this.state.numberInSeries,
+      category: this.state.category,
     };
     listItem[`${this.listTypeToSnakeCase(this.state.listType)}_id`] = this.state.listId;
     const putData = {};
@@ -173,6 +176,7 @@ export default class EditListItemForm extends Component {
           itemRead={this.state.itemRead}
           inputHandler={this.handleUserInput}
           numberInSeries={this.state.numberInSeries}
+          category={this.state.category}
           editForm
         />
       );
@@ -183,6 +187,7 @@ export default class EditListItemForm extends Component {
           itemQuantity={this.state.itemQuantity}
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
           editForm
         />
       );
@@ -194,6 +199,7 @@ export default class EditListItemForm extends Component {
           itemAlbum={this.state.itemAlbum}
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
           editForm
         />
       );
@@ -206,6 +212,7 @@ export default class EditListItemForm extends Component {
           itemCompleted={this.state.itemCompleted}
           listUsers={this.state.listUsers}
           inputHandler={this.handleUserInput}
+          category={this.state.category}
           editForm
         />
       );

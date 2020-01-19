@@ -41,8 +41,15 @@ class ToDoListItemsController < ListItemsController
   private
 
   def item_params
-    params.require(:to_do_list_item).permit(
-      :user_id, :list_id, :task, :assignee_id, :due_by, :completed, :refreshed
-    )
+    params
+      .require(:to_do_list_item)
+      .permit(:user_id,
+              :list_id,
+              :task,
+              :assignee_id,
+              :due_by,
+              :completed,
+              :refreshed,
+              :category)
   end
 end

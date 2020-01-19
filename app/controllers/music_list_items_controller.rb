@@ -43,6 +43,12 @@ class MusicListItemsController < ListItemsController
   def item_params
     params
       .require(:music_list_item)
-      .permit(:user_id, :list_id, :title, :artist, :album, :purchased)
+      .permit(:user_id,
+              :list_id,
+              :title,
+              :artist,
+              :album,
+              :purchased,
+              :category)
   end
 end

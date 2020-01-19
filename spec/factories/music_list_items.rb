@@ -9,5 +9,6 @@ FactoryBot.define do
     album { "MyString" }
     purchased { false }
     archived_at { nil }
+    category { "MyString" }
   end
 end

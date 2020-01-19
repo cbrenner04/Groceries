@@ -9,5 +9,7 @@ FactoryBot.define do
     purchased { false }
     read { false }
     archived_at { nil }
+    number_in_series { 1 }
+    category { "MyString" }
   end
 end

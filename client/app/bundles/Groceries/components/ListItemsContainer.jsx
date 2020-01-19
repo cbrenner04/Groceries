@@ -23,6 +23,7 @@ export default class ListItemsContainer extends Component {
       due_by: PropTypes.date,
       read: PropTypes.bool,
       number_in_series: PropTypes.number,
+      category: PropTypes.category,
     }).isRequired).isRequired,
     purchasedItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -37,6 +38,7 @@ export default class ListItemsContainer extends Component {
       due_by: PropTypes.date,
       read: PropTypes.bool,
       number_in_series: PropTypes.number,
+      category: PropTypes.category,
     }).isRequired).isRequired,
     listType: PropTypes.string.isRequired,
     listUsers: PropTypes.arrayOf(PropTypes.shape({
@@ -60,29 +62,59 @@ export default class ListItemsContainer extends Component {
 
   handleDeletion = item => this.props.handleItemDelete(item);
 
-  title = () => {
-    if (this.props.listType === 'ToDoList') {
-      return 'Completed';
-    }
-    return 'Purchased';
+  completedTitle = () => (this.props.listType === 'ToDoList' ? 'Completed' : 'Purchased');
+
+  categories = () => {
+    const cats = [''];
+    this.props.notPurchasedItems.forEach((item) => {
+      if (!item.category) return;
+      const cat = item.category.toLowerCase();
+      const key = cat.charAt(0).toUpperCase() + cat.slice(1);
+      if (!cats.includes(key)) cats.push(key);
+    });
+    return cats;
+  }
+
+  categorizedNotPurchasedItems = () => {
+    const obj = [];
+    this.categories().forEach((cat) => {
+      obj[cat] = [];
+    });
+    this.props.notPurchasedItems.forEach((item) => {
+      if (!item.category) {
+        obj[''].push(item);
+        return;
+      }
+      const cat = item.category.toLowerCase();
+      const key = cat.charAt(0).toUpperCase() + cat.slice(1);
+      if (!obj[key]) obj[key] = [];
+      obj[key].push(item);
+    });
+    return obj;
   }
 
   render() {
     return (
       <div>
         <h2>Items</h2>
-        <ListItems
-          items={this.props.notPurchasedItems}
-          onItemPurchase={this.handlePurchase}
-          onItemRead={this.handleRead}
-          onItemUnRead={this.handleUnRead}
-          onItemDelete={this.handleDeletion}
-          listType={this.props.listType}
-          listUsers={this.props.listUsers}
-          permission={this.props.permission}
-        />
+        {this.categories().sort().map(category => (
+          <div key={category}>
+            <ListItems
+              category={category}
+              items={this.categorizedNotPurchasedItems()[category]}
+              onItemPurchase={this.handlePurchase}
+              onItemRead={this.handleRead}
+              onItemUnRead={this.handleUnRead}
+              onItemDelete={this.handleDeletion}
+              listType={this.props.listType}
+              listUsers={this.props.listUsers}
+              permission={this.props.permission}
+            />
+            <br />
+          </div>
+        ))}
         <br />
-        <h2>{this.title()}</h2>
+        <h2>{this.completedTitle()}</h2>
         <ListItems
           items={this.props.purchasedItems}
           handleItemUnPurchase={this.onItemUnPurchase}
