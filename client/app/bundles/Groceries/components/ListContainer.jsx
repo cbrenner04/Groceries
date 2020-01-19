@@ -113,6 +113,8 @@ export default class ListContainer extends Component {
     if (sortAttrs.length === 0) return items;
     const sortAttr = sortAttrs.pop();
     const sorted = items.sort((a, b) => {
+      // the sort from the server comes back with items with number_in_series: `null` at the end of the list
+      // without the next two lines this would put those items at the front of the list
       if (a[sortAttr] === null) return 1;
       if (b[sortAttr] === null) return -1;
       const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
