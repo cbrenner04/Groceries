@@ -132,7 +132,7 @@ export default class ListItemsContainer extends Component {
       <div>
         <div className="clearfix">
           <h2 className="float-left">Items</h2>
-          {!!this.categories().filter(cat => !!cat).length &&
+          {!!this.categories().filter(cat => !!cat).length && !this.state.filter &&
             <div className="dropdown float-right">
               <button
                 className="btn btn-light dropdown-toggle"
@@ -159,15 +159,18 @@ export default class ListItemsContainer extends Component {
               </div>
             </div>}
           {this.state.filter &&
-            <button
-              id="clear-filter-button"
-              type="button"
-              className="btn btn-outline-primary float-right"
-              style={{ marginRight: '1rem' }}
-              onClick={this.handleClearFilter}
-            >
-              <i className="fa fa-trash" /> {this.state.filter}
-            </button>}
+            <div>
+              <button
+                id="clear-filter-button"
+                type="button"
+                className="btn btn-outline-primary float-right"
+                style={{ marginRight: '1rem' }}
+                onClick={this.handleClearFilter}
+              >
+                {this.state.filter} <i className="fa fa-trash" />
+              </button>
+              <span className="float-right" style={{ lineHeight: '2.5rem', marginRight: '1rem' }}>Filtering by:</span>
+            </div>}
         </div>
         {this.categories().sort().map(category => (
           <div key={category}>
