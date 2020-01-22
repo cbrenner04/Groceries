@@ -37,6 +37,2288 @@ ignore:
     - webpack > terser-webpack-plugin > serialize-javascript:
         reason: None given
         expires: '2020-01-29T21:50:03.368Z'
+  SNYK-JS-LODASH-450202:
+    - babel-core > babel-generator > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-helpers > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-helpers > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-helpers > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-register > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-generator > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-core > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.356Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-computed-properties > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-helper-hoist-variables > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-systemjs > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-helper-optimise-call-expression > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-helper-optimise-call-expression > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.357Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-systemjs > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-computed-properties > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-regenerator > regenerator-transform > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-sticky-regex > babel-helper-regex > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-systemjs > babel-helper-hoist-variables > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-replace-supers > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-optimise-call-expression > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.358Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-systemjs > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-computed-properties > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-unicode-regex > babel-helper-regex > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-object-super > babel-helper-replace-supers > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-sticky-regex > babel-helper-regex > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-duplicate-keys > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-shorthand-properties > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-sticky-regex > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-unicode-regex > babel-helper-regex > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-function-name > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-parameters > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-systemjs > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-amd > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-computed-properties > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-block-scoping > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-helper-define-map > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-modules-umd > babel-plugin-transform-es2015-modules-amd > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-env > babel-plugin-transform-es2015-classes > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-react > babel-plugin-transform-react-jsx > babel-helper-builder-react-jsx > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.359Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-helper-bindify-decorators > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-helper-bindify-decorators > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-exponentiation-operator > babel-helper-builder-binary-assignment-operator-visitor > babel-helper-explode-assignable-expression > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-helper-bindify-decorators > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-helper-explode-class > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.360Z'
+    - babel-preset-stage-2 > babel-plugin-transform-decorators > babel-template > babel-traverse > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-plugin-transform-class-properties > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-template > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-types > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack-manifest-plugin > lodash:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+  SNYK-JS-KINDOF-537849:
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > braces > snapdragon-node > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.361Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > micromatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.362Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > nanomatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon-node > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon-node > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > extglob > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > nanomatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.363Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > nanomatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > braces > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > braces > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > braces > snapdragon-node > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > braces > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > nanomatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > braces > snapdragon-node > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > nanomatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.364Z'
+    - webpack > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > extglob > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > watchpack > chokidar > braces > snapdragon-node > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > extglob > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > watchpack > chokidar > braces > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > braces > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > extglob > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon-node > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > braces > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.365Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > to-regex > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > braces > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > extglob > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon-node > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > extglob > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.366Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > to-regex > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > global-modules > global-prefix > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > to-regex > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > snapdragon-node > snapdragon-util > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > fill-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > fill-range > to-regex-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > watchpack > chokidar > braces > snapdragon-node > snapdragon-util > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon-node > snapdragon-util > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > fill-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > watchpack > chokidar > braces > fill-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > fill-range > to-regex-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > braces > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > watchpack > chokidar > braces > fill-range > to-regex-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.367Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > fill-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > fill-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon-node > snapdragon-util > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon-node > snapdragon-util > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > fill-range > to-regex-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.368Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > fill-range > to-regex-range > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: No remediation
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.369Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.370Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > to-object-path > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.371Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.372Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.373Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > is-number > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.374Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-data-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > is-accessor-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > micromatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.375Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > has-value > has-values > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > nanomatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > extglob > expand-brackets > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > extglob > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > braces > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.376Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.377Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack-cli > findup-sync > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.378Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > base > class-utils > static-extend > object-copy > define-property > is-descriptor > kind-of:
+        reason: None given
+        expires: '2020-02-21T12:22:34.379Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:extend:20180424':
