@@ -10,6 +10,8 @@ export default class ListItemsContainer extends Component {
     handleReadOfItem: PropTypes.func.isRequired,
     handleUnReadOfItem: PropTypes.func.isRequired,
     handleItemUnPurchase: PropTypes.func.isRequired,
+    // I want to have prop type validations but I only use these in getDerivedStateFromProps
+    // eslint-disable-next-line react/no-unused-prop-types
     notPurchasedItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       product: PropTypes.string,
@@ -52,6 +54,23 @@ export default class ListItemsContainer extends Component {
     listUsers: [],
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      notPurchasedItems: [],
+      filter: '',
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.notPurchasedItems !== state.notPurchasedItems && !state.filter) {
+      return {
+        notPurchasedItems: props.notPurchasedItems,
+      };
+    }
+    return null;
+  }
+
   onItemUnPurchase = item => this.props.handleItemUnPurchase(item);
 
   handlePurchase = item => this.props.handlePurchaseOfItem(item);
@@ -66,7 +85,7 @@ export default class ListItemsContainer extends Component {
 
   categories = () => {
     const cats = [''];
-    this.props.notPurchasedItems.forEach((item) => {
+    this.state.notPurchasedItems.forEach((item) => {
       if (!item.category) return;
       const cat = item.category.toLowerCase();
       const key = cat.charAt(0).toUpperCase() + cat.slice(1);
@@ -80,7 +99,7 @@ export default class ListItemsContainer extends Component {
     this.categories().forEach((cat) => {
       obj[cat] = [];
     });
-    this.props.notPurchasedItems.forEach((item) => {
+    this.state.notPurchasedItems.forEach((item) => {
       if (!item.category) {
         obj[''].push(item);
         return;
@@ -93,10 +112,66 @@ export default class ListItemsContainer extends Component {
     return obj;
   }
 
+  handleCategoryFilter = (event) => {
+    const filter = event.target.name.toLowerCase();
+    const filteredItems = this.state.notPurchasedItems.filter(item => item.category === filter);
+    this.setState({
+      notPurchasedItems: filteredItems,
+      filter,
+    });
+  }
+
+  handleClearFilter = () => {
+    this.setState({
+      filter: '',
+    });
+  }
+
   render() {
     return (
       <div>
-        <h2>Items</h2>
+        <div className="clearfix">
+          <h2 className="float-left">Items</h2>
+          {!!this.categories().filter(cat => !!cat).length && !this.state.filter &&
+            <div className="dropdown float-right">
+              <button
+                className="btn btn-light dropdown-toggle"
+                type="button"
+                id="filter-by-category-button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Filter by category
+              </button>
+              <div className="dropdown-menu" aria-labelledby="filter-by-category-button">
+                {this.categories().sort().map(category => (
+                  <button
+                    key={category}
+                    name={category}
+                    onClick={this.handleCategoryFilter}
+                    className="dropdown-item"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>}
+          {this.state.filter &&
+            <div>
+              <button
+                id="clear-filter-button"
+                type="button"
+                className="btn btn-outline-primary float-right"
+                style={{ marginRight: '1rem' }}
+                onClick={this.handleClearFilter}
+              >
+                {this.state.filter} <i className="fa fa-trash" />
+              </button>
+              <span className="float-right" style={{ lineHeight: '2.5rem', marginRight: '1rem' }}>Filtering by:</span>
+            </div>}
+        </div>
         {this.categories().sort().map(category => (
           <div key={category}>
             <ListItems
