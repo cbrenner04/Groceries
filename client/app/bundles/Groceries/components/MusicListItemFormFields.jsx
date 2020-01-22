@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Category from './Category';
+
 const EditMusicListItemFormFields = props => (
   <div>
     <div className="form-group">
@@ -39,17 +41,7 @@ const EditMusicListItemFormFields = props => (
         placeholder="Mack Daddy"
       />
     </div>
-    <div className="form-group">
-      <label htmlFor="category">Label</label>
-      <input
-        name="category"
-        type="text"
-        className="form-control"
-        id="category"
-        value={props.category}
-        onChange={props.inputHandler}
-      />
-    </div>
+    <Category category={props.category} categories={props.categories} handleInput={props.inputHandler} />
     {
       props.editForm && (
         <div className="form-check mb-3">
@@ -78,12 +70,14 @@ EditMusicListItemFormFields.propTypes = {
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
   category: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 EditMusicListItemFormFields.defaultProps = {
   itemPurchased: false,
   editForm: false,
   category: '',
+  categories: [],
 };
 
 export default EditMusicListItemFormFields;

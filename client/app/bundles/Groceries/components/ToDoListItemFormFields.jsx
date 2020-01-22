@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Category from './Category';
+
 const EditToDoListItemFormFields = props => (
   <div>
     <div className="form-group">
@@ -44,17 +46,7 @@ const EditToDoListItemFormFields = props => (
         placeholder="mm/dd/yyyy"
       />
     </div>
-    <div className="form-group">
-      <label htmlFor="category">Label</label>
-      <input
-        name="category"
-        type="text"
-        className="form-control"
-        id="category"
-        value={props.category}
-        onChange={props.inputHandler}
-      />
-    </div>
+    <Category category={props.category} categories={props.categories} handleInput={props.inputHandler} />
     {
       props.editForm && (
         <div className="form-check mb-3">
@@ -87,12 +79,14 @@ EditToDoListItemFormFields.propTypes = {
   inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
   category: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 EditToDoListItemFormFields.defaultProps = {
   itemCompleted: false,
   editForm: false,
   category: '',
+  categories: [],
 };
 
 export default EditToDoListItemFormFields;

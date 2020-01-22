@@ -116,7 +116,8 @@ class ListsController < ApplicationController
       current_user_id: current_user.id,
       list: @list,
       not_purchased_items: @not_purchased_items,
-      purchased_items: @purchased_items
+      purchased_items: @purchased_items,
+      categories: @list.categories
     }
   end
 

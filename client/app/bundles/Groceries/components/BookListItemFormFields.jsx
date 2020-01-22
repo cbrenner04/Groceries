@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Category from './Category';
+
 const EditBookListItemFormFields = props => (
   <div>
     <div className="form-group">
@@ -38,17 +40,7 @@ const EditBookListItemFormFields = props => (
         onChange={props.inputHandler}
       />
     </div>
-    <div className="form-group">
-      <label htmlFor="category">Category</label>
-      <input
-        name="category"
-        type="text"
-        className="form-control"
-        id="category"
-        value={props.category}
-        onChange={props.inputHandler}
-      />
-    </div>
+    <Category category={props.category} categories={props.categories} handleInput={props.inputHandler} />
     {
       props.editForm && (
         <div className="form-row mb-3">
@@ -93,6 +85,7 @@ EditBookListItemFormFields.propTypes = {
   editForm: PropTypes.bool,
   numberInSeries: PropTypes.number,
   category: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 EditBookListItemFormFields.defaultProps = {
@@ -101,6 +94,7 @@ EditBookListItemFormFields.defaultProps = {
   editForm: false,
   numberInSeries: 0,
   category: '',
+  categories: [],
 };
 
 export default EditBookListItemFormFields;
