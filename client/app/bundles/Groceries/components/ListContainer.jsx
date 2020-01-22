@@ -78,7 +78,7 @@ export default class ListContainer extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -267,12 +267,16 @@ export default class ListContainer extends Component {
     this.setState({ purchasedItems });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
         <h1>{ this.state.list.name }</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <br />
         {
           this.state.permission === 'write' ? <ListItemForm

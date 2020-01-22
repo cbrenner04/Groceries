@@ -8,7 +8,6 @@ import PasswordForm from './PasswordForm';
 
 export default class EditPassword extends Component {
   static propTypes = {
-    reset_password_token: PropTypes.string.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
@@ -19,17 +18,9 @@ export default class EditPassword extends Component {
     this.state = {
       password: '',
       passwordConfirmation: '',
-      resetPasswordToken: this.props.reset_password_token,
+      resetPasswordToken: queryString.parse(this.props.location.search).reset_password_token,
       errors: '',
     };
-  }
-
-  componentWillMount() {
-    if (this.props.location) {
-      this.setState({
-        resetPasswordToken: queryString.parse(this.props.location.search).reset_password_token,
-      });
-    }
   }
 
   handleChange = (event) => {
@@ -63,10 +54,14 @@ export default class EditPassword extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h2>Change your password</h2>
         <PasswordForm
           submissionHandler={this.handleSubmit}

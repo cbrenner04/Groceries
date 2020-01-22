@@ -11,7 +11,7 @@ export default class CompletedLists extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     $.ajax({
       type: 'GET',
       url: '/completed_lists/',

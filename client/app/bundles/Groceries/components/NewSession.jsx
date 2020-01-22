@@ -40,10 +40,14 @@ export default class NewSession extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h2>Log in</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">

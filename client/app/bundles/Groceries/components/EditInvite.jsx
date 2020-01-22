@@ -5,9 +5,8 @@ import queryString from 'query-string';
 import Alert from './Alert';
 import PasswordForm from './PasswordForm';
 
-export default class EditPassword extends Component {
+export default class EditInvite extends Component {
   static propTypes = {
-    invitation_token: PropTypes.string.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
@@ -18,17 +17,9 @@ export default class EditPassword extends Component {
     this.state = {
       password: '',
       passwordConfirmation: '',
-      invitationToken: this.props.invitation_token,
+      invitationToken: queryString.parse(this.props.location.search).invitation_token,
       errors: '',
     };
-  }
-
-  componentWillMount() {
-    if (this.props.location) {
-      this.setState({
-        invitationToken: queryString.parse(this.props.location.search).invitation_token,
-      });
-    }
   }
 
   handleChange = (event) => {
@@ -62,10 +53,14 @@ export default class EditPassword extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h2>Set your password</h2>
         <PasswordForm
           submissionHandler={this.handleSubmit}

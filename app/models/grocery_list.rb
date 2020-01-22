@@ -7,11 +7,11 @@ class GroceryList < List
   def categories
     grocery_list_items.map(&:category).concat(
       [
-        "Alcohol", "Baby", "Bakery", "Baking", "Beverages",
-        "Canned Goods & Soups", "Cereal", "Cleaning Supplies", "Condiments",
-        "Dairy", "Deli", "Flowers", "Frozen Foods", "Grains, Pasta & Sides",
-        "Health & Beauty", "International", "Meat & Seafood", "Paper Products",
-        "Pet", "Pharmacy", "Produce", "Snacks", "Spices"
+        "alcohol", "baby", "bakery", "baking", "beverages",
+        "canned goods & soups", "cereal", "cleaning supplies", "condiments",
+        "dairy", "deli", "flowers", "frozen foods", "grains, pasta & sides",
+        "health & beauty", "international", "meat & seafood", "paper products",
+        "pet", "pharmacy", "produce", "snacks", "spices"
       ]
     ).uniq.compact.reject(&:empty?).sort
   end

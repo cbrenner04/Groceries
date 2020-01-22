@@ -9,7 +9,7 @@ export default class Navbar extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     $.ajax({ type: 'GET', url: '/', dataType: 'JSON' })
       .done(data => this.setState({ isUserSignedIn: data.is_user_signed_in }));
   }
