@@ -144,8 +144,11 @@ export default class ListContainer extends Component {
 
   handleAddItem = (item) => {
     const items = update(this.state.notPurchasedItems, { $push: [item] });
+    const categories = !this.state.categories.includes(item.category)
+      ? update(this.state.categories, { $push: [item.category] })
+      : this.state.categories;
     const notPurchasedItems = this.sortItems(items);
-    this.setState({ notPurchasedItems });
+    this.setState({ notPurchasedItems, categories });
   }
 
   listTypeToSnakeCase = () => {
