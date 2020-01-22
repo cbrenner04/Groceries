@@ -29,7 +29,7 @@ export default class ListEditForm extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -80,6 +80,10 @@ export default class ListEditForm extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
@@ -88,7 +92,7 @@ export default class ListEditForm extends Component {
           Back to lists
         </Link>
         <br />
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="listName">Name</label>

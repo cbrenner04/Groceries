@@ -42,7 +42,7 @@ export default class List extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { list } = this.props;
     $.ajax({
       type: 'GET',

@@ -19,7 +19,7 @@ export default class ListsContainer extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     $.ajax({
       type: 'GET',
       url: '/lists/',
@@ -149,10 +149,17 @@ export default class ListsContainer extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({
+      errors: '',
+      success: '',
+    });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} success={this.state.success} />
+        <Alert errors={this.state.errors} success={this.state.success} handleDismiss={this.handleAlertDismiss} />
         <h1>Lists</h1>
         <ListForm onFormSubmit={this.handleFormSubmit} />
         <hr />

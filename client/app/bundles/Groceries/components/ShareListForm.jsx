@@ -39,7 +39,7 @@ export default class ShareListForm extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -124,13 +124,17 @@ export default class ShareListForm extends Component {
     this.setState({ errors: errors.join(' and ') });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
         <h1>Share {this.state.name}</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="usersListNewEmail">Enter an email to invite someone to share this list:</label>

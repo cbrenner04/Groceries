@@ -7,8 +7,8 @@ class MusicList < List
   def categories
     music_list_items.map(&:category).concat(
       [
-        "Blues", "Comedy", "Country", "Electronic", "Folk", "Hip hop", "Jazz",
-        "Latin", "Pop", "R&B", "Rock"
+        "blues", "comedy", "country", "electronic", "folk", "hip hop", "jazz",
+        "latin", "pop", "r&b", "rock"
       ]
     ).uniq.compact.reject(&:empty?).sort
   end

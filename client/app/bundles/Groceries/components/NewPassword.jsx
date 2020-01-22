@@ -39,10 +39,14 @@ export default class NewPassword extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h2>Forgot your password?</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">

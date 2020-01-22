@@ -50,7 +50,7 @@ export default class EditListItemForm extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.match) {
       $.ajax({
         type: 'GET',
@@ -79,7 +79,7 @@ export default class EditListItemForm extends Component {
           itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
           itemAlbum: item.album,
           numberInSeries: Number(item.number_in_series),
-          category: item.category,
+          category: item.category || '',
         });
         $.ajax({
           type: 'GET',
@@ -141,7 +141,7 @@ export default class EditListItemForm extends Component {
       due_by: this.state.itemDueBy,
       assignee_id: this.state.itemAssigneeId,
       number_in_series: this.state.numberInSeries,
-      category: this.state.category,
+      category: this.state.category.trim().toLowerCase(),
     };
     listItem[`${this.listTypeToSnakeCase(this.state.listType)}_id`] = this.state.listId;
     const putData = {};
@@ -234,10 +234,14 @@ export default class EditListItemForm extends Component {
     return '';
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h1>Edit { this.itemName() }</h1>
         <Link to={`/lists/${this.state.listId}`} className="pull-right">
           Back to list

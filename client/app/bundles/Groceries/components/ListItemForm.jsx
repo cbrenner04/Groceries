@@ -48,6 +48,13 @@ export default class ListItemForm extends Component {
     this.state = initialState;
   }
 
+  handleAlertDismiss = () => {
+    this.setState({
+      errors: '',
+      success: '',
+    });
+  }
+
   handleUserInput = (event) => {
     const { name, value } = event.target;
     let targetValue = value;
@@ -80,7 +87,7 @@ export default class ListItemForm extends Component {
       assignee_id: this.state.itemAssigneeId,
       due_by: this.state.itemDueBy,
       number_in_series: this.state.numberInSeries || null,
-      category: this.state.category,
+      category: this.state.category.trim().toLowerCase(),
     };
     listItem[`${this.listTypeToSnakeCase()}_id`] = this.props.listId;
     const postData = {};
@@ -160,7 +167,7 @@ export default class ListItemForm extends Component {
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} success={this.state.success} />
+        <Alert errors={this.state.errors} success={this.state.success} handleDismiss={this.handleAlertDismiss} />
         <form onSubmit={this.handleSubmit} autoComplete="off">
           { this.formFields() }
           <br />

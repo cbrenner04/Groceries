@@ -35,10 +35,14 @@ export default class InviteForm extends Component {
     });
   }
 
+  handleAlertDismiss = () => {
+    this.setState({ errors: '' });
+  }
+
   render() {
     return (
       <div>
-        <Alert errors={this.state.errors} />
+        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
         <h1>Send Invitation</h1>
         <Link to="/lists" className="pull-right">Back to lists</Link>
         <br />
