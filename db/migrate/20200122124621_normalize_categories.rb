@@ -22,5 +22,5 @@ class NormalizeCategories < ActiveRecord::Migration[5.2]
     end
   end
 
-  # no doewn as it doesn't make any sense
+  # no down as it doesn't make any sense
 end
