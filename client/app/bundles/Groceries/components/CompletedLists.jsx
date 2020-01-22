@@ -45,9 +45,10 @@ export default class CompletedLists extends Component {
     return (
       <div>
         <h1>Completed Lists</h1>
-        <Link to="/lists" className="pull-right">Back to lists</Link>
-        <br />
-        <div>Previously refreshed lists are marked with an asterisk (*).</div>
+        <div className="clearfix">
+          <Link to="/lists" className="float-right">Back to lists</Link>
+          <div className="float-left">Previously refreshed lists are marked with an asterisk (*).</div>
+        </div>
         <div className="list-group">
           {
             this.state.completedLists.map(list => (
