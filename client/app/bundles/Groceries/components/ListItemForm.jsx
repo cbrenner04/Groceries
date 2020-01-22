@@ -35,10 +35,12 @@ export default class ListItemForm extends Component {
       email: PropTypes.string.isRequired,
     })),
     handleItemAddition: PropTypes.func.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     listUsers: [],
+    categories: [],
   }
 
   constructor(props) {
@@ -115,6 +117,7 @@ export default class ListItemForm extends Component {
           inputHandler={this.handleUserInput}
           numberInSeries={this.state.numberInSeries}
           category={this.state.category}
+          categories={this.props.categories}
         />
       );
     } else if (this.props.listType === 'GroceryList') {
@@ -124,6 +127,7 @@ export default class ListItemForm extends Component {
           product={this.state.product}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.props.categories}
         />
       );
     } else if (this.props.listType === 'MusicList') {
@@ -134,6 +138,7 @@ export default class ListItemForm extends Component {
           itemAlbum={this.state.itemAlbum}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.props.categories}
         />
       );
     } else if (this.props.listType === 'ToDoList') {
@@ -145,6 +150,7 @@ export default class ListItemForm extends Component {
           itemDueBy={this.state.itemDueBy}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.props.categories}
         />
       );
     }
@@ -155,7 +161,7 @@ export default class ListItemForm extends Component {
     return (
       <div>
         <Alert errors={this.state.errors} success={this.state.success} />
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} autoComplete="off">
           { this.formFields() }
           <br />
           <button type="submit" className="btn btn-success btn-block">

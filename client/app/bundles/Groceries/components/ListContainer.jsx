@@ -74,6 +74,7 @@ export default class ListContainer extends Component {
       purchasedItems: props.purchased_items,
       listUsers: [],
       permission: 'write',
+      categories: [],
     };
   }
 
@@ -89,6 +90,7 @@ export default class ListContainer extends Component {
           list: data.list,
           notPurchasedItems: data.not_purchased_items,
           purchasedItems: data.purchased_items,
+          categories: data.categories,
         });
         $.ajax({
           type: 'GET',
@@ -142,8 +144,11 @@ export default class ListContainer extends Component {
 
   handleAddItem = (item) => {
     const items = update(this.state.notPurchasedItems, { $push: [item] });
+    const categories = !this.state.categories.includes(item.category)
+      ? update(this.state.categories, { $push: [item.category] })
+      : this.state.categories;
     const notPurchasedItems = this.sortItems(items);
-    this.setState({ notPurchasedItems });
+    this.setState({ notPurchasedItems, categories });
   }
 
   listTypeToSnakeCase = () => {
@@ -276,6 +281,7 @@ export default class ListContainer extends Component {
             listUsers={this.state.listUsers}
             userId={this.state.userId}
             handleItemAddition={this.handleAddItem}
+            categories={this.state.categories}
           /> : <p>You only have permission to read this list</p>
         }
         <br />

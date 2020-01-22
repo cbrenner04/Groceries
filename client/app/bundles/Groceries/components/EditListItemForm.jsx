@@ -46,6 +46,7 @@ export default class EditListItemForm extends Component {
       errors: '',
       numberInSeries: 0,
       category: '',
+      categories: [],
     };
   }
 
@@ -94,6 +95,15 @@ export default class EditListItemForm extends Component {
           } else {
             this.props.history.push('/lists');
           }
+          $.ajax({
+            type: 'GET',
+            url: `/lists/${this.props.match.params.list_id}`,
+            dataType: 'JSON',
+          }).done((listData) => {
+            this.setState({
+              categories: listData.categories,
+            });
+          });
         });
       });
     }
@@ -177,6 +187,7 @@ export default class EditListItemForm extends Component {
           inputHandler={this.handleUserInput}
           numberInSeries={this.state.numberInSeries}
           category={this.state.category}
+          categories={this.state.categories}
           editForm
         />
       );
@@ -188,6 +199,7 @@ export default class EditListItemForm extends Component {
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.state.categories}
           editForm
         />
       );
@@ -200,6 +212,7 @@ export default class EditListItemForm extends Component {
           itemPurchased={this.state.itemPurchased}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.state.categories}
           editForm
         />
       );
@@ -213,6 +226,7 @@ export default class EditListItemForm extends Component {
           listUsers={this.state.listUsers}
           inputHandler={this.handleUserInput}
           category={this.state.category}
+          categories={this.state.categories}
           editForm
         />
       );
@@ -229,7 +243,7 @@ export default class EditListItemForm extends Component {
           Back to list
         </Link>
         <br />
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} autoComplete="off">
           { this.formFields() }
           <button type="submit" className="btn btn-success btn-block">
             Update Item

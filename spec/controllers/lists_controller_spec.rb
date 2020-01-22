@@ -110,7 +110,8 @@ RSpec.describe ListsController do
                 user_id: user.id,
                 book_list_id: list.id,
                 title: "foo",
-                purchased: false
+                purchased: false,
+                category: "foo"
               )
               BookListItem.create!(
                 user_id: user.id,
@@ -137,6 +138,7 @@ RSpec.describe ListsController do
                 BookListItem.where(book_list: list)
                 .not_archived.ordered.purchased.first.id
               )
+              expect(response_body["categories"]).to include "foo"
             end
           end
 
@@ -149,7 +151,8 @@ RSpec.describe ListsController do
                 grocery_list_id: list.id,
                 product: "foo",
                 quantity: 1,
-                purchased: false
+                purchased: false,
+                category: "foo"
               )
               GroceryListItem.create!(
                 user_id: user.id,
@@ -186,6 +189,7 @@ RSpec.describe ListsController do
                 GroceryListItem.where(grocery_list: list)
                 .not_archived.ordered.purchased.not_refreshed.first.id
               )
+              expect(response_body["categories"]).to include "foo"
             end
           end
 
@@ -197,7 +201,8 @@ RSpec.describe ListsController do
                 user_id: user.id,
                 music_list_id: list.id,
                 title: "foo",
-                purchased: false
+                purchased: false,
+                category: "foo"
               )
               MusicListItem.create!(
                 user_id: user.id,
@@ -224,6 +229,7 @@ RSpec.describe ListsController do
                 MusicListItem.where(music_list: list)
                 .not_archived.ordered.purchased.first.id
               )
+              expect(response_body["categories"]).to include "foo"
             end
           end
 
@@ -235,7 +241,8 @@ RSpec.describe ListsController do
                 user_id: user.id,
                 to_do_list_id: list.id,
                 task: "foo",
-                completed: false
+                completed: false,
+                category: "foo"
               )
               ToDoListItem.create!(
                 user_id: user.id,
@@ -270,6 +277,7 @@ RSpec.describe ListsController do
                 ToDoListItem.where(to_do_list: list)
                 .not_archived.ordered.completed.not_refreshed.first.id
               )
+              expect(response_body["categories"]).to include "foo"
             end
           end
         end

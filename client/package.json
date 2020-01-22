@@ -10,7 +10,7 @@
     "build:production": "NODE_ENV=production webpack --config webpack.config.js --mode=production",
     "build:development": "NODE_ENV=development webpack -w --config webpack.config.js --mode=development",
     "lint": "./node_modules/.bin/eslint eslint --ext .jsx,.js ./app/",
-    "test": "snyk test",
+    "test": "yarn run lint && snyk test",
     "snyk-protect": "snyk protect",
     "prepare": "yarn run snyk-protect",
     "prepublish": "yarn run snyk-protect"
@@ -39,7 +39,7 @@
     "react-dom": "^16.4.2",
     "react-on-rails": "8.0.6",
     "react-router-dom": "^4.2.2",
-    "snyk": "^1.269.0",
+    "snyk": "^1.279.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3"
