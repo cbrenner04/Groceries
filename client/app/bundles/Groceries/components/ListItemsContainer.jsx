@@ -159,17 +159,17 @@ export default class ListItemsContainer extends Component {
               </div>
             </div>}
           {this.state.filter &&
-            <div>
+            <div className="float-right">
+              <span style={{ lineHeight: '2.5rem', marginRight: '1rem' }}>Filtering by:</span>
               <button
                 id="clear-filter-button"
                 type="button"
-                className="btn btn-outline-primary float-right"
+                className="btn btn-outline-primary"
                 style={{ marginRight: '1rem' }}
                 onClick={this.handleClearFilter}
               >
                 {this.state.filter} <i className="fa fa-trash" />
               </button>
-              <span className="float-right" style={{ lineHeight: '2.5rem', marginRight: '1rem' }}>Filtering by:</span>
             </div>}
         </div>
         {this.categories().sort().map(category => (
