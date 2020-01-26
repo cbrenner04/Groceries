@@ -7,43 +7,35 @@ import Alert from './Alert';
 import ListItemForm from './ListItemForm';
 import ListItemsContainer from './ListItemsContainer';
 
+const mapIncludedCategories = (items) => {
+  const cats = [''];
+  items.forEach((item) => {
+    if (!item.category) return;
+    const cat = item.category.toLowerCase();
+    if (!cats.includes(cat)) cats.push(cat);
+  });
+  return cats;
+};
+
+const categorizeNotPurchasedItems = (items, categories) => {
+  const obj = {};
+  categories.forEach((cat) => {
+    obj[cat] = [];
+  });
+  items.forEach((item) => {
+    if (!item.category) {
+      obj[''].push(item);
+      return;
+    }
+    const cat = item.category.toLowerCase();
+    if (!obj[cat]) obj[cat] = [];
+    obj[cat].push(item);
+  });
+  return obj;
+};
+
 export default class ListContainer extends Component {
   static propTypes = {
-    current_user_id: PropTypes.number,
-    list: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-    not_purchased_items: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      product: PropTypes.string,
-      task: PropTypes.string,
-      quantity: PropTypes.number,
-      author: PropTypes.string,
-      title: PropTypes.string,
-      artist: PropTypes.string,
-      album: PropTypes.string,
-      assignee_id: PropTypes.number,
-      due_by: PropTypes.date,
-      read: PropTypes.bool,
-      number_in_series: PropTypes.number,
-      category: PropTypes.string,
-    }).isRequired),
-    purchased_items: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      product: PropTypes.string,
-      task: PropTypes.string,
-      quantity: PropTypes.number,
-      author: PropTypes.string,
-      title: PropTypes.string,
-      artist: PropTypes.string,
-      album: PropTypes.string,
-      assignee_id: PropTypes.number,
-      due_by: PropTypes.date,
-      read: PropTypes.bool,
-      number_in_series: PropTypes.number,
-      category: PropTypes.string,
-    }).isRequired),
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
@@ -55,26 +47,21 @@ export default class ListContainer extends Component {
     }).isRequired,
   }
 
-  static defaultProps = {
-    current_user_id: 0,
-    list: {
-      id: 0,
-      type: 'GroceryList',
-    },
-    not_purchased_items: [],
-    purchased_items: [],
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      userId: props.current_user_id,
-      list: props.list,
-      notPurchasedItems: props.not_purchased_items,
-      purchasedItems: props.purchased_items,
+      userId: 0,
+      list: {
+        id: 0,
+        type: 'GroceryList',
+      },
+      notPurchasedItems: {},
+      purchasedItems: [],
       listUsers: [],
       permission: 'write',
       categories: [],
+      filter: '',
+      includedCategories: [''],
     };
   }
 
@@ -84,25 +71,34 @@ export default class ListContainer extends Component {
         type: 'GET',
         url: `/lists/${this.props.match.params.id}`,
         dataType: 'JSON',
-      }).done((data) => {
-        this.setState({
-          userId: data.current_user_id,
-          list: data.list,
-          notPurchasedItems: data.not_purchased_items,
-          purchasedItems: data.purchased_items,
-          categories: data.categories,
-        });
+      }).done(({
+        current_user_id: userId,
+        not_purchased_items: notPurchased,
+        purchased_items: purchasedItems,
+        list, categories,
+      }) => {
         $.ajax({
           type: 'GET',
           url: `/lists/${this.props.match.params.id}/users_lists`,
           dataType: 'JSON',
         }).done(({ accepted, pending }) => {
-          const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === this.state.userId);
+          const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === userId);
           const allAcceptedUsers = accepted.map(({ user }) => user);
           const allPendingUsers = pending.map(({ user }) => user);
           const listUsers = allAcceptedUsers.concat(allPendingUsers);
           if (userInAccepted) {
-            this.setState({ listUsers, permission: userInAccepted.users_list.permissions });
+            const includedCategories = mapIncludedCategories(notPurchased);
+            const notPurchasedItems = categorizeNotPurchasedItems(notPurchased, includedCategories);
+            this.setState({
+              userId,
+              list,
+              purchasedItems,
+              categories,
+              listUsers,
+              includedCategories,
+              notPurchasedItems,
+              permission: userInAccepted.users_list.permissions,
+            });
           } else {
             this.props.history.push('/lists');
           }
@@ -143,12 +139,19 @@ export default class ListContainer extends Component {
   }
 
   handleAddItem = (item) => {
-    const items = update(this.state.notPurchasedItems, { $push: [item] });
-    const categories = !this.state.categories.includes(item.category)
-      ? update(this.state.categories, { $push: [item.category] })
+    let { category } = item;
+    if (!category) category = '';
+    const { notPurchasedItems } = this.state;
+    if (!notPurchasedItems[category]) notPurchasedItems[category] = [];
+    const items = update(notPurchasedItems[category], { $push: [item] });
+    notPurchasedItems[category] = this.sortItems(items);
+    const categories = !this.state.categories.includes(category)
+      ? update(this.state.categories, { $push: [category] })
       : this.state.categories;
-    const notPurchasedItems = this.sortItems(items);
-    this.setState({ notPurchasedItems, categories });
+    const includedCategories = !this.state.includedCategories.includes(category)
+      ? update(this.state.includedCategories, { $push: [category] })
+      : this.state.includedCategories;
+    this.setState({ notPurchasedItems, categories, includedCategories });
   }
 
   listTypeToSnakeCase = () => {
@@ -205,6 +208,7 @@ export default class ListContainer extends Component {
       completed: false,
       assignee_id: item.assignee_id,
       due_by: item.due_by,
+      category: item.category || '',
     };
     newItem[`${this.listTypeToSnakeCase()}_id`] = this.listId(item);
     const postData = {};
@@ -227,20 +231,25 @@ export default class ListContainer extends Component {
   }
 
   moveItemToPurchased = (item) => {
-    const notPurchasedItems =
-      this.state.notPurchasedItems.filter(notItem => notItem.id !== item.id);
+    let { category } = item;
+    if (!category) category = '';
+    const updateNotPurchasedItems =
+      this.state.notPurchasedItems[category].filter(notItem => notItem.id !== item.id);
+    const { notPurchasedItems } = this.state;
+    notPurchasedItems[category] = updateNotPurchasedItems;
     let purchasedItems = update(this.state.purchasedItems, { $push: [item] });
     purchasedItems = this.sortItems(purchasedItems);
-    this.setState({ notPurchasedItems, purchasedItems });
-  }
-
-  moveItemToNotPurchased = (item) => {
-    const purchasedItems =
-      this.state.purchasedItems.filter(notItem => notItem.id !== item.id);
-    let notPurchasedItems =
-      update(this.state.notPurchasedItems, { $push: [item] });
-    notPurchasedItems = this.sortItems(notPurchasedItems);
-    this.setState({ notPurchasedItems, purchasedItems });
+    let { includedCategories, filter } = this.state;
+    if (!this.state.notPurchasedItems[category].length) {
+      includedCategories = includedCategories.filter(cat => cat !== category);
+      filter = '';
+    }
+    this.setState({
+      notPurchasedItems,
+      purchasedItems,
+      includedCategories,
+      filter,
+    });
   }
 
   handleDelete = (item) => {
@@ -258,7 +267,11 @@ export default class ListContainer extends Component {
   }
 
   removeItem = (itemId) => {
-    const notPurchasedItems = this.state.notPurchasedItems.filter(item => item.id !== itemId);
+    const category = Object.keys(this.state.notPurchasedItems).find(cat =>
+      this.state.notPurchasedItems[cat].find(item => item.id === itemId));
+    const updatedItems = this.state.notPurchasedItems[category].filter(item => item.id !== itemId);
+    const { notPurchasedItems } = this.state;
+    notPurchasedItems[category] = updatedItems;
     this.setState({ notPurchasedItems });
   }
 
@@ -269,6 +282,19 @@ export default class ListContainer extends Component {
 
   handleAlertDismiss = () => {
     this.setState({ errors: '' });
+  }
+
+  handleFilterByCategory = (event) => {
+    const filter = event.target.name;
+    this.setState({
+      filter,
+    });
+  }
+
+  handleClearingFilter = () => {
+    this.setState({
+      filter: '',
+    });
   }
 
   render() {
@@ -300,6 +326,10 @@ export default class ListContainer extends Component {
           listType={this.state.list.type}
           listUsers={this.state.listUsers}
           permission={this.state.permission}
+          handleCategoryFilter={this.handleFilterByCategory}
+          handleClearFilter={this.handleClearingFilter}
+          filter={this.state.filter}
+          categories={this.state.includedCategories}
         />
       </div>
     );
