@@ -517,7 +517,9 @@ RSpec.describe ListsController do
     context "when user is owner" do
       describe "when old list is a BookList" do
         it "creates new list" do
-          list = BookList.create!(name: "NewBookList", owner: user, completed: true)
+          list = BookList.create!(name: "NewBookList",
+                                  owner: user,
+                                  completed: true)
           expect do
             post :refresh_list, params: {
               id: list.id
@@ -526,7 +528,9 @@ RSpec.describe ListsController do
         end
 
         it "creates new items" do
-          list = BookList.create!(name: "NewBookList", owner: user, completed: true)
+          list = BookList.create!(name: "NewBookList",
+                                  owner: user,
+                                  completed: true)
           BookListItem.create!(
             user: user,
             book_list: list,
@@ -546,7 +550,9 @@ RSpec.describe ListsController do
 
       describe "when old list is a GroceryList" do
         it "creates new list" do
-          list = GroceryList.create!(name: "NewGroceryList", owner: user, completed: true)
+          list = GroceryList.create!(name: "NewGroceryList",
+                                     owner: user,
+                                     completed: true)
           expect do
             post :refresh_list, params: {
               id: list.id
@@ -555,7 +561,9 @@ RSpec.describe ListsController do
         end
 
         it "creates new items" do
-          list = GroceryList.create!(name: "NewGroceryList", owner: user, completed: true)
+          list = GroceryList.create!(name: "NewGroceryList",
+                                     owner: user,
+                                     completed: true)
           GroceryListItem.create!(
             user: user,
             grocery_list: list,
@@ -576,7 +584,9 @@ RSpec.describe ListsController do
 
       describe "when old list is a MusicList" do
         it "creates new list" do
-          list = MusicList.create!(name: "NewMusicList", owner: user, completed: true)
+          list = MusicList.create!(name: "NewMusicList",
+                                   owner: user,
+                                   completed: true)
           expect do
             post :refresh_list, params: {
               id: list.id
@@ -585,7 +595,9 @@ RSpec.describe ListsController do
         end
 
         it "creates new items" do
-          list = MusicList.create!(name: "NewMusicList", owner: user, completed: true)
+          list = MusicList.create!(name: "NewMusicList",
+                                   owner: user,
+                                   completed: true)
           MusicListItem.create!(
             user: user,
             music_list: list,
@@ -605,7 +617,9 @@ RSpec.describe ListsController do
 
       describe "when old list is a ToDoList" do
         it "creates new list" do
-          list = ToDoList.create!(name: "NewToDoList", owner: user, completed: true)
+          list = ToDoList.create!(name: "NewToDoList",
+                                  owner: user,
+                                  completed: true)
           expect do
             post :refresh_list, params: {
               id: list.id
@@ -614,7 +628,9 @@ RSpec.describe ListsController do
         end
 
         it "creates new items" do
-          list = ToDoList.create!(name: "NewToDoList", owner: user, completed: true)
+          list = ToDoList.create!(name: "NewToDoList",
+                                  owner: user,
+                                  completed: true)
           ToDoListItem.create!(
             user: user,
             to_do_list: list,
