@@ -54,11 +54,13 @@ export default class ListItems extends Component {
 
   handleUnPurchase = item => this.props.handleItemUnPurchase(item);
 
+  capitalize = category => category.charAt(0).toUpperCase() + category.slice(1);
+
   render() {
     return (
       <div className="list-group">
-        {this.props.category !== 'none' &&
-          <h5 data-test-class="category-header">{this.props.category}</h5>}
+        {this.props.category &&
+          <h5 data-test-class="category-header">{this.capitalize(this.props.category)}</h5>}
         {
           this.props.items.map(item => (
             <ListItem
