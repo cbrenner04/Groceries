@@ -184,7 +184,8 @@ class ListsController < ApplicationController
         to_do_list: new_list,
         task: item[:task],
         assignee_id: item[:assignee_id],
-        due_by: item[:due_by]
+        due_by: item[:due_by],
+        category: item[:category]
       )
     end
   end
@@ -198,7 +199,8 @@ class ListsController < ApplicationController
         user: current_user,
         book_list: new_list,
         author: item[:author],
-        title: item[:title]
+        title: item[:title],
+        category: item[:category]
       )
     end
   end
@@ -213,7 +215,8 @@ class ListsController < ApplicationController
         music_list: new_list,
         title: item[:title],
         artist: item[:artist],
-        album: item[:album]
+        album: item[:album],
+        category: item[:category]
       )
     end
   end
@@ -227,7 +230,8 @@ class ListsController < ApplicationController
         user: current_user,
         grocery_list: new_list,
         product: item[:product],
-        quantity: item[:quantity]
+        quantity: item[:quantity],
+        category: item[:category]
       )
     end
   end
