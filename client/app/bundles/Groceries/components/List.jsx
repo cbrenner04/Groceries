@@ -63,56 +63,82 @@ export default class List extends Component {
 
   handleReject = () => this.props.onListRejection(this.props.list);
 
-  incompleteListOwnerButtons = () => (
+  incompleteListButtons = () => (
     <div className="btn-group float-right" role="group">
-      <button onClick={this.handleComplete} className="btn btn-link p-0 mr-3">
+      <button
+        onClick={this.handleComplete}
+        className="btn btn-link p-0 mr-3"
+        disabled={this.props.userId !== this.props.list.owner_id}
+        style={{ opacity: this.props.userId !== this.props.list.owner_id ? 0.3 : 1 }}
+        data-test-id="incomplete-list-complete"
+      >
         <i className="fa fa-check-square-o fa-2x text-success" />
       </button>
-      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
+      <Link
+        to={`lists/${this.props.list.id}/users_lists`}
+        className="btn btn-link p-0 mr-3"
+        disabled={this.state.currentUserPermissions !== 'write'}
+        style={{
+          pointerEvents: this.state.currentUserPermissions !== 'write' ? 'none' : 'auto',
+          opacity: this.state.currentUserPermissions !== 'write' ? 0.3 : 1,
+        }}
+        data-test-id="incomplete-list-share"
+      >
         <i className="fa fa-users fa-2x text-primary" />
       </Link>
-      <Link to={`/lists/${this.props.list.id}/edit`} className="btn btn-link p-0 mr-3">
+      <Link
+        to={`/lists/${this.props.list.id}/edit`}
+        className="btn btn-link p-0 mr-3"
+        disabled={this.props.userId !== this.props.list.owner_id}
+        style={{
+          pointerEvents: this.props.userId !== this.props.list.owner_id ? 'none' : 'auto',
+          opacity: this.props.userId !== this.props.list.owner_id ? 0.3 : 1,
+        }}
+        data-test-id="incomplete-list-edit"
+      >
         <i className="fa fa-pencil-square-o fa-2x text-warning" />
       </Link>
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
+      <button
+        onClick={this.handleDelete}
+        className="btn btn-link p-0"
+        disabled={this.props.userId !== this.props.list.owner_id}
+        style={{ opacity: this.props.userId !== this.props.list.owner_id ? 0.3 : 1 }}
+        data-test-id="incomplete-list-trash"
+      >
         <i className="fa fa-trash fa-2x text-danger" />
       </button>
     </div>
   );
 
-  incompleteListWriterButtons = () => (
+  completedListButtons = () => (
     <div className="btn-group float-right" role="group">
-      <Link to={`lists/${this.props.list.id}/users_lists`} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-users fa-2x text-primary" />
-      </Link>
-    </div>
-  );
-
-  nonOwnerListButtons = () => (this.state.currentUserPermissions === 'write' ? this.incompleteListWriterButtons() : '');
-
-  incompleteListButtons = () => (
-    this.props.userId === this.props.list.owner_id ? this.incompleteListOwnerButtons() : this.nonOwnerListButtons()
-  );
-
-  completeListOwnerButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button onClick={this.handleRefresh} className="btn btn-link p-0 mr-3">
+      <button
+        onClick={this.handleRefresh}
+        className="btn btn-link p-0 mr-3"
+        disabled={this.props.userId !== this.props.list.owner_id}
+        style={{ opacity: this.props.userId !== this.props.list.owner_id ? 0.3 : 1 }}
+        data-test-id="complete-list-refresh"
+      >
         <i className="fa fa-refresh fa-2x text-primary" />
       </button>
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
+      <button
+        onClick={this.handleDelete}
+        className="btn btn-link p-0"
+        disabled={this.props.userId !== this.props.list.owner_id}
+        style={{ opacity: this.props.userId !== this.props.list.owner_id ? 0.3 : 1 }}
+        data-test-id="complete-list-trash"
+      >
         <i className="fa fa-trash fa-2x text-danger" />
       </button>
     </div>
   );
-
-  completedListButtons = () => (this.props.userId === this.props.list.owner_id ? this.completeListOwnerButtons() : '');
 
   pendingListButtons = () => (
     <div className="btn-group float-right" role="group">
-      <button onClick={this.handleAccept} className="btn btn-link p-0 mr-3">
+      <button onClick={this.handleAccept} className="btn btn-link p-0 mr-3" data-test-id="pending-list-accept">
         <i className="fa fa-check-square-o fa-2x text-success" />
       </button>
-      <button onClick={this.handleReject} className="btn btn-link p-0 mr-3">
+      <button onClick={this.handleReject} className="btn btn-link p-0 mr-3" data-test-id="pending-list-trash">
         <i className="fa fa-trash fa-2x text-danger" />
       </button>
     </div>
