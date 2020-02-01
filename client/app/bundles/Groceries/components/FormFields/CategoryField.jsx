@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Category = props => (
+const CategoryField = props => (
   <div className="form-group">
     <label htmlFor="category">Category</label>
     <input
@@ -19,15 +19,15 @@ const Category = props => (
   </div>
 );
 
-Category.propTypes = {
+CategoryField.propTypes = {
   handleInput: PropTypes.func.isRequired,
   category: PropTypes.string,
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
-Category.defaultProps = {
+CategoryField.defaultProps = {
   category: '',
   categories: [],
 };
 
-export default Category;
+export default CategoryField;

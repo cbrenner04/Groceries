@@ -56,8 +56,13 @@ class ListsController < ApplicationController
 
   def destroy
     set_list
-    @list.archive
-    redirect_to lists_path, notice: "Your list was successfully deleted"
+    if @list.archive
+      render json: {
+        completed_lists: List.all_completed_lists(current_user)
+      }
+    else
+      render json: @list.errors, status: :server_error
+    end
   end
 
   # TODO: Should this be another controller?

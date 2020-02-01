@@ -1,127 +1,106 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Alert from './Alert';
-import ListTypeOptions from './ListTypeOptions';
+import { SelectField, TextField, CheckboxField } from './FormFields';
 
-export default class ListEditForm extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-        list_id: PropTypes.string,
-      }).isRequired,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func,
-    }).isRequired,
-  }
+function ListEditForm(props) {
+  const [id, setId] = useState(0);
+  const [listName, setListName] = useState('');
+  const [completed, setCompleted] = useState(false);
+  const [listType, setListType] = useState('GroceryList');
+  const [errors, setErrors] = useState('');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: 0,
-      listName: '',
-      completed: false,
-      listType: 'GroceryList',
-      errors: '',
-    };
-  }
+  useEffect(() => {
+    if (!props.match) props.history.push('/lists');
+    $.ajax({
+      type: 'GET',
+      url: `/lists/${props.match.params.id}/edit`,
+      dataType: 'JSON',
+    }).done(({ list, current_user_id: currentUserId }) => {
+      if (list.owner_id !== currentUserId) props.history.push('/lists');
+      setId(list.id);
+      setListName(list.name);
+      setCompleted(list.completed);
+      setListType(list.type);
+    });
+  }, []);
 
-  componentDidMount() {
-    if (this.props.match) {
-      $.ajax({
-        type: 'GET',
-        url: `/lists/${this.props.match.params.id}/edit`,
-        dataType: 'JSON',
-      }).done(({ list, current_user_id: currentUserId }) => {
-        if (list.owner_id === currentUserId) {
-          this.setState({
-            id: list.id,
-            listName: list.name,
-            completed: list.completed,
-            listType: list.type,
-          });
-        } else {
-          this.props.history.push('/lists');
-        }
-      });
-    } else {
-      this.props.history.push('/lists');
-    }
-  }
-
-  handleChange = (event) => {
-    const { target } = event;
-    const obj = {};
-    obj[target.name] = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState(obj);
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const list = {
-      name: this.state.listName,
-      completed: this.state.completed,
-      type: this.state.listType,
+      name: listName,
+      completed,
+      type: listType,
     };
     $.ajax({
-      url: `/lists/${this.state.id}`,
+      url: `/lists/${id}`,
       data: { list },
       method: 'PUT',
     }).done(() => {
-      this.props.history.push('/lists');
+      props.history.push('/lists');
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+      setErrors(returnedErrors.join(' and '));
     });
-  }
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({ errors: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Edit { this.state.listName }</h1>
-        <Link to="/lists" className="pull-right">
-          Back to lists
-        </Link>
-        <br />
-        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
-        <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="listName">Name</label>
-            <input
-              name="listName"
-              type="text"
-              className="form-control"
-              id="listName"
-              value={this.state.listName}
-              onChange={this.handleChange}
-            />
-          </div>
-          <ListTypeOptions listType={this.state.listType} changeHandler={this.handleChange} />
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              id="completed"
-              name="completed"
-              type="checkbox"
-              checked={this.state.completed}
-              onChange={this.handleChange}
-            />
-            <label className="form-check-label" htmlFor="completed">Completed</label>
-          </div>
-          <button type="submit" className="btn btn-success btn-block">
-            Update List
-          </button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>Edit { listName }</h1>
+      <Link to="/lists" className="pull-right">
+        Back to lists
+      </Link>
+      <br />
+      <Alert errors={errors} handleDismiss={() => setErrors('')} />
+      <form className="form" onSubmit={handleSubmit}>
+        <TextField
+          name="listName"
+          label="Name"
+          value={listName}
+          handleChange={({ target: { value } }) => setListName(value)}
+        />
+        <SelectField
+          name="listType"
+          label="Type"
+          value={listType}
+          handleChange={({ target: { value } }) => setListType(value)}
+          options={[
+            { value: 'BookList', label: 'books' },
+            { value: 'GroceryList', label: 'groceries' },
+            { value: 'MusicList', label: 'music' },
+            { value: 'ToDoList', label: 'to-do' },
+          ]}
+          blankOption={false}
+        />
+        <CheckboxField
+          name="completed"
+          label="Completed"
+          value={completed}
+          handleChange={({ target: { checked } }) => setCompleted(checked)}
+          blankOption={false}
+          classes="mb-3"
+        />
+        <button type="submit" className="btn btn-success btn-block">
+          Update List
+        </button>
+      </form>
+    </div>
+  );
 }
+
+ListEditForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+      list_id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default ListEditForm;

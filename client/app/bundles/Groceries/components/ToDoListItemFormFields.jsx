@@ -1,67 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Category from './Category';
+import { TextField, CategoryField, DateField, CheckboxField, SelectField } from './FormFields';
 
 const EditToDoListItemFormFields = props => (
   <div>
-    <div className="form-group">
-      <label htmlFor="task">Task</label>
-      <input
-        name="task"
-        type="text"
-        className="form-control"
-        id="task"
-        value={props.task}
-        onChange={props.inputHandler}
-        placeholder="Clean the toilets"
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="itemAssignee">Assignee</label>
-      <select
-        name="itemAssigneeId"
-        className="form-control"
-        id="itemAssignee"
-        value={props.itemAssigneeId ? props.itemAssigneeId : ''}
-        onChange={props.inputHandler}
-      >
-        <option value="" disabled>Select Assignee</option>
-        {
-          props.listUsers.map(user => (
-            <option key={user.id} value={user.id}>{user.email}</option>
-          ))
-        }
-      </select>
-    </div>
-    <div className="form-group">
-      <label htmlFor="itemDueDate">Due By</label>
-      <input
-        name="itemDueBy"
-        type="date"
-        className="form-control"
-        id="itemDueDate"
-        value={props.itemDueBy}
-        onChange={props.inputHandler}
-        placeholder="mm/dd/yyyy"
-      />
-    </div>
-    <Category category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <TextField
+      name="task"
+      label="Task"
+      value={props.task}
+      handleChange={props.inputHandler}
+      placeholder="Clean the toilets"
+    />
+    <SelectField
+      name="itemAssigneeId"
+      label="Assignee"
+      value={props.itemAssigneeId}
+      handleChange={props.inputHandler}
+      options={props.listUsers.map(user => ({ value: String(user.id), label: user.email }))}
+      blankOption
+    />
+    <DateField
+      name="itemDueBy"
+      label="Due By"
+      value={props.itemDueBy}
+      handleChange={props.inputHandler}
+      placeholder="mm/dd/yyyy"
+    />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
     {
       props.editForm && (
-        <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            name="itemCompleted"
-            id="itemCompleted"
-            type="checkbox"
-            checked={props.itemCompleted}
-            onChange={props.inputHandler}
-          />
-          <label className="form-check-label" htmlFor="itemCompleted">
-            Completed
-          </label>
-        </div>
+        <CheckboxField
+          name="itemCompleted"
+          label="Completed"
+          value={props.itemCompleted}
+          handleChange={props.inputHandler}
+          classes="mb-3"
+        />
       )
     }
   </div>

@@ -110,9 +110,15 @@ export default class EditListItemForm extends Component {
   }
 
   handleUserInput = (event) => {
-    const { name, value } = event.target;
+    const {
+      name,
+      value,
+      type,
+      checked,
+    } = event.target;
     let targetValue = value;
-    if (name === 'numberInSeries') targetValue = Number(value);
+    if (type === 'number') targetValue = Number(value);
+    if (type === 'checkbox') targetValue = checked;
     const obj = {};
     obj[name] = targetValue;
     this.setState(obj);

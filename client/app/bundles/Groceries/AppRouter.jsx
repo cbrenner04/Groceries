@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import CompletedLists from './CompletedLists';
-import EditInvite from './EditInvite';
-import EditListItemForm from './EditListItemForm';
-import EditPassword from './EditPassword';
-import InviteForm from './InviteForm';
-import ListContainer from './ListContainer';
-import ListEditForm from './ListEditForm';
-import ListsContainer from './ListsContainer';
-import Navbar from './Navbar';
-import NewPassword from './NewPassword';
-import NewSession from './NewSession';
-import ShareListForm from './ShareListForm';
+import CompletedLists from './components/CompletedLists';
+import EditInvite from './components/EditInvite';
+import EditListItemForm from './components/EditListItemForm';
+import EditPassword from './components/EditPassword';
+import InviteForm from './components/InviteForm';
+import ListContainer from './components/ListContainer';
+import ListEditForm from './components/ListEditForm';
+import ListsContainer from './components/ListsContainer';
+import Navbar from './components/Navbar';
+import NewPassword from './components/NewPassword';
+import NewSession from './components/NewSession';
+import ShareListForm from './components/ShareListForm';
 
 export default function AppRouter() {
   return (

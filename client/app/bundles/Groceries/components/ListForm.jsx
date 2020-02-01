@@ -1,57 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import ListTypeOptions from './ListTypeOptions';
+import { SelectField, TextField } from './FormFields';
 
-const defaultListType = 'GroceryList';
+function ListForm(props) {
+  const defaultListType = 'GroceryList';
+  const [list, setList] = useState('');
+  const [listType, setListType] = useState(defaultListType);
 
-export default class ListForm extends Component {
-  static propTypes = {
-    onFormSubmit: PropTypes.func.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: '',
-      listType: defaultListType,
-    };
-  }
-
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    const obj = {};
-    obj[name] = value;
-    this.setState(obj);
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.props.onFormSubmit({
-      name: this.state.list,
-      type: this.state.listType,
+    props.onFormSubmit({
+      name: list,
+      type: listType,
     });
-    this.setState({ list: '', listType: defaultListType });
-  }
+    setList('');
+    setListType(defaultListType);
+  };
 
-  render() {
-    return (
-      <form className="form" onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="list">Name</label>
-          <input
-            id="list"
-            name="list"
-            type="text"
-            className="form-control"
-            value={this.state.list}
-            onChange={this.handleChange}
-            placeholder="My super cool list"
-          />
-        </div>
-        <ListTypeOptions listType={this.state.listType} changeHandler={this.handleChange} />
-        <button type="submit" className="btn btn-success btn-block">Create List</button>
-      </form>
-    );
-  }
+  return (
+    <form className="form" onSubmit={handleSubmit}>
+      <TextField
+        name="list"
+        label="Name"
+        value={list}
+        handleChange={({ target: { value } }) => setList(value)}
+        placeholder="My super cool list"
+      />
+      <SelectField
+        name="listType"
+        label="Type"
+        value={listType}
+        handleChange={({ target: { value } }) => setListType(value)}
+        options={[
+          { value: 'BookList', label: 'books' },
+          { value: 'GroceryList', label: 'groceries' },
+          { value: 'MusicList', label: 'music' },
+          { value: 'ToDoList', label: 'to-do' },
+        ]}
+        blankOption={false}
+      />
+      <button type="submit" className="btn btn-success btn-block">Create List</button>
+    </form>
+  );
 }
+
+ListForm.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+};
+
+export default ListForm;

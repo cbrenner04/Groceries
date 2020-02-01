@@ -1,82 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Category from './Category';
+import {
+  CategoryField,
+  TextField,
+  NumberField,
+  CheckboxField,
+} from './FormFields';
 
-const EditBookListItemFormFields = props => (
+const BookListItemFormFields = props => (
   <div>
-    <div className="form-group">
-      <label htmlFor="itemAuthor">Author</label>
-      <input
-        name="itemAuthor"
-        type="text"
-        className="form-control"
-        id="itemAuthor"
-        value={props.itemAuthor}
-        onChange={props.inputHandler}
-        placeholder="Kurt Vonnegut"
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="itemTitle">Title</label>
-      <input
-        name="itemTitle"
-        type="text"
-        className="form-control"
-        id="itemTitle"
-        value={props.itemTitle}
-        onChange={props.inputHandler}
-        placeholder="Slaughterhouse-Five"
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="numberInSeries">Number in series</label>
-      <input
-        name="numberInSeries"
-        type="number"
-        className="form-control"
-        id="numberInSeries"
-        value={props.numberInSeries || ''}
-        onChange={props.inputHandler}
-      />
-    </div>
-    <Category category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <TextField
+      name="itemAuthor"
+      label="Author"
+      value={props.itemAuthor}
+      handleChange={props.inputHandler}
+      placeholder="Kurt Vonnagut"
+    />
+    <TextField
+      name="itemTitle"
+      label="Title"
+      value={props.itemTitle}
+      handleChange={props.inputHandler}
+      placeholder="Slaughterhouse-Five"
+    />
+    <NumberField
+      name="numberInSeries"
+      label="Number in series"
+      value={props.numberInSeries}
+      handleChange={props.inputHandler}
+    />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
     {
       props.editForm && (
         <div className="form-row mb-3">
-          <div className="form-check form-check-inline ml-1">
-            <input
-              className="form-check-input"
-              name="itemPurchased"
-              id="itemPurchased"
-              type="checkbox"
-              checked={props.itemPurchased}
-              onChange={props.inputHandler}
-            />
-            <label className="form-check-label" htmlFor="itemPurchased">
-              Purchased
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              name="itemRead"
-              id="itemRead"
-              type="checkbox"
-              checked={props.itemRead}
-              onChange={props.inputHandler}
-            />
-            <label className="form-check-label" htmlFor="itemRead">
-              Read
-            </label>
-          </div>
+          <CheckboxField
+            name="itemPurchased"
+            label="Purchased"
+            value={props.itemPurchased}
+            handleChange={props.inputHandler}
+            classes="form-check-inline ml-1"
+          />
+          <CheckboxField
+            name="itemRead"
+            label="Read"
+            value={props.itemRead}
+            handleChange={props.inputHandler}
+            classes="form-check-inline"
+          />
         </div>
       )
     }
   </div>
 );
 
-EditBookListItemFormFields.propTypes = {
+BookListItemFormFields.propTypes = {
   itemAuthor: PropTypes.string.isRequired,
   itemTitle: PropTypes.string.isRequired,
   itemPurchased: PropTypes.bool,
@@ -88,7 +66,7 @@ EditBookListItemFormFields.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
-EditBookListItemFormFields.defaultProps = {
+BookListItemFormFields.defaultProps = {
   itemPurchased: false,
   itemRead: false,
   editForm: false,
@@ -97,4 +75,4 @@ EditBookListItemFormFields.defaultProps = {
   categories: [],
 };
 
-export default EditBookListItemFormFields;
+export default BookListItemFormFields;

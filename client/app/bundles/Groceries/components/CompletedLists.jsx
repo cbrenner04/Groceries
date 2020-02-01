@@ -1,70 +1,85 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import Alert from './Alert';
 import List from './List';
 
-export default class CompletedLists extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      completedLists: [],
-    };
-  }
+function CompletedLists() {
+  const [completedLists, setCompletedLists] = useState([]);
+  const [errors, setErrors] = useState('');
+  const [success, setSuccess] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     $.ajax({
       type: 'GET',
       url: '/completed_lists/',
       dataType: 'JSON',
     }).done((data) => {
-      this.setState({
-        completedLists: data.completed_lists,
-      });
+      setCompletedLists(data.completed_lists);
     });
-  }
+  }, []);
 
-  handleDelete = (listId) => {
+  const handleDelete = (listId) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
         url: `/lists/${listId}`,
         type: 'DELETE',
-        success: () => this.removeList(listId),
-      });
+      })
+        .done(() => {
+          const lists = completedLists.filter(list => list.id !== listId);
+          setCompletedLists(lists);
+          setSuccess('Your list was successfully deleted.');
+        })
+        .fail((response) => {
+          const responseJSON = JSON.parse(response.responseText);
+          const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+          setErrors(returnedErrors.join(' and '));
+        });
     }
-  }
+  };
 
-  handleRefresh = (list) => {
+  const handleRefresh = (list) => {
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
     });
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <h1>Completed Lists</h1>
-        <div className="clearfix">
-          <Link to="/lists" className="float-right">Back to lists</Link>
-          <div className="float-left">Previously refreshed lists are marked with an asterisk (*).</div>
-        </div>
-        <div className="list-group">
-          {
-            this.state.completedLists.map(list => (
-              <List
-                userId={list.user_id}
-                list={list}
-                key={list.id}
-                onListDeletion={this.handleDelete}
-                completed={list.completed}
-                onListRefresh={this.handleRefresh}
-                accepted
-              />
-            ))
-          }
-        </div>
+  const dismissAlert = () => {
+    if (success) {
+      setSuccess('');
+    }
+    if (errors) {
+      setErrors('');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Completed Lists</h1>
+      <Alert errors={errors} success={success} handleDismiss={dismissAlert} />
+      <div className="clearfix">
+        <Link to="/lists" className="float-right">Back to lists</Link>
+        <div className="float-left">Previously refreshed lists are marked with an asterisk (*).</div>
       </div>
-    );
-  }
+      <div className="list-group">
+        {
+          completedLists.map(list => (
+            <List
+              userId={list.user_id}
+              list={list}
+              key={list.id}
+              onListDeletion={handleDelete}
+              completed={list.completed}
+              onListRefresh={handleRefresh}
+              accepted
+            />
+          ))
+        }
+      </div>
+    </div>
+  );
 }
+
+export default CompletedLists;
