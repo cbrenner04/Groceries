@@ -1,43 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import Alert from './Alert';
-import PasswordForm from './PasswordForm';
+import PasswordField from './FormFields';
 
-export default class EditInvite extends Component {
-  static propTypes = {
-    location: PropTypes.shape({
-      search: PropTypes.string,
-    }).isRequired,
-  }
+function EditInvite(props) {
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [invitationToken] = useState(queryString.parse(props.location.search).invitation_token);
+  const [errors, setErrors] = useState('');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      password: '',
-      passwordConfirmation: '',
-      invitationToken: queryString.parse(this.props.location.search).invitation_token,
-      errors: '',
-    };
-  }
-
-  handleChange = (event) => {
-    const { name } = event.target;
-    const obj = {};
-    obj[name] = event.target.value;
-    this.setState(obj);
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      errors: '',
-    });
+    setErrors('');
     const user = {
-      password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation,
-      invitation_token: this.state.invitationToken,
+      password,
+      password_confirmation: passwordConfirmation,
+      invitation_token: invitationToken,
     };
     $.ajax({
       url: '/users/invitation',
@@ -47,28 +27,42 @@ export default class EditInvite extends Component {
       // noop
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
-      const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      const responseErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+      setErrors(responseErrors);
     });
-  }
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({ errors: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
-        <h2>Set your password</h2>
-        <PasswordForm
-          submissionHandler={this.handleSubmit}
-          password={this.state.password}
-          passwordConfirmation={this.state.passwordConfirmation}
-          changeHandler={this.handleChange}
+  return (
+    <div>
+      <Alert errors={errors} handleDismiss={() => setErrors('')} />
+      <h2>Set your password</h2>
+      <form className="form" onSubmit={handleSubmit}>
+        <PasswordField
+          name="password"
+          label="password"
+          value={password}
+          handleChange={({ target: { value } }) => setPassword(value)}
+          placeholder="New password"
         />
-      </div>
-    );
-  }
+        <PasswordField
+          name="passwordConfirmation"
+          label="passwordConfirmation"
+          value={passwordConfirmation}
+          handleChange={({ target: { value } }) => setPasswordConfirmation(value)}
+          placeholder="Confirm new password"
+        />
+        <button type="submit" className="btn btn-success btn-block">
+          Set my password
+        </button>
+      </form>
+    </div>
+  );
 }
+
+EditInvite.propTypes = {
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }).isRequired,
+};
+
+export default EditInvite;

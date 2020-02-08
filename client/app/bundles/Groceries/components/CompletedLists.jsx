@@ -43,16 +43,22 @@ function CompletedLists() {
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
-    });
+    })
+      .done(() => {
+        const refreshedList = completedLists.find(completedList => completedList.id === list.id);
+        refreshedList.refreshed = true;
+        setSuccess('Your list was successfully refreshed.');
+      })
+      .fail((response) => {
+        const responseJSON = JSON.parse(response.responseText);
+        const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+        setErrors(returnedErrors.join(' and '));
+      });
   };
 
   const dismissAlert = () => {
-    if (success) {
-      setSuccess('');
-    }
-    if (errors) {
-      setErrors('');
-    }
+    setSuccess('');
+    setErrors('');
   };
 
   return (

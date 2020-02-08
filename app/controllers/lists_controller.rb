@@ -57,9 +57,7 @@ class ListsController < ApplicationController
   def destroy
     set_list
     if @list.archive
-      render json: {
-        completed_lists: List.all_completed_lists(current_user)
-      }
+      render json: {}, status: :no_content
     else
       render json: @list.errors, status: :server_error
     end
@@ -73,7 +71,7 @@ class ListsController < ApplicationController
     create_users_list(current_user, new_list)
     accept_user_list(new_list)
     create_new_items(@list, new_list)
-    redirect_to lists_path, notice: "Your list was successfully refreshed"
+    render json: new_list
   end
 
   private
