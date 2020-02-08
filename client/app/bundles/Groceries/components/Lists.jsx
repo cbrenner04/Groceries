@@ -41,7 +41,7 @@ export default class Lists extends Component {
     onListRefresh: PropTypes.func.isRequired,
   }
 
-  onDeleteOfList = listId => this.props.onListDelete(listId);
+  onDeleteOfList = list => this.props.onListDelete(list);
 
   onCompletionOfList = list => this.props.onListCompletion(list);
 

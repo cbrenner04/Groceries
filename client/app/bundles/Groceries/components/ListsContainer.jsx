@@ -1,92 +1,80 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import update from 'immutability-helper';
 
 import Alert from './Alert';
 import ListForm from './ListForm';
 import Lists from './Lists';
 
-export default class ListsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: 0,
-      acceptedLists: [],
-      pendingLists: [],
-      errors: '',
-      success: '',
-      completedLists: [],
-      nonCompletedLists: [],
-    };
-  }
+export default function ListsContainer() {
+  const [userId, setUserId] = useState(0);
+  const [pendingLists, setPendingLists] = useState([]);
+  const [completedLists, setCompletedLists] = useState([]);
+  const [nonCompletedLists, setNonCompletedLists] = useState([]);
+  const [errors, setErrors] = useState('');
+  const [success, setSuccess] = useState('');
 
-  componentDidMount() {
+  const sortLists = lists => lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+  useEffect(() => {
     $.ajax({
       type: 'GET',
       url: '/lists/',
       dataType: 'JSON',
     }).done((data) => {
-      const userId = data.current_user_id;
-      const acceptedLists = data.accepted_lists;
-      const pendingLists = data.pending_lists;
-      const completedLists = acceptedLists.filter(list => list.completed);
-      const nonCompletedLists = acceptedLists.filter(list => !list.completed);
-      this.setState({
-        userId,
-        acceptedLists,
-        pendingLists,
-        completedLists,
-        nonCompletedLists,
-      });
+      const newAcceptedLists = sortLists(data.accepted_lists);
+      const newCompletedLists = newAcceptedLists.filter(list => list.completed);
+      const newNonCompletedLists = newAcceptedLists.filter(list => !list.completed);
+      setUserId(data.current_user_id);
+      setPendingLists(sortLists(data.pending_lists)); // this should be sorted the opposite
+      setCompletedLists(newCompletedLists);
+      setNonCompletedLists(newNonCompletedLists);
     });
-  }
+  }, []);
 
-  handleFormSubmit = (list) => {
-    this.setState({
-      errors: '',
-      success: '',
-    });
+  const handleFormSubmit = (list) => {
+    setErrors('');
+    setSuccess('');
     $.post('/lists', { list })
       .done((data) => {
-        this.addNewList(data);
+        const updatedNonCompletedLists = update(nonCompletedLists, { $push: [data] });
+        setNonCompletedLists(sortLists(updatedNonCompletedLists));
+        setSuccess('List successfully added.');
       })
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);
         const responseTextKeys = Object.keys(responseJSON);
-        const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
-        this.setState({ errors: errors.join(' and ') });
+        const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
+        setErrors(responseErrors.join(' and '));
       });
-  }
+  };
 
-  sortLists = lists => lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-  addNewList = (list) => {
-    const lists = update(this.state.acceptedLists, { $push: [list] });
-    let { nonCompletedLists, completedLists } = this.state;
-    if (list.completed) {
-      completedLists = update(this.state.completedLists, { $push: [list] });
-    } else {
-      nonCompletedLists = update(this.state.nonCompletedLists, { $push: [list] });
-    }
-    this.setState({
-      acceptedLists: this.sortLists(lists),
-      success: 'List successfully added.',
-      nonCompletedLists: this.sortLists(nonCompletedLists),
-      completedLists: this.sortLists(completedLists),
-    });
-  }
-
-  handleDelete = (listId) => {
+  const handleDelete = (list) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
-        url: `/lists/${listId}`,
+        url: `/lists/${list.id}`,
         type: 'DELETE',
-        success: () => this.removeList(listId),
-      });
+      })
+        .done(() => {
+          const { id, completed } = list;
+          if (completed) {
+            const updatedCompletedLists = completedLists.filter(ll => ll.id !== id);
+            setCompletedLists(updatedCompletedLists);
+          } else {
+            const updatedNonCompletedLists = nonCompletedLists.filter(ll => ll.id !== id);
+            setNonCompletedLists(updatedNonCompletedLists);
+          }
+          setSuccess('List successfully deleted.');
+        })
+        .fail((response) => {
+          const responseJSON = JSON.parse(response.responseText);
+          const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+          setErrors(returnedErrors.join(' and '));
+        });
     }
-  }
+  };
 
-  handleCompletion = (list) => {
+  const handleCompletion = (list) => {
     const theList = list;
     theList.completed = true;
     $.ajax({
@@ -94,25 +82,38 @@ export default class ListsContainer extends Component {
       type: 'PUT',
       data: 'list%5Bcompleted%5D=true',
       success: () => {
-        const nonCompletedLists = this.state.nonCompletedLists.filter(nonList => nonList.id !== theList.id);
-        let completedLists = update(this.state.completedLists, { $push: [theList] });
-        completedLists = this.sortLists(completedLists);
-        this.setState({ nonCompletedLists, completedLists });
+        const updatedNonCompletedLists = nonCompletedLists.filter(nonList => nonList.id !== theList.id);
+        setNonCompletedLists(updatedNonCompletedLists);
+        const updatedCompletedLists = update(completedLists, { $push: [theList] });
+        setCompletedLists(sortLists(updatedCompletedLists));
       },
     });
-  }
+  };
 
-  removeList = (listId) => {
-    const acceptedLists = this.state.acceptedLists.filter(list => list.id !== listId);
-    this.setState({ acceptedLists });
-  }
+  const removeListFromUnaccepted = (listId) => {
+    const updatedPendingLists = pendingLists.filter(list => list.id !== listId);
+    setPendingLists(updatedPendingLists);
+  };
 
-  handleAccept = (list) => {
-    this.removeListFromUnaccepted(list.id);
-    this.acceptList(list);
-  }
+  const acceptList = (list) => {
+    $.ajax({
+      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
+      type: 'PATCH',
+      data: 'users_list%5Bhas_accepted%5D=true',
+      success: () => {
+        const updatedCompletedLists = update(completedLists, { $push: [list] });
+        setCompletedLists(sortLists(updatedCompletedLists));
+        setSuccess('List successfully added.');
+      },
+    });
+  };
 
-  handleReject = (list) => {
+  const handleAccept = (list) => {
+    removeListFromUnaccepted(list.id);
+    acceptList(list);
+  };
+
+  const handleReject = (list) => {
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       $.ajax({
@@ -120,61 +121,53 @@ export default class ListsContainer extends Component {
         type: 'PATCH',
         data: 'users_list%5Bhas_accepted%5D=false',
         success: () => {
-          this.removeListFromUnaccepted(list.id);
+          removeListFromUnaccepted(list.id);
         },
       });
     }
-  }
+  };
 
-  acceptList = (list) => {
-    $.ajax({
-      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
-      type: 'PATCH',
-      data: 'users_list%5Bhas_accepted%5D=true',
-      success: () => {
-        this.addNewList(list);
-      },
-    });
-  }
-
-  removeListFromUnaccepted = (listId) => {
-    const pendingLists = this.state.pendingLists.filter(list => list.id !== listId);
-    this.setState({ pendingLists });
-  }
-
-  handleRefresh = (list) => {
+  const handleRefresh = (list) => {
+    const localList = list;
+    localList.refreshed = true;
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
-    });
-  }
+    })
+      .done((data) => {
+        const updatedNonCompletedLists = update(nonCompletedLists, { $push: [data] });
+        setNonCompletedLists(sortLists(updatedNonCompletedLists));
+      })
+      .fail((response) => {
+        const responseJSON = JSON.parse(response.responseText);
+        const responseTextKeys = Object.keys(responseJSON);
+        const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
+        setErrors(responseErrors.join(' and '));
+      });
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({
-      errors: '',
-      success: '',
-    });
-  }
+  const handleAlertDismiss = () => {
+    setErrors('');
+    setSuccess('');
+  };
 
-  render() {
-    return (
-      <div>
-        <Alert errors={this.state.errors} success={this.state.success} handleDismiss={this.handleAlertDismiss} />
-        <h1>Lists</h1>
-        <ListForm onFormSubmit={this.handleFormSubmit} />
-        <hr />
-        <Lists
-          userId={this.state.userId}
-          onListDelete={this.handleDelete}
-          onListCompletion={this.handleCompletion}
-          pendingLists={this.state.pendingLists}
-          completedLists={this.state.completedLists}
-          nonCompletedLists={this.state.nonCompletedLists}
-          onListRefresh={this.handleRefresh}
-          onAccept={this.handleAccept}
-          onReject={this.handleReject}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Alert errors={errors} success={success} handleDismiss={handleAlertDismiss} />
+      <h1>Lists</h1>
+      <ListForm onFormSubmit={handleFormSubmit} />
+      <hr />
+      <Lists
+        userId={userId}
+        onListDelete={handleDelete}
+        onListCompletion={handleCompletion}
+        pendingLists={pendingLists}
+        completedLists={completedLists}
+        nonCompletedLists={nonCompletedLists}
+        onListRefresh={handleRefresh}
+        onAccept={handleAccept}
+        onReject={handleReject}
+      />
+    </div>
+  );
 }

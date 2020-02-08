@@ -53,7 +53,7 @@ export default class List extends Component {
     });
   }
 
-  handleDelete = () => this.props.onListDeletion(this.props.list.id);
+  handleDelete = () => this.props.onListDeletion(this.props.list);
 
   handleComplete = () => this.props.onListCompletion(this.props.list);
 
