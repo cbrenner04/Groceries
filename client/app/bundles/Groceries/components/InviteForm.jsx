@@ -1,69 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Alert from './Alert';
+import { EmailField } from './FormFields';
 
-export default class InviteForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newEmail: '',
-      errors: '',
-    };
-  }
+export default function InviteForm() {
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState('');
 
-  handleUserInput = (event) => {
-    const { name } = event.target;
-    const obj = {};
-    obj[name] = event.target.value;
-    this.setState(obj);
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      errors: '',
-    });
+    setErrors('');
     $.post(
       '/users/invitation',
-      { user: { email: this.state.newEmail } },
+      { user: { email } },
     ).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
-      this.setState({ errors: errors.join(' and ') });
+      const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
+      setErrors(responseErrors.join(' and '));
     });
-  }
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({ errors: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
-        <h1>Send Invitation</h1>
-        <Link to="/lists" className="pull-right">Back to lists</Link>
-        <br />
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="newEmail">Email</label>
-            <input
-              id="new-email"
-              type="email"
-              name="newEmail"
-              className="form-control"
-              value={this.state.newEmail}
-              onChange={this.handleUserInput}
-              placeholder="jane.smith@example.com"
-            />
-          </div>
-          <button type="submit" className="btn btn-success btn-block">
-            Invite User
-          </button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Alert errors={errors} handleDismiss={() => setErrors('')} />
+      <h1>Send Invitation</h1>
+      <Link to="/lists" className="pull-right">Back to lists</Link>
+      <br />
+      <form onSubmit={handleSubmit}>
+        <EmailField value={email} handleChange={({ target: { value } }) => setEmail(value)} />
+        <button type="submit" className="btn btn-success btn-block">
+          Invite User
+        </button>
+      </form>
+    </div>
+  );
 }

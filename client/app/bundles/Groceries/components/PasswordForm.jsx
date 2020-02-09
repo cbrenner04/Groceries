@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PasswordField from './FormFields/PasswordField';
+import { PasswordField } from './FormFields';
 
 const PasswordForm = props => (
   <form className="form" onSubmit={props.submissionHandler} autoComplete="off">
     <PasswordField
       name="password"
-      label="password"
+      label="Password"
       value={props.password}
       handleChange={props.passwordChangeHandler}
       placeholder="New password"
     />
     <PasswordField
-      name="passwordConfirmation"
-      label="passwordConfirmation"
+      name="password-confirmation"
+      label="Password confirmation"
       value={props.passwordConfirmation}
       handleChange={props.passwordConfirmationChangeHandler}
       placeholder="Confirm new password"
