@@ -1,169 +1,110 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { prettyDueBy } from '../utils/format';
+import PurchasedItemButtons from './PurchasedItemButtons';
+import NotPurchasedItemButtons from './NotPurchasedItemButtons';
 
-export default class ListItem extends Component {
-  static propTypes = {
-    item: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      product: PropTypes.string,
-      task: PropTypes.string,
-      quantity: PropTypes.string,
-      author: PropTypes.string,
-      title: PropTypes.string,
-      artist: PropTypes.string,
-      album: PropTypes.string,
-      assignee_id: PropTypes.number,
-      due_by: PropTypes.string,
-      read: PropTypes.bool,
-      number_in_series: PropTypes.number,
-      category: PropTypes.string,
-    }).isRequired,
-    purchased: PropTypes.bool,
-    handleItemDelete: PropTypes.func.isRequired,
-    handleItemPurchase: PropTypes.func.isRequired,
-    handleItemRead: PropTypes.func.isRequired,
-    handleItemUnRead: PropTypes.func.isRequired,
-    listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      email: PropTypes.string.isRequired,
-    })),
-    unPurchaseItem: PropTypes.func.isRequired,
-    permission: PropTypes.string.isRequired,
-  }
+function ListItem(props) {
+  const prettyTitle = () => `"${props.item.title}"`;
+  const due = () => `Due By: ${prettyDueBy(props.item.due_by)}`;
+  const testClass = () => (props.purchased ? 'purchased-item' : 'non-purchased-item');
 
-  static defaultProps = {
-    listUsers: [],
-    purchased: false,
-  }
-
-  setButtons = () => (this.props.purchased ? this.purchasedItemButtons() : this.notPurchaseItemButtons());
-
-  unPurchase = () => this.props.unPurchaseItem(this.props.item);
-
-  handleDelete = () => this.props.handleItemDelete(this.props.item);
-
-  handleRead = () => this.props.handleItemRead(this.props.item);
-
-  handleUnRead = () => this.props.handleItemUnRead(this.props.item);
-
-  handlePurchase = () => this.props.handleItemPurchase(this.props.item);
-
-  prettyTitle = () => `"${this.props.item.title}"`
-
-  listTypeToSnakeCase = () => {
-    const { listType } = this.props;
-    return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-  }
-
-  listItemPath = () => {
-    const listId = this.props.item[`${this.listTypeToSnakeCase()}_id`];
-    return `/lists/${listId}/${this.listTypeToSnakeCase()}_items`;
-  }
-
-  itemName = () => (
+  const itemName = () => (
     {
-      BookList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.author}`,
-      GroceryList: `${this.props.item.quantity} ${this.props.item.product}`,
-      MusicList: `${this.props.item.title ? this.prettyTitle() : ''} ${this.props.item.artist} ` +
-                 `${this.props.item.artist && this.props.item.album ? '- ' : ''}` +
-                 `${this.props.item.album ? this.props.item.album : ''}`,
-      ToDoList: `${this.props.item.task}`,
-    }[this.props.listType]
-  )
+      BookList: `${props.item.title ? prettyTitle() : ''} ${props.item.author}`,
+      GroceryList: `${props.item.quantity} ${props.item.product}`,
+      MusicList: `${props.item.title ? prettyTitle() : ''} ${props.item.artist} ` +
+                 `${props.item.artist && props.item.album ? '- ' : ''}` +
+                 `${props.item.album ? props.item.album : ''}`,
+      ToDoList: `${props.item.task}`,
+    }[props.listType]
+  );
 
-  assigned = () => `Assigned To: ${this.assignee(this.props.item.assignee_id)}`;
-
-  due = () => `Due By: ${prettyDueBy(this.props.item.due_by)}`;
-
-  assignee = (assigneeId) => {
-    const assignedUser = this.props.listUsers.filter(user => user.id === assigneeId)[0];
+  const assignee = (assigneeId) => {
+    const assignedUser = props.listUsers.filter(user => user.id === assigneeId)[0];
     return assignedUser ? assignedUser.email : '';
-  }
+  };
 
-  extraInfo = () => {
-    if (this.props.listType === 'ToDoList') {
+  const assigned = () => `Assigned To: ${assignee(props.item.assignee_id)}`;
+
+  const extraInfo = () => {
+    if (props.listType === 'ToDoList') {
       return (
         <small className="text-muted">
-          <div>{this.props.item.assignee_id ? this.assigned() : ''}</div>
-          <div>{this.props.item.due_by ? this.due() : ''}</div>
+          <div>{props.item.assignee_id ? assigned() : ''}</div>
+          <div>{props.item.due_by ? due() : ''}</div>
         </small>
       );
     }
     return '';
-  }
+  };
 
-  readIcon = () => {
-    if (this.props.listType === 'BookList') {
-      if (this.props.item.read) {
-        return (
-          <button onClick={this.handleUnRead} className="btn btn-link p-0 mr-3">
-            <i className="fa fa-bookmark fa-2x text-info" />
-          </button>
-        );
-      }
-      return (
-        <button onClick={this.handleRead} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-bookmark-o fa-2x text-info" />
-        </button>
-      );
-    }
-    return '';
-  }
+  const setButtons =
+    props.purchased
+      ? (<PurchasedItemButtons
+        listType={props.listType}
+        item={props.item}
+        handleItemUnPurchase={props.handleItemUnPurchase}
+        handleItemDelete={props.handleItemDelete}
+        handleReadOfItem={props.handleReadOfItem}
+        handleUnReadOfItem={props.handleUnReadOfItem}
+      />) : (<NotPurchasedItemButtons
+        listType={props.listType}
+        item={props.item}
+        handlePurchaseOfItem={props.handlePurchaseOfItem}
+        handleItemDelete={props.handleItemDelete}
+        handleReadOfItem={props.handleReadOfItem}
+        handleUnReadOfItem={props.handleUnReadOfItem}
+      />);
 
-  refreshIcon = () => {
-    if (this.props.listType === 'GroceryList' || this.props.listType === 'ToDoList') {
-      return (
-        <button onClick={this.unPurchase} className="btn btn-link p-0 mr-3">
-          <i className="fa fa-refresh fa-2x text-primary" />
-        </button>
-      );
-    }
-    return '';
-  }
-
-  testClass = () => (this.props.purchased ? 'purchased-item' : 'non-purchased-item');
-
-  notPurchaseItemButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <div>{ this.readIcon() }</div>
-      <button onClick={this.handlePurchase} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-check-square-o fa-2x text-success" />
-      </button>
-      <Link to={`${this.listItemPath()}/${this.props.item.id}/edit`} className="btn btn-link p-0 mr-3">
-        <i className="fa fa-pencil-square-o fa-2x text-warning" />
-      </Link>
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
+  return (
+    <div
+      className="list-group-item"
+      key={props.item.id}
+      style={{ display: 'block' }}
+      data-test-class={testClass()}
+    >
+      <div className="pt-1">{ itemName() }</div>
+      <div className="pt-1">{ extraInfo() }</div>
+      { props.permission === 'write' ? setButtons : '' }
     </div>
   );
-
-  purchasedItemButtons = () => (
-    <div className="btn-group float-right" role="group">
-      { this.refreshIcon() }
-      { this.readIcon() }
-      <button onClick={this.handleDelete} className="btn btn-link p-0">
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
-  );
-
-  render() {
-    return (
-      <div
-        className="list-group-item"
-        key={this.props.item.id}
-        style={{ display: 'block' }}
-        data-test-class={this.testClass()}
-      >
-        <div className="pt-1">{ this.itemName() }</div>
-        <div className="pt-1">{ this.extraInfo() }</div>
-        { this.props.permission === 'write' ? this.setButtons() : '' }
-      </div>
-    );
-  }
 }
+
+ListItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    product: PropTypes.string,
+    task: PropTypes.string,
+    quantity: PropTypes.string,
+    author: PropTypes.string,
+    title: PropTypes.string,
+    artist: PropTypes.string,
+    album: PropTypes.string,
+    assignee_id: PropTypes.number,
+    due_by: PropTypes.string,
+    read: PropTypes.bool,
+    number_in_series: PropTypes.number,
+    category: PropTypes.string,
+  }).isRequired,
+  purchased: PropTypes.bool,
+  handleItemDelete: PropTypes.func.isRequired,
+  handlePurchaseOfItem: PropTypes.func.isRequired,
+  handleReadOfItem: PropTypes.func.isRequired,
+  handleUnReadOfItem: PropTypes.func.isRequired,
+  handleItemUnPurchase: PropTypes.func.isRequired,
+  listType: PropTypes.string.isRequired,
+  listUsers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+  })),
+  permission: PropTypes.string.isRequired,
+};
+
+ListItem.defaultProps = {
+  listUsers: [],
+  purchased: false,
+};
+
+export default ListItem;

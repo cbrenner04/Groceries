@@ -1,84 +1,107 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ListItem from './ListItem';
 
-export default class ListItems extends Component {
-  static propTypes = {
-    category: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      product: PropTypes.string,
-      task: PropTypes.string,
-      quantity: PropTypes.string,
-      author: PropTypes.string,
-      title: PropTypes.string,
-      artist: PropTypes.string,
-      album: PropTypes.string,
-      assignee_id: PropTypes.number,
-      due_by: PropTypes.date,
-      read: PropTypes.bool,
-      number_in_series: PropTypes.number,
-      category: PropTypes.string,
-    }).isRequired),
-    purchased: PropTypes.bool,
-    onItemPurchase: PropTypes.func,
-    onItemRead: PropTypes.func.isRequired,
-    onItemUnRead: PropTypes.func.isRequired,
-    onItemDelete: PropTypes.func.isRequired,
-    handleItemUnPurchase: PropTypes.func,
-    listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      email: PropTypes.string.isRequired,
-    })),
-    permission: PropTypes.string.isRequired,
-  }
+function ListItems(props) {
+  const [sortedItems, setSortedItems] = useState(props.items);
+  const capitalize = category => category.charAt(0).toUpperCase() + category.slice(1);
 
-  static defaultProps = {
-    items: [],
-    listUsers: [],
-    purchased: false,
-    handleItemUnPurchase: null,
-    onItemPurchase: null,
-    category: '',
-  }
+  const performSort = (items, sortAttrs) => {
+    if (sortAttrs.length === 0) return items;
+    const sortAttr = sortAttrs.pop();
+    const sorted = items.sort((a, b) => {
+      // the sort from the server comes back with items with number_in_series: `null` at the end of the list
+      // without the next two lines this would put those items at the front of the list
+      if (a[sortAttr] === null) return 1;
+      if (b[sortAttr] === null) return -1;
+      const positiveBranch = (a[sortAttr] > b[sortAttr]) ? 1 : 0;
+      return (a[sortAttr] < b[sortAttr]) ? -1 : positiveBranch;
+    });
+    return performSort(sorted, sortAttrs);
+  };
 
-  purchaseItem = item => this.props.onItemPurchase(item);
+  const sortItems = (items) => {
+    let sortAttrs = [];
+    if (props.listType === 'BookList') {
+      sortAttrs = ['author', 'number_in_series', 'title'];
+    } else if (props.listType === 'GroceryList') {
+      sortAttrs = ['product'];
+    } else if (props.listType === 'MusicList') {
+      sortAttrs = ['artist', 'album', 'title'];
+    } else if (props.listType === 'ToDoList') {
+      sortAttrs = ['due_by', 'assignee_id', 'task'];
+    }
+    const sorted = performSort(items, sortAttrs);
+    return sorted;
+  };
 
-  readItem = item => this.props.onItemRead(item);
+  useEffect(() => {
+    const sorted = sortItems(props.items);
+    setSortedItems(sorted);
+  }, [props.items]);
 
-  unReadItem = item => this.props.onItemUnRead(item);
-
-  deleteItem = item => this.props.onItemDelete(item);
-
-  handleUnPurchase = item => this.props.handleItemUnPurchase(item);
-
-  capitalize = category => category.charAt(0).toUpperCase() + category.slice(1);
-
-  render() {
-    return (
-      <div className="list-group">
-        {this.props.category &&
-          <h5 data-test-class="category-header">{this.capitalize(this.props.category)}</h5>}
-        {
-          this.props.items.map(item => (
-            <ListItem
-              item={item}
-              key={item.id}
-              unPurchaseItem={this.handleUnPurchase}
-              handleItemPurchase={this.purchaseItem}
-              handleItemRead={this.readItem}
-              handleItemUnRead={this.unReadItem}
-              handleItemDelete={this.deleteItem}
-              listType={this.props.listType}
-              listUsers={this.props.listUsers}
-              purchased={this.props.purchased}
-              permission={this.props.permission}
-            />
-          ))
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="list-group">
+      {props.category &&
+        <h5 data-test-class="category-header">{capitalize(props.category)}</h5>}
+      {
+        sortedItems.map(item => (
+          <ListItem
+            item={item}
+            key={item.id}
+            purchased={props.purchased}
+            handleItemDelete={props.handleItemDelete}
+            handlePurchaseOfItem={props.handlePurchaseOfItem}
+            handleReadOfItem={props.handleReadOfItem}
+            handleUnReadOfItem={props.handleUnReadOfItem}
+            handleItemUnPurchase={props.handleItemUnPurchase}
+            listType={props.listType}
+            listUsers={props.listUsers}
+            permission={props.permission}
+          />
+        ))
+      }
+    </div>
+  );
 }
+
+ListItems.propTypes = {
+  category: PropTypes.string,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    product: PropTypes.string,
+    task: PropTypes.string,
+    quantity: PropTypes.string,
+    author: PropTypes.string,
+    title: PropTypes.string,
+    artist: PropTypes.string,
+    album: PropTypes.string,
+    assignee_id: PropTypes.number,
+    due_by: PropTypes.date,
+    read: PropTypes.bool,
+    number_in_series: PropTypes.number,
+    category: PropTypes.string,
+  }).isRequired),
+  purchased: PropTypes.bool,
+  handleItemDelete: PropTypes.func.isRequired,
+  handlePurchaseOfItem: PropTypes.func.isRequired,
+  handleReadOfItem: PropTypes.func.isRequired,
+  handleUnReadOfItem: PropTypes.func.isRequired,
+  handleItemUnPurchase: PropTypes.func.isRequired,
+  listType: PropTypes.string.isRequired,
+  listUsers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+  })),
+  permission: PropTypes.string.isRequired,
+};
+
+ListItems.defaultProps = {
+  items: [],
+  listUsers: [],
+  purchased: false,
+  category: '',
+};
+
+export default ListItems;
