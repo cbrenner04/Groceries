@@ -10,7 +10,6 @@ const NumberField = ({
   <div className="form-group">
     <label htmlFor={name}>{label}</label>
     <input
-      name={name}
       type="number"
       className="form-control"
       id={name}

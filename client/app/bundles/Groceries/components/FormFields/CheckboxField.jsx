@@ -11,7 +11,6 @@ const CheckboxField = ({
   <div className={`form-check ${classes}`}>
     <input
       className="form-check-input"
-      name={name}
       id={name}
       type="checkbox"
       checked={value}

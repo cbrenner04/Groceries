@@ -5,33 +5,33 @@ import { SelectField, TextField } from './FormFields';
 
 function ListForm(props) {
   const defaultListType = 'GroceryList';
-  const [list, setList] = useState('');
-  const [listType, setListType] = useState(defaultListType);
+  const [name, setName] = useState('');
+  const [type, setType] = useState(defaultListType);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     props.onFormSubmit({
-      name: list,
-      type: listType,
+      name,
+      type,
     });
-    setList('');
-    setListType(defaultListType);
+    setName('');
+    setType(defaultListType);
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit} autoComplete="off">
       <TextField
-        name="list"
+        name="name"
         label="Name"
-        value={list}
-        handleChange={({ target: { value } }) => setList(value)}
+        value={name}
+        handleChange={({ target: { value } }) => setName(value)}
         placeholder="My super cool list"
       />
       <SelectField
-        name="listType"
+        name="type"
         label="Type"
-        value={listType}
-        handleChange={({ target: { value } }) => setListType(value)}
+        value={type}
+        handleChange={({ target: { value } }) => setType(value)}
         options={[
           { value: 'BookList', label: 'books' },
           { value: 'GroceryList', label: 'groceries' },

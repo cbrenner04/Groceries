@@ -6,34 +6,34 @@ import { TextField, CategoryField, CheckboxField } from './FormFields';
 const EditMusicListItemFormFields = props => (
   <div>
     <TextField
-      name="itemTitle"
+      name="title"
       label="Title"
-      value={props.itemTitle}
-      handleChange={props.inputHandler}
+      value={props.title}
+      handleChange={props.titleChangeHandler}
       placeholder="Baby Got Back"
     />
     <TextField
-      name="itemArtist"
+      name="artist"
       label="Artist"
-      value={props.itemArtist}
-      handleChange={props.inputHandler}
+      value={props.artist}
+      handleChange={props.artistChangeHandler}
       placeholder="Sir Mix-a-Lot"
     />
     <TextField
-      name="itemAlbum"
+      name="album"
       label="Album"
-      value={props.itemAlbum}
-      handleChange={props.inputHandler}
+      value={props.album}
+      handleChange={props.albumChangeHandler}
       placeholder="Mack Daddy"
     />
-    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.categoryChangeHandler} />
     {
       props.editForm && (
         <CheckboxField
-          name="itemPurchased"
+          name="purchased"
           label="Purchased"
-          value={props.itemPurchased}
-          handleChange={props.inputHandler}
+          value={props.purchased}
+          handleChange={props.purchasedChangeHandler}
           classes="mb-3"
         />
       )
@@ -42,21 +42,26 @@ const EditMusicListItemFormFields = props => (
 );
 
 EditMusicListItemFormFields.propTypes = {
-  itemTitle: PropTypes.string.isRequired,
-  itemArtist: PropTypes.string.isRequired,
-  itemAlbum: PropTypes.string.isRequired,
-  itemPurchased: PropTypes.bool,
-  inputHandler: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  titleChangeHandler: PropTypes.func.isRequired,
+  artist: PropTypes.string.isRequired,
+  artistChangeHandler: PropTypes.func.isRequired,
+  album: PropTypes.string.isRequired,
+  albumChangeHandler: PropTypes.func.isRequired,
+  purchased: PropTypes.bool,
+  purchasedChangeHandler: PropTypes.func,
   editForm: PropTypes.bool,
   category: PropTypes.string,
+  categoryChangeHandler: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 EditMusicListItemFormFields.defaultProps = {
-  itemPurchased: false,
+  purchased: false,
   editForm: false,
   category: '',
   categories: [],
+  purchasedChangeHandler: () => {},
 };
 
 export default EditMusicListItemFormFields;

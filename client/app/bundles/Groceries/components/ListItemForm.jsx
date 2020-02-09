@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { defaultDueBy } from '../utils/format';
@@ -9,173 +9,168 @@ import GroceryListItemFormFields from './GroceryListItemFormFields';
 import MusicListItemFormFields from './MusicListItemFormFields';
 import ToDoListItemFormFields from './ToDoListItemFormFields';
 
-const initialState = {
-  product: '',
-  task: '',
-  itemQuantity: '',
-  itemAuthor: '',
-  itemTitle: '',
-  itemArtist: '',
-  itemAlbum: '',
-  itemAssigneeId: '',
-  itemDueBy: defaultDueBy(),
-  errors: '',
-  success: '',
-  numberInSeries: 0,
-  category: '',
-};
+function ListItemForm(props) {
+  const [product, setProduct] = useState('');
+  const [task, setTask] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
+  const [album, setAlbum] = useState('');
+  const [assigneeId, setAssigneeId] = useState('');
+  const [dueBy, setDueBy] = useState(defaultDueBy());
+  const [numberInSeries, setNumberInSeries] = useState(0);
+  const [category, setCategory] = useState('');
+  const [errors, setErrors] = useState('');
+  const [success, setSuccess] = useState('');
 
-export default class ListItemForm extends Component {
-  static propTypes = {
-    userId: PropTypes.number.isRequired,
-    listId: PropTypes.number.isRequired,
-    listType: PropTypes.string.isRequired,
-    listUsers: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      email: PropTypes.string.isRequired,
-    })),
-    handleItemAddition: PropTypes.func.isRequired,
-    categories: PropTypes.arrayOf(PropTypes.string),
-  }
+  const dismissAlert = () => {
+    setErrors('');
+    setSuccess('');
+  };
 
-  static defaultProps = {
-    listUsers: [],
-    categories: [],
-  }
+  const listTypeToSnakeCase = () => props.listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
 
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-  }
-
-  handleAlertDismiss = () => {
-    this.setState({
-      errors: '',
-      success: '',
-    });
-  }
-
-  handleUserInput = (event) => {
-    const { name, value } = event.target;
-    let targetValue = value;
-    if (name === 'numberInSeries') targetValue = Number(value);
-    const obj = {};
-    obj[name] = targetValue;
-    this.setState(obj);
-  }
-
-  listTypeToSnakeCase = () => {
-    const { listType } = this.props;
-    return listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      errors: '',
-      success: '',
-    });
+    dismissAlert();
     const listItem = {
-      user_id: this.props.userId,
-      product: this.state.product,
-      task: this.state.task,
-      quantity: this.state.itemQuantity,
-      author: this.state.itemAuthor,
-      title: this.state.itemTitle,
-      artist: this.state.itemArtist,
-      album: this.state.itemAlbum,
-      assignee_id: this.state.itemAssigneeId,
-      due_by: this.state.itemDueBy,
-      number_in_series: this.state.numberInSeries || null,
-      category: this.state.category.trim().toLowerCase(),
+      user_id: props.userId,
+      product,
+      task,
+      quantity,
+      author,
+      title,
+      artist,
+      album,
+      assignee_id: assigneeId,
+      due_by: dueBy,
+      number_in_series: numberInSeries || null,
+      category: category.trim().toLowerCase(),
     };
-    listItem[`${this.listTypeToSnakeCase()}_id`] = this.props.listId;
+    listItem[`${listTypeToSnakeCase()}_id`] = props.listId;
     const postData = {};
-    postData[`${this.listTypeToSnakeCase()}_item`] = listItem;
+    postData[`${listTypeToSnakeCase()}_item`] = listItem;
     $.post(
-      `/lists/${this.props.listId}/${this.listTypeToSnakeCase()}_items`,
+      `/lists/${props.listId}/${listTypeToSnakeCase()}_items`,
       postData,
     ).done((data) => {
-      this.props.handleItemAddition(data);
-      this.setState(initialState);
-      this.setState({
-        success: 'Item successfully added.',
-      });
+      props.handleItemAddition(data);
+      setProduct('');
+      setTask('');
+      setQuantity('');
+      setAuthor('');
+      setTitle('');
+      setArtist('');
+      setAlbum('');
+      setAssigneeId('');
+      setDueBy(defaultDueBy());
+      setNumberInSeries(0);
+      setCategory('');
+      setSuccess('Item successfully added.');
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+      const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
       let joinString;
-      if (this.props.listType === 'BookList' || this.props.listType === 'MusicList') {
+      if (props.listType === 'BookList' || props.listType === 'MusicList') {
         joinString = ' or ';
       } else {
         joinString = ' and ';
       }
-      this.setState({ errors: errors.join(joinString) });
+      setErrors(responseErrors.join(joinString));
     });
-  }
+  };
 
-  formFields() {
-    if (this.props.listType === 'BookList') {
+  const formFields = () => {
+    if (props.listType === 'BookList') {
       return (
         <BookListItemFormFields
-          itemAuthor={this.state.itemAuthor}
-          itemTitle={this.state.itemTitle}
-          inputHandler={this.handleUserInput}
-          numberInSeries={this.state.numberInSeries}
-          category={this.state.category}
-          categories={this.props.categories}
+          author={author}
+          authorChangeHandler={({ target: { value } }) => setAuthor(value)}
+          title={title}
+          titleChangeHandler={({ target: { value } }) => setTitle(value)}
+          numberInSeries={numberInSeries}
+          numberInSeriesChangeHandler={({ target: { value } }) => setNumberInSeries(Number(value))}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={props.categories}
         />
       );
-    } else if (this.props.listType === 'GroceryList') {
+    } else if (props.listType === 'GroceryList') {
       return (
         <GroceryListItemFormFields
-          itemQuantity={this.state.itemQuantity}
-          product={this.state.product}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.props.categories}
+          quantity={quantity}
+          quantityChangeHandler={({ target: { value } }) => setQuantity(value)}
+          product={product}
+          productChangeHandler={({ target: { value } }) => setProduct(value)}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={props.categories}
         />
       );
-    } else if (this.props.listType === 'MusicList') {
+    } else if (props.listType === 'MusicList') {
       return (
         <MusicListItemFormFields
-          itemTitle={this.state.itemTitle}
-          itemArtist={this.state.itemArtist}
-          itemAlbum={this.state.itemAlbum}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.props.categories}
+          title={title}
+          titleChangeHandler={({ target: { value } }) => setTitle(value)}
+          artist={artist}
+          artistChangeHandler={({ target: { value } }) => setArtist(value)}
+          album={album}
+          albumChangeHandler={({ target: { value } }) => setAlbum(value)}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={props.categories}
         />
       );
-    } else if (this.props.listType === 'ToDoList') {
+    } else if (props.listType === 'ToDoList') {
       return (
         <ToDoListItemFormFields
-          task={this.state.task}
-          itemAssigneeId={this.state.itemAssigneeId}
-          listUsers={this.props.listUsers}
-          itemDueBy={this.state.itemDueBy}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.props.categories}
+          task={task}
+          taskChangeHandler={({ target: { value } }) => setTask(value)}
+          assigneeId={assigneeId}
+          assigneeIdChangeHandler={({ target: { value } }) => setAssigneeId(value)}
+          listUsers={props.listUsers}
+          dueBy={dueBy}
+          dueByChangeHandler={({ target: { value } }) => setDueBy(value)}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={props.categories}
         />
       );
     }
     return '';
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <Alert errors={this.state.errors} success={this.state.success} handleDismiss={this.handleAlertDismiss} />
-        <form onSubmit={this.handleSubmit} autoComplete="off">
-          { this.formFields() }
-          <br />
-          <button type="submit" className="btn btn-success btn-block">
-            Add New Item
-          </button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Alert errors={errors} success={success} handleDismiss={dismissAlert} />
+      <form onSubmit={handleSubmit} autoComplete="off">
+        { formFields() }
+        <br />
+        <button type="submit" className="btn btn-success btn-block">
+          Add New Item
+        </button>
+      </form>
+    </div>
+  );
 }
+
+ListItemForm.propTypes = {
+  userId: PropTypes.number.isRequired,
+  listId: PropTypes.number.isRequired,
+  listType: PropTypes.string.isRequired,
+  listUsers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+  })),
+  handleItemAddition: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string),
+};
+
+ListItemForm.defaultProps = {
+  listUsers: [],
+  categories: [],
+};
+
+export default ListItemForm;

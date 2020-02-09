@@ -11,7 +11,6 @@ const PasswordField = ({
   <div className="form-group">
     <label htmlFor={name}>{label}</label>
     <input
-      name={name}
       type="password"
       className="form-control"
       id={name}

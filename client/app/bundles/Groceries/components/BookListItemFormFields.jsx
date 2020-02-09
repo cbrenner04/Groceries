@@ -11,41 +11,41 @@ import {
 const BookListItemFormFields = props => (
   <div>
     <TextField
-      name="itemAuthor"
+      name="author"
       label="Author"
-      value={props.itemAuthor}
-      handleChange={props.inputHandler}
+      value={props.author}
+      handleChange={props.authorChangeHandler}
       placeholder="Kurt Vonnagut"
     />
     <TextField
-      name="itemTitle"
+      name="title"
       label="Title"
-      value={props.itemTitle}
-      handleChange={props.inputHandler}
+      value={props.title}
+      handleChange={props.titleChangeHandler}
       placeholder="Slaughterhouse-Five"
     />
     <NumberField
-      name="numberInSeries"
+      name="number-in-series"
       label="Number in series"
       value={props.numberInSeries}
-      handleChange={props.inputHandler}
+      handleChange={props.numberInSeriesChangeHandler}
     />
-    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.categoryChangeHandler} />
     {
       props.editForm && (
         <div className="form-row mb-3">
           <CheckboxField
-            name="itemPurchased"
+            name="purchased"
             label="Purchased"
-            value={props.itemPurchased}
-            handleChange={props.inputHandler}
+            value={props.purchased}
+            handleChange={props.purchasedChangeHandler}
             classes="form-check-inline ml-1"
           />
           <CheckboxField
-            name="itemRead"
+            name="read"
             label="Read"
-            value={props.itemRead}
-            handleChange={props.inputHandler}
+            value={props.read}
+            handleChange={props.readChangeHandler}
             classes="form-check-inline"
           />
         </div>
@@ -55,24 +55,31 @@ const BookListItemFormFields = props => (
 );
 
 BookListItemFormFields.propTypes = {
-  itemAuthor: PropTypes.string.isRequired,
-  itemTitle: PropTypes.string.isRequired,
-  itemPurchased: PropTypes.bool,
-  itemRead: PropTypes.bool,
-  inputHandler: PropTypes.func.isRequired,
+  author: PropTypes.string.isRequired,
+  authorChangeHandler: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  titleChangeHandler: PropTypes.func.isRequired,
+  purchased: PropTypes.bool,
+  purchasedChangeHandler: PropTypes.func,
+  read: PropTypes.bool,
+  readChangeHandler: PropTypes.func,
   editForm: PropTypes.bool,
   numberInSeries: PropTypes.number,
+  numberInSeriesChangeHandler: PropTypes.func.isRequired,
   category: PropTypes.string,
+  categoryChangeHandler: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 BookListItemFormFields.defaultProps = {
-  itemPurchased: false,
-  itemRead: false,
+  purchased: false,
+  read: false,
   editForm: false,
   numberInSeries: 0,
   category: '',
   categories: [],
+  purchasedChangeHandler: () => {},
+  readChangeHandler: () => {},
 };
 
 export default BookListItemFormFields;

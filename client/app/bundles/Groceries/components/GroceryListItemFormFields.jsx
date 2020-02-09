@@ -7,30 +7,30 @@ import {
   CheckboxField,
 } from './FormFields';
 
-const EditGroceryListItemFormFields = props => (
+const GroceryListItemFormFields = props => (
   <div>
     <TextField
       name="product"
       label="Product"
       value={props.product}
-      handleChange={props.inputHandler}
+      handleChange={props.productChangeHandler}
       placeholder="apples"
     />
     <TextField
-      name="itemQuantity"
+      name="quantity"
       label="Quantity"
-      value={props.itemQuantity}
-      handleChange={props.inputHandler}
+      value={props.quantity}
+      handleChange={props.quantityChangeHandler}
       placeholder="3 bags"
     />
-    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.categoryChangeHandler} />
     {
       props.editForm && (
         <CheckboxField
-          name="itemPurchased"
+          name="purchased"
           label="Purchased"
-          value={props.itemPurchased}
-          handleChange={props.inputHandler}
+          value={props.purchased}
+          handleChange={props.purchasedChangeHandler}
           classes="mb-3"
         />
       )
@@ -38,21 +38,25 @@ const EditGroceryListItemFormFields = props => (
   </div>
 );
 
-EditGroceryListItemFormFields.propTypes = {
+GroceryListItemFormFields.propTypes = {
   product: PropTypes.string.isRequired,
-  itemQuantity: PropTypes.string.isRequired,
-  itemPurchased: PropTypes.bool,
-  inputHandler: PropTypes.func.isRequired,
+  productChangeHandler: PropTypes.func.isRequired,
+  quantity: PropTypes.string.isRequired,
+  quantityChangeHandler: PropTypes.func.isRequired,
+  purchased: PropTypes.bool,
+  purchasedChangeHandler: PropTypes.func,
   editForm: PropTypes.bool,
   category: PropTypes.string,
+  categoryChangeHandler: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
-EditGroceryListItemFormFields.defaultProps = {
-  itemPurchased: false,
+GroceryListItemFormFields.defaultProps = {
+  purchased: false,
   editForm: false,
   category: '',
   categories: [],
+  purchasedChangeHandler: () => {},
 };
 
-export default EditGroceryListItemFormFields;
+export default GroceryListItemFormFields;

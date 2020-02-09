@@ -7,10 +7,10 @@ import { SelectField, TextField, CheckboxField } from './FormFields';
 
 function ListEditForm(props) {
   const [id, setId] = useState(0);
-  const [listName, setListName] = useState('');
-  const [completed, setCompleted] = useState(false);
-  const [listType, setListType] = useState('GroceryList');
   const [errors, setErrors] = useState('');
+  const [name, setName] = useState('');
+  const [completed, setCompleted] = useState(false);
+  const [type, setType] = useState('GroceryList');
 
   useEffect(() => {
     if (!props.match) props.history.push('/lists');
@@ -21,18 +21,18 @@ function ListEditForm(props) {
     }).done(({ list, current_user_id: currentUserId }) => {
       if (list.owner_id !== currentUserId) props.history.push('/lists');
       setId(list.id);
-      setListName(list.name);
+      setName(list.name);
       setCompleted(list.completed);
-      setListType(list.type);
+      setType(list.type);
     });
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const list = {
-      name: listName,
+      name,
       completed,
-      type: listType,
+      type,
     };
     $.ajax({
       url: `/lists/${id}`,
@@ -49,24 +49,24 @@ function ListEditForm(props) {
 
   return (
     <div>
-      <h1>Edit { listName }</h1>
+      <h1>Edit { name }</h1>
       <Link to="/lists" className="pull-right">
         Back to lists
       </Link>
       <br />
       <Alert errors={errors} handleDismiss={() => setErrors('')} />
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} autoComplete="off">
         <TextField
-          name="listName"
+          name="name"
           label="Name"
-          value={listName}
-          handleChange={({ target: { value } }) => setListName(value)}
+          value={name}
+          handleChange={({ target: { value } }) => setName(value)}
         />
         <SelectField
-          name="listType"
+          name="type"
           label="Type"
-          value={listType}
-          handleChange={({ target: { value } }) => setListType(value)}
+          value={type}
+          handleChange={({ target: { value } }) => setType(value)}
           options={[
             { value: 'BookList', label: 'books' },
             { value: 'GroceryList', label: 'groceries' },
@@ -79,7 +79,7 @@ function ListEditForm(props) {
           name="completed"
           label="Completed"
           value={completed}
-          handleChange={({ target: { checked } }) => setCompleted(checked)}
+          handleChange={() => setCompleted(!completed)}
           blankOption={false}
           classes="mb-3"
         />

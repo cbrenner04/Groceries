@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import Alert from './Alert';
-import PasswordField from './FormFields';
+
+import PasswordForm from './PasswordForm';
 
 function EditInvite(props) {
   const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [invitationToken] = useState(queryString.parse(props.location.search).invitation_token);
+  const [passwordConfirmation, , setPasswordConfirmation] = useState('');
+
   const [errors, setErrors] = useState('');
 
   const handleSubmit = (event) => {
@@ -17,7 +18,7 @@ function EditInvite(props) {
     const user = {
       password,
       password_confirmation: passwordConfirmation,
-      invitation_token: invitationToken,
+      invitation_token: queryString.parse(props.location.search).invitation_token,
     };
     $.ajax({
       url: '/users/invitation',
@@ -36,25 +37,13 @@ function EditInvite(props) {
     <div>
       <Alert errors={errors} handleDismiss={() => setErrors('')} />
       <h2>Set your password</h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <PasswordField
-          name="password"
-          label="password"
-          value={password}
-          handleChange={({ target: { value } }) => setPassword(value)}
-          placeholder="New password"
-        />
-        <PasswordField
-          name="passwordConfirmation"
-          label="passwordConfirmation"
-          value={passwordConfirmation}
-          handleChange={({ target: { value } }) => setPasswordConfirmation(value)}
-          placeholder="Confirm new password"
-        />
-        <button type="submit" className="btn btn-success btn-block">
-          Set my password
-        </button>
-      </form>
+      <PasswordForm
+        password={password}
+        passwordChangeHandler={({ target: { value } }) => setPassword(value)}
+        passwordConfirmation={passwordConfirmation}
+        passwordConfirmationChangeHandler={({ target: { value } }) => setPasswordConfirmation(value)}
+        submissionHandler={handleSubmit}
+      />
     </div>
   );
 }

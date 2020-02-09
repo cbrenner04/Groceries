@@ -9,32 +9,32 @@ const EditToDoListItemFormFields = props => (
       name="task"
       label="Task"
       value={props.task}
-      handleChange={props.inputHandler}
+      handleChange={props.taskChangeHandler}
       placeholder="Clean the toilets"
     />
     <SelectField
-      name="itemAssigneeId"
+      name="assignee"
       label="Assignee"
-      value={props.itemAssigneeId}
-      handleChange={props.inputHandler}
+      value={props.assigneeId}
+      handleChange={props.assigneeIdChangeHandler}
       options={props.listUsers.map(user => ({ value: String(user.id), label: user.email }))}
       blankOption
     />
     <DateField
-      name="itemDueBy"
+      name="due-by"
       label="Due By"
-      value={props.itemDueBy}
-      handleChange={props.inputHandler}
+      value={props.dueBy}
+      handleChange={props.dueByChangeHandler}
       placeholder="mm/dd/yyyy"
     />
-    <CategoryField category={props.category} categories={props.categories} handleInput={props.inputHandler} />
+    <CategoryField category={props.category} categories={props.categories} handleInput={props.categoryChangeHandler} />
     {
       props.editForm && (
         <CheckboxField
-          name="itemCompleted"
+          name="completed"
           label="Completed"
-          value={props.itemCompleted}
-          handleChange={props.inputHandler}
+          value={props.completed}
+          handleChange={props.completedChangeHandler}
           classes="mb-3"
         />
       )
@@ -44,24 +44,29 @@ const EditToDoListItemFormFields = props => (
 
 EditToDoListItemFormFields.propTypes = {
   task: PropTypes.string.isRequired,
-  itemAssigneeId: PropTypes.string.isRequired,
-  itemDueBy: PropTypes.string.isRequired,
-  itemCompleted: PropTypes.bool,
+  taskChangeHandler: PropTypes.func.isRequired,
+  assigneeId: PropTypes.string.isRequired,
+  assigneeIdChangeHandler: PropTypes.func.isRequired,
+  dueBy: PropTypes.string.isRequired,
+  dueByChangeHandler: PropTypes.func.isRequired,
+  completed: PropTypes.bool,
+  completedChangeHandler: PropTypes.func,
   listUsers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     email: PropTypes.string,
   })).isRequired,
-  inputHandler: PropTypes.func.isRequired,
   editForm: PropTypes.bool,
   category: PropTypes.string,
+  categoryChangeHandler: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 EditToDoListItemFormFields.defaultProps = {
-  itemCompleted: false,
+  completed: false,
   editForm: false,
   category: '',
   categories: [],
+  completedChangeHandler: () => {},
 };
 
 export default EditToDoListItemFormFields;

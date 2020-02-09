@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -10,256 +10,248 @@ import GroceryListItemFormFields from './GroceryListItemFormFields';
 import MusicListItemFormFields from './MusicListItemFormFields';
 import ToDoListItemFormFields from './ToDoListItemFormFields';
 
-export default class EditListItemForm extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-        list_id: PropTypes.string,
-      }).isRequired,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func,
-    }).isRequired,
-  }
+function EditListItemForm(props) {
+  const [userId, setUserId] = useState(0);
+  const [listId, setListId] = useState(0);
+  const [itemId, setItemId] = useState(0);
+  const [listType, setListType] = useState('GroceryList');
+  const [listUsers, setListUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [errors, setErrors] = useState('');
+  const [product, setProduct] = useState('');
+  const [task, setTask] = useState('');
+  const [purchased, setPurchased] = useState(false);
+  const [quantity, setQuantity] = useState('');
+  const [completed, setCompleted] = useState(false);
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [read, setRead] = useState(false);
+  const [artist, setArtist] = useState('');
+  const [dueBy, setDueBy] = useState(defaultDueBy());
+  const [assigneeId, setAssigneeId] = useState('');
+  const [album, setAlbum] = useState('');
+  const [numberInSeries, setNumberInSeries] = useState(0);
+  const [category, setCategory] = useState('');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: 0,
-      listId: 0,
-      itemId: 0,
-      listType: 'GroceryList',
-      product: '',
-      task: '',
-      itemPurchased: false,
-      itemQuantity: '',
-      itemCompleted: false,
-      itemAuthor: '',
-      itemTitle: '',
-      itemRead: false,
-      itemArtist: '',
-      itemDueBy: defaultDueBy(),
-      itemAssigneeId: '',
-      itemAlbum: '',
-      listUsers: [],
-      errors: '',
-      numberInSeries: 0,
-      category: '',
-      categories: [],
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.match) {
+  useEffect(() => {
+    if (props.match) {
       $.ajax({
         type: 'GET',
-        url: `/lists/${this.props.match.params.list_id}` +
-             `/${this.props.match.params[0]}` +
-             `/${this.props.match.params.id}/edit`,
+        url: `/lists/${props.match.params.list_id}` +
+             `/${props.match.params[0]}` +
+             `/${props.match.params.id}/edit`,
         dataType: 'JSON',
       }).done((data) => {
         const { item, list } = data;
         const dueByDate = formatDueBy(item.due_by);
-        this.setState({
-          userId: item.user_id,
-          listId: list.id,
-          listType: list.type,
-          itemId: item.id,
-          product: item.product,
-          task: item.task,
-          itemPurchased: item.purchased,
-          itemQuantity: item.quantity,
-          itemCompleted: item.completed,
-          itemAuthor: item.author,
-          itemTitle: item.title,
-          itemRead: item.read,
-          itemArtist: item.artist,
-          itemDueBy: dueByDate,
-          itemAssigneeId: item.assignee_id ? String(item.assignee_id) : '',
-          itemAlbum: item.album,
-          numberInSeries: Number(item.number_in_series),
-          category: item.category || '',
-        });
+        setUserId(item.user_id);
+        setListId(list.id);
+        setListType(list.type);
+        setItemId(item.id);
+        setProduct(item.product);
+        setTask(item.task);
+        setPurchased(item.purchased);
+        setQuantity(item.quantity);
+        setCompleted(item.completed);
+        setAuthor(item.author);
+        setTitle(item.title);
+        setRead(item.read);
+        setArtist(item.artist);
+        setDueBy(dueByDate);
+        setAssigneeId(item.assignee_id ? String(item.assignee_id) : '');
+        setAlbum(item.album);
+        setNumberInSeries(Number(item.number_in_series));
+        setCategory(item.category || '');
         $.ajax({
           type: 'GET',
-          url: `/lists/${this.props.match.params.list_id}/users_lists`,
+          url: `/lists/${props.match.params.list_id}/users_lists`,
           dataType: 'JSON',
         }).done(({ accepted, pending, current_user_id: currentUserId }) => {
           const acceptedUsers = accepted.map(({ user }) => user);
           const pendingUsers = pending.map(({ user }) => user);
-          const listUsers = acceptedUsers.concat(pendingUsers);
+          const currentListUsers = acceptedUsers.concat(pendingUsers);
           const userInAccepted = accepted.find(acceptedList => acceptedList.user.id === currentUserId);
           if (userInAccepted && userInAccepted.users_list.permissions === 'write') {
-            this.setState({ listUsers });
+            setListUsers(currentListUsers);
           } else {
-            this.props.history.push('/lists');
+            props.history.push('/lists');
           }
           $.ajax({
             type: 'GET',
-            url: `/lists/${this.props.match.params.list_id}`,
+            url: `/lists/${props.match.params.list_id}`,
             dataType: 'JSON',
           }).done((listData) => {
-            this.setState({
-              categories: listData.categories,
-            });
+            setCategories(listData.categories);
           });
         });
       });
     }
-  }
+  }, []);
 
-  handleUserInput = (event) => {
-    const {
-      name,
-      value,
-      type,
-      checked,
-    } = event.target;
-    let targetValue = value;
-    if (type === 'number') targetValue = Number(value);
-    if (type === 'checkbox') targetValue = checked;
-    const obj = {};
-    obj[name] = targetValue;
-    this.setState(obj);
-  }
+  const listTypeToSnakeCase = llt => llt.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
 
-  listTypeToSnakeCase = listType =>
-    listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      errors: '',
-    });
+    setErrors('');
     const listItem = {
-      user_id: this.state.userId,
-      product: this.state.product,
-      task: this.state.task,
-      quantity: this.state.itemQuantity,
-      purchased: this.state.itemPurchased,
-      completed: this.state.itemCompleted,
-      author: this.state.itemAuthor,
-      title: this.state.itemTitle,
-      read: this.state.itemRead,
-      artist: this.state.itemArtist,
-      album: this.state.itemAlbum,
-      due_by: this.state.itemDueBy,
-      assignee_id: this.state.itemAssigneeId,
-      number_in_series: this.state.numberInSeries,
-      category: this.state.category.trim().toLowerCase(),
+      user_id: userId,
+      product,
+      task,
+      quantity,
+      purchased,
+      completed,
+      author,
+      title,
+      read,
+      artist,
+      album,
+      due_by: dueBy,
+      assignee_id: assigneeId,
+      number_in_series: numberInSeries,
+      category: category.trim().toLowerCase(),
     };
-    listItem[`${this.listTypeToSnakeCase(this.state.listType)}_id`] = this.state.listId;
+    listItem[`${listTypeToSnakeCase(listType)}_id`] = listId;
     const putData = {};
-    putData[`${this.listTypeToSnakeCase(this.state.listType)}_item`] = listItem;
-    // TODO: update to use axios. this will require auth token stuff
+    putData[`${listTypeToSnakeCase(listType)}_item`] = listItem;
     $.ajax({
-      url: `/lists/${this.state.listId}/` +
-           `${this.listTypeToSnakeCase(this.state.listType)}_items/` +
-           `${this.state.itemId}`,
+      url: `/lists/${listId}/${listTypeToSnakeCase(listType)}_items/${itemId}`,
       data: putData,
       method: 'PUT',
     }).done(() => {
-      this.props.history.push(`/lists/${this.state.listId}`);
+      props.history.push(`/lists/${listId}`);
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
       const responseTextKeys = Object.keys(responseJSON);
-      const errors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-      this.setState({ errors: errors.join(' and ') });
+      const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+      let joinString;
+      if (listType === 'BookList' || listType === 'MusicList') {
+        joinString = ' or ';
+      } else {
+        joinString = ' and ';
+      }
+      setErrors(responseErrors.join(joinString));
     });
-  }
+  };
 
-  prettyTitle = () => `"${this.state.itemTitle}"`
+  const prettyTitle = () => `"${title}"`;
 
-  itemName = () => (
+  const itemName = () => (
     {
-      BookList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemAuthor}`,
-      GroceryList: this.state.product,
-      MusicList: `${this.state.itemTitle ? this.prettyTitle() : ''} ${this.state.itemArtist} ` +
-                 `${this.state.itemArtist && this.state.itemAlbum ? '- ' : ''}` +
-                 `${this.state.itemAlbum ? this.state.itemAlbum : ''}`,
-      ToDoList: this.state.task,
-    }[this.state.listType]
-  )
+      BookList: `${title ? prettyTitle() : ''} ${author}`,
+      GroceryList: product,
+      MusicList: `${
+        title ? prettyTitle() : ''
+      } ${
+        artist
+      } ${
+        artist && album ? `- ${album || ''}` : ''
+      }`,
+      ToDoList: task,
+    }[listType]
+  );
 
-  formFields() {
-    if (this.state.listType === 'BookList') {
+  const formFields = () => {
+    if (listType === 'BookList') {
       return (
         <BookListItemFormFields
-          itemAuthor={this.state.itemAuthor}
-          itemTitle={this.state.itemTitle}
-          itemPurchased={this.state.itemPurchased}
-          itemRead={this.state.itemRead}
-          inputHandler={this.handleUserInput}
-          numberInSeries={this.state.numberInSeries}
-          category={this.state.category}
-          categories={this.state.categories}
+          author={author}
+          authorChangeHandler={({ target: { value } }) => setAuthor(value)}
+          title={title}
+          titleChangeHandler={({ target: { value } }) => setTitle(value)}
+          purchased={purchased}
+          purchasedChangeHandler={() => setPurchased(!purchased)}
+          read={read}
+          readChangeHandler={() => setRead(!read)}
+          numberInSeries={numberInSeries}
+          numberInSeriesChangeHandler={({ target: { value } }) => setNumberInSeries(Number(value))}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={categories}
           editForm
         />
       );
-    } else if (this.state.listType === 'GroceryList') {
+    } else if (listType === 'GroceryList') {
       return (
         <GroceryListItemFormFields
-          product={this.state.product}
-          itemQuantity={this.state.itemQuantity}
-          itemPurchased={this.state.itemPurchased}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.state.categories}
+          product={product}
+          productChangeHandler={({ target: { value } }) => setProduct(value)}
+          quantity={quantity}
+          quantityChangeHandler={({ target: { value } }) => setQuantity(value)}
+          purchased={purchased}
+          purchasedChangeHandler={() => setPurchased(!purchased)}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={categories}
           editForm
         />
       );
-    } else if (this.state.listType === 'MusicList') {
+    } else if (listType === 'MusicList') {
       return (
         <MusicListItemFormFields
-          itemTitle={this.state.itemTitle}
-          itemArtist={this.state.itemArtist}
-          itemAlbum={this.state.itemAlbum}
-          itemPurchased={this.state.itemPurchased}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.state.categories}
+          title={title}
+          titleChangeHandler={({ target: { value } }) => setTitle(value)}
+          artist={artist}
+          artistChangeHandler={({ target: { value } }) => setArtist(value)}
+          album={album}
+          albumChangeHandler={({ target: { value } }) => setAlbum(value)}
+          purchased={purchased}
+          purchasedChangeHandler={() => setPurchased(!purchased)}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={categories}
           editForm
         />
       );
-    } else if (this.state.listType === 'ToDoList') {
+    } else if (listType === 'ToDoList') {
       return (
         <ToDoListItemFormFields
-          task={this.state.task}
-          itemAssigneeId={this.state.itemAssigneeId}
-          itemDueBy={this.state.itemDueBy}
-          itemCompleted={this.state.itemCompleted}
-          listUsers={this.state.listUsers}
-          inputHandler={this.handleUserInput}
-          category={this.state.category}
-          categories={this.state.categories}
+          task={task}
+          taskChangeHandler={({ target: { value } }) => setTask(value)}
+          assigneeId={assigneeId}
+          assigneeIdChangeHandler={({ target: { value } }) => setAssigneeId(value)}
+          dueBy={dueBy}
+          dueByChangeHandler={({ target: { value } }) => setDueBy(value)}
+          completed={completed}
+          completedChangeHandler={() => setCompleted(!completed)}
+          listUsers={listUsers}
+          category={category}
+          categoryChangeHandler={({ target: { value } }) => setCategory(value)}
+          categories={categories}
           editForm
         />
       );
     }
     return '';
-  }
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({ errors: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
-        <h1>Edit { this.itemName() }</h1>
-        <Link to={`/lists/${this.state.listId}`} className="pull-right">
-          Back to list
-        </Link>
-        <br />
-        <form onSubmit={this.handleSubmit} autoComplete="off">
-          { this.formFields() }
-          <button type="submit" className="btn btn-success btn-block">
-            Update Item
-          </button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Alert errors={errors} handleDismiss={() => setErrors('')} />
+      <h1>Edit { itemName() }</h1>
+      <Link to={`/lists/${listId}`} className="pull-right">
+        Back to list
+      </Link>
+      <br />
+      <form onSubmit={handleSubmit} autoComplete="off">
+        { formFields() }
+        <button type="submit" className="btn btn-success btn-block">
+          Update Item
+        </button>
+      </form>
+    </div>
+  );
 }
+
+EditListItemForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+      list_id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default EditListItemForm;

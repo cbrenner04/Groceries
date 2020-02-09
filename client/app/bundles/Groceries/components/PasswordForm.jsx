@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import PasswordField from './FormFields/PasswordField';
 
 const PasswordForm = props => (
-  <form className="form" onSubmit={props.submissionHandler}>
+  <form className="form" onSubmit={props.submissionHandler} autoComplete="off">
     <PasswordField
       name="password"
       label="password"
       value={props.password}
-      handleChange={props.changeHandler}
+      handleChange={props.passwordChangeHandler}
       placeholder="New password"
     />
     <PasswordField
       name="passwordConfirmation"
       label="passwordConfirmation"
       value={props.passwordConfirmation}
-      handleChange={props.changeHandler}
+      handleChange={props.passwordConfirmationChangeHandler}
       placeholder="Confirm new password"
     />
     <button type="submit" className="btn btn-success btn-block">
@@ -26,8 +26,9 @@ const PasswordForm = props => (
 
 PasswordForm.propTypes = {
   password: PropTypes.string.isRequired,
+  passwordChangeHandler: PropTypes.func.isRequired,
   passwordConfirmation: PropTypes.string.isRequired,
-  changeHandler: PropTypes.func.isRequired,
+  passwordConfirmationChangeHandler: PropTypes.func.isRequired,
   submissionHandler: PropTypes.func.isRequired,
 };
 

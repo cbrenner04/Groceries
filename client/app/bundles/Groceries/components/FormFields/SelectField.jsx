@@ -12,7 +12,6 @@ const SelectField = ({
   <div className="form-group">
     <label htmlFor={name}>{label}</label>
     <select
-      name={name}
       className="form-control"
       id={name}
       value={value || ''}
