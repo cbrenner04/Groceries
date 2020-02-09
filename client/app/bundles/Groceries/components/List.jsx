@@ -1,112 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { formatDate } from '../utils/format';
 import listIconClass from '../utils/list_icon';
+import CompletedListButtons from './CompleteListButtons';
+import IncompleteListButtons from './IncompleteListButtons';
+import PendingListButtons from './PendingListButtons';
 
 function List(props) {
-  const [currentUserPermissions, setCurrentUserPermissions] = useState('read');
-  const { list, userId } = props;
+  const { list } = props;
 
-  useEffect(() => {
-    $.ajax({
-      type: 'GET',
-      url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
-      dataType: 'JSON',
-    }).done(({ permissions }) => {
-      setCurrentUserPermissions(permissions);
-    });
-  });
-
-  const handleDelete = () => props.onListDeletion(list);
-  const handleComplete = () => props.onListCompletion(list);
-  const handleRefresh = () => props.onListRefresh(list);
-  const handleAccept = () => props.onListAcceptance(list);
-  const handleReject = () => props.onListRejection(list);
-
-  const incompleteListButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button
-        onClick={handleComplete}
-        className="btn btn-link p-0 mr-3"
-        disabled={userId !== list.owner_id}
-        style={{ opacity: userId !== list.owner_id ? 0.3 : 1 }}
-        data-test-id="incomplete-list-complete"
-      >
-        <i className="fa fa-check-square-o fa-2x text-success" />
-      </button>
-      <Link
-        to={`lists/${list.id}/users_lists`}
-        className="btn btn-link p-0 mr-3"
-        disabled={currentUserPermissions !== 'write'}
-        style={{
-          pointerEvents: currentUserPermissions !== 'write' ? 'none' : 'auto',
-          opacity: currentUserPermissions !== 'write' ? 0.3 : 1,
-        }}
-        data-test-id="incomplete-list-share"
-      >
-        <i className="fa fa-users fa-2x text-primary" />
-      </Link>
-      <Link
-        to={`/lists/${list.id}/edit`}
-        className="btn btn-link p-0 mr-3"
-        disabled={userId !== list.owner_id}
-        style={{
-          pointerEvents: userId !== list.owner_id ? 'none' : 'auto',
-          opacity: userId !== list.owner_id ? 0.3 : 1,
-        }}
-        data-test-id="incomplete-list-edit"
-      >
-        <i className="fa fa-pencil-square-o fa-2x text-warning" />
-      </Link>
-      <button
-        onClick={handleDelete}
-        className="btn btn-link p-0"
-        disabled={userId !== list.owner_id}
-        style={{ opacity: userId !== list.owner_id ? 0.3 : 1 }}
-        data-test-id="incomplete-list-trash"
-      >
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
+  const acceptedListButtons = () => (
+    list.completed ? <CompletedListButtons {...props} /> : <IncompleteListButtons {...props} />
   );
-
-  const completedListButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button
-        onClick={handleRefresh}
-        className="btn btn-link p-0 mr-3"
-        disabled={userId !== list.owner_id}
-        style={{ opacity: userId !== list.owner_id ? 0.3 : 1 }}
-        data-test-id="complete-list-refresh"
-      >
-        <i className="fa fa-refresh fa-2x text-primary" />
-      </button>
-      <button
-        onClick={handleDelete}
-        className="btn btn-link p-0"
-        disabled={userId !== list.owner_id}
-        style={{ opacity: userId !== list.owner_id ? 0.3 : 1 }}
-        data-test-id="complete-list-trash"
-      >
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
-  );
-
-  const pendingListButtons = () => (
-    <div className="btn-group float-right" role="group">
-      <button onClick={handleAccept} className="btn btn-link p-0 mr-3" data-test-id="pending-list-accept">
-        <i className="fa fa-check-square-o fa-2x text-success" />
-      </button>
-      <button onClick={handleReject} className="btn btn-link p-0 mr-3" data-test-id="pending-list-trash">
-        <i className="fa fa-trash fa-2x text-danger" />
-      </button>
-    </div>
-  );
-
-  const acceptedListButtons = () => (list.completed ? completedListButtons() : incompleteListButtons());
   const acceptedListTestClass = () => (list.completed ? 'completed-list' : 'non-completed-list');
 
   const listTitle = () => (
@@ -138,7 +45,7 @@ function List(props) {
           </small>
         </div>
         <div className="col-md-2">
-          {props.accepted ? acceptedListButtons() : pendingListButtons()}
+          {props.accepted ? acceptedListButtons() : <PendingListButtons {...props} />}
         </div>
       </div>
     </div>
