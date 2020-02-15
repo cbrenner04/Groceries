@@ -15,13 +15,10 @@ function IncompleteListButtons(props) {
     });
   }, []);
 
-  const handleComplete = () => props.onListCompletion(props.list);
-  const handleDelete = () => props.onListDeletion(props.list);
-
   return (
     <div className="btn-group float-right" role="group">
       <button
-        onClick={handleComplete}
+        onClick={() => props.onListCompletion(props.list)}
         className="btn btn-link p-0 mr-3"
         disabled={props.userId !== props.list.owner_id}
         style={{ opacity: props.userId !== props.list.owner_id ? 0.3 : 1 }}
@@ -54,7 +51,7 @@ function IncompleteListButtons(props) {
         <i className="fa fa-pencil-square-o fa-2x text-warning" />
       </Link>
       <button
-        onClick={handleDelete}
+        onClick={() => props.onListDeletion(props.list)}
         className="btn btn-link p-0"
         disabled={props.userId !== props.list.owner_id}
         style={{ opacity: props.userId !== props.list.owner_id ? 0.3 : 1 }}
