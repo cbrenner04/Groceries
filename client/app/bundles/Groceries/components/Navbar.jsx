@@ -12,11 +12,7 @@ export default function Navbar() {
   return (
     <div>
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-full">
-        {
-          isUserSignedIn
-            ? <Link to="/" className="navbar-brand">Groceries</Link>
-            : <Link to="/users/sign_in" className="navbar-brand">Groceries</Link>
-        }
+        <Link to={isUserSignedIn ? '/' : '/users/sign_in'} className="navbar-brand">Groceries</Link>
         <button
           className="navbar-toggler"
           type="button"

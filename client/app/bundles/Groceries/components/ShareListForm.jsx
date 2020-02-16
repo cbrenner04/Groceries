@@ -1,101 +1,83 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 
 import Alert from './Alert';
-import PermissionsButtons from './PermissionsButtons';
+import { EmailField } from './FormFields';
+import PermissionButtons from './PermissionButtons';
 
-export default class ShareListForm extends Component {
-  static propTypes = {
-    listId: PropTypes.number,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-        list_id: PropTypes.string,
-      }).isRequired,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func,
-    }).isRequired,
-  }
+function ShareListForm(props) {
+  const [listId, setListId] = useState(0);
+  const [invitableUsers, setInvitableUsers] = useState([]);
+  const [newEmail, setNewEmail] = useState('');
+  const [errors, setErrors] = useState('');
+  const [pending, setPending] = useState([]);
+  const [accepted, setAccepted] = useState([]);
+  const [refused, setRefused] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const [userIsOwner, setUserIsOwner] = useState(false);
+  const [name, setName] = useState('');
+  const [success, setSuccess] = useState('');
 
-  static defaultProps = {
-    listId: 0,
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      listId: this.props.listId,
-      invitableUsers: [],
-      newEmail: '',
-      errors: '',
-      pending: [],
-      accepted: [],
-      refused: [],
-      userId: 0,
-      userIsOwner: false,
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.match) {
+  useEffect(() => {
+    if (props.match) {
       $.ajax({
         type: 'GET',
-        url: `/lists/${this.props.match.params.list_id}/users_lists`,
+        url: `/lists/${props.match.params.list_id}/users_lists`,
         dataType: 'JSON',
       }).done((data) => {
-        this.setState({
-          name: data.list.name,
-          invitableUsers: data.invitable_users,
-          listId: data.list.id,
-          userIsOwner: data.user_is_owner,
-          pending: data.pending,
-          accepted: data.accepted,
-          refused: data.refused,
-          userId: data.current_user_id,
-        });
+        setName(data.list.name);
+        setInvitableUsers(data.invitable_users);
+        setListId(data.list.id);
+        setUserIsOwner(data.user_is_owner);
+        setPending(data.pending);
+        setAccepted(data.accepted);
+        setRefused(data.refused);
+        setUserId(data.current_user_id);
         const userInAccepted = data.accepted.find(acceptedList => acceptedList.user.id === data.current_user_id);
         if (!(userInAccepted && userInAccepted.users_list.permissions === 'write')) {
-          this.props.history.push('/lists');
+          props.history.push('/lists');
         }
       });
     }
-  }
+  }, []);
 
-  handleUserInput = (event) => {
-    const { name } = event.target;
-    const obj = {};
-    obj[name] = event.target.value;
-    this.setState(obj);
-  }
+  const handleAlertDismiss = () => {
+    setSuccess('');
+    setErrors('');
+  };
 
-  handleSubmit = (event) => {
+  const failure = (response) => {
+    const responseJSON = JSON.parse(response.responseText);
+    const responseTextKeys = Object.keys(responseJSON);
+    const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
+    setErrors(responseErrors.join(' and '));
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      errors: '',
-    });
+    handleAlertDismiss();
     $.post('/users/invitation', {
       user: {
-        email: this.state.newEmail,
+        email: newEmail,
       },
-      list_id: this.state.listId,
-    }).fail(response => this.failure(response));
-  }
+      list_id: listId,
+    }).done(() => {
+      setSuccess(`"${name}" has been successfully shared with ${newEmail}.`);
+    }).fail(response => failure(response));
+  };
 
-  handleSelectUser(user) {
-    this.setState({
-      errors: '',
-    });
+  const handleSelectUser = (user) => {
+    handleAlertDismiss();
     const usersList = {
       user_id: user.id,
-      list_id: this.state.listId,
+      list_id: listId,
     };
-    $.post(`/lists/${this.state.listId}/users_lists`, { users_list: usersList })
+    $.post(`/lists/${listId}/users_lists`, { users_list: usersList })
       .done((data) => {
-        const newUsers = this.state.invitableUsers.filter(tmpUser => tmpUser.id !== user.id);
-        const newPending = update(this.state.pending, {
+        const newUsers = invitableUsers.filter(tmpUser => tmpUser.id !== user.id);
+        const newPending = update(pending, {
           $push: [
             {
               user: {
@@ -109,84 +91,99 @@ export default class ShareListForm extends Component {
             },
           ],
         });
-        this.setState({
-          invitableUsers: newUsers,
-          pending: newPending,
-        });
+        setSuccess(`"${name}" has been successfully shared with ${user.email}.`);
+        setInvitableUsers(newUsers);
+        setPending(newPending);
       })
-      .fail(response => this.failure(response));
-  }
+      .fail(response => failure(response));
+  };
 
-  failure(response) {
-    const responseJSON = JSON.parse(response.responseText);
-    const responseTextKeys = Object.keys(responseJSON);
-    const errors = responseTextKeys.map(key => `${key} ${responseJSON[key].join(' and ')}`);
-    this.setState({ errors: errors.join(' and ') });
-  }
+  const togglePermission = (id, currentPermission, status) => {
+    const permissions = currentPermission === 'write' ? 'read' : 'write';
+    $.ajax({
+      type: 'PATCH',
+      url: `/lists/${listId}/users_lists/${id}`,
+      dataType: 'JSON',
+      data: `users_list%5Bpermissions%5D=${permissions}`,
+    })
+      .done(() => {
+        const users = status === 'pending' ? pending : accepted;
+        const updatedUsers = users.map((usersList) => {
+          const newList = usersList;
+          const tmpUsersList = newList.users_list;
+          if (tmpUsersList.id === id) tmpUsersList.permissions = permissions;
+          return newList;
+        });
+        const stateFunc = status === 'pending' ? setPending : setAccepted;
+        stateFunc(updatedUsers);
+      })
+      .fail(response => failure(response));
+  };
 
-  handleAlertDismiss = () => {
-    this.setState({ errors: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Share {this.state.name}</h1>
-        <Link to="/lists" className="pull-right">Back to lists</Link>
-        <br />
-        <Alert errors={this.state.errors} handleDismiss={this.handleAlertDismiss} />
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="usersListNewEmail">Enter an email to invite someone to share this list:</label>
-            <input
-              id="usersListNewEmail"
-              type="email"
-              name="newEmail"
-              className="form-control"
-              value={this.state.newEmail}
-              onChange={this.handleUserInput}
-              placeholder="jane.smith@example.com"
-            />
-          </div>
-          <button type="submit" className="btn btn-success btn-block">Share List</button>
-        </form>
-        <br />
-        <p className="text-lead">Or select someone you&apos;ve previously shared with:</p>
-        {
-          this.state.invitableUsers.map(user => (
-            <button
-              key={user.id}
-              id={`invite-user-${user.id}`}
-              className="list-group-item list-group-item-action btn btn-link"
-              onClick={() => this.handleSelectUser(user)}
-            >
-              {user.email}
-            </button>
-          ))
-        }
-        <br />
-        <h2>Already shared</h2>
-        <p className="text-lead">Click to toggle permissions between read and write</p>
-        <br />
-        <PermissionsButtons
-          status="pending"
-          users={this.state.pending}
-          listId={this.state.listId}
-          userIsOwner={this.state.userIsOwner}
-          userId={this.state.userId}
+  return (
+    <div>
+      <h1>Share {name}</h1>
+      <Link to="/lists" className="pull-right">Back to lists</Link>
+      <br />
+      <Alert errors={errors} success={success} handleDismiss={handleAlertDismiss} />
+      <form onSubmit={handleSubmit}>
+        <EmailField
+          name="new-email"
+          label="Enter an email to invite someone to share this list:"
+          value={newEmail}
+          handleChange={({ target: { value } }) => setNewEmail(value)}
         />
-        <PermissionsButtons
-          status="accepted"
-          users={this.state.accepted}
-          listId={this.state.listId}
-          userIsOwner={this.state.userIsOwner}
-          userId={this.state.userId}
-        />
-        <h3>Refused</h3>
-        <br />
-        { this.state.refused.map(({ user }) =>
-          <div key={user.id} id={`refused-user-${user.id}`} className="list-group-item">{user.email}</div>) }
-      </div>
-    );
-  }
+        <button type="submit" className="btn btn-success btn-block">Share List</button>
+      </form>
+      <br />
+      <p className="text-lead">Or select someone you&apos;ve previously shared with:</p>
+      {
+        invitableUsers.map(user => (
+          <button
+            key={user.id}
+            id={`invite-user-${user.id}`}
+            className="list-group-item list-group-item-action btn btn-link"
+            onClick={() => handleSelectUser(user)}
+          >
+            {user.email}
+          </button>
+        ))
+      }
+      <br />
+      <h2>Already shared</h2>
+      <p className="text-lead">Click to toggle permissions between read and write</p>
+      <br />
+      <PermissionButtons
+        togglePermission={togglePermission}
+        userIsOwner={userIsOwner}
+        userId={userId}
+        status="pending"
+        users={pending}
+      />
+      <PermissionButtons
+        togglePermission={togglePermission}
+        userIsOwner={userIsOwner}
+        userId={userId}
+        status="accepted"
+        users={accepted}
+      />
+      <h3>Refused</h3>
+      <br />
+      { refused.map(({ user }) =>
+        <div key={user.id} id={`refused-user-${user.id}`} className="list-group-item">{user.email}</div>) }
+    </div>
+  );
 }
+
+ShareListForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      list_id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default ShareListForm;

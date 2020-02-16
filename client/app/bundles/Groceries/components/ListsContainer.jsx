@@ -101,9 +101,15 @@ export default function ListsContainer() {
       type: 'PATCH',
       data: 'users_list%5Bhas_accepted%5D=true',
       success: () => {
-        const updatedCompletedLists = update(completedLists, { $push: [list] });
-        setCompletedLists(sortLists(updatedCompletedLists));
-        setSuccess('List successfully added.');
+        const { completed } = list;
+        if (completed) {
+          const updatedCompletedLists = update(completedLists, { $push: [list] });
+          setCompletedLists(updatedCompletedLists);
+        } else {
+          const updatedNonCompletedLists = update(nonCompletedLists, { $push: [list] });
+          setNonCompletedLists(updatedNonCompletedLists);
+        }
+        setSuccess('List successfully accepted.');
       },
     });
   };
@@ -137,6 +143,7 @@ export default function ListsContainer() {
       .done((data) => {
         const updatedNonCompletedLists = update(nonCompletedLists, { $push: [data] });
         setNonCompletedLists(sortLists(updatedNonCompletedLists));
+        setSuccess('List successfully refreshed.');
       })
       .fail((response) => {
         const responseJSON = JSON.parse(response.responseText);

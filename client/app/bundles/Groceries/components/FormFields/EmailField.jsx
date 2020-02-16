@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EmailField = ({
+  name,
+  label,
   value,
   handleChange,
 }) => (
   <div className="form-group">
-    <label htmlFor="email">Email</label>
+    <label htmlFor={name}>{label}</label>
     <input
-      id="email"
+      id={name}
       type="email"
-      name="email"
+      name={name}
       className="form-control"
       value={value}
       onChange={handleChange}
@@ -20,8 +22,15 @@ const EmailField = ({
 );
 
 EmailField.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+};
+
+EmailField.defaultProps = {
+  name: 'email',
+  label: 'Email',
 };
 
 export default EmailField;

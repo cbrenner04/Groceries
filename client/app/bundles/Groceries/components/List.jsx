@@ -12,7 +12,19 @@ function List(props) {
   const { list } = props;
 
   const acceptedListButtons = () => (
-    list.completed ? <CompletedListButtons {...props} /> : <IncompleteListButtons {...props} />
+    list.completed
+      ? <CompletedListButtons
+        userId={props.userId}
+        list={props.list}
+        onListRefresh={props.onListRefresh}
+        onListDeletion={props.onListDeletion}
+      />
+      : <IncompleteListButtons
+        userId={props.userId}
+        list={props.list}
+        onListCompletion={props.onListCompletion}
+        onListDeletion={props.onListDeletion}
+      />
   );
   const acceptedListTestClass = () => (list.completed ? 'completed-list' : 'non-completed-list');
 
@@ -45,7 +57,15 @@ function List(props) {
           </small>
         </div>
         <div className="col-md-2">
-          {props.accepted ? acceptedListButtons() : <PendingListButtons {...props} />}
+          {
+            props.accepted
+              ? acceptedListButtons()
+              : <PendingListButtons
+                list={list}
+                onListAcceptance={props.onListAcceptance}
+                onListRejection={props.onListRejection}
+              />
+          }
         </div>
       </div>
     </div>
@@ -53,7 +73,7 @@ function List(props) {
 }
 
 List.propTypes = {
-  userId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
   list: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -65,9 +85,9 @@ List.propTypes = {
     refreshed: PropTypes.bool,
   }).isRequired,
   accepted: PropTypes.bool,
-  onListDeletion: PropTypes.func,
-  onListCompletion: PropTypes.func,
-  onListRefresh: PropTypes.func,
+  onListDeletion: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+  onListCompletion: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+  onListRefresh: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onListAcceptance: PropTypes.func,
   onListRejection: PropTypes.func,
 };
