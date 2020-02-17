@@ -6,7 +6,7 @@ import {
   TextField,
   NumberField,
   CheckboxField,
-} from './FormFields';
+} from '../../../components/FormFields';
 
 const BookListItemFormFields = props => (
   <div>

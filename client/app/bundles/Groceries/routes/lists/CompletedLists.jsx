@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import Alert from './Alert';
-import List from './List';
+import Alert from '../../components/Alert';
+import List from './components/List';
+import ConfirmModal from '../../components/ConfirmModal';
 
 function CompletedLists() {
   const [completedLists, setCompletedLists] = useState([]);
   const [errors, setErrors] = useState('');
   const [success, setSuccess] = useState('');
+  const [listToDelete, setListToDelete] = useState('');
 
   useEffect(() => {
     $.ajax({
@@ -19,27 +21,13 @@ function CompletedLists() {
     });
   }, []);
 
-  const handleDelete = (listId) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure?')) {
-      $.ajax({
-        url: `/lists/${listId}`,
-        type: 'DELETE',
-      })
-        .done(() => {
-          const lists = completedLists.filter(list => list.id !== listId);
-          setCompletedLists(lists);
-          setSuccess('Your list was successfully deleted.');
-        })
-        .fail((response) => {
-          const responseJSON = JSON.parse(response.responseText);
-          const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
-          setErrors(returnedErrors.join(' and '));
-        });
-    }
+  const dismissAlert = () => {
+    setSuccess('');
+    setErrors('');
   };
 
   const handleRefresh = (list) => {
+    dismissAlert();
     $.ajax({
       url: `/lists/${list.id}/refresh_list`,
       type: 'POST',
@@ -56,9 +44,30 @@ function CompletedLists() {
       });
   };
 
-  const dismissAlert = () => {
-    setSuccess('');
-    setErrors('');
+  const confirmModalId = 'confirm-delete-completed-list-modal';
+
+  const handleDelete = (list) => {
+    setListToDelete(list);
+    $(`#${confirmModalId}`).modal('show');
+  };
+
+  const handleDeleteConfirm = () => {
+    dismissAlert();
+    $(`#${confirmModalId}`).modal('hide');
+    $.ajax({
+      url: `/lists/${listToDelete.id}`,
+      type: 'DELETE',
+    })
+      .done(() => {
+        const lists = completedLists.filter(cl => cl.id !== listToDelete.id);
+        setCompletedLists(lists);
+        setSuccess('Your list was successfully deleted.');
+      })
+      .fail((response) => {
+        const responseJSON = JSON.parse(response.responseText);
+        const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+        setErrors(returnedErrors.join(' and '));
+      });
   };
 
   return (
@@ -84,6 +93,13 @@ function CompletedLists() {
           ))
         }
       </div>
+      <ConfirmModal
+        name={confirmModalId}
+        action="delete"
+        body="Are you sure you want to delete this list?"
+        handleConfirm={() => handleDeleteConfirm()}
+        handleClear={() => $(`#${confirmModalId}`).modal('hide')}
+      />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { defaultDueBy } from '../utils/format';
+import { defaultDueBy, listTypeToSnakeCase } from '../../../utils/format';
 
-import Alert from './Alert';
+import Alert from '../../../components/Alert';
 import BookListItemFormFields from './BookListItemFormFields';
 import GroceryListItemFormFields from './GroceryListItemFormFields';
 import MusicListItemFormFields from './MusicListItemFormFields';
@@ -29,8 +29,6 @@ function ListItemForm(props) {
     setSuccess('');
   };
 
-  const listTypeToSnakeCase = () => props.listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     dismissAlert();
@@ -48,11 +46,11 @@ function ListItemForm(props) {
       number_in_series: numberInSeries || null,
       category: category.trim().toLowerCase(),
     };
-    listItem[`${listTypeToSnakeCase()}_id`] = props.listId;
+    listItem[`${listTypeToSnakeCase(props.listType)}_id`] = props.listId;
     const postData = {};
-    postData[`${listTypeToSnakeCase()}_item`] = listItem;
+    postData[`${listTypeToSnakeCase(props.listType)}_item`] = listItem;
     $.post(
-      `/lists/${props.listId}/${listTypeToSnakeCase()}_items`,
+      `/lists/${props.listId}/${listTypeToSnakeCase(props.listType)}_items`,
       postData,
     ).done((data) => {
       props.handleItemAddition(data);

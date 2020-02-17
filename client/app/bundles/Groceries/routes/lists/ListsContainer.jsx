@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import update from 'immutability-helper';
 
-import Alert from './Alert';
-import ListForm from './ListForm';
-import Lists from './Lists';
+import Alert from '../../components/Alert';
+import ListForm from './components/ListForm';
+import Lists from './components/Lists';
+import ConfirmModal from '../../components/ConfirmModal';
 
 export default function ListsContainer() {
   const [userId, setUserId] = useState(0);
@@ -12,6 +13,8 @@ export default function ListsContainer() {
   const [nonCompletedLists, setNonCompletedLists] = useState([]);
   const [errors, setErrors] = useState('');
   const [success, setSuccess] = useState('');
+  const [listToDelete, setListToDelete] = useState('');
+  const [listToReject, setListToReject] = useState('');
 
   const sortLists = lists => lists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
@@ -31,9 +34,13 @@ export default function ListsContainer() {
     });
   }, []);
 
-  const handleFormSubmit = (list) => {
+  const handleAlertDismiss = () => {
     setErrors('');
     setSuccess('');
+  };
+
+  const handleFormSubmit = (list) => {
+    handleAlertDismiss();
     $.post('/lists', { list })
       .done((data) => {
         const updatedNonCompletedLists = update(nonCompletedLists, { $push: [data] });
@@ -48,33 +55,40 @@ export default function ListsContainer() {
       });
   };
 
+  const deleteConfirmModalId = 'confirm-delete-completed-list-modal';
+
   const handleDelete = (list) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure?')) {
-      $.ajax({
-        url: `/lists/${list.id}`,
-        type: 'DELETE',
+    setListToDelete(list);
+    $(`#${deleteConfirmModalId}`).modal('show');
+  };
+
+  const handleDeleteConfirm = () => {
+    $(`#${deleteConfirmModalId}`).modal('hide');
+    handleAlertDismiss();
+    const { id, completed } = listToDelete;
+    $.ajax({
+      url: `/lists/${id}`,
+      type: 'DELETE',
+    })
+      .done(() => {
+        if (completed) {
+          const updatedCompletedLists = completedLists.filter(ll => ll.id !== id);
+          setCompletedLists(updatedCompletedLists);
+        } else {
+          const updatedNonCompletedLists = nonCompletedLists.filter(ll => ll.id !== id);
+          setNonCompletedLists(updatedNonCompletedLists);
+        }
+        setSuccess('List successfully deleted.');
       })
-        .done(() => {
-          const { id, completed } = list;
-          if (completed) {
-            const updatedCompletedLists = completedLists.filter(ll => ll.id !== id);
-            setCompletedLists(updatedCompletedLists);
-          } else {
-            const updatedNonCompletedLists = nonCompletedLists.filter(ll => ll.id !== id);
-            setNonCompletedLists(updatedNonCompletedLists);
-          }
-          setSuccess('List successfully deleted.');
-        })
-        .fail((response) => {
-          const responseJSON = JSON.parse(response.responseText);
-          const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
-          setErrors(returnedErrors.join(' and '));
-        });
-    }
+      .fail((response) => {
+        const responseJSON = JSON.parse(response.responseText);
+        const returnedErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
+        setErrors(returnedErrors.join(' and '));
+      });
   };
 
   const handleCompletion = (list) => {
+    handleAlertDismiss();
     const theList = list;
     theList.completed = true;
     $.ajax({
@@ -86,6 +100,7 @@ export default function ListsContainer() {
         setNonCompletedLists(updatedNonCompletedLists);
         const updatedCompletedLists = update(completedLists, { $push: [theList] });
         setCompletedLists(sortLists(updatedCompletedLists));
+        setSuccess('List successfully completed.');
       },
     });
   };
@@ -96,6 +111,7 @@ export default function ListsContainer() {
   };
 
   const acceptList = (list) => {
+    handleAlertDismiss();
     $.ajax({
       url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
       type: 'PATCH',
@@ -119,21 +135,28 @@ export default function ListsContainer() {
     acceptList(list);
   };
 
+  const rejectConfirmModalId = 'confirm-reject-completed-list-modal';
+
   const handleReject = (list) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure?')) {
-      $.ajax({
-        url: `/lists/${list.id}/users_lists/${list.users_list_id}`,
-        type: 'PATCH',
-        data: 'users_list%5Bhas_accepted%5D=false',
-        success: () => {
-          removeListFromUnaccepted(list.id);
-        },
-      });
-    }
+    setListToReject(list);
+    $(`#${rejectConfirmModalId}`).modal('show');
+  };
+
+  const handleRejectConfirm = () => {
+    $(`#${rejectConfirmModalId}`).modal('hide');
+    handleAlertDismiss();
+    $.ajax({
+      url: `/lists/${listToReject.id}/users_lists/${listToReject.users_list_id}`,
+      type: 'PATCH',
+      data: 'users_list%5Bhas_accepted%5D=false',
+    }).done(() => {
+      removeListFromUnaccepted(listToReject.id);
+      setSuccess('List successfully rejected.');
+    });
   };
 
   const handleRefresh = (list) => {
+    handleAlertDismiss();
     const localList = list;
     localList.refreshed = true;
     $.ajax({
@@ -153,11 +176,6 @@ export default function ListsContainer() {
       });
   };
 
-  const handleAlertDismiss = () => {
-    setErrors('');
-    setSuccess('');
-  };
-
   return (
     <div>
       <Alert errors={errors} success={success} handleDismiss={handleAlertDismiss} />
@@ -174,6 +192,20 @@ export default function ListsContainer() {
         onListRefresh={handleRefresh}
         onAccept={handleAccept}
         onReject={handleReject}
+      />
+      <ConfirmModal
+        name={deleteConfirmModalId}
+        action="delete"
+        body="Are you sure you want to delete this list?"
+        handleConfirm={() => handleDeleteConfirm()}
+        handleClear={() => $(`#${deleteConfirmModalId}`).modal('hide')}
+      />
+      <ConfirmModal
+        name={rejectConfirmModalId}
+        action="reject"
+        body="Are you sure you want to reject this list?"
+        handleConfirm={() => handleRejectConfirm()}
+        handleClear={() => $(`#${rejectConfirmModalId}`).modal('hide')}
       />
     </div>
   );

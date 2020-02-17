@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { capitalize } from '../../../utils/format';
 import ListItem from './ListItem';
 
 function ListItems(props) {
   const [sortedItems, setSortedItems] = useState(props.items);
-  const capitalize = category => category.charAt(0).toUpperCase() + category.slice(1);
 
   const performSort = (items, sortAttrs) => {
     if (sortAttrs.length === 0) return items;

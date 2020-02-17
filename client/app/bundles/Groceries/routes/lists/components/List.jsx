@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { formatDate } from '../utils/format';
-import listIconClass from '../utils/list_icon';
+import { formatDate } from '../../../utils/format';
+import listIconClass from '../../../utils/list_icon';
 import CompletedListButtons from './CompleteListButtons';
 import IncompleteListButtons from './IncompleteListButtons';
 import PendingListButtons from './PendingListButtons';
@@ -11,21 +11,20 @@ import PendingListButtons from './PendingListButtons';
 function List(props) {
   const { list } = props;
 
-  const acceptedListButtons = () => (
-    list.completed
-      ? <CompletedListButtons
-        userId={props.userId}
-        list={props.list}
-        onListRefresh={props.onListRefresh}
-        onListDeletion={props.onListDeletion}
-      />
-      : <IncompleteListButtons
-        userId={props.userId}
-        list={props.list}
-        onListCompletion={props.onListCompletion}
-        onListDeletion={props.onListDeletion}
-      />
-  );
+  const acceptedListButtons = () => (list.completed
+    ? (<CompletedListButtons
+      userId={props.userId}
+      list={props.list}
+      onListRefresh={props.onListRefresh}
+      onListDeletion={props.onListDeletion}
+    />)
+    : (<IncompleteListButtons
+      userId={props.userId}
+      list={props.list}
+      onListCompletion={props.onListCompletion}
+      onListDeletion={props.onListDeletion}
+    />));
+
   const acceptedListTestClass = () => (list.completed ? 'completed-list' : 'non-completed-list');
 
   const listTitle = () => (

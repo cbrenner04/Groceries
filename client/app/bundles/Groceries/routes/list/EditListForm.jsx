@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Alert from './Alert';
-import { SelectField, TextField, CheckboxField } from './FormFields';
+import Alert from '../../components/Alert';
+import { SelectField, TextField, CheckboxField } from '../../components/FormFields';
 
-function ListEditForm(props) {
+function EditListForm(props) {
   const [id, setId] = useState(0);
   const [errors, setErrors] = useState('');
   const [name, setName] = useState('');
@@ -91,7 +91,7 @@ function ListEditForm(props) {
   );
 }
 
-ListEditForm.propTypes = {
+EditListForm.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -103,4 +103,4 @@ ListEditForm.propTypes = {
   }).isRequired,
 };
 
-export default ListEditForm;
+export default EditListForm;

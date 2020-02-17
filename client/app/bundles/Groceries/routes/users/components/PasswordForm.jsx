@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PasswordField } from './FormFields';
+
+import { PasswordField } from '../../../components/FormFields';
 
 const PasswordForm = props => (
   <form className="form" onSubmit={props.submissionHandler} autoComplete="off">

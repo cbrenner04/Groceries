@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TextField, CategoryField, DateField, CheckboxField, SelectField } from './FormFields';
+import {
+  TextField,
+  CategoryField,
+  DateField,
+  CheckboxField,
+  SelectField,
+} from '../../../components/FormFields';
 
 const EditToDoListItemFormFields = props => (
   <div>

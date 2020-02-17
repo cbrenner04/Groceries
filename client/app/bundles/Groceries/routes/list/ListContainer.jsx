@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 
-import Alert from './Alert';
-import ListItemForm from './ListItemForm';
-import ListItemsContainer from './ListItemsContainer';
+import { listTypeToSnakeCase } from '../../utils/format';
+import Alert from '../../components/Alert';
+import ListItemForm from './components/ListItemForm';
+import ListItemsContainer from './components/ListItemsContainer';
+import ConfirmModal from '../../components/ConfirmModal';
 
 const mapIncludedCategories = (items) => {
   const cats = [''];
@@ -48,6 +50,8 @@ function ListContainer(props) {
   const [filter, setFilter] = useState('');
   const [includedCategories, setIncludedCategories] = useState(['']);
   const [errors, setErrors] = useState('');
+  const [itemToDelete, setItemToDelete] = useState(false);
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     if (props.match) {
@@ -68,7 +72,10 @@ function ListContainer(props) {
           const responseListUsers = allAcceptedUsers.concat(allPendingUsers);
           if (userInAccepted) {
             const responseIncludedCategories = mapIncludedCategories(data.not_purchased_items);
-            const responseNotPurchasedItems = categorizeNotPurchasedItems(data.not_purchased_items, includedCategories);
+            const responseNotPurchasedItems = categorizeNotPurchasedItems(
+              data.not_purchased_items,
+              responseIncludedCategories,
+            );
             setUserId(data.current_user_id);
             setList(data.list);
             setPurchasedItems(data.purchased_items);
@@ -105,9 +112,8 @@ function ListContainer(props) {
     }
   };
 
-  const listTypeToSnakeCase = () => list.type.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-  const listId = item => item[`${listTypeToSnakeCase()}_id`];
-  const listItemPath = item => `/lists/${listId(item)}/${listTypeToSnakeCase()}_items`;
+  const listId = item => item[`${listTypeToSnakeCase(list.type)}_id`];
+  const listItemPath = item => `/lists/${listId(item)}/${listTypeToSnakeCase(list.type)}_items`;
 
   // TODO: refactor?
   const moveItemToPurchased = (item) => {
@@ -123,7 +129,20 @@ function ListContainer(props) {
     }
   };
 
+  const dismissAlert = () => {
+    setSuccess('');
+    setErrors('');
+  };
+
+  const failure = (responseText) => {
+    const responseJSON = JSON.parse(responseText);
+    const responseTextKeys = Object.keys(responseJSON);
+    const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+    setErrors(responseErrors.join(' and '));
+  };
+
   const handleItemPurchase = (item) => {
+    dismissAlert();
     let completionType;
     if (list.type === 'ToDoList') {
       completionType = 'completed';
@@ -133,32 +152,47 @@ function ListContainer(props) {
     $.ajax({
       url: `${listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${listTypeToSnakeCase()}_item%5B${completionType}%5D=true`,
-      success: () => moveItemToPurchased(item),
+      data: `${listTypeToSnakeCase(list.type)}_item%5B${completionType}%5D=true`,
+    }).done(() => {
+      moveItemToPurchased(item);
+      setSuccess('Item successfully purchased.');
+    }).fail((response) => {
+      failure(response.responseText);
     });
   };
 
   const handleItemRead = (item) => {
+    const localItem = item;
+    localItem.read = true;
+    dismissAlert();
     $.ajax({
       url: `${listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${listTypeToSnakeCase()}_item%5Bread%5D=true`,
+      data: `${listTypeToSnakeCase(list.type)}_item%5Bread%5D=true`,
+    }).done(() => {
+      setSuccess('Item successfully read.');
+    }).fail((response) => {
+      failure(response.responseText);
     });
-    // TODO: remove this
-    window.location.reload();
   };
 
   const handleItemUnRead = (item) => {
+    const localItem = item;
+    localItem.read = false;
+    dismissAlert();
     $.ajax({
       url: `${listItemPath(item)}/${item.id}`,
       type: 'PUT',
-      data: `${listTypeToSnakeCase()}_item%5Bread%5D=false`,
+      data: `${listTypeToSnakeCase(list.type)}_item%5Bread%5D=false`,
+    }).done(() => {
+      setSuccess('Item successfully unread.');
+    }).fail((response) => {
+      failure(response.responseText);
     });
-    // TODO: remove this
-    window.location.reload();
   };
 
   const handleUnPurchase = (item) => {
+    dismissAlert();
     const newItem = {
       user_id: item.user_id,
       product: item.product,
@@ -170,67 +204,71 @@ function ListContainer(props) {
       due_by: item.due_by,
       category: item.category || '',
     };
-    newItem[`${listTypeToSnakeCase()}_id`] = listId(item);
+    newItem[`${listTypeToSnakeCase(list.type)}_id`] = listId(item);
     const postData = {};
-    postData[`${listTypeToSnakeCase()}_item`] = newItem;
+    postData[`${listTypeToSnakeCase(list.type)}_item`] = newItem;
     $.post(`${listItemPath(newItem)}`, postData)
       .done((data) => {
         handleAddItem(data);
         $.ajax({
           url: `${listItemPath(item)}/${item.id}`,
           type: 'PUT',
-          data: `${listTypeToSnakeCase()}_item%5Brefreshed%5D=true`,
+          data: `${listTypeToSnakeCase(list.type)}_item%5Brefreshed%5D=true`,
         })
           .done(() => {
             const updatedPurchasedItems = purchasedItems.filter(notItem => notItem.id !== item.id);
             setPurchasedItems(updatedPurchasedItems);
+            setSuccess('Item successfully refreshed.');
           })
           .fail((response) => {
-            const responseJSON = JSON.parse(response.responseText);
-            const responseTextKeys = Object.keys(responseJSON);
-            const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-            setErrors(responseErrors.join(' and '));
+            failure(response.responseText);
           });
       }).fail((response) => {
-        const responseJSON = JSON.parse(response.responseText);
-        const responseTextKeys = Object.keys(responseJSON);
-        const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
-        setErrors(responseErrors.join(' and '));
+        failure(response.responseText);
       });
   };
 
-  // TODO: refactor?
-  const removeItem = (item) => {
-    if (item.purchased) {
-      const updatedPurchasedItems = purchasedItems.filter(li => li.id !== item.id);
-      setPurchasedItems(updatedPurchasedItems);
-    } else {
-      const category = Object.keys(notPurchasedItems).find(cat =>
-        notPurchasedItems[cat].find(li => li.id === item.id));
-      const updatedItems = notPurchasedItems[category].filter(li => li.id !== item.id);
-      notPurchasedItems[category] = updatedItems;
-    }
-  };
+  const confirmModalId = 'confirm-delete-item-modal';
 
   const handleDelete = (item) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure?')) {
+    setItemToDelete(item);
+    $(`#${confirmModalId}`).modal('show');
+  };
+
+  const handleDeleteConfirm = () => {
+    dismissAlert();
+    $.ajax({
+      url: `${listItemPath(itemToDelete)}/${itemToDelete.id}`,
+      type: 'DELETE',
+    }).done(() => {
       $.ajax({
-        url: `${listItemPath(item)}/${item.id}`,
-        type: 'DELETE',
-        success: () => removeItem(item),
+        type: 'GET',
+        url: `/lists/${props.match.params.id}`,
+        dataType: 'JSON',
+      }).done((data) => {
+        $(`#${confirmModalId}`).modal('hide');
+        const responseIncludedCategories = mapIncludedCategories(data.not_purchased_items);
+        const responseNotPurchasedItems = categorizeNotPurchasedItems(
+          data.not_purchased_items,
+          responseIncludedCategories,
+        );
+        setSuccess('Item successfully deleted.');
+        setIncludedCategories(responseIncludedCategories);
+        setNotPurchasedItems(responseNotPurchasedItems);
+        setPurchasedItems(data.purchased_items);
+      }).fail((response) => {
+        failure(response.responseText);
       });
-    } else {
-      return false;
-    }
-    return '';
+    }).fail((response) => {
+      failure(response.responseText);
+    });
   };
 
   return (
     <div>
       <h1>{ list.name }</h1>
       <Link to="/lists" className="pull-right">Back to lists</Link>
-      <Alert errors={errors} handleDismiss={() => setErrors('')} />
+      <Alert errors={errors} success={success} handleDismiss={dismissAlert} />
       <br />
       {
         permission === 'write' ? <ListItemForm
@@ -258,6 +296,13 @@ function ListContainer(props) {
         handleClearFilter={() => setFilter('')}
         filter={filter}
         categories={includedCategories}
+      />
+      <ConfirmModal
+        name={confirmModalId}
+        action="delete"
+        body="Are you sure you want to delete this item?"
+        handleConfirm={() => handleDeleteConfirm()}
+        handleClear={() => $(`#${confirmModalId}`).modal('hide')}
       />
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Alert from './Alert';
-import { CheckboxField, EmailField, PasswordField } from './FormFields';
+import Alert from '../../components/Alert';
+import { CheckboxField, EmailField, PasswordField } from '../../components/FormFields';
 
 export default function NewSession() {
   const [email, setEmail] = useState('');

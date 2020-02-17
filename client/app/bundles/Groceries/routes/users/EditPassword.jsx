@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import Alert from './Alert';
+import Alert from '../../components/Alert';
+import PasswordForm from './components/PasswordForm';
 
-import PasswordForm from './PasswordForm';
-
-function EditInvite(props) {
+function EditPassword(props) {
   const [password, setPassword] = useState('');
-  const [passwordConfirmation, , setPasswordConfirmation] = useState('');
-
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errors, setErrors] = useState('');
 
   const handleSubmit = (event) => {
@@ -18,25 +17,26 @@ function EditInvite(props) {
     const user = {
       password,
       password_confirmation: passwordConfirmation,
-      invitation_token: queryString.parse(props.location.search).invitation_token,
+      reset_password_token: queryString.parse(props.location.search).reset_password_token,
     };
     $.ajax({
-      url: '/users/invitation',
+      url: '/users/password',
       data: { user },
       method: 'PUT',
     }).done(() => {
       // noop
     }).fail((response) => {
       const responseJSON = JSON.parse(response.responseText);
-      const responseErrors = Object.keys(responseJSON).map(key => `${key} ${responseJSON[key]}`);
-      setErrors(responseErrors);
+      const responseTextKeys = Object.keys(responseJSON);
+      const responseErrors = responseTextKeys.map(key => `${key} ${responseJSON[key]}`);
+      setErrors(responseErrors.join(' and '));
     });
   };
 
   return (
     <div>
       <Alert errors={errors} handleDismiss={() => setErrors('')} />
-      <h2>Set your password</h2>
+      <h2>Change your password</h2>
       <PasswordForm
         password={password}
         passwordChangeHandler={({ target: { value } }) => setPassword(value)}
@@ -44,14 +44,15 @@ function EditInvite(props) {
         passwordConfirmationChangeHandler={({ target: { value } }) => setPasswordConfirmation(value)}
         submissionHandler={handleSubmit}
       />
+      <Link to="/users/sign_in">Log in</Link>
     </div>
   );
 }
 
-EditInvite.propTypes = {
+EditPassword.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string,
   }).isRequired,
 };
 
-export default EditInvite;
+export default EditPassword;

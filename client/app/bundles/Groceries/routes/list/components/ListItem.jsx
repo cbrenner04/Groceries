@@ -1,46 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { prettyDueBy } from '../utils/format';
+import { prettyDueBy } from '../../../utils/format';
 import PurchasedItemButtons from './PurchasedItemButtons';
 import NotPurchasedItemButtons from './NotPurchasedItemButtons';
 
 function ListItem(props) {
-  const prettyTitle = () => `"${props.item.title}"`;
-  const due = () => `Due By: ${prettyDueBy(props.item.due_by)}`;
-  const testClass = () => (props.purchased ? 'purchased-item' : 'non-purchased-item');
+  const itemName = {
+    BookList: `${props.item.title ? `"${props.item.title}"` : ''} ${props.item.author}`,
+    GroceryList: `${props.item.quantity} ${props.item.product}`,
+    MusicList: `${props.item.title ? `"${props.item.title}"` : ''} ${props.item.artist} ` +
+                `${props.item.artist && props.item.album ? '- ' : ''}` +
+                `${props.item.album ? props.item.album : ''}`,
+    ToDoList: `${props.item.task}`,
+  }[props.listType];
 
-  const itemName = () => (
-    {
-      BookList: `${props.item.title ? prettyTitle() : ''} ${props.item.author}`,
-      GroceryList: `${props.item.quantity} ${props.item.product}`,
-      MusicList: `${props.item.title ? prettyTitle() : ''} ${props.item.artist} ` +
-                 `${props.item.artist && props.item.album ? '- ' : ''}` +
-                 `${props.item.album ? props.item.album : ''}`,
-      ToDoList: `${props.item.task}`,
-    }[props.listType]
-  );
-
-  const assignee = (assigneeId) => {
-    const assignedUser = props.listUsers.filter(user => user.id === assigneeId)[0];
-    return assignedUser ? assignedUser.email : '';
-  };
-
-  const assigned = () => `Assigned To: ${assignee(props.item.assignee_id)}`;
-
-  const extraInfo = () => {
-    if (props.listType === 'ToDoList') {
-      return (
-        <small className="text-muted">
-          <div>{props.item.assignee_id ? assigned() : ''}</div>
-          <div>{props.item.due_by ? due() : ''}</div>
-        </small>
-      );
-    }
-    return '';
-  };
-
-  const setButtons =
+  const itemButtons =
     props.purchased
       ? (<PurchasedItemButtons
         listType={props.listType}
@@ -63,11 +38,25 @@ function ListItem(props) {
       className="list-group-item"
       key={props.item.id}
       style={{ display: 'block' }}
-      data-test-class={testClass()}
+      data-test-class={props.purchased ? 'purchased-item' : 'non-purchased-item'}
     >
-      <div className="pt-1">{ itemName() }</div>
-      <div className="pt-1">{ extraInfo() }</div>
-      { props.permission === 'write' ? setButtons : '' }
+      <div className="pt-1">{ itemName }</div>
+      <div className="pt-1">
+        {
+          props.listType === 'ToDoList' &&
+            <small className="text-muted">
+              <div>
+                {
+                  props.item.assignee_id
+                    ? `Assigned To: ${props.listUsers.find(user => user.id === props.item.assignee_id).email}`
+                    : ''
+                }
+              </div>
+              <div>{props.item.due_by ? `Due By: ${prettyDueBy(props.item.due_by)}` : ''}</div>
+            </small>
+        }
+      </div>
+      { props.permission === 'write' && itemButtons }
     </div>
   );
 }

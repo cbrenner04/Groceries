@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import ReadIcon from './ReadIcon';
+
+import { listTypeToSnakeCase } from '../../../utils/format';
 
 function NotPurchasedItemButtons(props) {
-  const listTypeToSnakeCase = () => props.listType.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
   const listItemPath = () => {
-    const listId = props.item[`${listTypeToSnakeCase()}_id`];
-    return `/lists/${listId}/${listTypeToSnakeCase()}_items`;
+    const listId = props.item[`${listTypeToSnakeCase(props.listType)}_id`];
+    return `/lists/${listId}/${listTypeToSnakeCase(props.listType)}_items`;
   };
+
+  const handleRead = () => props.handleReadOfItem(props.item);
+  const handleUnRead = () => props.handleUnReadOfItem(props.item);
 
   return (
     <div className="btn-group float-right" role="group">
       {
         props.listType === 'BookList' &&
-          <ReadIcon
-            itemRead={props.item.read}
-            handleRead={() => props.handleReadOfItem(props.item)}
-            handleUnread={() => props.handleUnReadOfItem(props.item)}
-          />
+          <button onClick={props.item.read ? handleUnRead : handleRead} className="btn btn-link p-0 mr-3">
+            <i className={`fa fa-bookmark${props.item.read ? '' : '-o'} fa-2x text-info`} />
+          </button>
       }
       <button onClick={() => props.handlePurchaseOfItem(props.item)} className="btn btn-link p-0 mr-3">
         <i className="fa fa-check-square-o fa-2x text-success" />

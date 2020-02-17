@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TextField, CategoryField, CheckboxField } from './FormFields';
+import { TextField, CategoryField, CheckboxField } from '../../../components/FormFields';
 
 const EditMusicListItemFormFields = props => (
   <div>

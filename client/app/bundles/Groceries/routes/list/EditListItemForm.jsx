@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { defaultDueBy, formatDueBy } from '../utils/format';
+import { defaultDueBy, formatDueBy, listTypeToSnakeCase } from '../../utils/format';
 
-import Alert from './Alert';
-import BookListItemFormFields from './BookListItemFormFields';
-import GroceryListItemFormFields from './GroceryListItemFormFields';
-import MusicListItemFormFields from './MusicListItemFormFields';
-import ToDoListItemFormFields from './ToDoListItemFormFields';
+import Alert from '../../components/Alert';
+import BookListItemFormFields from './components/BookListItemFormFields';
+import GroceryListItemFormFields from './components/GroceryListItemFormFields';
+import MusicListItemFormFields from './components/MusicListItemFormFields';
+import ToDoListItemFormFields from './components/ToDoListItemFormFields';
 
 function EditListItemForm(props) {
   const [userId, setUserId] = useState(0);
@@ -88,8 +88,6 @@ function EditListItemForm(props) {
     }
   }, []);
 
-  const listTypeToSnakeCase = llt => llt.replace(/([A-Z])/g, $1 => `_${$1}`.toLowerCase()).slice(1);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors('');
@@ -133,14 +131,12 @@ function EditListItemForm(props) {
     });
   };
 
-  const prettyTitle = () => `"${title}"`;
-
   const itemName = () => (
     {
-      BookList: `${title ? prettyTitle() : ''} ${author}`,
+      BookList: `${title ? `"${title}"` : ''} ${author}`,
       GroceryList: product,
       MusicList: `${
-        title ? prettyTitle() : ''
+        title ? `"${title}"` : ''
       } ${
         artist
       } ${

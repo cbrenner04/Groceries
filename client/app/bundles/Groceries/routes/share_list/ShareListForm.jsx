@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 
-import Alert from './Alert';
-import { EmailField } from './FormFields';
-import PermissionButtons from './PermissionButtons';
+import Alert from '../../components/Alert';
+import { EmailField } from '../../components/FormFields';
+import PermissionButtons from './components/PermissionButtons';
 
 function ShareListForm(props) {
   const [listId, setListId] = useState(0);

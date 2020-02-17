@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Alert from './Alert';
-import { EmailField } from './FormFields';
+import Alert from '../../components/Alert';
+import { EmailField } from '../../components/FormFields';
 
 function NewPassword(props) {
   const [email, setEmail] = useState('');

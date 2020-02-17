@@ -5,7 +5,7 @@ import {
   CategoryField,
   TextField,
   CheckboxField,
-} from './FormFields';
+} from '../../../components/FormFields';
 
 const GroceryListItemFormFields = props => (
   <div>

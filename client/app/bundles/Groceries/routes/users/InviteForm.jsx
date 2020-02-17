@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Alert from './Alert';
-import { EmailField } from './FormFields';
+import Alert from '../../components/Alert';
+import { EmailField } from '../../components/FormFields';
 
 export default function InviteForm() {
   const [email, setEmail] = useState('');

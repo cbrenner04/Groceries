@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { SelectField, TextField } from './FormFields';
+import { SelectField, TextField } from '../../../components/FormFields';
 
 function ListForm(props) {
   const defaultListType = 'GroceryList';

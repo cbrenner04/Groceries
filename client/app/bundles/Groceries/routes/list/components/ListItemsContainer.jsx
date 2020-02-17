@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ListItems from '../components/ListItems';
+import ListItems from './ListItems';
 
 const ListItemsContainer = props => (
   <div>

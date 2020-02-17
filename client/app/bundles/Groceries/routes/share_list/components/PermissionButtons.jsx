@@ -40,8 +40,8 @@ PermissionButtons.propTypes = {
   userId: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    email: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    email: PropTypes.string,
   }).isRequired).isRequired,
 };
 
