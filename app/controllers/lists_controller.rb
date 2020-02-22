@@ -57,7 +57,7 @@ class ListsController < ApplicationController
   def destroy
     set_list
     if @list.archive
-      render json: {}, status: :no_content
+      head :no_content
     else
       render json: @list.errors, status: :server_error
     end
