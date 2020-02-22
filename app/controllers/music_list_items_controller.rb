@@ -35,7 +35,7 @@ class MusicListItemsController < ListItemsController
     @list = List.find(params[:list_id])
     @item = MusicListItem.find(params[:id])
     @item.archive
-    render json: {}, status: :no_content
+    head :no_content
   end
 
   private

@@ -35,7 +35,7 @@ class ToDoListItemsController < ListItemsController
     @list = List.find(params[:list_id])
     @item = ToDoListItem.find(params[:id])
     @item.archive
-    render json: {}, status: :no_content
+    head :no_content
   end
 
   private
