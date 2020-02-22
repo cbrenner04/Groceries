@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Alert = (props) => {
+function Alert(props) {
   if (props.errors === '' && props.success === '') return '';
   return (
     <div
@@ -14,7 +14,7 @@ const Alert = (props) => {
       { props.errors || props.success }
     </div>
   );
-};
+}
 
 Alert.propTypes = {
   errors: PropTypes.string,

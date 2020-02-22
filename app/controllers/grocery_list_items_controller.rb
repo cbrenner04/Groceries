@@ -35,7 +35,7 @@ class GroceryListItemsController < ListItemsController
     @list = List.find(params[:list_id])
     @item = GroceryListItem.find(params[:id])
     @item.archive
-    redirect_to list_url(@list.id), notice: "Your item was successfully deleted"
+    head :no_content
   end
 
   private

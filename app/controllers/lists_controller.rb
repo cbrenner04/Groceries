@@ -18,7 +18,7 @@ class ListsController < ApplicationController
     @list = build_new_list
     if @list.save
       users_list = create_users_list(current_user, @list)
-      render json: create_response(users_list)
+      render json: list_response(@list, users_list)
     else
       render json: @list.errors, status: :unprocessable_entity
     end
@@ -56,8 +56,11 @@ class ListsController < ApplicationController
 
   def destroy
     set_list
-    @list.archive
-    redirect_to lists_path, notice: "Your list was successfully deleted"
+    if @list.archive
+      head :no_content
+    else
+      render json: @list.errors, status: :server_error
+    end
   end
 
   # TODO: Should this be another controller?
@@ -65,10 +68,10 @@ class ListsController < ApplicationController
     set_list
     @list.update!(refreshed: true)
     new_list = create_new_list_from(@list)
-    create_users_list(current_user, new_list)
+    users_list = create_users_list(current_user, new_list)
     accept_user_list(new_list)
     create_new_items(@list, new_list)
-    redirect_to lists_path, notice: "Your list was successfully refreshed"
+    render json: list_response(new_list, users_list)
   end
 
   private
@@ -121,10 +124,10 @@ class ListsController < ApplicationController
     }
   end
 
-  def create_response(users_list)
+  def list_response(list, users_list)
     # return object needs to be updated to include the users_list as this is
     # what the client expects, similar to the index_response > accepted_lists
-    @list.attributes.merge!(
+    list.attributes.merge!(
       has_accepted: true,
       user_id: current_user.id,
       users_list_id: users_list.id

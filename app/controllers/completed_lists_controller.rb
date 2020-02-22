@@ -4,7 +4,7 @@
 class CompletedListsController < ApplicationController
   def index
     respond_to do |format|
-      format.html
+      format.html { render template: "lists/index" }
       format.json do
         render json: {
           completed_lists: List.all_completed_lists(current_user)
