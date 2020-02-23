@@ -63,4 +63,4 @@ group :development do
   gem "web-console", "~> 3.7", ">= 3.7.0"
 end
 
-ruby "2.5.1"
+ruby "2.5.7"
