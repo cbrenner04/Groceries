@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/Groceries
     docker:
-      - image: circleci/ruby:2.5.1-node-browsers
+      - image: circleci/ruby:2.5.7-node-browsers
         environment:
           BUNDLER_VERSION: 2.1.4
           BUNDLE_PATH: vendor/bundle
