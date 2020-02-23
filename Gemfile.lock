@@ -135,7 +135,7 @@ GEM
     json (2.3.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (5.9.211.38.1)
+    libv8 (7.3.492.27.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -152,8 +152,8 @@ GEM
     mimemagic (0.3.3)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.1.14)
-      libv8 (~> 5.9)
+    mini_racer (0.2.9)
+      libv8 (>= 6.9.411)
     minitest (5.13.0)
     multi_json (1.14.1)
     multipart-post (2.1.1)
@@ -352,9 +352,9 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails (>= 4.3.5)
   launchy (~> 2.4, >= 2.4.3)
-  libv8 (~> 5.3, >= 5.3.332.38.5)
+  libv8 (~> 7.3, >= 7.3.492.27.1)
   listen (~> 3.1, >= 3.1.5)
-  mini_racer
+  mini_racer (~> 0.2.9)
   newrelic_rpm (~> 5.1, >= 5.1.0.344)
   pg (~> 1.0)
   poltergeist (~> 1.18, >= 1.18.1)
@@ -380,7 +380,7 @@ DEPENDENCIES
   webpacker_lite (>= 2.1.0)
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.7p206
 
 BUNDLED WITH
    1.17.3

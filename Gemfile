@@ -15,8 +15,8 @@ gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.5"
 gem "jbuilder", "~> 2.7"
 gem "jquery-rails", ">= 4.3.5"
 # error bundling on heroku fixed adding line below
-gem "libv8", "~> 5.3", ">= 5.3.332.38.5"
-gem "mini_racer", platforms: :ruby
+gem "libv8", "~> 7.3", ">= 7.3.492.27.1"
+gem "mini_racer", "~> 0.2.9", platforms: :ruby
 gem "newrelic_rpm", "~> 5.1", ">= 5.1.0.344"
 gem "pg", "~> 1.0"
 gem "puma", "~> 3.12"
