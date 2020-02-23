@@ -2,8 +2,8 @@
   "name": "groceries",
   "private": true,
   "engines": {
-    "node": ">=8.11.2",
-    "yarn": "^1.6.0"
+    "node": ">=12.16.0",
+    "yarn": "^1.22.0"
   },
   "dependencies": {
     "yarn": "1.22.0"
