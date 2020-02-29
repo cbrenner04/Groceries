@@ -46,7 +46,6 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -105,9 +104,16 @@ Rails.application.configure do
   }
 
   # reduce log noise
+
+  # reduce log noise
   config.lograge.enabled = true
-  # add time to lograge
+  # add params to lograge
+  # previously added time but papertrail has timestamps so not needed
   config.lograge.custom_options = lambda do |event|
-    { time: Time.now }
+    exceptions = %w(controller action format id)
+    {
+      params: event.payload[:params].except(*exceptions)
+    }
   end
+  config.log_level = :info
 end

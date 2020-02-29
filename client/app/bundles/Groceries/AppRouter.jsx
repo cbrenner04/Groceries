@@ -13,6 +13,7 @@ import Navbar from './components/Navbar';
 import NewPassword from './routes/users/NewPassword';
 import NewSession from './routes/users/NewSession';
 import ShareListForm from './routes/share_list/ShareListForm';
+import PageNotFound from './routes/error_pages/PageNotFound';
 
 export default function AppRouter() {
   return (
@@ -35,6 +36,7 @@ export default function AppRouter() {
         <Route exact path="/users/password/edit" component={EditPassword} />
         <Route exact path="/users/invitation/new" component={InviteForm} />
         <Route exact path="/users/invitation/accept" component={EditInvite} />
+        <Route component={PageNotFound} />
       </div>
     </Router>
   );
