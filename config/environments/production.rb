@@ -22,6 +22,8 @@ Rails.application.configure do
   config.assets.js_compressor = Uglifier.new(harmony: true)
   # config.assets.css_compressor = :sass
 
+  config.assets.quiet = true
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 
@@ -44,7 +46,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -101,4 +103,11 @@ Rails.application.configure do
     host: 'groceries-app.com',
     protocol: 'https'
   }
+
+  # reduce log noise
+  config.lograge.enabled = true
+  # add time to lograge
+  config.lograge.custom_options = lambda do |event|
+    { time: Time.now }
+  end
 end

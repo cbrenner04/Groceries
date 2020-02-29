@@ -17,25 +17,25 @@ Seed data can be found in `db/seeds.rb`.
 
 Setup the database:
 
-```
+```sh
 rails db:setup
 ```
 
 Build the front end and watch for changes:
 
-```
+```sh
 sh -c 'rm app/assets/webpack/* || true && cd client && yarn run build:development'
 ```
 
 In a separate terminal, run the server:
 
-```
+```sh
 rails s
 ```
 
 You can sign in using any of the users in the seeds file listed above.
 
-## Todos
+## TODO
 
 * Update front-end UI.
   * Sort options for items on list and for lists. Suggested options would be:
