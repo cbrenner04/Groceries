@@ -104,8 +104,6 @@ Rails.application.configure do
   }
 
   # reduce log noise
-
-  # reduce log noise
   config.lograge.enabled = true
   # add params to lograge
   # previously added time but papertrail has timestamps so not needed
