@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import CompletedLists from './routes/lists/CompletedLists';
 import EditInvite from './routes/users/EditInvite';
@@ -18,8 +18,8 @@ import PageNotFound from './routes/error_pages/PageNotFound';
 export default function AppRouter() {
   return (
     <Router>
-      <div>
-        <Route path="*" component={Navbar} />
+      <Navbar />
+      <Switch>
         {/* routes/lists */}
         <Route exact path="/" component={ListsContainer} />
         <Route exact path="/lists" component={ListsContainer} />
@@ -37,7 +37,7 @@ export default function AppRouter() {
         <Route exact path="/users/invitation/new" component={InviteForm} />
         <Route exact path="/users/invitation/accept" component={EditInvite} />
         <Route component={PageNotFound} />
-      </div>
+      </Switch>
     </Router>
   );
 }
