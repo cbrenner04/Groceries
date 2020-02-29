@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   end
   resources :completed_lists, only: :index
   root to: "lists#index"
+  get '*unmatched_route', to: 'application#route_not_found'
 end

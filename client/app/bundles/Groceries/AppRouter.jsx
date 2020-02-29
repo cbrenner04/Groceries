@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import CompletedLists from './routes/lists/CompletedLists';
 import EditInvite from './routes/users/EditInvite';
@@ -13,12 +13,13 @@ import Navbar from './components/Navbar';
 import NewPassword from './routes/users/NewPassword';
 import NewSession from './routes/users/NewSession';
 import ShareListForm from './routes/share_list/ShareListForm';
+import PageNotFound from './routes/error_pages/PageNotFound';
 
 export default function AppRouter() {
   return (
     <Router>
-      <div>
-        <Route path="*" component={Navbar} />
+      <Navbar />
+      <Switch>
         {/* routes/lists */}
         <Route exact path="/" component={ListsContainer} />
         <Route exact path="/lists" component={ListsContainer} />
@@ -35,7 +36,8 @@ export default function AppRouter() {
         <Route exact path="/users/password/edit" component={EditPassword} />
         <Route exact path="/users/invitation/new" component={InviteForm} />
         <Route exact path="/users/invitation/accept" component={EditInvite} />
-      </div>
+        <Route component={PageNotFound} />
+      </Switch>
     </Router>
   );
 }
