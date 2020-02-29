@@ -34,8 +34,10 @@ gem "turbolinks", "~> 5.1", ">= 5.1.1"
 gem "uglifier", "~> 4.1", ">= 4.1.11"
 gem "webpacker_lite", ">= 2.1.0"
 
-group :production do
+group :production, :staging do
   gem "informant-rails", "~> 1.1", ">= 1.1.0"
+  # reduce log noise
+  gem "lograge", "~> 0.11.2"
   # heroku
   gem "rails_12factor"
 end
