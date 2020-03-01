@@ -13,5 +13,16 @@ module Groceries
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = "Central Time (US & Canada)"
     config.active_record.time_zone_aware_types = [:datetime]
+
+    # TODO: move to specific environmentw to be more precise about origins
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          methods: [:get, :post, :patch, :put, :delete, :options]
+      end
+    end
   end
 end

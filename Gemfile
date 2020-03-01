@@ -35,6 +35,10 @@ gem "uglifier", "~> 4.1", ">= 4.1.11"
 gem "webpacker_lite", ">= 2.1.0"
 # reduce log noise
 gem "lograge", "~> 0.11.2"
+# cors
+gem 'rack-cors', '~> 1.1', '>= 1.1.1'
+# for token authentication
+gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
 
 group :production do
   gem "informant-rails", "~> 1.1", ">= 1.1.0"

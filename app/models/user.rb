@@ -4,6 +4,7 @@
 class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :recoverable,
          :rememberable, :trackable, :invitable, invite_for: 1.week
+  include DeviseTokenAuth::Concerns::User
 
   has_many :users_lists, dependent: :destroy
   has_many :lists,

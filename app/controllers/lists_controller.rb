@@ -6,12 +6,14 @@
 class ListsController < ApplicationController
   before_action :require_list_access, only: %i[show]
   before_action :require_list_owner, only: %i[edit update destroy refresh_list]
+  before_action :authenticate_user!
 
   def index
-    respond_to do |format|
-      format.html
-      format.json { render json: index_response }
-    end
+    render json: index_response
+    # respond_to do |format|
+    #   format.html
+    #   format.json { render json: index_response }
+    # end
   end
 
   def create

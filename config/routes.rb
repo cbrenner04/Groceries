@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  mount_devise_token_auth_for 'User', at: 'auth', skip: [:invitations]
   devise_for :users,
+             path: 'auth',
+             only: [:invitations],
              controllers: {
                invitations: 'users/invitations',
-               sessions: 'users/sessions',
-               passwords: 'users/passwords'
              },
              skip: :registration
   resources :lists, only: [:index, :show, :create, :edit, :update, :destroy] do
