@@ -73,10 +73,10 @@ export default function ListsContainer() {
       .done(() => {
         if (completed) {
           const updatedCompletedLists = completedLists.filter(ll => ll.id !== id);
-          setCompletedLists(updatedCompletedLists);
+          setCompletedLists(sortLists(updatedCompletedLists));
         } else {
           const updatedNonCompletedLists = nonCompletedLists.filter(ll => ll.id !== id);
-          setNonCompletedLists(updatedNonCompletedLists);
+          setNonCompletedLists(sortLists(updatedNonCompletedLists));
         }
         setSuccess('List successfully deleted.');
       })
@@ -97,7 +97,7 @@ export default function ListsContainer() {
       data: 'list%5Bcompleted%5D=true',
       success: () => {
         const updatedNonCompletedLists = nonCompletedLists.filter(nonList => nonList.id !== theList.id);
-        setNonCompletedLists(updatedNonCompletedLists);
+        setNonCompletedLists(sortLists(updatedNonCompletedLists));
         const updatedCompletedLists = update(completedLists, { $push: [theList] });
         setCompletedLists(sortLists(updatedCompletedLists));
         setSuccess('List successfully completed.');
@@ -120,10 +120,10 @@ export default function ListsContainer() {
         const { completed } = list;
         if (completed) {
           const updatedCompletedLists = update(completedLists, { $push: [list] });
-          setCompletedLists(updatedCompletedLists);
+          setCompletedLists(sortLists(updatedCompletedLists));
         } else {
           const updatedNonCompletedLists = update(nonCompletedLists, { $push: [list] });
-          setNonCompletedLists(updatedNonCompletedLists);
+          setNonCompletedLists(sortLists(updatedNonCompletedLists));
         }
         setSuccess('List successfully accepted.');
       },
