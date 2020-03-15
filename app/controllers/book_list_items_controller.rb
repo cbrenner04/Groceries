@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # no doc
-class BookListItemsController < ListItemsController
+class BookListItemsController < ProtectedRouteController
   def create
     @item = BookListItem
             .create(item_params.merge!(book_list_id: params[:list_id]))
@@ -15,10 +15,7 @@ class BookListItemsController < ListItemsController
   def edit
     item = BookListItem.find(params[:id])
     list = BookList.find(item.book_list_id)
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json { render json: { item: item, list: list } }
-    end
+    render json: { item: item, list: list }
   end
 
   def update

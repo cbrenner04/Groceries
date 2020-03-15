@@ -1,15 +1,8 @@
 # frozen_string_literal: true
 
 # Controller for completed lists
-class CompletedListsController < ApplicationController
+class CompletedListsController < ProtectedRouteController
   def index
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json do
-        render json: {
-          completed_lists: List.all_completed_lists(current_user)
-        }
-      end
-    end
+    render json: { completed_lists: List.all_completed_lists(current_user) }
   end
 end

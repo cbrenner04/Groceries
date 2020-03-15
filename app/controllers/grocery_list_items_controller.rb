@@ -16,10 +16,7 @@ class GroceryListItemsController < ListItemsController
   def edit
     item = GroceryListItem.find(params[:id])
     list = GroceryList.find(item.grocery_list_id)
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json { render json: { item: item, list: list } }
-    end
+    render json: { item: item, list: list }
   end
 
   def update

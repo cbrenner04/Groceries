@@ -2,23 +2,17 @@
 
 # no doc
 # TODO: This needs a service object
-class UsersListsController < ApplicationController
+class UsersListsController < ProtectedRouteController
   before_action :require_list_access, only: %i[index update]
-  before_action :require_write_access, only: %i[show create]
+  # before_action :require_write_access, only: %i[show create]
 
   def index
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json { render json: index_response }
-    end
+    render json: index_response
   end
 
   def show
     users_list = UsersList.find(params[:id])
-    respond_to do |format|
-      format.html { render template: "lists/index" }
-      format.json { render json: users_list }
-    end
+    render json: users_list
   end
 
   def create
@@ -54,6 +48,7 @@ class UsersListsController < ApplicationController
       .permit(:user_id, :list_id, :has_accepted, :permissions)
   end
 
+  # TODO: handle this differently
   def require_list_access
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)
@@ -62,6 +57,8 @@ class UsersListsController < ApplicationController
     redirect_to lists_path
   end
 
+  # TODO: handle this differently
+  # TODO: is this needed?
   def require_write_access
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)

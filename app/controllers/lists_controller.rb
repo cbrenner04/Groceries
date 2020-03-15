@@ -3,17 +3,12 @@
 # no doc
 # TODO: This needs a service object
 # rubocop:disable Metrics/ClassLength
-class ListsController < ApplicationController
+class ListsController < ProtectedRouteController
   before_action :require_list_access, only: %i[show]
   before_action :require_list_owner, only: %i[edit update destroy refresh_list]
-  before_action :authenticate_user!
 
   def index
     render json: index_response
-    # respond_to do |format|
-    #   format.html
-    #   format.json { render json: index_response }
-    # end
   end
 
   def create
@@ -28,23 +23,15 @@ class ListsController < ApplicationController
 
   def show
     set_up_list
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render json: show_response }
-    end
+    render json: show_response
   end
 
   def edit
     set_list
-    respond_to do |format|
-      format.html { render :index }
-      format.json do
-        render json: {
-          list: @list,
-          current_user_id: current_user&.id
-        }
-      end
-    end
+    render json: {
+      list: @list,
+      current_user_id: current_user&.id
+    }
   end
 
   def update
