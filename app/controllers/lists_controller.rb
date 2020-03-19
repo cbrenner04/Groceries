@@ -74,14 +74,14 @@ class ListsController < ProtectedRouteController
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list&.has_accepted
 
-    redirect_to lists_path
+    head :forbidden
   end
 
   def require_list_owner
     list = List.find(params[:id])
     return if list.owner == current_user
 
-    redirect_to lists_path
+    head :forbidden
   end
 
   def accept_user_list(list)

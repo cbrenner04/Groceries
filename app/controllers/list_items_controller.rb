@@ -12,6 +12,6 @@ class ListItemsController < ProtectedRouteController
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list&.permissions == "write"
 
-    redirect_to lists_path
+    head :forbidden
   end
 end
