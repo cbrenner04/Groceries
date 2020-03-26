@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "bootstrap", "~> 4.3", ">= 4.3.1"
+gem "bootstrap", "~> 4.4", ">= 4.4.1"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.7", ">= 4.7.1"
 gem "devise_invitable", "~> 1.7", ">= 1.7.5"
@@ -20,7 +20,7 @@ gem "mini_racer", "~> 0.2.9", platforms: :ruby
 gem "newrelic_rpm", "~> 5.1", ">= 5.1.0.344"
 gem "pg", "~> 1.0"
 gem "puma", "~> 3.12"
-gem "rails", "~> 5.2", ">= 5.2.3"
+gem "rails", "~> 5.2", ">= 5.2.4.2"
 source "https://rails-assets.org" do
   # In combination with Bootstrap
   gem "rails-assets-tether", "~> 1.1", ">= 1.1.1"
