@@ -5,13 +5,7 @@ module Users
   class InvitationsController < Devise::InvitationsController
     include InvitableMethods
     before_action :authenticate_user!, only: :create
-    before_action :resource_from_invitation_token, only: [:edit, :update]
-
-    # this overrides the default redirect after invitation is made
-    # it needs to have the argument or an error would be thrown
-    def after_invite_path_for(_resource)
-      list_id ? list_users_lists_path(list_id) : root_path
-    end
+    before_action :authenticate_invitee!, only: :update
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def create
@@ -43,15 +37,9 @@ module Users
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-    # TODO: nope
-    def edit
-      redirect_to
-        "#{client_api_url}?invitation_token=#{params[:invitation_token]}"
-    end
-
     def update
       user = User.accept_invitation!(accept_invitation_params)
-      if @user.errors.empty?
+      if user.errors.empty?
         render json: { success: ['User updated.'] }, status: :accepted
       else
         render json: { errors: user.errors.full_messages },
@@ -73,6 +61,12 @@ module Users
 
     def list_id
       params[:list_id]
+    end
+
+    def authenticate_invitee!
+      user = User.find_by_invitation_token(accept_invitation_params[:invitation_token], true)
+      return if user
+      render json: { errors: ['Invalid token.'] }, status: :not_acceptable
     end
 
     def invited_user
