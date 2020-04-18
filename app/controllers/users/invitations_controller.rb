@@ -8,10 +8,12 @@ module Users
     before_action :authenticate_invitee!, only: :update
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/BlockNesting
     def create
       # do nothing if user already exists and this isn't related to list sharing
       if invited_user && !list_id
-        render json: { success: [] }, status: :ok
+        head :ok
       elsif list_id
         # if sharing a list, current user must have write permissions
         if current_user_has_write_access
@@ -23,7 +25,11 @@ module Users
             user = User.invite!(invite_params, current_user)
             if user.valid?
               users_list = create_users_list(user)
-              render json: { user: user, users_list: { id: users_list.id, permissions: users_list.permissions } }, status: :created
+              render json: {
+                user: user, users_list: {
+                  id: users_list.id, permissions: users_list.permissions
+                }
+              }, status: :created
             else
               render json: user.errors, status: :unprocessable_entity
             end
@@ -36,11 +42,13 @@ module Users
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/BlockNesting
 
     def update
       user = User.accept_invitation!(accept_invitation_params)
       if user.errors.empty?
-        render json: { success: ['User updated.'] }, status: :accepted
+        render json: { success: ["User updated."] }, status: :accepted
       else
         render json: { errors: user.errors.full_messages },
                status: :unprocessable_entity
@@ -50,9 +58,7 @@ module Users
     private
 
     def invite_params
-      params.permit(
-        [:email, :invitation_token, :provider, :skip_invitation]
-      )
+      params.permit(:email, :invitation_token, :provider, :skip_invitation)
     end
 
     def accept_invitation_params
@@ -64,9 +70,15 @@ module Users
     end
 
     def authenticate_invitee!
-      user = User.find_by_invitation_token(accept_invitation_params[:invitation_token], true)
+      # rubocop:disable Rails/DynamicFindBy
+      user = User.find_by_invitation_token(
+        accept_invitation_params[:invitation_token],
+        true
+      )
+      # rubocop:enable Rails/DynamicFindBy
       return if user
-      render json: { errors: ['Invalid token.'] }, status: :not_acceptable
+
+      render json: { errors: ["Invalid token."] }, status: :not_acceptable
     end
 
     def invited_user
@@ -79,10 +91,13 @@ module Users
 
     def share_list(user)
       if existing_users_list(user)
-        render json: { responseText: "List already shared with #{user.email}" }, status: :conflict
+        render json: { responseText: "List already shared with #{user.email}" },
+               status: :conflict
       else
         users_list = create_users_list(user)
-        render json: { user: user, users_list: { id: users_list.id, permissions: users_list.permissions } }, status: :created
+        render json: { user: user, users_list: {
+          id: users_list.id, permissions: users_list.permissions
+        } }, status: :created
       end
     end
 
