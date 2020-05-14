@@ -47,7 +47,7 @@ function ListItem(props) {
             <small className="text-muted">
               <div>
                 {
-                  props.item.assignee_id
+                  props.item.assignee_id && props.listUsers.length
                     ? `Assigned To: ${props.listUsers.find(user => user.id === props.item.assignee_id).email}`
                     : ''
                 }
