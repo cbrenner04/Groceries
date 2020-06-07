@@ -28,10 +28,7 @@ class ListsController < ProtectedRouteController
 
   def edit
     set_list
-    render json: {
-      list: @list,
-      current_user_id: current_user&.id
-    }
+    render json: @list
   end
 
   def update
@@ -109,7 +106,12 @@ class ListsController < ProtectedRouteController
       list: @list,
       not_purchased_items: @not_purchased_items,
       purchased_items: @purchased_items,
-      categories: @list.categories
+      categories: @list.categories,
+      list_users: UsersListsService.new(@list.id).list_users,
+      permissions: UsersList.find_by(
+        list_id: @list.id,
+        user_id: current_user.id
+      ).permissions
     }
   end
 

@@ -2,12 +2,11 @@
 
 # no doc
 class ListItemsController < ProtectedRouteController
-  before_action :require_list_access
+  before_action :require_write_access
 
   private
 
-  # TODO: handle this differently
-  def require_list_access
+  def require_write_access
     list = List.find(params[:list_id])
     users_list = UsersList.find_by(list: list, user: current_user)
     return if users_list&.permissions == "write"

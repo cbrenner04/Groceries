@@ -16,7 +16,8 @@ class MusicListItemsController < ListItemsController
   def edit
     item = MusicListItem.find(params[:id])
     list = MusicList.find(item.music_list_id)
-    render json: { item: item, list: list }
+    categories = list.categories
+    render json: { item: item, list: list, categories: categories }
   end
 
   def update

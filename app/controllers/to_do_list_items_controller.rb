@@ -16,7 +16,15 @@ class ToDoListItemsController < ListItemsController
   def edit
     item = ToDoListItem.find(params[:id])
     list = ToDoList.find(item.to_do_list_id)
-    render json: { item: item, list: list }
+    categories = list.categories
+    categories = list.categories
+    list_users = UsersListsService.new([params[:list_id]]).list_users
+    render json: {
+      item: item,
+      list: list,
+      categories: categories,
+      list_users: list_users
+    }
   end
 
   def update

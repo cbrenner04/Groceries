@@ -16,7 +16,8 @@ class GroceryListItemsController < ListItemsController
   def edit
     item = GroceryListItem.find(params[:id])
     list = GroceryList.find(item.grocery_list_id)
-    render json: { item: item, list: list }
+    categories = list.categories
+    render json: { item: item, list: list, categories: categories }
   end
 
   def update
