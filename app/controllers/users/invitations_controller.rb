@@ -70,12 +70,9 @@ module Users
     end
 
     def authenticate_invitee!
-      # rubocop:disable Rails/DynamicFindBy
-      user = User.find_by_invitation_token(
-        accept_invitation_params[:invitation_token],
-        true
+      user = User.find_by(
+        invitation_token: accept_invitation_params[:invitation_token]
       )
-      # rubocop:enable Rails/DynamicFindBy
       return if user
 
       render json: { errors: ["Invalid token."] }, status: :not_acceptable

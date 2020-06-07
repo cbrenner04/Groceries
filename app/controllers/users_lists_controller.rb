@@ -4,7 +4,7 @@
 # TODO: This needs a service object
 class UsersListsController < ProtectedRouteController
   before_action :require_list_access, only: %i[index update]
-  # before_action :require_write_access, only: %i[show create]
+  before_action :require_write_access, only: %i[create]
 
   def index
     render json: index_response
