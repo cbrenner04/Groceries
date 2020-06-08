@@ -89,14 +89,12 @@ class ListsController < ProtectedRouteController
     UsersList.create!(user: user, list: list, has_accepted: true)
   end
 
-  # TODO: why split the lists? If we continue to split them,
-  # why not split accepted into complete/incomplete as well?
   def index_response
     {
       accepted_lists: List.accepted(current_user),
       pending_lists: List.pending(current_user),
-      is_user_signed_in: user_signed_in?,
-      current_user_id: current_user&.id
+      current_user_id: current_user.id,
+      current_list_permissions: current_user.current_list_permissions
     }
   end
 

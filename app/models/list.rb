@@ -25,7 +25,10 @@ class List < ApplicationRecord
       List.find_by_sql(not_completed_accepted_lists_query(user.id))
     completed_lists =
       List.find_by_sql(limited_completed_accepted_lists_query(user.id))
-    not_completed_lists.concat(completed_lists)
+    {
+      not_completed_lists: not_completed_lists,
+      completed_lists: completed_lists
+    }
   end
 
   def self.all_completed_lists(user)
