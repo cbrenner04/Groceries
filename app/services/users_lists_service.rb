@@ -20,10 +20,12 @@ class UsersListsService
   end
 
   def list_users
-    accepted_users_lists = UsersList.where(list_id: @list_id).public_send("accepted")
-    pending_users_lists = UsersList.where(list_id: @list_id).public_send("pending")
-    accepted_users_lists.to_a.concat(pending_users_lists.to_a).map do |user_list|
-      User.find(user_list.user_id)
-    end
+    accepted_users_lists = UsersList.where(list_id: @list_id)
+                                    .public_send("accepted")
+    pending_users_lists = UsersList.where(list_id: @list_id)
+                                   .public_send("pending")
+    accepted_users_lists.to_a
+                        .concat(pending_users_lists.to_a)
+                        .map { |user_list| User.find(user_list.user_id) }
   end
 end

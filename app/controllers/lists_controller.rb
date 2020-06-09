@@ -98,6 +98,7 @@ class ListsController < ProtectedRouteController
     }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def show_response
     {
       current_user_id: current_user.id,
@@ -112,6 +113,7 @@ class ListsController < ProtectedRouteController
       ).permissions
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   def list_response(list, users_list)
     # return object needs to be updated to include the users_list as this is

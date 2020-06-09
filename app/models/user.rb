@@ -30,6 +30,7 @@ class User < ApplicationRecord
     current_list_permissions = {}
     users_lists.each do |users_list|
       next if List.find(users_list.list_id).archived_at
+
       current_list_permissions[users_list.list_id] = users_list.permissions
     end
     current_list_permissions

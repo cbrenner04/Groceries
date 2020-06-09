@@ -63,6 +63,7 @@ class UsersListsController < ProtectedRouteController
     head :forbidden
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def index_response
     list = List.find(params[:list_id])
     user_is_owner = list.owner == current_user
@@ -78,4 +79,5 @@ class UsersListsController < ProtectedRouteController
       user_is_owner: user_is_owner
     }
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

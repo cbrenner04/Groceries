@@ -2,89 +2,57 @@
 
 require "rails_helper"
 
-RSpec.describe BookListItemsController do
+describe "/lists/:list_id/book_list_items/:id", type: :request do
   let(:user) { create :user }
   let(:list) { create :book_list, owner: user }
   let(:users_list) { create :users_list, user: user, list: list }
   let(:item) { create :book_list_item, book_list: list }
 
-  before { sign_in user }
+  before { login user }
 
-  describe "GET #edit" do
-    describe "format HTML" do
-      describe "with read access" do
-        before { users_list.update!(permissions: "read") }
+  describe "GET /edit" do
+    describe "with read access" do
+      before { users_list.update!(permissions: "read") }
 
-        it "redirects to lists_path" do
-          get :edit, params: {
-            id: item.id,
-            list_id: list.id
-          }
+      it "responds with forbidden" do
+        get edit_list_book_list_item_path(item.id, list.id),
+            headers: get_auth_params
 
-          expect(response).to redirect_to lists_path
-        end
-      end
-
-      describe "with write access" do
-        before { users_list.update!(permissions: "write") }
-
-        it "renders 'lists/index'" do
-          get :edit, params: {
-            id: item.id,
-            list_id: list.id
-          }
-
-          expect(response).to render_template "lists/index"
-        end
+        expect(response).to have_http_status :forbidden
       end
     end
 
-    describe "format JSON" do
-      describe "with read access" do
-        before { users_list.update!(permissions: "read") }
+    describe "with write access" do
+      before { users_list.update!(permissions: "write") }
 
-        it "redirects to lists_path" do
-          get :edit, params: {
-            id: item.id,
-            list_id: list.id
-          }, format: :json
+      it "responds with 200 and correct body" do
+        get edit_list_book_list_item_path(item.id, list.id),
+            headers: get_auth_params
 
-          expect(response).to redirect_to lists_path
-        end
-      end
+        response_body = JSON.parse(response.body).to_h
 
-      describe "with write access" do
-        before { users_list.update!(permissions: "write") }
-
-        it "responds with success and correct payload" do
-          get :edit, params: {
-            id: item.id,
-            list_id: list.id
-          }, format: :json
-
-          expect(response).to be_successful
-          response_body = JSON.parse(response.body).to_h
-          expect(response_body["item"]).to include(
-            "archived_at" => item[:archived_at],
-            "id" => item[:id],
-            "book_list_id" => item[:book_list_id],
-            "author" => item[:author],
-            "purchased" => item[:purchased],
-            "title" => item[:title],
-            "read" => item[:read],
-            "user_id" => item[:user_id],
-            "number_in_series" => item[:number_in_series],
-            "category" => item[:category]
-          )
-          expect(response_body["list"]).to include(
-            "id" => list[:id],
-            "name" => list[:name],
-            "archived_at" => list[:archived_at],
-            "completed" => list[:completed],
-            "refreshed" => list[:refreshed],
-            "type" => list[:type]
-          )
-        end
+        expect(response).to have_http_status :success
+        expect(response_body["item"]).to include(
+          "archived_at" => item[:archived_at],
+          "id" => item[:id],
+          "book_list_id" => item[:book_list_id],
+          "author" => item[:author],
+          "purchased" => item[:purchased],
+          "title" => item[:title],
+          "read" => item[:read],
+          "user_id" => item[:user_id],
+          "number_in_series" => item[:number_in_series],
+          "category" => item[:category]
+        )
+        expect(response_body["list"]).to include(
+          "id" => list[:id],
+          "name" => list[:name],
+          "archived_at" => list[:archived_at],
+          "completed" => list[:completed],
+          "refreshed" => list[:refreshed],
+          "type" => list[:type]
+        )
+        # TODO: check categories
       end
     end
   end

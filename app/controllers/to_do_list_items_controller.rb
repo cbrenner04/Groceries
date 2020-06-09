@@ -17,7 +17,6 @@ class ToDoListItemsController < ListItemsController
     item = ToDoListItem.find(params[:id])
     list = ToDoList.find(item.to_do_list_id)
     categories = list.categories
-    categories = list.categories
     list_users = UsersListsService.new([params[:list_id]]).list_users
     render json: {
       item: item,
