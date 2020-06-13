@@ -29,7 +29,6 @@ class BookListItemsController < ListItemsController
   end
 
   def destroy
-    @list = List.find(params[:list_id])
     @item = BookListItem.find(params[:id])
     @item.archive
     head :no_content

@@ -42,11 +42,8 @@ class ListsController < ProtectedRouteController
 
   def destroy
     set_list
-    if @list.archive
-      head :no_content
-    else
-      render json: @list.errors, status: :server_error
-    end
+    @list.archive
+    head :no_content
   end
 
   # TODO: Should this be another controller?

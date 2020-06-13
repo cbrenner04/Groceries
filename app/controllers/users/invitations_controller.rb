@@ -5,7 +5,18 @@ module Users
   class InvitationsController < Devise::InvitationsController
     include InvitableMethods
     before_action :authenticate_user!, only: :create
-    before_action :authenticate_invitee!, only: :update
+
+    def new
+      head :no_content
+    end
+
+    def edit
+      head :no_content
+    end
+
+    def destroy
+      head :no_content
+    end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -38,7 +49,11 @@ module Users
       else
         # if this isn't related to list sharing, just do regular invitation
         user = User.invite!(invite_params, current_user)
-        render json: { user: user }, status: :created
+        if user.valid?
+          render json: { user: user }, status: :created
+        else
+          render json: user.errors, status: :unprocessable_entity
+        end
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -46,6 +61,14 @@ module Users
     # rubocop:enable Metrics/BlockNesting
 
     def update
+      if !accept_invitation_params[:password] ||
+        !accept_invitation_params[:password_confirmation] ||
+        accept_invitation_params[:password] != accept_invitation_params[:password_confirmation]
+        render json: {
+          errors: "password and password confirmation must be the same"
+        }, status: :unprocessable_entity
+        return
+      end
       user = User.accept_invitation!(accept_invitation_params)
       if user.errors.empty?
         render json: { success: ["User updated."] }, status: :accepted
@@ -67,15 +90,6 @@ module Users
 
     def list_id
       params[:list_id]
-    end
-
-    def authenticate_invitee!
-      user = User.find_by(
-        invitation_token: accept_invitation_params[:invitation_token]
-      )
-      return if user
-
-      render json: { errors: ["Invalid token."] }, status: :not_acceptable
     end
 
     def invited_user

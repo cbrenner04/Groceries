@@ -39,10 +39,6 @@ class List < ApplicationRecord
     List.find_by_sql(pending_lists_query(user.id))
   end
 
-  def self.refused(user)
-    List.find_by_sql(refused_lists_query(user.id))
-  end
-
   # TODO: These should not be *, set the columns needed
   def self.accepted_lists_query(user_id)
     <<-SQL
@@ -60,16 +56,6 @@ class List < ApplicationRecord
       FROM active_lists
       WHERE user_id = #{user_id}
       AND has_accepted IS NULL
-    SQL
-  end
-
-  # TODO: These should not be *, set the columns needed
-  def self.refused_lists_query(user_id)
-    <<-SQL
-      SELECT *
-      FROM active_lists
-      WHERE user_id = #{user_id}
-      AND has_accepted = false
     SQL
   end
 

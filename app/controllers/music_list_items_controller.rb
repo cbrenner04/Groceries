@@ -30,7 +30,6 @@ class MusicListItemsController < ListItemsController
   end
 
   def destroy
-    @list = List.find(params[:list_id])
     @item = MusicListItem.find(params[:id])
     @item.archive
     head :no_content

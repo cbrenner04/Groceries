@@ -30,7 +30,6 @@ class GroceryListItemsController < ListItemsController
   end
 
   def destroy
-    @list = List.find(params[:list_id])
     @item = GroceryListItem.find(params[:id])
     @item.archive
     head :no_content

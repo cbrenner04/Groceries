@@ -9,11 +9,6 @@ class UsersListsController < ProtectedRouteController
     render json: index_response
   end
 
-  def show
-    users_list = UsersList.find(params[:id])
-    render json: users_list
-  end
-
   def create
     @list = List.find(params[:list_id])
     @users_list = UsersList.create(users_list_params)
