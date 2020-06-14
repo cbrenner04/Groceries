@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # service object for Lists
+# rubocop:disable Metrics/ModuleLength
 module ListsService
   include UsersListsService
 
@@ -192,3 +193,4 @@ module ListsService
       end
   end
 end
+# rubocop:enable Metrics/ModuleLength
