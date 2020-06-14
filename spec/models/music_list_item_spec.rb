@@ -49,7 +49,7 @@ RSpec.describe MusicListItem, type: :model do
 
   describe ".ordered" do
     it "returns items ordered by artist then album then title" do
-      expect(MusicListItem.ordered).to eq [item, third_item, another_item]
+      expect(described_class.ordered).to eq [item, third_item, another_item]
     end
   end
 

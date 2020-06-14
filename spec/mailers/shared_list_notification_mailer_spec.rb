@@ -13,7 +13,7 @@ RSpec.describe SharedListNotificationMailer, type: :mailer do
 
   describe "shared list email" do
     let(:mail) do
-      SharedListNotificationMailer.notify(sharer_email, sharee_email)
+      described_class.notify(sharer_email, sharee_email)
     end
 
     it "sets 'subject'" do

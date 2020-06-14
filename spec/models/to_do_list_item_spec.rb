@@ -45,7 +45,7 @@ RSpec.describe ToDoListItem, type: :model do
 
   describe ".ordered" do
     it "returns items ordered by due by then assignee id then task" do
-      expect(ToDoListItem.ordered).to eq [third_item, another_item, item]
+      expect(described_class.ordered).to eq [third_item, another_item, item]
     end
   end
 

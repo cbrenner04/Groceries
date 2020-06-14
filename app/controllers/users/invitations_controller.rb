@@ -57,13 +57,13 @@ module Users
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     # rubocop:enable Metrics/BlockNesting
 
     def update
       if !accept_invitation_params[:password] ||
-        !accept_invitation_params[:password_confirmation] ||
-        accept_invitation_params[:password] != accept_invitation_params[:password_confirmation]
+         !accept_invitation_params[:password_confirmation] ||
+         accept_invitation_params[:password] !=
+         accept_invitation_params[:password_confirmation]
         render json: {
           errors: "password and password confirmation must be the same"
         }, status: :unprocessable_entity
@@ -77,6 +77,7 @@ module Users
                status: :unprocessable_entity
       end
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     private
 

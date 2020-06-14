@@ -19,8 +19,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
-          - v2-ruby-dependencies-
+            - v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+            - v2-ruby-dependencies-
       - run:
           name: install ruby dependencies
           command: |
@@ -63,6 +63,6 @@ jobs:
       - run:
           name: lint client
           command: cd client && yarn lint
-      - run:
-          name: test client
-          command: cd client && yarn test
+      # - run:
+      #     name: test client
+      #     command: cd client && yarn test

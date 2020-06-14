@@ -56,7 +56,7 @@ RSpec.describe BookListItem, type: :model do
 
   describe ".ordered" do
     it "returns items ordered by author then number_in_series then title" do
-      expect(BookListItem.ordered).to eq [
+      expect(described_class.ordered).to eq [
         second_item,
         fourth_item,
         third_item,

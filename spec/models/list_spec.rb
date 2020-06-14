@@ -39,7 +39,8 @@ RSpec.describe List do
     end
 
     it "returns lists accepted by user" do
-      expect(described_class.accepted(user).count).to eq 1
+      expect(described_class.accepted(user)[:not_completed_lists].count).to eq 1
+      expect(described_class.accepted(user)[:completed_lists].count).to eq 0
     end
   end
 
@@ -52,18 +53,6 @@ RSpec.describe List do
 
     it "returns lists not yet accepted by user" do
       expect(described_class.pending(new_user).count).to eq 1
-    end
-  end
-
-  describe ".refused" do
-    let(:new_user) { create :user }
-
-    before do
-      UsersList.create!(user: new_user, list: other_list, has_accepted: false)
-    end
-
-    it "returns lists not yet accepted by user" do
-      expect(described_class.refused(new_user).count).to eq 1
     end
   end
 end
