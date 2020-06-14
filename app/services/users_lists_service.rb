@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 # service object for UsersLists
-class UsersListsService
-  def initialize(list_id)
-    @list_id = list_id
-  end
-
-  def list_users_by_status(status)
-    users_lists = UsersList.where(list_id: @list_id).public_send(status)
+module UsersListsService
+  def list_users_by_status(list_id, status)
+    users_lists = UsersList.where(list_id: list_id).public_send(status)
     users_lists.map do |user_list|
       {
         user: User.find(user_list.user_id),
@@ -19,10 +15,10 @@ class UsersListsService
     end
   end
 
-  def list_users
-    accepted_users_lists = UsersList.where(list_id: @list_id)
+  def list_users(list_id)
+    accepted_users_lists = UsersList.where(list_id: list_id)
                                     .public_send("accepted")
-    pending_users_lists = UsersList.where(list_id: @list_id)
+    pending_users_lists = UsersList.where(list_id: list_id)
                                    .public_send("pending")
     accepted_users_lists.to_a
                         .concat(pending_users_lists.to_a)

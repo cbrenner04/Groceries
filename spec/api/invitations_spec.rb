@@ -8,73 +8,13 @@ describe "/auth/invitation", type: :request do
 
   before { login user }
 
-  describe "GET /new" do
-    it "responds with no content" do
-      get new_user_invitation_path, headers: auth_params
-
-      expect(response).to have_http_status :no_content
-    end
-  end
-
-  describe "GET /accept" do
-    let(:new_user) { User.invite!(email: "test@test.org") }
-
-    context "when token is valid" do
-      it "responds with no content" do
-        get accept_user_invitation_path,
-            params: {
-              invitation_token: new_user.raw_invitation_token
-            }
-
-        expect(response).to have_http_status :no_content
-      end
-    end
-
-    context "when token is invalid" do
-      it "responds with found" do
-        get accept_user_invitation_path,
-            params: {
-              invitation_token: "foobar"
-            }
-
-        expect(response).to have_http_status :found
-      end
-    end
-  end
-
-  describe "GET /remove" do
-    let(:new_user) { User.invite!(email: "test@test.org") }
-
-    context "when token is valid" do
-      it "responds with no content" do
-        get remove_user_invitation_path,
-            params: {
-              invitation_token: new_user.raw_invitation_token
-            }
-
-        expect(response).to have_http_status :no_content
-      end
-    end
-
-    context "when token is invalid" do
-      it "responds with found" do
-        get remove_user_invitation_path,
-            params: {
-              invitation_token: "foobar"
-            }
-
-        expect(response).to have_http_status :found
-      end
-    end
-  end
-
   describe "POST /" do
     context "when list_id param exists" do
       context "with valid params" do
         it "creates a new user" do
           starting_user_count = User.count
           starting_users_list_count = UsersList.count
-          post user_invitation_path,
+          post auth_invitation_path,
                params: {
                  email: "foo@bar.com",
                  list_id: list.id
@@ -108,7 +48,7 @@ describe "/auth/invitation", type: :request do
 
       context "with invalid params" do
         it "responds with errors" do
-          post user_invitation_path,
+          post auth_invitation_path,
                params: {
                  email: nil,
                  list_id: list.id
@@ -126,7 +66,7 @@ describe "/auth/invitation", type: :request do
             other_user = create :user
             create :users_list, user: other_user, list: list
             expect do
-              post user_invitation_path,
+              post auth_invitation_path,
                    params: {
                      email: other_user.email,
                      list_id: list.id
@@ -147,7 +87,7 @@ describe "/auth/invitation", type: :request do
             other_user = create :user
             starting_user_count = User.count
             starting_users_list_count = UsersList.count
-            post user_invitation_path,
+            post auth_invitation_path,
                  params: {
                    email: other_user.email,
                    list_id: list.id
@@ -186,7 +126,7 @@ describe "/auth/invitation", type: :request do
           it "creates a new user, does not create a users list" do
             starting_user_count = User.count
             starting_users_list_count = UsersList.count
-            post user_invitation_path,
+            post auth_invitation_path,
                  params: {
                    email: "foo@bar.com"
                  },
@@ -219,7 +159,7 @@ describe "/auth/invitation", type: :request do
           it "responds with ok" do
             user_email = "foo@bar.com"
             User.create!(email: user_email)
-            post user_invitation_path,
+            post auth_invitation_path,
                  params: {
                    email: user_email
                  },
@@ -231,7 +171,7 @@ describe "/auth/invitation", type: :request do
 
       context "with invalid params" do
         it "responds with errors" do
-          post user_invitation_path,
+          post auth_invitation_path,
                params: {
                  email: nil
                },
@@ -249,7 +189,7 @@ describe "/auth/invitation", type: :request do
 
     context "with invalid token" do
       it "responds with errors" do
-        put user_invitation_path,
+        put auth_invitation_path,
             params: {
               password: "foobar",
               password_confirmation: "foobar",
@@ -266,7 +206,7 @@ describe "/auth/invitation", type: :request do
     context "with valid token" do
       context "with valid params" do
         it "updates user" do
-          put user_invitation_path,
+          put auth_invitation_path,
               params: {
                 password: "foobar",
                 password_confirmation: "foobar",
@@ -280,7 +220,7 @@ describe "/auth/invitation", type: :request do
 
       context "with invalid params" do
         it "responds with errors" do
-          put user_invitation_path,
+          put auth_invitation_path,
               params: {
                 password: "foobar",
                 password_confirmation: "foobaz",

@@ -21,7 +21,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false)
 end
 
-require_relative "./helpers/authentication_helper"
+require_relative "./authentication_helper"
 
 Warden.test_mode!
 

@@ -6,18 +6,6 @@ module Users
     include InvitableMethods
     before_action :authenticate_user!, only: :create
 
-    def new
-      head :no_content
-    end
-
-    def edit
-      head :no_content
-    end
-
-    def destroy
-      head :no_content
-    end
-
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     # rubocop:disable Metrics/BlockNesting

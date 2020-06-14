@@ -4,7 +4,7 @@
 class CompletedListsController < ProtectedRouteController
   def index
     render json: {
-      completed_lists: List.all_completed_lists(current_user),
+      completed_lists: current_user.all_completed_lists,
       current_list_permissions: current_user.current_list_permissions
     }
   end

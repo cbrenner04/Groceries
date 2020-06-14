@@ -15,16 +15,5 @@ module Groceries
     config.active_record.time_zone_aware_types = [:datetime]
 
     config.client = config_for(:client)
-
-    # TODO: move to specific environmentw to be more precise about origins
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-          headers: :any,
-          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-          methods: [:get, :post, :patch, :put, :delete, :options]
-      end
-    end
   end
 end

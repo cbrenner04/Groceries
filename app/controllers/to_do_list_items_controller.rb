@@ -2,6 +2,8 @@
 
 # no doc
 class ToDoListItemsController < ListItemsController
+  include UsersListsService
+
   def create
     @item = ToDoListItem
             .create(item_params.merge!(to_do_list_id: params[:list_id]))
@@ -17,7 +19,7 @@ class ToDoListItemsController < ListItemsController
     item = ToDoListItem.find(params[:id])
     list = ToDoList.find(item.to_do_list_id)
     categories = list.categories
-    list_users = UsersListsService.new([params[:list_id]]).list_users
+    list_users = list_users(params[:list_id])
     render json: {
       item: item,
       list: list,

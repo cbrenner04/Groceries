@@ -19,7 +19,7 @@ describe "/completed_lists", type: :request do
       response_body = JSON.parse(response.body).to_h
       expect(response).to have_http_status :success
       expect(response_body["completed_lists"].count)
-        .to eq List.all_completed_lists(user).count
+        .to eq user.all_completed_lists.count
       expect(response_body["completed_lists"].first).to eq(
         "id" => completed_list[:id],
         "name" => completed_list[:name],

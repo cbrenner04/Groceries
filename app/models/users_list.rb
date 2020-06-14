@@ -13,16 +13,4 @@ class UsersList < ApplicationRecord
   scope :accepted, (-> { where(has_accepted: true) })
   scope :pending, (-> { where(has_accepted: nil) })
   scope :refused, (-> { where(has_accepted: false) })
-
-  before_destroy :no_to_do_list_assignments?
-
-  def no_to_do_list_assignments?
-    any_assignments = ToDoListItem.where(to_do_list: list).any? do |item|
-      item.assignee_id == user.id
-    end
-    if any_assignments
-      errors.add(:base, "Can't destroy due to ToDoListItem assignments")
-    end
-    !any_assignments
-  end
 end

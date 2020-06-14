@@ -6,6 +6,8 @@ class User < ApplicationRecord
          :rememberable, :trackable, :invitable, invite_for: 1.week
   include DeviseTokenAuth::Concerns::User
 
+  include UsersService
+
   has_many :users_lists, dependent: :destroy
   has_many :lists,
            through: :users_lists,
@@ -23,7 +25,7 @@ class User < ApplicationRecord
   validates :email, presence: true
 
   def users_that_list_can_be_shared_with(list)
-    User.find_by_sql(related_users_query(list.id))
+    User.find_by_sql(related_users_query(id, list.id))
   end
 
   def current_list_permissions
@@ -36,29 +38,22 @@ class User < ApplicationRecord
     current_list_permissions
   end
 
-  private
+  def all_completed_lists
+    List.find_by_sql(completed_accepted_lists_query(id))
+  end
 
-  # TODO: What attributes are needed here? shouldn't be returning *
-  # Find users where they have been shared on the same lists as current user
-  # Filter out usere that are already shared on the supplied list
-  def related_users_query(list_id)
-    <<-SQL
-      SELECT DISTINCT "users".*
-      FROM "users"
-      INNER JOIN "users_lists"
-              ON "users"."id" = "users_lists"."user_id"
-      WHERE "users_lists"."list_id" IN (
-        SELECT "lists"."id"
-        FROM "lists"
-        INNER JOIN "users_lists"
-                ON "lists"."id" = "users_lists"."list_id"
-        WHERE "users_lists"."user_id" = #{id}
-      )
-      AND NOT "users"."id" IN (
-        SELECT "users_lists"."user_id"
-        FROM "users_lists"
-        WHERE "users_lists"."list_id" = #{list_id}
-      );
-    SQL
+  def accepted_lists
+    not_completed_lists =
+      List.find_by_sql(not_completed_accepted_lists_query(id))
+    completed_lists =
+      List.find_by_sql(limited_completed_accepted_lists_query(id))
+    {
+      not_completed_lists: not_completed_lists,
+      completed_lists: completed_lists
+    }
+  end
+
+  def pending_lists
+    List.find_by_sql(pending_lists_query(id))
   end
 end

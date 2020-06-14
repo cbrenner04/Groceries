@@ -2,6 +2,8 @@
 
 # no doc
 class UsersListsController < ProtectedRouteController
+  include UsersListsService
+
   before_action :require_list_access, only: %i[index update]
   before_action :require_write_access, only: %i[create]
 
@@ -63,13 +65,12 @@ class UsersListsController < ProtectedRouteController
     list = List.find(params[:list_id])
     user_is_owner = list.owner == current_user
     invitable_users = current_user.users_that_list_can_be_shared_with(list)
-    users_lists = UsersListsService.new(params[:list_id])
     {
       list: list,
       invitable_users: invitable_users,
-      accepted: users_lists.list_users_by_status("accepted"),
-      pending: users_lists.list_users_by_status("pending"),
-      refused: users_lists.list_users_by_status("refused"),
+      accepted: list_users_by_status(params[:list_id], "accepted"),
+      pending: list_users_by_status(params[:list_id], "pending"),
+      refused: list_users_by_status(params[:list_id], "refused"),
       current_user_id: current_user.id,
       user_is_owner: user_is_owner
     }

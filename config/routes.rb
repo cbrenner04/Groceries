@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth', skip: [:invitations]
-  devise_for :users,
-             path: 'auth',
-             only: [:invitations],
-             controllers: {
-               invitations: 'users/invitations',
-             },
-             skip: :registration
+  as :user do
+    patch "/auth/invitation", to: "users/invitations#update"
+    put "/auth/invitation", to: "users/invitations#update"
+    post "/auth/invitation", to: "users/invitations#create"
+  end
   resources :lists, only: [:index, :show, :create, :edit, :update, :destroy] do
-    post :refresh_list, on: :member
+    resource :refresh_list, only: [:create]
     resources :book_list_items, only: [:create, :edit, :update, :destroy]
     resources :grocery_list_items, only: [:create, :edit, :update, :destroy]
     resources :music_list_items, only: [:create, :edit, :update, :destroy]
