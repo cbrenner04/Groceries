@@ -7,12 +7,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "bootstrap", "~> 4.3", ">= 4.3.1"
+gem "bootstrap", "~> 4.4", ">= 4.4.1"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.7", ">= 4.7.1"
 gem "devise_invitable", "~> 1.7", ">= 1.7.5"
 gem "font-awesome-rails", "~> 4.7", ">= 4.7.0.5"
-gem "jbuilder", "~> 2.7"
+gem "jbuilder", "~> 2.9", ">= 2.9.1"
 gem "jquery-rails", ">= 4.3.5"
 # error bundling on heroku fixed adding line below
 gem "libv8", "~> 7.3", ">= 7.3.492.27.1"
@@ -20,7 +20,7 @@ gem "mini_racer", "~> 0.2.9", platforms: :ruby
 gem "newrelic_rpm", "~> 5.1", ">= 5.1.0.344"
 gem "pg", "~> 1.0"
 gem "puma", "~> 3.12"
-gem "rails", "~> 5.2", ">= 5.2.3"
+gem "rails", "~> 5.2", ">= 5.2.4.3"
 source "https://rails-assets.org" do
   # In combination with Bootstrap
   gem "rails-assets-tether", "~> 1.1", ">= 1.1.1"
@@ -59,7 +59,7 @@ group :development do
   gem "derailed", "~> 0.1.0"
   gem "factory_bot_rails", "~> 4.11", ">= 4.11.1"
   gem "listen", "~> 3.1", ">= 3.1.5"
-  gem "rails-erd", "~> 1.5", ">= 1.5.2"
+  gem "rails-erd", "~> 1.6", ">= 1.6.0"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0", ">= 2.0.1"
   gem "web-console", "~> 3.7", ">= 3.7.0"
